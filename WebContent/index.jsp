@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    	String includePage = request.getParameter("page"); /* ?page=XXXX */
+    	String includeMenu = request.getParameter("menu");
+    	
+    	if(includeMenu == null) includeMenu = "/WEB-INF/introduce/intro_menu";
+    	if(includePage == null) includePage = "/WEB-INF/introduce/intro_main";
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +29,7 @@
 					<a href="index.jsp"><img src="image/logo.png" alt="" /></a>
 				</div>
 				<div>
-					<a href="#">휴양림소개</a>
+					<a href="introduce.do">휴양림소개</a>
 					<a href="book.do">예약안내</a>
 					<a href="structure.do">시설현황</a>
 					<a href="board.do">자유게시판</a>
@@ -32,17 +39,11 @@
 		<section class="content">
 			<div>
 				<nav>
-					<!-- <a href="#">예약하기</a>
-					<a href="#">예약조회 및 취소</a>
-					<a href="#">주의사항</a>
-					<a href="#">요금 및 환불 안내</a> -->
-					<h1>이 부분은 자신이 맡은 세부링크를 넣어주세요★ 화이팅!★</h1>
-					* jsp 파일들 모두 생성해서 c 태그 걸어놨어염<br /><br />
-					* '휴양림 안내' 제외하고 헤더 메뉴들만 링크 연결시켰어요 (로그인, 회원가입 포함) <br /><br />
-					* 커넥션풀, 커넥션 db 이름 resort로 다 수정해 놓았어염~(초기화 테스트는 각자)
+					<jsp:include page='<%= includeMenu+".jsp" %>'></jsp:include>
+					
 				</nav>
 				<article>
-					jsp include
+					<jsp:include page='<%= includePage+".jsp" %>'></jsp:include>
 				</article>
 			</div>
 		</section>

@@ -10,7 +10,7 @@ public class JoinHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if (req.getMethod().equalsIgnoreCase("get")) {
-			return "/WEB-INF/member/join.jsp";
+			return "index.jsp?page=/WEB-INF/member/join&menu=/WEB-INF/member/mem_menu";
 		}
 		return null;
 	}
