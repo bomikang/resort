@@ -9,31 +9,50 @@
 	#bk_now #bookTable .sat{color: blue;}
 </style>
 <script type="text/javascript">
-	$(function(){
-		var date = new Date();
-		 
+	
+	$(function(){	
+		/* 달력에 날짜 넣기 */
+		var date = new Date();		
 		setMonthTable(date);		
-		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' id='nextMonth'>&gt;</a>");		
+		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");		
 		
+		 
+		$(document).on("click", ".nextMonth", function(){
+			var thisMonth = date.getMonth();
+			var thisYear = date.getFullYear();
 		
-		$(document).on("click", "#nextMonth", function(){
-			
-			var m = date.getMonth();
-			var y = date.getFullYear();
-		
-			if(m==11){
-				y += 1;
-				m = 0;
-				date.setFullYear(y);
-				date.setMonth(m);
+			if(thisMonth==11){
+				thisYear += 1;
+				thisMonth = 0;
+				date.setFullYear(thisYear);
+				date.setMonth(thisMonth);
 				setMonthTable(date);
 			}else{
-				m += 1;
-				date.setMonth(m)
+				date.setMonth(thisMonth+1);
 				setMonthTable(date);
 			}
-			$("#bkTable").html("<a href='#' id='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");
 			
+			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");
+			
+		});
+
+		
+		$(document).on("click", ".prevMonth", function(){
+			var thisMonth = date.getMonth();
+			var thisYear = date.getFullYear();
+		
+			if(thisMonth==0){
+				thisYear -= 1;
+				thisMonth = 11;
+				date.setFullYear(thisYear);
+				date.setMonth(thisMonth);
+				setMonthTable(date);
+			}else{
+				date.setMonth(thisMonth-1);
+				setMonthTable(date);
+			}
+			
+			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");			
 		});
 	});//ready
 	
@@ -50,7 +69,7 @@
 		
 		var dateForm = "<tr><th></th>";
 		
-		for(var i=0;i<last[m]-1;i++){
+		for(var i=0;i<last[m];i++){
 			date.setDate(i+1);
 			if(date.getDay()== 0){
 				dateForm += "<th class='sun'>"+(i+1)+"</th>";
@@ -61,12 +80,13 @@
 			}			
 		}	
 		dateForm += "</tr>";
+		date.setDate(1);
 		$("#bookTable").append(dateForm);
 	}
 </script>
 <div id="bk_now">
 	<h2 id="bkTable"></h2>
 	<table id="bookTable">
-	
+		
 	</table>
 </div>
