@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /auth/
 /board/
 /book/
@@ -5,4 +6,6 @@
 /jdbc/
 /member/
 /mvc/
+=======
+>>>>>>> refs/remotes/origin/bomi01
 /structure/
