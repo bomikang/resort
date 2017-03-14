@@ -62,6 +62,10 @@
 					<jsp:include page='<%= includePage+".jsp" %>'></jsp:include>
 				</article>
 			</div>
+		
+			
+			
+			
 		</section>
 		<footer>
 			<div>
