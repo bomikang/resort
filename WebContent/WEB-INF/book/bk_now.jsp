@@ -15,7 +15,12 @@
 		var date = new Date();		
 		setMonthTable(date);		
 		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");		
-		
+		$.ajax({
+			type:"get",
+			dataType:"json",
+			url:"book.do",
+			
+		});
 		 
 		$(document).on("click", ".nextMonth", function(){
 			var thisMonth = date.getMonth();

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -56,8 +57,7 @@ public class BookDao {
 				
 				
 				book.setMem(mDao.selectById(conn, memNo));
-//				book.setStr(sDao.);
-				
+				book.setStr(sDao.getStructureByNo(conn, strNo));			
 				
 				bList.add(book);
 			}
@@ -78,17 +78,25 @@ public class BookDao {
 		ResultSet rs = null;
 		
 		try{
-			int year = date.getYear();
-			int month = date.getMonth()+1;
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			
+			int year = cal.get(Calendar.YEAR);
+			int month = cal.get(Calendar.MONTH)+1;
+			
 			String sql = "select * from resort.book where((year(bk_startdate)=? and month(bk_startdate)=?)or(year(bk_enddate)=? and month(bk_enddate)=?))and bk_state!='예약취소'";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
 			pstmt.setInt(2, month);
 			pstmt.setInt(3, year);
 			pstmt.setInt(4, month);
+			
 			rs = pstmt.executeQuery();
+			
 			MemberDao mDao = MemberDao.getInstance();
 			StructureDao sDao = StructureDao.getInstance();
+			
 			while(rs.next()){
 				Book book = new Book();
 				book.setNo(rs.getInt("bk_no"));								//예약번호
@@ -108,7 +116,7 @@ public class BookDao {
 				
 				
 				book.setMem(mDao.selectById(conn, memNo));
-//				book.setStr(sDao.);		
+				book.setStr(sDao.getStructureByNo(conn, strNo));		
 				
 				bList.add(book);
 			}
@@ -154,9 +162,7 @@ public class BookDao {
 				
 				
 				book.setMem(mDao.selectById(conn, memNo));
-//				book.setStr(sDao.);
-				
-				
+				book.setStr(sDao.getStructureByNo(conn, strNo));				
 				return book;
 			}
 			
@@ -199,7 +205,8 @@ public class BookDao {
 				
 				
 				book.setMem(mDao.selectById(conn, memNo));
-//				book.setStr(sDao.);	
+				book.setStr(sDao.getStructureByNo(conn, strNo));
+				
 				return book;
 			}			
 			return null;			
