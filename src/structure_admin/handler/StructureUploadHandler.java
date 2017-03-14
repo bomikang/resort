@@ -1,4 +1,4 @@
-package structure.handler;
+package structure_admin.handler;
 
 import java.io.File;
 import java.sql.Connection;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 
 import jdbc.ConnectionProvider;
+import jdbc.JdbcUtil;
 import mvc.controller.CommandHandler;
 import structure.model.Structure;
 import structure.model.StructureDao;
@@ -29,7 +30,7 @@ public class StructureUploadHandler implements CommandHandler {
 	
 	private String postProcess(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String uploadPath = req.getRealPath("Structure_Images"); //파일 들어갈 폴더 명(프로젝트 안 upload폴더) => 서버에 저장
-	
+		
 		File dir = new File(uploadPath);
 		if(dir.exists() == false){
 			dir.mkdirs();
@@ -76,6 +77,8 @@ public class StructureUploadHandler implements CommandHandler {
 			dao.insertStructure(con, str);
 		}catch(Exception e){
 			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(con);			
 		}
 		return "index.jsp?page=/WEB-INF/structure_admin/str_room_de&menu=/WEB-INF/structure/str_menu";
 	}
