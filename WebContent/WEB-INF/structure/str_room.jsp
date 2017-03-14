@@ -1,8 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <% String imagePath = (String) request.getAttribute("imagePath"); %> --%>
-
+<%
+	request.setCharacterEncoding("utf-8");
+	/* 서버에 업로드 된 사진 불러오기  */
+		//http://localhost:8080//resort/Structure_Images/xxx.png => jsp는 이렇게 가져오나 봄
+		//request.getServerName() : localhost
+		//request.getServerPort() : 8080
+		//getServletContext().getContextPath() : /resort
+	String path = getServletContext().getContextPath(); // => /resort
+	String test = "http://"+ request.getServerName() +":"+ request.getServerPort() + "/" + path;
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,20 +32,21 @@
 			data:{"no":1},
 			success:function(data){
 				images = data.image;
-				//$("#test").html(data.name +"<br>이미지"+ images);
 				
 				var oneImages = images.split("/"); //image쪼개기
 				repImage = oneImages[0]; //대표이미지
-				alert(repImage);
 				
-				/* 원래 path : D:\workspace\.... => 변경 D:/workspace/... */
-				var imagePath = "${imagePath}"+"/";
-				
-				//$("#test").html("<img src='"+ imagePath + repImage+"'>");
+				/* ********여기서부터가 중요********* */
+				//http://localhost:8080//resort/Structure_Images/"+ repImage+ "
+				//var test = "/<%=path%>"+"/Structure_images/logo2.png"
+				$("#test").html("<img src='<%=test%>/Structure_Images/"+ repImage+ "'>");
 			}
 		});
 		
 		
+		$("button").click(function() {
+			$("#test").html($("#a").attr("src"));
+		});
 	});
 </script>
 </head>
@@ -51,8 +62,7 @@
 		</ul>
 	</c:if>
 	<p id="test">
-		<%-- ${imagePath} --%>
-		<img src="D:/workspace/workspace_jsp/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/resort/Structure_Images/grass_01_4.jpg" alt="" />
+		
 	</p>
 </body>
 </html>

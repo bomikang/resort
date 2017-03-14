@@ -29,13 +29,9 @@ public class StructureHandler implements CommandHandler {
 				StructureDao dao = StructureDao.getInstance();
 				List<Structure> list = dao.selectAllStructure(con);
 				
-				String originPath = req.getRealPath("Structure_Images");
-				String imagePath = originPath.replace("\\", "/");
-				
-				req.setAttribute("imagePath", imagePath);
 				req.setAttribute("strList", list);
 				
-				System.out.println(req.getRealPath("Structure_Images"));
+				System.out.println(req.getRealPath("Structure_Images")); //absolute path
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally{
