@@ -9,9 +9,26 @@
     },
     "browser-extension": {
       
+<<<<<<< HEAD
     }
   },
   "libs": [
     "browser"
+=======
+    },
+    "jquery-ui1-12": {
+      
+    },
+    "jquery-extension": {
+      
+    },
+    "jquery-mobile1.5": {
+      
+    }
+  },
+  "libs": [
+    "browser",
+    "jquery"
+>>>>>>> refs/remotes/origin/bomi01
   ]
 }
