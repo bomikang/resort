@@ -22,11 +22,12 @@ public class CheckId implements CommandHandler {
 				conn = ConnectionProvider.getConnection();
 				MemberDao dao = MemberDao.getInstance();
 				String id = req.getParameter("id"); // JSP 에서 LOCATION으로 던져준 변수 
+				System.out.println("들어오는 아이디값 : "+id);
 				List<Member> idList = dao.listNo(conn);
 				
 				for(int i=0;i<idList.size();i++){
-				
-					if(idList.get(i).equals(id)){
+					System.out.println(idList.get(i).getId());
+					if(idList.get(i).getId().equals(id)){
 					req.setAttribute("error",true);
 					}	
 				}

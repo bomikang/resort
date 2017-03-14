@@ -1,7 +1,9 @@
 package member.handler;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,12 +23,17 @@ public class JoinHandler implements CommandHandler {
 			return "/WEB-INF/member/join.jsp";
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			String id = req.getParameter("id");
-			
-			Member mem = new Member(0, req.getParameter("id"),
+			//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng
+			Date nowTime = new Date();
+			Member mem = new Member(0,
+					req.getParameter("id"),
 					req.getParameter("password"),
 					req.getParameter("name"),
 					req.getParameter("email"),
-					req.getParameter("tel"),false
+					req.getParameter("tel"),
+					nowTime,
+					null,
+					false
 					);								
 			Connection conn = null;
 			try{
