@@ -1,6 +1,7 @@
 package member.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,8 +25,11 @@ public class MemberDao {
 	public void insert(Connection conn, Member mem) throws SQLException{
 		PreparedStatement pstmt = null;
 		try{
-			String sql = "insert into member(mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_out)"
-					+ " values(?,?,?,?,?,?,?)";
+			String sql ="insert into member"
+					+ "(mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng)"
+					+ "values(?,?,?,?,?,?,?,?,?)";
+			
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mem.getNo());
 			pstmt.setString(2, mem.getId());
@@ -33,8 +37,9 @@ public class MemberDao {
 			pstmt.setString(4,mem.getName());
 			pstmt.setString(5,mem.getMail());
 			pstmt.setString(6,mem.getTel());
-			pstmt.setBoolean(7,mem.getMem_out());
-			
+			pstmt.setTimestamp(7,new Timestamp(mem.getRegDate().getTime()));
+			pstmt.setTimestamp(8,null);
+			pstmt.setBoolean(9, false);
 			pstmt.executeUpdate();
 		}finally{
 			JdbcUtil.close(pstmt);
@@ -75,6 +80,7 @@ public class MemberDao {
 			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
 			Member member= null;
+			//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng
 			if(rs.next()){
 				member = new Member(
 						rs.getInt("mem_no"),
@@ -83,7 +89,9 @@ public class MemberDao {
 						rs.getString("mem_name"),
 						rs.getString("mem_mail"),
 						rs.getString("mem_tel"),
-						rs.getBoolean("mem_out"));
+						rs.getDate("mem_regdate"),
+						rs.getDate("mem_outdate"),
+						rs.getBoolean("mem_ismng"));
 			}
 			return member;
 		}finally{
@@ -102,15 +110,17 @@ public class MemberDao {
 			if(rs.next()){
 				List<Member> memberlist = new ArrayList<>();
 				do{
-					//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_out
+					//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng
 					Member mb = new Member(
-						rs.getInt("mem_no"),
-						rs.getString("mem_id"),
-						rs.getString("mem_pwd"),
-						rs.getString("mem_name"),
-						rs.getString("mem_mail"),
-						rs.getString("mem_tel"),
-						rs.getBoolean("mem_out"));
+							rs.getInt("mem_no"),
+							rs.getString("mem_id"),
+							rs.getString("mem_pwd"),
+							rs.getString("mem_name"),
+							rs.getString("mem_mail"),
+							rs.getString("mem_tel"),
+							rs.getDate("mem_regdate"),
+							rs.getDate("mem_outdate"),
+							rs.getBoolean("mem_ismng"));
 					memberlist.add(mb);
 				}while(rs.next());
 				return memberlist;

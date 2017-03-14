@@ -9,7 +9,7 @@
 <style>
 
 .error{
-	/* display:none; */
+	
 	color:red;
 	padding:0;
 	margin:0 0 0 90px;
@@ -35,21 +35,48 @@ fieldset{
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
+$(function(){
+	$("#btn").click(function(){
+		$.ajax({
+			url:"checkId.do",
+			type:"post",
+			timeout:30000,
+			dataType:"json",
+			data:{"id":$("#id").val()},//게시글의 번호
+			success:function(data){
+				console.log(data);
+						if(data=="ok"){
+							alert("사용가능 아이디 입니다.");			
+						}else{
+							alert("사용불가 아이디 입니다.");
+						}	
+			} 
+		});
+	});
+	
+});
+</script>
+<!-- <script type="text/javascript">
 
 	$(function(){
 		
 		$("#btn").click(function(){
-			/* var url = "join.do?id="+id;    
-			$(location).attr('href',url); */
+		
 			var id=$("#id").val();
-			location.href="join.do?id="+id;	
+			location.href="checkId.do?id="+id;	
 		});
 		
 	});
 		
-		
-	
-</script>
+	/* function checking(){
+		var id=$("#id").val();
+		if(id==""){
+			alert("이름을 입력하세요");
+			return;
+		}
+	}	
+	 */
+</script> -->
 </head>
 <body>
 	<div id="title">
@@ -97,7 +124,7 @@ fieldset{
 		</fieldset>
 		
 		<div id="submit">
-			<input type="submit" value="가입하기" id="sub">
+			<input type="submit" value="가입하기" id="sub" onclick="checking()">
 		</div>
 		
 		</form>
