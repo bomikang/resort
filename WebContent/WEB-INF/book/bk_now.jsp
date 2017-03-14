@@ -16,10 +16,19 @@
 		setMonthTable(date);		
 		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");		
 		$.ajax({
-			type:"get",
-			dataType:"json",
 			url:"book.do",
-			
+			type:"get",
+			timeout:30000,
+			dataType:"json",
+			data:{"date":date},//게시글의 번호
+			success:function(data){
+				console.log(data);
+				if(data=="ok"){
+					alert("사용가능 아이디 입니다.");			
+				}else{
+					alert("사용불가 아이디 입니다.");
+				}	
+			} 
 		});
 		 
 		$(document).on("click", ".nextMonth", function(){
