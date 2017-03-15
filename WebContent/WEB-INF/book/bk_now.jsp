@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 	#bk_now{width:100%;}
-	#bk_now #bookTable{width:95%; margin: 0 auto;}
+	#bk_now #bookTable{width:95%; margin: 0 auto; table-layout:auto;}
 	#bk_now #bookTable .sun{color: red;}
 	#bk_now #bookTable .sat{color: blue;}
 </style>
@@ -12,26 +12,13 @@
 	
 	$(function(){	
 		/* 달력에 날짜 넣기 */
-		var date = new Date();		
-		setMonthTable(date);		
-		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");		
-		$.ajax({
-			url:"book.do",
-			type:"get",
-			timeout:30000,
-			dataType:"json",
-			data:{"date":date},//게시글의 번호
-			success:function(data){
-				console.log(data);
-				if(data=="ok"){
-					alert("사용가능 아이디 입니다.");			
-				}else{
-					alert("사용불가 아이디 입니다.");
-				}	
-			} 
-		});
+		
+		var date = new Date();
+/* 		setMonthTable(date); */		
+		setScreen(date); 
+		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");			
 		 
-		$(document).on("click", ".nextMonth", function(){
+		$(document).on("click", ".nextMonth", function(){			
 			var thisMonth = date.getMonth();
 			var thisYear = date.getFullYear();
 		
@@ -40,14 +27,12 @@
 				thisMonth = 0;
 				date.setFullYear(thisYear);
 				date.setMonth(thisMonth);
-				setMonthTable(date);
 			}else{
 				date.setMonth(thisMonth+1);
-				setMonthTable(date);
 			}
 			
-			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");
-			
+			setScreen(date);
+			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");			
 		});
 
 		
@@ -60,17 +45,41 @@
 				thisMonth = 11;
 				date.setFullYear(thisYear);
 				date.setMonth(thisMonth);
-				setMonthTable(date);
 			}else{
 				date.setMonth(thisMonth-1);
-				setMonthTable(date);
 			}
 			
+			setScreen(date);
 			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");			
 		});
+		
+		$(document).on("click", ".isBooked", function(){
+			alert("예약할 수 없습니다.");
+			return false;
+		});
+		
+		$(document).on("click", ".noBooked", function(){
+			alert("예약가능합니다.");	
+			location.href="";
+		});
+		
 	});//ready
 	
-	function setMonthTable(date){
+	function setScreen(date){
+		 $.ajax({
+				url:"book.do",
+				type:"post",
+				timeout:30000,
+				dataType:"json",
+				data:{"date":date.getTime()},//현재 시간
+				success:function(data){
+					console.log(data);
+					setMonthTable(date, data);					
+				} 
+			}); 
+	}
+	
+	function setMonthTable(date, data){
 		$("#bookTable").empty();
 		var y = date.getFullYear();
 		var m = date.getMonth();
@@ -94,13 +103,55 @@
 			}			
 		}	
 		dateForm += "</tr>";
+		var names = data[0];
+		var bList = data[1];
+		var today = new Date();
+		
+		for(var j=0;j < names.length;j++){
+			var index = 0;
+			dateForm += "<tr>";
+			dateForm += "<th><a href='#'>";
+			dateForm += names[j].name;
+			console.log("j : "+j+"|"+names);
+			dateForm += "</a></th>";
+			for(var k=0;k<last[m];k++){	
+				//console.log(bList[j][index].startDate);
+				if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
+					dateForm += "<td><a href='#' class='isBooked'>X</a></td>";
+				}else{				
+					if(bList[j]!= undefined){	
+						if(bList[j][index] != undefined){
+							var startDate = new Date(bList[j][index].startDate);
+							var endDate = new Date(bList[j][index].endDate);
+							
+							if((k+1)>=startDate.getDate()||(k+1)<=endDate.getDate()){
+								console.log("일치");
+								if(bList[j][index].state=="입금완료"){
+									dateForm += "<td><a href='#' class='isBooked'>X</a></td>";
+								}else if(bList[j][index].state=="입금대기"){
+									dateForm += "<td><a href='#' class='isBooked'>△</a></td>";
+								}
+							}else{
+								dateForm += "<td><a href='#' class='noBooked'>O</a></td>";
+							}
+							index++;
+						}else{
+							dateForm += "<td><a href='#' class='noBooked'>O</a></td>";
+						}						
+					}else{ 
+						dateForm += "<td><a href='#' class='noBooked'>O</a></td>";
+					} 
+				}
+			}
+			dateForm += "</tr>";
+		}
 		date.setDate(1);
-		$("#bookTable").append(dateForm);
+		$("#bookTable").prepend(dateForm);
 	}
 </script>
 <div id="bk_now">
 	<h2 id="bkTable"></h2>
-	<table id="bookTable">
+	<table id="bookTable" border="1">
 		
 	</table>
 </div>

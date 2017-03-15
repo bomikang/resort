@@ -135,6 +135,10 @@ public class Book {
 		return dateFormat.format(endDate);
 	}
 	public String getCancelForm(){
-		return dateTimeFormat.format(cancelDate);
+		if(cancelDate!=null){
+			return dateTimeFormat.format(cancelDate);
+		}
+		return null;
+		
 	}
 }

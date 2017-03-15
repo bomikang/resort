@@ -70,9 +70,9 @@ public class BookDao {
 		
 	}//end of selectAll
 	/**
-	 * 예약현황 조회에 취소되지 않은 내역을 월별로 조회하여 ArrayList로 돌려주는 Method
+	 * 예약현황 조회에 취소되지 않은 내역을 시설 번호를 기준으로 월별로 조회하여 ArrayList로 돌려주는 Method
 	 * */
-	public List<Book> selectThisMonth(Connection conn, Date date)throws SQLException{
+	public List<Book> selectThisMonthByStr(Connection conn, Date date, int str)throws SQLException{
 		List<Book> bList = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -84,13 +84,16 @@ public class BookDao {
 			int year = cal.get(Calendar.YEAR);
 			int month = cal.get(Calendar.MONTH)+1;
 			
-			String sql = "select * from resort.book where((year(bk_startdate)=? and month(bk_startdate)=?)or(year(bk_enddate)=? and month(bk_enddate)=?))and bk_state!='예약취소'";
+			String sql = "select * from resort.book"
+							+" where((year(bk_startdate)=? and month(bk_startdate)=?)or(year(bk_enddate)=? and month(bk_enddate)=?))"
+							+"and bk_state!='예약취소' and bk_str=? order by bk_startdate";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
 			pstmt.setInt(2, month);
 			pstmt.setInt(3, year);
 			pstmt.setInt(4, month);
+			pstmt.setInt(5, str);
 			
 			rs = pstmt.executeQuery();
 			
