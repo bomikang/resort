@@ -23,6 +23,7 @@ public class JoinHandler implements CommandHandler {
 			return "/WEB-INF/member/join.jsp";
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			String id = req.getParameter("id");
+			
 			//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng
 			Date nowTime = new Date();
 			Member mem = new Member(0,
@@ -37,6 +38,9 @@ public class JoinHandler implements CommandHandler {
 					);								
 			Connection conn = null;
 			try{
+				
+				
+				
 				conn = ConnectionProvider.getConnection();
 				MemberDao dao = MemberDao.getInstance();
 				dao.insert(conn,mem);
