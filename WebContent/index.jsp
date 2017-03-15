@@ -30,7 +30,7 @@
 				<a href="join.do">회원가입</a>
 			</div>
 		</div>
-		<header class="header_menu">
+		<header class="header_menu" style="z-index:9999;">
 			<div>
 				<div id="logo_area">
 					<a href="index.jsp"><img src="image/logo2.png" alt="" /></a>

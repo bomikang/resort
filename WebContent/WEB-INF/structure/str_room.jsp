@@ -78,11 +78,7 @@
 				str_no = $(obj).find("span").text();
 				
 				getStructures(str_no);
-				
-				
 			});
-			
-			
 		});
 		
 		$('.slider1').bxSlider({
