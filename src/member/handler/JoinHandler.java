@@ -20,9 +20,10 @@ public class JoinHandler implements CommandHandler {
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("get")){
 		
-			return "/WEB-INF/member/join.jsp";
+			return "index.jsp?page=/WEB-INF/member/join&menu=/WEB-INF/member/mem_menu";
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			String id = req.getParameter("id");
+			
 			//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng
 			Date nowTime = new Date();
 			Member mem = new Member(0,
@@ -37,6 +38,9 @@ public class JoinHandler implements CommandHandler {
 					);								
 			Connection conn = null;
 			try{
+				
+				
+				
 				conn = ConnectionProvider.getConnection();
 				MemberDao dao = MemberDao.getInstance();
 				dao.insert(conn,mem);
@@ -44,7 +48,8 @@ public class JoinHandler implements CommandHandler {
 			}finally{
 				JdbcUtil.close(conn);
 			}
-			return "/WEB-INF/member/joinSuccess.jsp";
+			return "index.jsp?page=/WEB-INF/member/joinSuccess&menu=/WEB-INF/member/mem_menu";
+			
 		}
 		return null;
 	}
