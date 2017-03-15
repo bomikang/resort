@@ -26,8 +26,30 @@ public class StructureHandler implements CommandHandler {
 			try {
 				con = ConnectionProvider.getConnection();
 				
+				switch (req.getParameter("house")) {
+				case "forest":
+					
+					break;
+				case "culture":
+					break;
+				case "mountain":
+					break;
+				case "wellbeing":
+					break;
+				case "caraban":
+					break;
+				case "dome":
+					break;
+				}
+				
+				//수용인원
+				int peopleCnt = 0;
+				if (req.getParameter("people") != null) {
+					peopleCnt = Integer.parseInt(req.getParameter("people"));
+				}
+				
 				StructureDao dao = StructureDao.getInstance();
-				List<Structure> list = dao.selectAllStructure(con);
+				List<Structure> list = dao.selectAllStrByNameAndPeople(con, peopleCnt); //수용인원만큼 가져옴
 				
 				req.setAttribute("strList", list);
 				req.setAttribute("firstRoomNo", list.get(0).getNo());

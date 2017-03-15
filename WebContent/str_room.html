@@ -6,15 +6,63 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 	$(function(){
-		$("button").click(function() {
-			$("p").html($("img").attr("src"));
+		/* $("input[name='forestHouse']").click(function() {
+			$("#test").html($(this).attr("checked"));
+			//$("#test").html($(this).prop("checked"));
+			
+		}); */
+		$(document).on("change", "input[type='checkbox']", function() {
+			alert($("input[type='checkbox']").prop("checked"));
 		});
+		
+		/* 
+		if ($("input[name='forestHouse']").prop("checked")) {
+			$("#test").html($(this).prop("checked"));
+		}else{
+			$("#test").html($(this).prop("checked"));
+		} */
 	});
 </script>
 </head>
 <body>
-	<img src="E:\workspace\workspace_jsp\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\resort\Structure_Images\logo2.png" alt="" />
-	<button>ㅎㅎ</button>
-	<p></p>
+	<fieldset>
+			<legend>숙박 시설 등록</legend>
+			
+			<p>
+				<label for="">숙박 시설 이름</label><br />
+				<input type="text" name="name" id="name"/><input type="checkbox" name="forestHouse" />숲속의 집
+			</p>
+			
+			<p>
+				<label for="">면적<small>(㎡)</small></label><br />
+				<input type="text" name="width" placeholder="ex) 26.44" />
+			</p>
+			
+			<p>
+				<label for="">가격</label><br />
+				<input type="text" name="price" placeholder="ex) 90000"/>
+			</p>
+			
+			<p>
+				<label for="">옵션</label><br />
+				<input type="text" name="option" />
+			</p>
+			
+			<p>
+				<label for="">대표사진</label><br />
+				<input type="file" name="repImage" id="repImage"/>
+			</p>
+			
+			<p>
+				<label for="">내부사진</label><br />
+				<input type="file" name="innerImage" id="innerImage" multiple/><br>
+			</p>
+			<p>
+				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
+				<input type="submit" value="등록하기" id="btnAddStr"/>
+			</p>
+		</fieldset>
+		
+		<p id="test"></p>
 </body>
 </html>

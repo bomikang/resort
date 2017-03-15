@@ -7,6 +7,7 @@ public class Structure {
 	private int price;
 	private String option;
 	private String image;
+	private String width; //면적
 	
 	public Structure() {}
 
@@ -65,6 +66,14 @@ public class Structure {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getWidth() {
+		return width;
+	}
+
+	public void setWidth(String width) {
+		this.width = width;
 	}
 
 	

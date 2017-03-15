@@ -37,34 +37,43 @@
 				var images = data.image;
 				
 				var oneImages = images.split("/"); //image쪼개기
-				var repImage = oneImages[0]; //대표이미지
 				
 				/* ********여기서부터가 중요********* */
 				//http://localhost:8080//resort/Structure_Images/"+ repImage+ "
 				
 				var showImages = new Array();
+				
 				for (var i = 0; i < oneImages.length; i++) {
 					showImages[i] = "<%=fullPath%>/Structure_Images/"+oneImages[i];
-					
 				}
-				$("#test").html("<img src='"+showImages[0]+"'>");
-				
-				
-				/* 함수호출 */
+				//bxSlider 적용 함수 호출
 				gallery(showImages);
-				
 			}
 		});
 	}
 	
+	/* bxSlider 적용 함수 */
 	function gallery(showImages){
-		//$("#test").html("<img src='"+showImages[0]+"'>");
-		$(".slider1 .slide").eq(0).find("img").attr("src", showImages[0]);
+		$("#bigImage").html("<img src='"+showImages[0]+"'>"); //큰이미지
 		
+		var slideImage = "<div class='sliderImages'>";
 		
+		for (var i = 0; i < showImages.length; i++) {
+			slideImage += "<div class='slide'>";
+			slideImage += "<img src='"+showImages[i]+"'>";
+			slideImage += "</div>";
+		}
 		
-	//	$(".slider1 .slide").eq(0).find("img").attr("src", showImages[0]);
+		$("#slideGallery").html(slideImage);
+		
+		$('.sliderImages').bxSlider({
+			slideWidth : 200,
+			minSlides : 1,
+			maxSlides : 3,
+			slideMargin : 10
+		});
 	}
+	
 
 	$(function(){
 		var str_no = 0; //방 번호
@@ -81,16 +90,17 @@
 			});
 		});
 		
-		$('.slider1').bxSlider({
-			slideWidth : 200,
-			minSlides : 2,
-			maxSlides : 3,
-			slideMargin : 10
+		$(document).on("click", ".sliderImages .slide img", function() {
+			$("#bigImage img").attr("src", $(this).attr("src"));
 		});
 	});
 </script>
 </head>
 <body>
+	<a href="structure.do?people=4">4인실</a>
+	<a href="structure.do?people=6">6인실</a>
+	<a href="structure.do?people=8">8인실</a>
+	
 	<c:if test="${strList.size() == 0}">
 		<p>등록된 방이 없습니다</p>
 	</c:if>
@@ -100,38 +110,12 @@
 				<li><a href="#">${rooms.name}<span class="str_no" style="display:none;">${rooms.no}</span></a></li>
 			</c:forEach>
 		</ul>
+		<p id="bigImage">
+			<!-- bigImage -->
+		</p>
+		<p id="slideGallery">
+			<!-- gallery -->
+		</p>
 	</c:if>
-	<p id="test">
-		
-	</p>
-	<div class="slider1">
-		<div class="slide">
-			<img src="http://placehold.it/350x150&text=FooBar1">
-		</div>
-		<div class="slide">
-			<img src="http://placehold.it/350x150&text=FooBar2">
-		</div>
-		<div class="slide">
-			<img src="http://placehold.it/350x150&text=FooBar3">
-		</div>
-		<div class="slide">
-			<img src="http://placehold.it/350x150&text=FooBar4">
-		</div>
-		<div class="slide">
-			<img src="http://placehold.it/350x150&text=FooBar5">
-		</div>
-		<div class="slide">
-			<img src="http://placehold.it/350x150&text=FooBar6">
-		</div>
-		<div class="slide">
-			<img src="http://placehold.it/350x150&text=FooBar7">
-		</div>
-		<div class="slide">
-			<img src="http://placehold.it/350x150&text=FooBar8">
-		</div>
-		<div class="slide">
-			<img src="http://placehold.it/350x150&text=FooBar9">
-		</div>
-	</div>
 </body>
 </html>
