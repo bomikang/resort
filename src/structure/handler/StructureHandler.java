@@ -30,6 +30,7 @@ public class StructureHandler implements CommandHandler {
 				List<Structure> list = dao.selectAllStructure(con);
 				
 				req.setAttribute("strList", list);
+				req.setAttribute("firstRoomNo", list.get(0).getNo());
 				
 				System.out.println(req.getRealPath("Structure_Images")); //absolute path
 			} catch (Exception e) {
@@ -65,8 +66,6 @@ public class StructureHandler implements CommandHandler {
 				JdbcUtil.close(con);
 			}
 		}
-		
-		
 		
 		return null;
 	}
