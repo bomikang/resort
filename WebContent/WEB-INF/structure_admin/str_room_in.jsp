@@ -75,7 +75,7 @@
 			</p>
 			
 			<p>
-				<label for="">내부사진</label><br />
+				<label for="">내부사진</label><br/>
 				<input type="file" name="innerImage" id="innerImage" multiple/><br>
 			</p>
 			<p>

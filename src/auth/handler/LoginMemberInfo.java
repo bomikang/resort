@@ -1,11 +1,12 @@
 package auth.handler;
 
-public class LoginMemberInfo {
+public class LoginMemberInfo { // 로그인 이후 세션에 남는 DATA 들 중 로그인 한 개인의 정보를 가지고 있음
 	private int my_no;
 	private String my_id;
 	private String my_name;
 	private String my_mail;
-	private Boolean isMng;
+	private Boolean isMng; // 관리자인지 구분
+	
 	public LoginMemberInfo(int my_no, String my_id, String my_name, String my_mail, Boolean isMng) {
 		super();
 		this.my_no = my_no;

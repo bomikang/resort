@@ -40,7 +40,7 @@ public class BookDao {
 			StructureDao sDao = StructureDao.getInstance();
 			while(rs.next()){
 				Book book = new Book();
-				book.setNo(rs.getInt("bk_no"));								//예약번호
+				book.setNo(rs.getString("bk_no"));							//예약번호
 				book.setRegDate(rs.getTimestamp("bk_regdate"));				//예약날짜
 				book.setStartDate(rs.getTimestamp("bk_startdate"));			//숙박시작날짜
 				book.setEndDate(rs.getTimestamp("bk_enddate"));				//숙박끝날짜
@@ -102,7 +102,7 @@ public class BookDao {
 			
 			while(rs.next()){
 				Book book = new Book();
-				book.setNo(rs.getInt("bk_no"));								//예약번호
+				book.setNo(rs.getString("bk_no"));							//예약번호
 				book.setRegDate(rs.getTimestamp("bk_regdate"));				//예약날짜
 				book.setStartDate(rs.getTimestamp("bk_startdate"));			//숙박시작날짜
 				book.setEndDate(rs.getTimestamp("bk_enddate"));				//숙박끝날짜
@@ -134,21 +134,21 @@ public class BookDao {
 	/**
 	 * 예약번호를 바탕으로 예약내역을 조회하여 Book객체를 반환해 주는 Method
 	 * */
-	public Book selectByNo(Connection conn, int no)throws SQLException{		
+	public Book selectByNo(Connection conn, String no)throws SQLException{		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try{
 			String sql = "select * from resort.book where bk_no = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, no);
+			pstmt.setString(1, no);
 			rs = pstmt.executeQuery();
 			MemberDao mDao = MemberDao.getInstance();
 			StructureDao sDao = StructureDao.getInstance();
 			
 			if(rs.next()){
 				Book book = new Book();
-				book.setNo(rs.getInt("bk_no"));								//예약번호
+				book.setNo(rs.getString("bk_no"));								//예약번호
 				book.setRegDate(rs.getTimestamp("bk_regdate"));				//예약날짜
 				book.setStartDate(rs.getTimestamp("bk_startdate"));			//숙박시작날짜
 				book.setEndDate(rs.getTimestamp("bk_enddate"));				//숙박끝날짜
@@ -191,7 +191,7 @@ public class BookDao {
 			
 			if(rs.next()){
 				Book book = new Book();
-				book.setNo(rs.getInt("bk_no"));								//예약번호
+				book.setNo(rs.getString("bk_no"));								//예약번호
 				book.setRegDate(rs.getTimestamp("bk_regdate"));				//예약날짜
 				book.setStartDate(rs.getTimestamp("bk_startdate"));			//숙박시작날짜
 				book.setEndDate(rs.getTimestamp("bk_enddate"));				//숙박끝날짜
@@ -225,7 +225,7 @@ public class BookDao {
 		PreparedStatement pstmt = null;
 		
 		try{
-			String sql = "insert into resort.`book`(bk_mem, bk_str, bk_regdate, bk_startdate, bk_enddate, bk_state, bk_tel)"
+			String sql = "insert into resort.`book`(bk_mem, bk_str, bk_regdate, bk_startdate, bk_enddate, bk_state, bk_tel, bk_no)"
 							+"values(?, ?, ?, ?, ?, '입금대기', ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, book.getMem().getNo());
@@ -234,6 +234,7 @@ public class BookDao {
 			pstmt.setString(4, book.getStartDateForm());
 			pstmt.setString(5, book.getEndDateForm());
 			pstmt.setString(6, book.getTel());
+			pstmt.setString(7, book.getNoForm());
 			
 			pstmt.executeUpdate();			
 		}finally {
@@ -250,7 +251,7 @@ public class BookDao {
 			String sql = "update resort.book set bk_state = ? where bk_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, book.getState());
-			pstmt.setInt(2, book.getNo());
+			pstmt.setString(2, book.getNo());
 			
 			pstmt.executeUpdate();			
 		}finally {
@@ -268,7 +269,7 @@ public class BookDao {
 			String sql = "update resort.book set bk_state = '예약취소', bk_canceldate = ? where bk_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setTimestamp(1, new Timestamp(book.getCancelDate().getTime()));
-			pstmt.setInt(2, book.getNo());
+			pstmt.setString(2, book.getNo());
 			
 			pstmt.executeUpdate();			
 		}finally {
