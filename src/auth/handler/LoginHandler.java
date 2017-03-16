@@ -36,6 +36,9 @@ public class LoginHandler implements CommandHandler {
 				if(!member.matchPassword(password)){ // 패스워드가 틀렸을경우
 					req.setAttribute("notPass",true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
+				}if(member.getPassword() == null){
+					req.setAttribute("outPass", true);
+					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu"; 
 				}
 			
 				

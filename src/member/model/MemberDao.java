@@ -161,7 +161,35 @@ public class MemberDao {
 			
 		}
 	}
-	
+	// 이부장 요청
+	public Member selectByNo(Connection conn, int no) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			String sql = "select * from member where mem_no =?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			Member member= null;
+			//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng
+			if(rs.next()){
+				member = new Member(
+						rs.getInt("mem_no"),
+						rs.getString("mem_id"),
+						rs.getString("mem_pwd"),
+						rs.getString("mem_name"),
+						rs.getString("mem_mail"),
+						rs.getString("mem_tel"),
+						rs.getDate("mem_regdate"),
+						rs.getDate("mem_outdate"),
+						rs.getBoolean("mem_ismng"));
+			}
+			return member;
+		}finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
 	
 	
 	/*public int updatePwd(Connection conn, Member member) throws SQLException{

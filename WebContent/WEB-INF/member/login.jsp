@@ -38,6 +38,9 @@ fieldset{
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/common.js"></script>
+<script type="text/javascript">
+
+</script>
 <body>
 <div id="title">
 		<h1> 로그인 </h1>
@@ -57,7 +60,9 @@ fieldset{
 			</p>
 			<p>
 				<label>비밀번호 : </label>  <input type="password" name="password" id="password" placeholder="비밀번호" > 
-				 <span class="error">비밀번호를 입력하세요</span>
+				 <c:if test="${outPass }">
+				<span class="error">비밀번호가 틀렸습니다.</span>
+				</c:if>
 				<c:if test="${notPass }">
 				<span class="error">비밀번호가 틀렸습니다.</span>
 				</c:if>
