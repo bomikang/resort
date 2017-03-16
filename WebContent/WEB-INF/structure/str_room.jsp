@@ -105,11 +105,13 @@
 		<p>등록된 방이 없습니다</p>
 	</c:if>
 	<c:if test="${strList.size() > 0}">
-		<ul class="room_menu">
-			<c:forEach var="rooms" items="${strList}">
-				<li><a href="#">${rooms.name}<span class="str_no" style="display:none;">${rooms.no}</span></a></li>
-			</c:forEach>
-		</ul>
+		<c:if test="${param.houseId == 1 or param.houseId == null}"> <!-- 숲속의 집 -->
+			<ul class="room_menu">
+				<c:forEach var="rooms" items="${strList}">
+					<li><a href="#">${rooms.name}<span class="str_no" style="display:none;">${rooms.no}</span></a></li>
+				</c:forEach>
+			</ul>
+		</c:if>
 		<p id="bigImage">
 			<!-- bigImage -->
 		</p>

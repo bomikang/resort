@@ -23,15 +23,16 @@ public class StructureDao {
 		PreparedStatement pstmt = null;
 		
 		//집이름, 수용인원, 가격, 옵션, 사진경로
-		String sql = "insert into structure(str_name, str_people, str_price, str_option, str_image) values(?, ?, ?, ?, ?)";
+		String sql = "insert into structure(str_id, str_name, str_people, str_price, str_option, str_image) values(?, ?, ?, ?, ?, ?)";
 		
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, str.getName());
-			pstmt.setInt(2, str.getPeople());
-			pstmt.setInt(3, str.getPrice());
-			pstmt.setString(4, str.getOption());
-			pstmt.setString(5, str.getImage()); //multiple file
+			pstmt.setInt(1, str.getId());
+			pstmt.setString(2, str.getName());
+			pstmt.setInt(3, str.getPeople());
+			pstmt.setInt(4, str.getPrice());
+			pstmt.setString(5, str.getOption());
+			pstmt.setString(6, str.getImage()); //multiple file
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -53,14 +54,7 @@ public class StructureDao {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				int no = rs.getInt("str_no");
-				String name = rs.getString("str_name");
-				int people = rs.getInt("str_people");
-				int price = rs.getInt("str_price");
-				String option = rs.getString("str_option");
-				String image = rs.getString("str_image");
-				
-				Structure structure = new Structure(no, name, people, price, option, image); 
+				Structure structure = createStructure(rs);
 				
 				list.add(structure);
 			}
@@ -73,29 +67,22 @@ public class StructureDao {
 		return list;
 	}
 	
+
 	/* select all structure by name and people (~집으로 끝나면 숲속의 집으로 지정) */
-	public List<Structure> selectAllStrByNameAndPeople(Connection con, int peopleCnt){
+	public List<Structure> selectAllStrByIdAndPeople(Connection con, int houseId, int peopleCnt){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Structure> list = new ArrayList<>();
 		
 		try {
-			if (peopleCnt == 0) peopleCnt = 4; //시설 현황 처음 눌렀을 때
-			
-			pstmt = con.prepareStatement("select * from structure where str_people=?");
-			pstmt.setInt(1, peopleCnt);
+			pstmt = con.prepareStatement("select * from structure where str_id = ? and str_people=?");
+			pstmt.setInt(1, houseId);
+			pstmt.setInt(2, peopleCnt);
 			
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				int no = rs.getInt("str_no");
-				String name = rs.getString("str_name");
-				int people = rs.getInt("str_people");
-				int price = rs.getInt("str_price");
-				String option = rs.getString("str_option");
-				String image = rs.getString("str_image");
-				
-				Structure structure = new Structure(no, name, people, price, option, image); 
+				Structure structure = createStructure(rs);
 				
 				list.add(structure);
 			}
@@ -121,14 +108,7 @@ public class StructureDao {
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
-				int no = rs.getInt("str_no");
-				String name = rs.getString("str_name");
-				int people = rs.getInt("str_people");
-				int price = rs.getInt("str_price");
-				String option = rs.getString("str_option");
-				String image = rs.getString("str_image");
-				
-				structure = new Structure(no, name, people, price, option, image);
+				structure = createStructure(rs);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -138,5 +118,18 @@ public class StructureDao {
 		}
 		
 		return structure;
+	}
+	
+	//method
+	private Structure createStructure(ResultSet rs) throws SQLException {
+		int no = rs.getInt("str_no");
+		int id = rs.getInt("str_id");
+		String name = rs.getString("str_name");
+		int people = rs.getInt("str_people");
+		int price = rs.getInt("str_price");
+		String option = rs.getString("str_option");
+		String image = rs.getString("str_image");
+		
+		return new Structure(no, id, name, people, price, option, image);
 	}
 }

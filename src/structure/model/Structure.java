@@ -2,6 +2,7 @@ package structure.model;
 
 public class Structure {
 	private int no;
+	private int id;
 	private String name;
 	private int people;
 	private int price;
@@ -11,8 +12,9 @@ public class Structure {
 	
 	public Structure() {}
 
-	public Structure(int no, String name, int people, int price, String option, String image) {
+	public Structure(int no, int id, String name, int people, int price, String option, String image) {
 		this.no = no;
+		this.id = id;
 		this.name = name;
 		this.people = people;
 		this.price = price;
@@ -26,6 +28,14 @@ public class Structure {
 
 	public void setNo(int no) {
 		this.no = no;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
