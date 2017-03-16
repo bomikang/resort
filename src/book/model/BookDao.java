@@ -56,7 +56,7 @@ public class BookDao {
 				int strNo = rs.getInt("bk_str");
 				
 				
-				book.setMem(mDao.selectById(conn, memNo));
+				book.setMem(mDao.selectByNo(conn, memNo));
 				book.setStr(sDao.getStructureByNo(conn, strNo));			
 				
 				bList.add(book);
@@ -118,7 +118,7 @@ public class BookDao {
 				int strNo = rs.getInt("bk_str");
 				
 				
-				book.setMem(mDao.selectById(conn, memNo));
+				book.setMem(mDao.selectByNo(conn, memNo));
 				book.setStr(sDao.getStructureByNo(conn, strNo));		
 				
 				bList.add(book);
@@ -164,7 +164,7 @@ public class BookDao {
 				int strNo = rs.getInt("bk_str");
 				
 				
-				book.setMem(mDao.selectById(conn, memNo));
+				book.setMem(mDao.selectByNo(conn, memNo));
 				book.setStr(sDao.getStructureByNo(conn, strNo));				
 				return book;
 			}
@@ -207,7 +207,7 @@ public class BookDao {
 				int strNo = rs.getInt("bk_str");
 				
 				
-				book.setMem(mDao.selectById(conn, memNo));
+				book.setMem(mDao.selectByNo(conn, memNo));
 				book.setStr(sDao.getStructureByNo(conn, strNo));
 				
 				return book;
