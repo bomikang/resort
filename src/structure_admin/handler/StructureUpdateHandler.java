@@ -39,11 +39,12 @@ public class StructureUpdateHandler implements CommandHandler {
 			}
 			return "index.jsp?page=/WEB-INF/structure_admin/str_room_de&menu=/WEB-INF/structure/str_menu";
 		} else {
-			return postProcess(req, res);
+			postProcess(req, res);
+			return "structureList.do";
 		}
 	}
 
-	private String postProcess(HttpServletRequest req, HttpServletResponse res) {
+	private void postProcess(HttpServletRequest req, HttpServletResponse res) {
 		String uploadPath = req.getRealPath("Structure_Images"); //파일 들어갈 폴더 명(프로젝트 안 upload폴더) => 서버에 저장
 		
 		File dir = new File(uploadPath);
@@ -96,7 +97,6 @@ public class StructureUpdateHandler implements CommandHandler {
 		}finally {
 			JdbcUtil.close(con);			
 		}
-		return "structureList.do";
 	}
 
 }

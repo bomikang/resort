@@ -97,20 +97,24 @@
 </script>
 </head>
 <body>
-	<a href="structure.do?people=4">4인실</a>
-	<a href="structure.do?people=6">6인실</a>
-	<a href="structure.do?people=8">8인실</a>
-	
 	<c:if test="${strList.size() == 0}">
 		<p>등록된 방이 없습니다</p>
 	</c:if>
 	<c:if test="${strList.size() > 0}">
 		<c:if test="${param.houseId == 1 or param.houseId == null}"> <!-- 숲속의 집 -->
+			<a href="structure.do?people=4">4인실</a>
+			<a href="structure.do?people=6">6인실</a>
+			<a href="structure.do?people=8">8인실</a>
 			<ul class="room_menu">
 				<c:forEach var="rooms" items="${strList}">
 					<li><a href="#">${rooms.name}<span class="str_no" style="display:none;">${rooms.no}</span></a></li>
 				</c:forEach>
 			</ul>
+		</c:if>
+		<c:if test="${param.houseId == 2}">
+			<a href="structure.do?people=4&houseId=2">4인실</a>
+			<a href="structure.do?people=8&houseId=2">8인실</a>
+			<a href="structure.do?people=12&houseId=2">12인실</a>
 		</c:if>
 		<p id="bigImage">
 			<!-- bigImage -->
