@@ -70,7 +70,6 @@ $(function(){
 	});
 	
 });
-
 </script>
 </head>
 <body>
