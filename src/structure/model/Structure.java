@@ -79,6 +79,16 @@ public class Structure {
 	}
 
 	public String getWidth() {
+		switch (people) {
+		case 4:
+			width = "26.44㎡"; break;
+		case 6:
+			width = "39.66㎡"; break;
+		case 8:
+			width = "46.27㎡"; break;
+		case 12:
+			width = "80㎡"; break;
+		}
 		return width;
 	}
 
