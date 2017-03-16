@@ -1,7 +1,6 @@
 package member.model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,13 +70,13 @@ public class MemberDao {
 			
 		}
 	}
-	public Member selectById(Connection conn, int no) throws SQLException{
+	public Member selectById(Connection conn, String id) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
-			String sql = "select * from member where mem_no =?";
+			String sql = "select * from member where mem_id =?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, no);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			Member member= null;
 			//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng
@@ -99,6 +98,34 @@ public class MemberDao {
 			JdbcUtil.close(pstmt);
 		}
 	}
+	public Member selectOutdateIs(Connection conn,String id) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			String sql = "select * from member where mem_id =? and mem_outdate is null;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			Member member = null;
+			if(rs.next()){
+				member = new Member(
+						rs.getInt("mem_no"),
+						rs.getString("mem_id"),
+						rs.getString("mem_pwd"),
+						rs.getString("mem_name"),
+						rs.getString("mem_mail"),
+						rs.getString("mem_tel"),
+						rs.getDate("mem_regdate"),
+						rs.getDate("mem_outdate"),
+						rs.getBoolean("mem_ismng"));
+			}
+			return member;
+		}finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+
 	public List<Member> listAll(Connection conn)throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -134,6 +161,9 @@ public class MemberDao {
 			
 		}
 	}
+	
+	
+	
 	/*public int updatePwd(Connection conn, Member member) throws SQLException{
 		PreparedStatement pstmt = null;	
 		try {

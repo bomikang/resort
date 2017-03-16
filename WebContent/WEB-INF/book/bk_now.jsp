@@ -143,14 +143,14 @@
 								if((k+1)==endDate.getDate()){
 									index++;
 								}
-								dateForm += "<td><a href='#' class='noBooked'>O</a></td>";
+								dateForm += "<td><a href='#' class='noBooked'><input type='hidden' value='"+names[j].no+"'>O</a></td>";
 							}							
 						}else{ 
-							dateForm += "<td><a href='#' class='noBooked'>O</a></td>";
+							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' value='"+names[j].no+"'>O</a></td>";
 						} 						
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
-						dateForm += "<td><a href='#' class='noBooked'>O</a></td>";
+						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' value='"+names[j].no+"'>O</a></td>";
 					}
 				}
 			}
