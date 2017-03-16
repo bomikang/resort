@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,20 +14,41 @@
 </head>
 <body>
 	<c:if test="${strList.size() == 0}">
-		<p>등록된 숙박 시설이 없음</p>
+		<p>등록된 숙박 시설이 없습니다.</p>
 	</c:if>
 	<c:if test="${strList.size() > 0}">
 		<table>
+			<caption>시설구분번호별 시설이름</caption>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+			</tr>
+			<tr>
+				<td>숲속의집</td>
+				<td>산림휴양관</td>
+				<td>캐라반</td>
+				<td>돔하우스</td>
+			</tr>
+		</table>
+		<table>
+			<caption></caption>
 			<tr>
 				<th>시설번호</th>
-				<th>시설이름</th>
+				<th>시설구분</th>
+				<th>호수(방이름)</th>
 				<th>수용인원</th>
+				<th>가격</th>
 			</tr>
-			<c:forEach var="list" items="${strList }">
+			<c:forEach var="list" items="${strList}">
 				<tr>
 					<td>${list.no}</td>
-					<td>${list.name}</td>
+					<td>${list.id}</td>
+					<td><a href="structureUpdate.do?no=${list.no}">${list.name}</a></td>
 					<td>${list.people}</td>
+					<td><fmt:formatNumber value="${list.price}" pattern="#,###" /></td>
+					
 				</tr>
 			</c:forEach>
 		</table>

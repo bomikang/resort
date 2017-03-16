@@ -49,7 +49,7 @@ public class StructureDao {
 		List<Structure> list = new ArrayList<>();
 		
 		try {
-			pstmt = con.prepareStatement("select * from structure");
+			pstmt = con.prepareStatement("select * from structure order by str_id asc ,str_no asc");
 			
 			rs = pstmt.executeQuery();
 			
@@ -68,14 +68,14 @@ public class StructureDao {
 	}
 	
 
-	/* select all structure by name and people (~집으로 끝나면 숲속의 집으로 지정) */
+	/* select all structure by name and people */
 	public List<Structure> selectAllStrByIdAndPeople(Connection con, int houseId, int peopleCnt){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Structure> list = new ArrayList<>();
 		
 		try {
-			pstmt = con.prepareStatement("select * from structure where str_id = ? and str_people=?");
+			pstmt = con.prepareStatement("select * from structure where str_id = ? and str_people=? order by str_name asc");
 			pstmt.setInt(1, houseId);
 			pstmt.setInt(2, peopleCnt);
 			
@@ -93,6 +93,29 @@ public class StructureDao {
 			JdbcUtil.close(pstmt);
 		}
 		return list;
+	}
+	
+	/* update structure */
+	public void updateStructure(Connection con, Structure str){
+		PreparedStatement pstmt = null;
+		
+		String sql = "update structure set str_id=?, str_name=?, str_people=?, str_price=?, str_option=?, str_image=? where str_no=?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, str.getId());
+			pstmt.setString(2, str.getName());
+			pstmt.setInt(3, str.getPeople());
+			pstmt.setInt(4, str.getPrice());
+			pstmt.setString(5, str.getOption());
+			pstmt.setString(6, str.getImage());
+			pstmt.setInt(7, str.getNo());
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcUtil.close(pstmt);
+		}
 	}
 	
 	/* get structure by no */

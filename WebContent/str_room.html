@@ -1,62 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
+<style>
+	.room_menu li{display: inline-block; border:1px solid black;}
+</style>
 <script>
-	$(function(){
+	/* bxSlider 적용 함수 */
+	function gallery(showImages){
+		$("#bigImage").html("<img src='"+showImages[0]+"'>"); //큰이미지
 		
+		var slideImage = "<div class='sliderImages'>";
+		
+		for (var i = 0; i < showImages.length; i++) {
+			slideImage += "<div class='slide'>";
+			slideImage += "<img src='"+showImages[i]+"'>";
+			slideImage += "</div>";
+		}
+		
+		$("#slideGallery").html(slideImage);
+		
+		
+	}
+	
+
+	$(function(){
+		$('.sliderImages').bxSlider({
+			slideWidth : 200,
+			minSlides : 1,
+			maxSlides : 3,
+			slideMargin : 10
+		});
 	});
 </script>
 </head>
 <body>
-	<fieldset>
-			<legend>숙박 시설 등록</legend>
-			
-			<p>
-				<label for="">시설 이름</label><br />
-				<input type="radio" name="strGroup" value="1" />숲속의집
-				<input type="radio" name="strGroup" value="2" />산림휴양관
-				<input type="radio" name="strGroup" value="3" />캐라반
-				<input type="radio" name="strGroup" value="4" />돔하우스
-			</p>
-			
-			<p>
-				<label for="">호수(숲속의 집은 방 이름을 입력해주세요.)</label><br />
-				<input type="text" name="name" id="name"/>
-			</p>
-			
-			<p>
-				<label for="">면적<small>(㎡)</small></label><br />
-				<input type="text" name="width" placeholder="ex) 26.44" />
-			</p>
-			
-			<p>
-				<label for="">가격</label><br />
-				<input type="text" name="price" placeholder="ex) 90000"/>
-			</p>
-			
-			<p>
-				<label for="">옵션</label><br />
-				<input type="text" name="option" />
-			</p>
-			
-			<p>
-				<label for="">대표사진</label><br />
-				<input type="file" name="repImage" id="repImage"/>
-			</p>
-			
-			<p>
-				<label for="">내부사진</label><br />
-				<input type="file" name="innerImage" id="innerImage" multiple/><br>
-			</p>
-			<p>
-				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
-				<input type="submit" value="등록하기" id="btnAddStr"/>
-			</p>
-		</fieldset>
-		
-		<p id="test"></p>
+	<div class="sliderImages">
+		<div class="slide">
+			<img src="image/arround/01market.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+		<div class="slide">
+			<img src="image/arround/02exercise.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+		<div class="slide">
+			<img src="image/arround/03square.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+		<div class="slide">
+			<img src="image/arround/04valley.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+		<div class="slide">
+			<img src="image/arround/05field.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+		<div class="slide">
+			<img src="image/arround/06pool.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+		<div class="slide">
+			<img src="image/arround/07kids_area.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+		<div class="slide">
+			<img src="image/arround/08pond.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+		<div class="slide">
+			<img src="image/arround/09mineral.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+		<div class="slide">
+			<img src="image/arround/10soccer.jpg" alt="" />
+			<span>aaa</span>
+		</div>
+	</div>
 </body>
 </html>
