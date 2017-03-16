@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+	$(function(){
+		
+	});
+</script>
+</head>
+<body>
+	<fieldset>
+			<legend>숙박 시설 등록</legend>
+			
+			<p>
+				<label for="">시설 이름</label><br />
+				<input type="radio" name="strGroup" value="1" />숲속의집
+				<input type="radio" name="strGroup" value="2" />산림휴양관
+				<input type="radio" name="strGroup" value="3" />캐라반
+				<input type="radio" name="strGroup" value="4" />돔하우스
+			</p>
+			
+			<p>
+				<label for="">호수(숲속의 집은 방 이름을 입력해주세요.)</label><br />
+				<input type="text" name="name" id="name"/>
+			</p>
+			
+			<p>
+				<label for="">면적<small>(㎡)</small></label><br />
+				<input type="text" name="width" placeholder="ex) 26.44" />
+			</p>
+			
+			<p>
+				<label for="">가격</label><br />
+				<input type="text" name="price" placeholder="ex) 90000"/>
+			</p>
+			
+			<p>
+				<label for="">옵션</label><br />
+				<input type="text" name="option" />
+			</p>
+			
+			<p>
+				<label for="">대표사진</label><br />
+				<input type="file" name="repImage" id="repImage"/>
+			</p>
+			
+			<p>
+				<label for="">내부사진</label><br />
+				<input type="file" name="innerImage" id="innerImage" multiple/><br>
+			</p>
+			<p>
+				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
+				<input type="submit" value="등록하기" id="btnAddStr"/>
+			</p>
+		</fieldset>
+		
+		<p id="test"></p>
+</body>
+</html>
