@@ -23,15 +23,16 @@ public class StructureDao {
 		PreparedStatement pstmt = null;
 		
 		//집이름, 수용인원, 가격, 옵션, 사진경로
-		String sql = "insert into structure(str_name, str_people, str_price, str_option, str_image) values(?, ?, ?, ?, ?)";
+		String sql = "insert into structure(str_id, str_name, str_people, str_price, str_option, str_image) values(?, ?, ?, ?, ?, ?)";
 		
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, str.getName());
-			pstmt.setInt(2, str.getPeople());
-			pstmt.setInt(3, str.getPrice());
-			pstmt.setString(4, str.getOption());
-			pstmt.setString(5, str.getImage()); //multiple file
+			pstmt.setInt(1, str.getId());
+			pstmt.setString(2, str.getName());
+			pstmt.setInt(3, str.getPeople());
+			pstmt.setInt(4, str.getPrice());
+			pstmt.setString(5, str.getOption());
+			pstmt.setString(6, str.getImage()); //multiple file
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
