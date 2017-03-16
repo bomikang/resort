@@ -54,7 +54,7 @@
 	
 	/* bxSlider 적용 함수 */
 	function gallery(showImages){
-		$("#bigImage").html("<img src='"+showImages[0]+"'>"); //큰이미지
+		$(".bigImage").html("<img src='"+showImages[0]+"'>"); //큰이미지
 		
 		var slideImage = "<div class='sliderImages'>";
 		
@@ -91,7 +91,7 @@
 		});
 		
 		$(document).on("click", ".sliderImages .slide img", function() {
-			$("#bigImage img").attr("src", $(this).attr("src"));
+			$(".bigImage img").attr("src", $(this).attr("src"));
 		});
 	});
 </script>
@@ -116,7 +116,7 @@
 			<a href="structure.do?people=8&houseId=2">8인실</a>
 			<a href="structure.do?people=12&houseId=2">12인실</a>
 		</c:if>
-		<p id="bigImage">
+		<p class="bigImage">
 			<!-- bigImage -->
 		</p>
 		<p id="slideGallery">

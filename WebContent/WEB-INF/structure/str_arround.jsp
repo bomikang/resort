@@ -41,14 +41,14 @@
 		});
 		
 		$(document).on("click", ".sliderImages .slide img", function() {
-			$("#bigImage img").attr("src", $(this).attr("src"));
+			$(".bigImage img").attr("src", $(this).attr("src"));
 		});
 	});
 </script>
 </head>
 <body>
-	<p id="bigImage">
-			<!-- bigImage -->
+	<p class="bigImage">
+		<img src="image/arround/01market.jpg" alt="" />
 	</p>
 	<div class="sliderImages">
 		<div class="slide">

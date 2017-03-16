@@ -98,7 +98,7 @@
 				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
 				<input type="hidden" name="strNo" value="${structure.no}"/>
 				<input type="submit" value="수정하기" id="btnUpdateStr"/>
-				<input type="button" value="돌아가기" id="btnBack"/>
+				<input type="button" value="돌아가기" id="btnBack" onclick="history.go(-1)"/>
 			</p>
 		</fieldset>
 	</form>
