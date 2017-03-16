@@ -52,7 +52,10 @@ fieldset{
 			<p>
 				<label>아이디 : </label>  <input type="text" name="id" id="id" placeholder="아이디" > 
 				<c:if test="${notJoin }">
-				<span class="error">아이디가 없습니다.</span>
+				<span class="error">아이디가  틀렸습니다.</span>
+				</c:if>
+				<c:if test="${outId }">
+				<span class="error">아이디를 입력하세요.</span>
 				</c:if>
 				<c:if test="${no_member }">
 				<span class="error">탈퇴한 회원의 아이디입니다.</span>
@@ -61,7 +64,7 @@ fieldset{
 			<p>
 				<label>비밀번호 : </label>  <input type="password" name="password" id="password" placeholder="비밀번호" > 
 				 <c:if test="${outPass }">
-				<span class="error">비밀번호가 틀렸습니다.</span>
+				<span class="error">비밀번호를 입력하세요.</span>
 				</c:if>
 				<c:if test="${notPass }">
 				<span class="error">비밀번호가 틀렸습니다.</span>
