@@ -69,16 +69,15 @@ public class StructureDao {
 	
 
 	/* select all structure by name and people (~집으로 끝나면 숲속의 집으로 지정) */
-	public List<Structure> selectAllStrByNameAndPeople(Connection con, int peopleCnt){
+	public List<Structure> selectAllStrByIdAndPeople(Connection con, int houseId, int peopleCnt){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Structure> list = new ArrayList<>();
 		
 		try {
-			if (peopleCnt == 0) peopleCnt = 4; //시설 현황 처음 눌렀을 때
-			
-			pstmt = con.prepareStatement("select * from structure where str_people=?");
-			pstmt.setInt(1, peopleCnt);
+			pstmt = con.prepareStatement("select * from structure where str_id = ? and str_people=?");
+			pstmt.setInt(1, houseId);
+			pstmt.setInt(2, peopleCnt);
 			
 			rs = pstmt.executeQuery();
 			

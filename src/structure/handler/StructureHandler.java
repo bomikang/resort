@@ -26,19 +26,21 @@ public class StructureHandler implements CommandHandler {
 			try {
 				con = ConnectionProvider.getConnection();
 				
-				//수용인원
-				int peopleCnt = 0;
+				int houseId = 1; //시설 구분 번호(초기 : 숲속의집)
+				if (req.getParameter("houseId") != null) {
+					houseId = Integer.parseInt(req.getParameter("houseId"));
+				}
+				
+				int peopleCnt = 4; //수용인원
 				if (req.getParameter("people") != null) {
 					peopleCnt = Integer.parseInt(req.getParameter("people"));
 				}
 				
 				StructureDao dao = StructureDao.getInstance();
-				List<Structure> list = dao.selectAllStrByNameAndPeople(con, peopleCnt); //수용인원만큼 가져옴
+				List<Structure> list = dao.selectAllStrByIdAndPeople(con, houseId, peopleCnt);
 				
 				req.setAttribute("strList", list);
-				req.setAttribute("firstRoomNo", list.get(0).getNo());
-				
-				System.out.println(req.getRealPath("Structure_Images")); //absolute path
+				req.setAttribute("firstRoomNo", list.get(0).getNo()); //ajax를 위해 필요
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally{
