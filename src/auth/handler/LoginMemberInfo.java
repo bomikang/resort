@@ -1,11 +1,11 @@
 package auth.handler;
 
-public class LoginMemberInfo { // ·Î±×ÀÎ ÀÌÈÄ ¼¼¼Ç¿¡ ³²´Â DATA µé Áß ·Î±×ÀÎ ÇÑ °³ÀÎÀÇ Á¤º¸¸¦ °¡Áö°í ÀÖÀ½
+public class LoginMemberInfo { // ë¡œê·¸ì¸ ì´í›„ ì„¸ì…˜ì— ë°ì´í„° ë‚¨ê¸°ëŠ” ê°œì¸ì •ë³´ í´ë˜ìŠ¤
 	private int my_no;
 	private String my_id;
 	private String my_name;
 	private String my_mail;
-	private Boolean isMng; // °ü¸®ÀÚÀÎÁö ±¸ºĞ
+	private Boolean isMng; // ê´€ë¦¬ì ìœ ë¬´íŒë‹¨
 	
 	public LoginMemberInfo(int my_no, String my_id, String my_name, String my_mail, Boolean isMng) {
 		super();

@@ -11,19 +11,11 @@ public class LogOutHandler implements CommandHandler{
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 	
-		//getSession(true) : ¼¼¼ÇÀÌ ÀÌ¹Ì ÀÖ´Â È®ÀÎÀ» ÇÏ¿©, 
-							//ÀÌ¹Ì ÀÖ´Ù¸é ±× ¼¼¼ÇÀ» ¹İÈ¯½ÃÅ°°í , ¾øÀ¸¸é »õ·Î¿î ¼¼¼ÇÀ» »ı¼ºÇÑ´Ù.
-		//getSession(false) : ¼¼¼ÇÀÌ ÀÖ´Ù¸é ±× ¼¼¼ÇÀ» ¸®ÅÏÇÏÁö¸¸
-		//						¼¼¼ÇÀÌ Á¸ÀçÇÏÁö ¾Ê´Â´Ù¸é nullÀ» ¸®ÅÏÇÑ´Ù.
-		HttpSession session = req.getSession(false);
-		if(session != null){
 			
-			session.invalidate(); // session »èÁ¦
-			res.setHeader("Cache-Control","no-store");
-			res.setHeader("Pragma", "no-cache");
-			res.setDateHeader("Expires", 0);
-			if(req.getProtocol().equals("HTTP/1.1"))
-				res.setHeader("Cache-Control", "no-cache");	
+		HttpSession session = req.getSession(false); // ì„¸ì…˜ê°’ì´ ì—†ìœ¼ë©´ null ê°’ì„ ë°˜í™˜
+		if(session != null){ // ì„¸ì…˜ì˜ ë°ì´í„°ê°€ ì—†ì„ê²½ìš°
+			
+			session.invalidate(); // ì„¸ì…˜ ì‚­ì œ
 			
 			
 		}

@@ -161,7 +161,7 @@ public class MemberDao {
 			
 		}
 	}
-	// ÀÌºÎÀå ¿äÃ»
+	// ìœ ì§„ì”¨ ìš”ì²­ ë©”ì„œë“œ
 	public Member selectByNo(Connection conn, int no) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
