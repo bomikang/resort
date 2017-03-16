@@ -42,7 +42,15 @@
 			<legend>숙박 시설 등록</legend>
 			
 			<p>
-				<label for="">숙박 시설 이름</label><br />
+				<label for="">시설 이름</label><br />
+				<input type="radio" name="strId" value="1" />숲속의집
+				<input type="radio" name="strId" value="2" />산림휴양관
+				<input type="radio" name="strId" value="3" />캐라반
+				<input type="radio" name="strId" value="4" />돔하우스
+			</p>
+			
+			<p>
+				<label for="">호수(숲속의 집은 방 이름을 입력해주세요.)</label><br />
 				<input type="text" name="name" id="name"/>
 			</p>
 			

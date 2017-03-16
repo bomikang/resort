@@ -64,13 +64,14 @@ public class StructureUploadHandler implements CommandHandler {
 			System.out.println(uploadPath);
 			
 			/* =====DB 저장 시작===== */
-			String name = multi.getParameter("name");
+			int id = Integer.parseInt(multi.getParameter("strId")); //시설 구분
+			String name = multi.getParameter("name"); //호수 또는 방이름
 			int people = Integer.parseInt(multi.getParameter("people"));
 			int price = Integer.parseInt(multi.getParameter("price"));
 			String option = multi.getParameter("option");
 			String setDbImage = multi.getParameter("setDbImage");
 			
-			Structure str = new Structure(0, name, people, price, option, setDbImage);
+			Structure str = new Structure(0, id, name, people, price, option, setDbImage);
 			
 			StructureDao dao = StructureDao.getInstance();
 			dao.insertStructure(con, str);

@@ -26,22 +26,6 @@ public class StructureHandler implements CommandHandler {
 			try {
 				con = ConnectionProvider.getConnection();
 				
-				switch (req.getParameter("house")) {
-				case "forest":
-					
-					break;
-				case "culture":
-					break;
-				case "mountain":
-					break;
-				case "wellbeing":
-					break;
-				case "caraban":
-					break;
-				case "dome":
-					break;
-				}
-				
 				//수용인원
 				int peopleCnt = 0;
 				if (req.getParameter("people") != null) {

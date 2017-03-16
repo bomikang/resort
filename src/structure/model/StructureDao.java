@@ -53,14 +53,7 @@ public class StructureDao {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				int no = rs.getInt("str_no");
-				String name = rs.getString("str_name");
-				int people = rs.getInt("str_people");
-				int price = rs.getInt("str_price");
-				String option = rs.getString("str_option");
-				String image = rs.getString("str_image");
-				
-				Structure structure = new Structure(no, name, people, price, option, image); 
+				Structure structure = createStructure(rs);
 				
 				list.add(structure);
 			}
@@ -73,6 +66,7 @@ public class StructureDao {
 		return list;
 	}
 	
+
 	/* select all structure by name and people (~집으로 끝나면 숲속의 집으로 지정) */
 	public List<Structure> selectAllStrByNameAndPeople(Connection con, int peopleCnt){
 		PreparedStatement pstmt = null;
@@ -88,14 +82,7 @@ public class StructureDao {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				int no = rs.getInt("str_no");
-				String name = rs.getString("str_name");
-				int people = rs.getInt("str_people");
-				int price = rs.getInt("str_price");
-				String option = rs.getString("str_option");
-				String image = rs.getString("str_image");
-				
-				Structure structure = new Structure(no, name, people, price, option, image); 
+				Structure structure = createStructure(rs);
 				
 				list.add(structure);
 			}
@@ -121,14 +108,7 @@ public class StructureDao {
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
-				int no = rs.getInt("str_no");
-				String name = rs.getString("str_name");
-				int people = rs.getInt("str_people");
-				int price = rs.getInt("str_price");
-				String option = rs.getString("str_option");
-				String image = rs.getString("str_image");
-				
-				structure = new Structure(no, name, people, price, option, image);
+				structure = createStructure(rs);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -138,5 +118,18 @@ public class StructureDao {
 		}
 		
 		return structure;
+	}
+	
+	//method
+	private Structure createStructure(ResultSet rs) throws SQLException {
+		int no = rs.getInt("str_no");
+		int id = rs.getInt("str_id");
+		String name = rs.getString("str_name");
+		int people = rs.getInt("str_people");
+		int price = rs.getInt("str_price");
+		String option = rs.getString("str_option");
+		String image = rs.getString("str_image");
+		
+		return new Structure(no, id, name, people, price, option, image);
 	}
 }
