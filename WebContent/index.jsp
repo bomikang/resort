@@ -20,14 +20,21 @@
 	.wrapper{ background:url("image/bg_img7_1.jpg") no-repeat fixed center center; background-size:100% !important;}
 </style>
 <title>Insert title here</title>
-</head>
+</head>	
 <body>
 	<div class="wrapper">
 		<div class="login_area">
 			<div>
-				<p><b>곽문한</b>님 옥성자연휴양림에 오신걸 환영합니다</p>
+			<c:if test="${empty myinfo }">
+				<p><b>손님!</b> 옥성자연휴양림에 오신걸 환영합니다</p>
 				<a href="login.do">로그인</a>
 				<a href="join.do">회원가입</a>
+			</c:if>
+			<c:if test="${!empty myinfo }">
+				<p><b>${myinfo.my_name }</b> 옥성자연휴양림에 오신걸 환영합니다</p>
+				<a href="#">로그아웃</a>
+				<a href="#">회원정보</a>
+			</c:if>
 			</div>
 		</div>
 		<header class="header_menu" style="z-index:9999;">
