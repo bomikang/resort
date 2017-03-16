@@ -61,7 +61,10 @@
 		
 		$(document).on("click", ".noBooked", function(){
 			alert("예약가능합니다.");	
-			location.href="bookprocess.do";
+			var strNo = $(this).find(".strNo").val();
+			var date = $(this).find(".date").val();
+			var url="bookprocess.do?strNo="+strNo+"&date="+date;
+			location.href=url;
 		});
 		
 	});//ready
@@ -143,14 +146,14 @@
 								if((k+1)==endDate.getDate()){
 									index++;
 								}
-								dateForm += "<td><a href='#' class='noBooked'><input type='hidden' value='"+names[j].no+"'>O</a></td>";
+								dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
 							}							
 						}else{ 
-							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' value='"+names[j].no+"'>O</a></td>";
+							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
 						} 						
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
-						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' value='"+names[j].no+"'>O</a></td>";
+						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
 					}
 				}
 			}
@@ -162,6 +165,11 @@
 	}
 </script>
 <div id="bk_now">
+	<c:if test="${noStr == true }">
+		<script type="text/javascript">
+			alert("시설을 조회하는데 문제가 발생하였습니다.");
+		</script>
+	</c:if>
 	<h2 id="bkTable"></h2>
 	<div id="bookTable" >
 		
