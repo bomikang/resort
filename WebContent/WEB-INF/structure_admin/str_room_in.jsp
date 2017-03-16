@@ -48,12 +48,12 @@
 			
 			<p>
 				<label for="">수용 인원</label><br />
-				<input type="text" name="people" />
+				<input type="text" name="people" placeholder="ex) 4"/>
 			</p>
 			
 			<p>
 				<label for="">가격</label><br />
-				<input type="text" name="price" />
+				<input type="text" name="price" placeholder="ex) 90000"/>
 			</p>
 			
 			<p>

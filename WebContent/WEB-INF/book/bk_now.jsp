@@ -4,7 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 	#bk_now{width:100%;}
-	#bk_now #bookTable{width:95%; margin: 0 auto; table-layout:auto;}
+	#bk_now #bookTable{width:95%; margin: 0 auto; }
+	#bk_now #bookTable table{table-layout:auto;width:100%;}
 	#bk_now #bookTable .sun{color: red;}
 	#bk_now #bookTable .sat{color: blue;}
 </style>
@@ -90,7 +91,7 @@
 			last[1]=29;
 		}
 		
-		var dateForm = "<tr><th></th>";
+		var dateForm = "<table border='1'><tr><th></th>";
 		
 		for(var i=0;i<last[m];i++){
 			date.setDate(i+1);
@@ -155,13 +156,14 @@
 			}
 			dateForm += "</tr>";
 		}
+		dateForm += "</table>";
 		date.setDate(1);
 		$("#bookTable").prepend(dateForm);
 	}
 </script>
 <div id="bk_now">
 	<h2 id="bkTable"></h2>
-	<table id="bookTable" border="1">
+	<div id="bookTable" >
 		
-	</table>
+	</div>
 </div>

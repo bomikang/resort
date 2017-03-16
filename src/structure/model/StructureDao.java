@@ -73,6 +73,41 @@ public class StructureDao {
 		return list;
 	}
 	
+	/* select all structure by name and people (~집으로 끝나면 숲속의 집으로 지정) */
+	public List<Structure> selectAllStrByNameAndPeople(Connection con, int peopleCnt){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Structure> list = new ArrayList<>();
+		
+		try {
+			if (peopleCnt == 0) peopleCnt = 4; //시설 현황 처음 눌렀을 때
+			
+			pstmt = con.prepareStatement("select * from structure where str_people=?");
+			pstmt.setInt(1, peopleCnt);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				int no = rs.getInt("str_no");
+				String name = rs.getString("str_name");
+				int people = rs.getInt("str_people");
+				int price = rs.getInt("str_price");
+				String option = rs.getString("str_option");
+				String image = rs.getString("str_image");
+				
+				Structure structure = new Structure(no, name, people, price, option, image); 
+				
+				list.add(structure);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+		return list;
+	}
+	
 	/* get structure by no */
 	public Structure getStructureByNo(Connection con, int strNo){
 		PreparedStatement pstmt = null;

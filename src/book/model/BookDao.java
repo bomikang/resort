@@ -275,4 +275,31 @@ public class BookDao {
 			JdbcUtil.close(pstmt);
 		}
 	}//end of updateBookState
+	/**
+	 * 사용자가 선택한 시설에 원하는 기간동안 사용이 가능한지를 조회하는 메소드
+	 * 사용할 수 있는 경우 true를 반환(rs.next가 존재하지 않는 경우)
+	 * */
+	public boolean checkBookDate(Connection conn, Book book) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;		
+		try{
+			String sql = "select * from resort.book where ((bk_startdate >= ? and bk_startdate <?) or (bk_enddate>? and bk_enddate<=?)) and bk_state != '예약취소' and bk_str = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, book.getStartDateForm());
+			pstmt.setString(2, book.getEndDateForm());
+			pstmt.setString(3, book.getStartDateForm());
+			pstmt.setString(4, book.getEndDateForm());
+			pstmt.setInt(5, book.getStr().getNo());
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				return false;
+			}			
+			return true;			
+		}finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(rs);
+		}
+	}// end of checkBookDate
 }

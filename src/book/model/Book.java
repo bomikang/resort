@@ -1,6 +1,7 @@
 package book.model;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
 
@@ -98,16 +99,31 @@ public class Book {
 	}
 	/* METHODS */
 	/**
-	 * 시설 가격과 숙박 기간을 바탕으로 가격을 계산하고, 
+	 * 시설 가격과 숙박 기간을 바탕으로 총 예약 금액을 계산한다.
+	 * 주로 성수기로 분류 되는 7, 8월 그리고 금요일, 토요일에 숙박하는 경우를 성수기로 분류하고 가격 전부를 부과하고,
+	 * 그 외는 비수기로 분류하여 30%할인된 가격을 부과한다. 공휴일은 아직 적용되지 않기 때문에 공휴일은 제외하고 계산하는 메소드 
 	 * 예약된 가격을 화면에 내보낼 때 가격 형식의 String Form으로 변환하여 Return 하는 Methods 
 	 * */
 	public int getPrice(){
 		int price = this.str.getPrice();
 		int period = (int) ((endDate.getTime()-startDate.getTime())/(24*60*60*1000));
-		System.out.println(period);
+		int totalPrice = 0;
+		Calendar temp = Calendar.getInstance();
+		temp.setTime(this.startDate);
+		for(int i=0;i<period;i++){
+			if(temp.get(Calendar.MONTH)==6||temp.get(Calendar.MONTH)==7||temp.get(Calendar.DAY_OF_WEEK)==Calendar.FRIDAY||temp.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY){
+				totalPrice += price;
+			}else{
+				totalPrice += (price*0.7);
+			}
+			temp.add(Calendar.DATE, 1);
+		}
+		System.out.println("예약 기간 : "+period);
+		System.out.println("총가격 : "+totalPrice);		
 		
-		return price * period;
+		return totalPrice;
 	}
+	
 	public String getPriceForm(){
 		int totalPrice = getPrice();		
 		String priceForm = "";
