@@ -24,7 +24,7 @@
 <script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
 <style>
 	.room_menu li{display: inline-block; border:1px solid black;}
-	#room_info td, th{border:1px solid black;}
+	.room_info_area td, th{border:1px solid black;}
 </style>
 <script>
 	/* bxSlider 적용 함수 */
@@ -52,8 +52,7 @@
 	/* 방 정보 테이블 생성 */
 	function roomInfoTable(data){
 		//table 생성
-		var table = "<table><caption>"+data.nameById+" 이용안내</caption>";
-		table += "<tr>";
+		var table = "<tr>";
 			table += "<th rowspan='2'>규모</th>";
 			table += "<th rowspan='2'>수용인원</th>";
 			table += "<th rowspan='2'>사용기간</th>";
@@ -66,15 +65,16 @@
 		table += "</tr>";
 		table += "<tr>";
 			table += "<td>"+data.width+"</td>";
-			table += "<td>"+data.people+"</td>";
+			table += "<td>"+data.people+"인실</td>";
 			table += "<td>1일</td>";
 			table += "<td>"+data.originPriceToString+"</td>";
 			table += "<td>"+data.lessPriceToString+"</td>";
-			table += "<td>2대 무료 주차</td>";
+			table += "<td>무료 주차</td>";
 		table += "</tr>";
-		table += "</table>";
 		
-		$("#room_info").html(table);
+		$(".room_info_area #room_name").html(data.nameById+" 이용안내");
+		$(".room_info_area > table").html(table);
+		$(".room_info_area #furniture").html(data.option);
 	}
 	
 	function getStructures(str_no){
@@ -114,7 +114,7 @@
 		
 		$(".room_menu li a").each(function(i, obj) {
 			$(obj).click(function() {
-				str_no = $(obj).find("span").text();
+				str_no = $(obj).find("span").text(); //시설번호
 				
 				getStructures(str_no);
 			});
@@ -152,9 +152,19 @@
 		<p id="slideGallery">
 			<!-- gallery -->
 		</p>
-		<div id="room_info">
-			<!-- room info table -->
+		<div class="room_info_area">
+			<p id="room_name"></p>
+			<table></table>
+			
+			<h4>내부 시설 안내</h4>
+			<p id="furniture"></p>
+			<p id="furniture_notice">
+				※ 구비물품은 기준인원에 맞추어 구비되어 있으며 추가지급은 안됩니다. <br />
+				※ 최대인원을 초과하여서는 입실이 안되며, 애완동물(애완견) 동반시 이용 불가합니다. <br /> 
+     			이와 같은 사유로 객실을 이용하지 못할 경우 사용자 과실로 처리되며, 환불기준에 의거하여 환불되오니 이용에 착오없으시기 바랍니다.
+			</p>
 		</div>
+		
 		<div>
 			<a href="book.do">예약하기</a>
 		</div>

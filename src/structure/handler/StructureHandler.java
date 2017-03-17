@@ -31,7 +31,7 @@ public class StructureHandler implements CommandHandler {
 					houseId = Integer.parseInt(req.getParameter("houseId"));
 				}
 				
-				int peopleCnt = 4; //수용인원
+				int peopleCnt = 4; //기본 수용인원 4명
 				if (req.getParameter("people") != null) {
 					peopleCnt = Integer.parseInt(req.getParameter("people"));
 				}

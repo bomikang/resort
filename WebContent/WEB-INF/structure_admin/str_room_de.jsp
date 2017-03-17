@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+/*캐시에 Data를 남기지 않는구문(로그아웃 이후 뒤로가기 Data기록 안남기기 위해 사용)  */
+response.setHeader("cache-control","no-store");
+response.setHeader("expires","0");
+response.setHeader("pragma","no-cache");
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,22 +16,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 	$(function(){
+		//저장된 시설구분 체크 해놓기
 		switch ("${structure.id}") {
-		case "1":
-			$("input[name='strId']").eq(0).prop("checked", true);
-			break;
-		case "2":
-			$("input[name='strId']").eq(1).prop("checked", true);
-			break;
-		case "3":
-			$("input[name='strId']").eq(2).prop("checked", true);
-			break;
-		case "4":
-			$("input[name='strId']").eq(3).prop("checked", true);
-			break;
+		case "1": $("input[name='strId']").eq(0).prop("checked", true); break;
+		case "2": $("input[name='strId']").eq(1).prop("checked", true); break;
+		case "3": $("input[name='strId']").eq(2).prop("checked", true); break;
+		case "4": $("input[name='strId']").eq(3).prop("checked", true); break;
 		}
 		
 		$("#btnUpdateStr").click(function() {
+			var strIdText = "";
+			
+			switch ($("input[name='strId']").val()) {
+			case "1": strIdText = "숲속의집"; break;
+			case "2": strIdText = "산림휴양관"; break;
+			case "3": strIdText = "캐라반"; break;
+			case "4": strIdText = "돔하우스"; break;
+			}
+			
+			//confirm확인
+			var name = $("#name").val();
+			
+			var check = confirm(strIdText +"의 "+name+" 을(를) 수정하시겠습니까?");
+			 
+			if (check == false) {
+				return false;
+			}
+			
 			var repImage = document.getElementById("repImage"); //대표이미지
 			var innerImage = document.getElementById("innerImage"); //내부이미지
 			
@@ -39,14 +57,6 @@
 			}
 			
 			$("#setDbImage").val(setDbImage); //hidden에 심음
-			
-			//confirm확인
-			var name = $("#name").val();
-			var check = confirm(name +"을 수정하시겠습니까?");
-			
-			if (check == false) {
-				return false;
-			}
 		});
 	});
 </script>
@@ -97,8 +107,8 @@
 			<p>
 				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
 				<input type="hidden" name="strNo" value="${structure.no}"/>
-				<input type="submit" value="수정하기" id="btnUpdateStr"/>
-				<input type="button" value="돌아가기" id="btnBack" onclick="history.go(-1)"/>
+				<input type="submit" value="수정" id="btnUpdateStr"/>
+				<input type="button" value="돌아가기" onclick="location.replace('structureList.do')"/><!-- 취소하면 리스트로 -->
 			</p>
 		</fieldset>
 	</form>

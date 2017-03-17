@@ -47,6 +47,10 @@
 </script>
 </head>
 <body>
+	<p>
+		<img src="image/arround/arround_subject01.gif" alt="" />
+		<img src="image/arround/arround_subject02.gif" alt="" />
+	</p>
 	<p class="bigImage">
 		<img src="image/arround/01market.jpg" alt="" />
 	</p>

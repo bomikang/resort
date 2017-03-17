@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,24 @@
 				return false;
 			}
 			
+			var strIdText = "";
+			
+			switch ($("input[name='strId']").val()) {
+			case "1": strIdText = "숲속의집"; break;
+			case "2": strIdText = "산림휴양관"; break;
+			case "3": strIdText = "캐라반"; break;
+			case "4": strIdText = "돔하우스"; break;
+			}
+			
+			//confirm확인
+			var name = $("#name").val();
+			
+			var check = confirm(strIdText +"의 "+name+" 을(를) 등록하시겠습니까?");
+			 
+			if (check == false) {
+				return false;
+			}
+			
 			var repImage = document.getElementById("repImage"); //대표이미지
 			var innerImage = document.getElementById("innerImage"); //내부이미지
 			
@@ -34,13 +53,6 @@
 			
 			$("#setDbImage").val(setDbImage); //hidden에 심음
 			
-			//confirm확인
-			var name = $("#name").val();
-			var check = confirm(name +" 을 등록하시겠습니까?");
-			
-			if (check == false) {
-				return false;
-			}
 		});
 		
 	});
@@ -94,7 +106,8 @@
 			</p>
 			<p>
 				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
-				<input type="submit" value="등록하기" id="btnAddStr"/>
+				<input type="submit" value="등록" id="btnAddStr"/>
+				<input type="button" value="취소" onclick="location.replace('structureList.do')"/><!-- 취소하면 리스트로 --><!-- 취소하면 리스트로 -->
 			</p>
 		</fieldset>
 	</form>
