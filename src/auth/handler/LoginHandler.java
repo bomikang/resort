@@ -4,10 +4,10 @@ import java.sql.Connection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
+import member.handler.LoginMemberInfo;
 import member.model.Member;
 import member.model.MemberDao;
 import mvc.controller.CommandHandler;
@@ -52,7 +52,8 @@ public class LoginHandler implements CommandHandler {
 						member.getId(),
 						member.getName(),
 						member.getMail(),
-						member.getIsMng());
+						member.getIsMng(),
+						member.getTel());
 				if(myinfo.getIsMng().equals(true)){ // 관리자일 경우
 					req.getSession().setAttribute("admin",myinfo);
 				}

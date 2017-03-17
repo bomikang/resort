@@ -28,7 +28,7 @@ response.setHeader("pragma","no-cache");
 	.wrapper{ background:url("image/bg_img7_1.jpg") no-repeat fixed center center; background-size:100% !important;}
 </style>
 <title>Insert title here</title>
-</head>	
+</head>		
 <body>
 	<div class="wrapper">
 		<div class="login_area">
@@ -41,7 +41,7 @@ response.setHeader("pragma","no-cache");
 			<c:if test="${!empty myinfo }">
 				<p><b>${myinfo.my_name }</b> 옥성자연휴양림에 오신걸 환영합니다</p>
 				<a href="logout.do">로그아웃</a>
-				<a href="#">회원정보</a>
+				<a href="myinfo.do">회원정보</a>
 			</c:if>
 			</div>
 		</div>
