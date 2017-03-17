@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 	$(function(){
+	
 		setDateForm();	
 		setPriceForm();
 		
@@ -35,6 +36,8 @@
 			 return false;
 		});
 
+		
+		
 	});
 	function setPriceForm(){
 		$("#totalPrice").empty();
@@ -83,8 +86,11 @@
 </script>
 <div id="bk_book">
 	<!-- 예약폼이 들어갈 예정입니다. -->
-	<form>
+	<form action="bookprocess.do" method="post">
 		<!-- 예약정보1 - 시설정보 및 기간 설정에 따른 가격 계산 -->
+		<input type="hidden" value="${str.no }" name="strNo">
+		<input type="hidden" value="${myinfo.my_no }" name="memNo">
+		
 		<h4>예약 객실</h4>
 		<table border="1">
 			<tr>
@@ -102,8 +108,8 @@
 			<tr>
 				<th>이용 기간</th>
 				<td>
-					시작날짜 : <input type="date" readonly="readonly" id="start">
-					끝날짜 : <input type="date" readonly="readonly" id="end">
+					시작날짜 : <input type="date" readonly="readonly" id="start" name="start">
+					끝날짜 : <input type="date" readonly="readonly" id="end" name="end">
 					<select id="period">
 						<option value="1">1박2일</option>
 						<option value="2">2박3일</option>
@@ -125,27 +131,32 @@
 		<table border="1">
 			<tr>
 				<th>예약자명</th>
-				<td><input type="text" readonly="readonly" disabled="disabled" required="required"></td>
+				<td><input type="text" readonly="readonly" disabled="disabled" required="required" value="${myinfo.my_name }"></td>
 			</tr>
 			<tr>
 				<th>연락처</th>
 				<td>
-					<select>
-						<option>010</option>
-						<option>011</option>
-						<option>019</option>
-						<option>017</option>
+					<select name="bkTel1">
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="019">019</option>
+						<option value="017">017</option>
 					</select>
 					-
-					<input type="text" required="required">
+					<input type="text" required="required" name="bkTel2">
 					-
-					<input type="text" required="required">					
+					<input type="text" required="required" name="bkTel3">					
 				</td>
+				<tr>
+				<th>메일주소</th>
+				<td>
+					<input type="text" readonly="readonly" value="${myinfo.my_mail }">					
+				</td>
+				<tr>
 			</tr>
 		</table>
-		<span>*</span>
-		<input>
-		<input>
+		<input type="submit" value="예약하기">
+		<input type="reset" value = "취소하기">
 	</form>
 	<a href="book.do">[돌아가기]</a>
 </div>

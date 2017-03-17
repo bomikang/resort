@@ -104,7 +104,7 @@ public class Member {
 		this.isMng = isMng;
 	}
 	
-	public boolean matchPassword(String pwd){
+	public boolean matchPassword(String pwd){ // 패스워드 비교
 		return password.equals(pwd);
 	}
 }

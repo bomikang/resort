@@ -30,34 +30,34 @@ public class LoginHandler implements CommandHandler {
 				Member no_member = dao.selectOutdateIs(conn, id);
 				
 				
-				if(no_member == null){	 // ±× ¾ÆÀÌµğ ¾øÀ¸¸é 
+				if(no_member == null){	 // ì•„ì´ë””ê°€ ì—†ì„ê²½ìš°
 					req.setAttribute("notJoin", true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
-				}else if(id==""){     // ¾ÆÀÌµğ °ø¶õÀÏ °æ¿ì
+				}else if(id==""){     // ì•„ì´ë””ë€ì´ ê³µë€ì¼ ê²½ìš°
 					req.setAttribute("outId", true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}
 				
-				if(password == ""){ // ºñ¹Ğ¹øÈ£ °ø¶õÀÏ °æ¿ì 
+				if(password == ""){ // íŒ¨ìŠ¤ì›Œë“œ ë€ì´ ê³µë€ì¼ ê²½ìš°
 					req.setAttribute("outPass", true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu"; 
-				}else if(!member.matchPassword(password)){ // ÆĞ½º¿öµå°¡ Æ²·ÈÀ»°æ¿ì
+				}else if(!member.matchPassword(password)){ // ë¹„ë°€ë²ˆí˜¸ê°€ë‹¤ë¥¼ê²½ìš°
 					req.setAttribute("notPass",true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}
 				
-				// ¼¼¼Ç ¿µ¿ª¿¡ Data ¿Ã·Á³õ±â
+				// ì„¸ì…˜ì— DATA ë‚¨ê¸°ê¸°ìœ„í•œ ì‘ì—…
 				LoginMemberInfo myinfo = new LoginMemberInfo(
 						member.getNo(),
 						member.getId(),
 						member.getName(),
 						member.getMail(),
 						member.getIsMng());
-				if(myinfo.getIsMng().equals(true)){ // °ü¸®ÀÚ ÀÏ °æ¿ì
+				if(myinfo.getIsMng().equals(true)){ // ê´€ë¦¬ìì¼ ê²½ìš°
 					req.getSession().setAttribute("admin",myinfo);
 				}
 				
-				if(myinfo.getIsMng().equals(false)){ // ÀÏ¹İÈ¸¿ø ÀÏ °æ¿ì
+				if(myinfo.getIsMng().equals(false)){ // ì¼ë°˜íšŒì›ì¼ ê²½ìš°
 					req.getSession().setAttribute("myinfo",myinfo);
 				}
 				

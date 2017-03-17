@@ -32,18 +32,18 @@ public class JoinId_Checking implements CommandHandler {
 				for(int i=0;i<mem.size();i++){
 					System.out.println(mem.get(i).getId());
 					if(mem.get(i).getId().equals(checkId)){
-						result = "no";
+						result = "no";				// input 창의 아이디와 DB 아이디 비교 후 동일하면 "no" 값 반환
 						break;
 					}else{
-						result = "ok";
+						result = "ok";				// input 창의 아이디와 DB 아이디 비교 후 다르면 "OK" 값 반환
 						
 					}	
 				}
 				
-				//data�� json ���� ����
+				//json 사용 시 필요구문
 				ObjectMapper om= new ObjectMapper();
-				String json = om.writeValueAsString(result);
-				// json �߽�
+				String json = om.writeValueAsString(result);	//  JSP화면 JSON 데이터 result값 반환 
+				
 				res.setContentType("application/json;charset=utf-8");
 				PrintWriter pw = res.getWriter();
 				pw.print(json);

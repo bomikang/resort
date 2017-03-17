@@ -178,18 +178,19 @@ public class BookDao {
 	/**
 	 * 로그인한 내역? 하여튼 회원내역(회원번호)를 바탕으로 예약내역을 조회할 시 가져 올 Method
 	 * */
-	public Book selectByMember(Connection conn, Member mem)throws SQLException{		
+	public List<Book> selectByMember(Connection conn, Member mem)throws SQLException{		
 		PreparedStatement pstmt = null;
+		List<Book> bList = new ArrayList<>();
 		ResultSet rs = null;		
 		try{
-			String sql = "select * from resort.book where bk_mem = ?";
+			String sql = "select * from resort.book where bk_mem = ? and (bk_state !='예약취소' or bk_state != '예약종료')";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mem.getNo());
 			rs = pstmt.executeQuery();
 			MemberDao mDao = MemberDao.getInstance();
 			StructureDao sDao = StructureDao.getInstance();
 			
-			if(rs.next()){
+			while(rs.next()){
 				Book book = new Book();
 				book.setNo(rs.getString("bk_no"));								//예약번호
 				book.setRegDate(rs.getTimestamp("bk_regdate"));				//예약날짜
@@ -210,9 +211,10 @@ public class BookDao {
 				book.setMem(mDao.selectByNo(conn, memNo));
 				book.setStr(sDao.getStructureByNo(conn, strNo));
 				
-				return book;
-			}			
-			return null;			
+				bList.add(book);
+			}	
+			
+			return bList;			
 		}finally {
 			JdbcUtil.close(pstmt);
 			JdbcUtil.close(rs);
@@ -226,7 +228,7 @@ public class BookDao {
 		
 		try{
 			String sql = "insert into resort.`book`(bk_mem, bk_str, bk_regdate, bk_startdate, bk_enddate, bk_state, bk_tel, bk_no)"
-							+"values(?, ?, ?, ?, ?, '입금대기', ?)";
+							+"values(?, ?, ?, ?, ?, '입금대기', ?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, book.getMem().getNo());
 			pstmt.setInt(2, book.getStr().getNo());
@@ -248,7 +250,7 @@ public class BookDao {
 		PreparedStatement pstmt = null;
 		
 		try{
-			String sql = "update resort.book set bk_state = ? where bk_no = ?";
+			String sql = "update resort.book set bk_state = ?, bk_canceldate = null where bk_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, book.getState());
 			pstmt.setString(2, book.getNo());
