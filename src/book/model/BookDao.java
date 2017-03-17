@@ -226,7 +226,7 @@ public class BookDao {
 		
 		try{
 			String sql = "insert into resort.`book`(bk_mem, bk_str, bk_regdate, bk_startdate, bk_enddate, bk_state, bk_tel, bk_no)"
-							+"values(?, ?, ?, ?, ?, '입금대기', ?)";
+							+"values(?, ?, ?, ?, ?, '입금대기', ?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, book.getMem().getNo());
 			pstmt.setInt(2, book.getStr().getNo());
@@ -248,7 +248,7 @@ public class BookDao {
 		PreparedStatement pstmt = null;
 		
 		try{
-			String sql = "update resort.book set bk_state = ? where bk_no = ?";
+			String sql = "update resort.book set bk_state = ?, bk_canceldate = null where bk_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, book.getState());
 			pstmt.setString(2, book.getNo());

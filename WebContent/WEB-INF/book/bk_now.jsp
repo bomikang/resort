@@ -2,18 +2,38 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+/*캐시에 Data를 남기지 않는구문(로그아웃 이후 뒤로가기 Data기록 안남기기 위해 사용)  */
+response.setHeader("cache-control","no-store");
+response.setHeader("expires","0");
+response.setHeader("pragma","no-cache");
+%>
+
 <style>
 	#bk_now{width:100%;}
 	#bk_now #bookTable{width:95%; margin: 0 auto; }
 	#bk_now #bookTable table{table-layout:auto;width:100%;}
 	#bk_now #bookTable .sun{color: red;}
 	#bk_now #bookTable .sat{color: blue;}
+	#bk_now #server{text-align: right;color: blue;}
+	#bk_now #server #serverTime{width: 110px; float: right;}
 </style>
 <script type="text/javascript">
 	
 	$(function(){	
-		/* 달력에 날짜 넣기 */
+
+		/* 서버시간 알리미용 임시 테스트 */
+		var st = srvTime();
+		var now = new Date(st);
+		console.log("서버시간 : "+now.getTime());
 		
+		setInterval(function() {			
+			$("#serverTime").html(now.getHours()+":"+now.getMinutes()+":"+now.getSeconds());
+			now.setSeconds(now.getSeconds()+1);
+		}, 1000);
+		
+
+		/* 달력에 날짜 넣기 */		
 		var date = new Date();
 /* 		setMonthTable(date); */		
 		setScreen(date); 
@@ -60,14 +80,52 @@
 		});
 		
 		$(document).on("click", ".noBooked", function(){
-			alert("예약가능합니다.");	
+			<c:if test="${empty myinfo }">
+				alert("로그인이 필요한 페이지 입니다.");
+				location.href="login.do";
+			</c:if>	
+			<c:if test="${!empty myinfo }">
+			//alert("예약가능합니다.");	
 			var strNo = $(this).find(".strNo").val();
 			var date = $(this).find(".date").val();
 			var url="bookprocess.do?strNo="+strNo+"&date="+date;
 			location.href=url;
+			</c:if>
 		});
 		
+		
+		
 	});//ready
+	var xmlHttp;
+
+	function srvTime(){	
+		if (window.XMLHttpRequest) {//분기하지 않으면 IE에서만 작동된다.
+	
+			xmlHttp = new XMLHttpRequest(); // IE 7.0 이상, 크롬, 파이어폭스 등
+		
+			xmlHttp.open('HEAD',window.location.href.toString(),false);
+		
+			xmlHttp.setRequestHeader("Content-Type", "text/html");
+		
+			xmlHttp.send('');
+		
+			return xmlHttp.getResponseHeader("Date");
+	
+		}else if (window.ActiveXObject) {
+	
+			xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
+		
+			xmlHttp.open('HEAD',window.location.href.toString(),false);
+		
+			xmlHttp.setRequestHeader("Content-Type", "text/html");
+		
+			xmlHttp.send('');
+		
+			return xmlHttp.getResponseHeader("Date");
+	
+		}
+
+	}
 	
 	function setScreen(date){
 		 $.ajax({
@@ -81,7 +139,7 @@
 					setMonthTable(date, data);					
 				} 
 			}); 
-	}
+	}// end of setScreen
 	
 	function setMonthTable(date, data){
 		$("#bookTable").empty();
@@ -118,6 +176,7 @@
 			dateForm += names[j].name;
 			console.log("j : "+j+"|"+names);
 			dateForm += "</a></th>";
+			date.setMonth(m);
 			for(var k=0;k<last[m];k++){	
 				date.setDate(k+1);
 				//console.log(bList[j][index].startDate);
@@ -133,6 +192,10 @@
 							var endDate = new Date(bList[j][index].endDate);
 							console.log(startDate.getDate()+","+endDate.getDate());
 							
+							if(date.getTime()>=endDate.getTime()){
+								index++;
+							}
+							
 							if(date.getTime()>=startDate.getTime()&&date.getTime()<endDate.getTime()){
 								//index번째 예약 내역의 시작날짜와 끝 날짜 사이에 있을 때
 								console.log("일치");
@@ -143,9 +206,6 @@
 								}
 								
 							}else{
-								if((k+1)==endDate.getDate()){
-									index++;
-								}
 								dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
 							}							
 						}else{ 
@@ -162,7 +222,7 @@
 		dateForm += "</table>";
 		date.setDate(1);
 		$("#bookTable").prepend(dateForm);
-	}
+	}//end of setMonthTable
 </script>
 <div id="bk_now">
 	<c:if test="${noStr == true }">
@@ -170,6 +230,7 @@
 			alert("시설을 조회하는데 문제가 발생하였습니다.");
 		</script>
 	</c:if>
+	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
 	<h2 id="bkTable"></h2>
 	<div id="bookTable" >
 		

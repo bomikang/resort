@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 	$(function(){
@@ -10,6 +11,43 @@
 		
 		$(".bkState").each(function(i, obj) {
 			$(obj).val(stateList[i]);
+			$(obj).next(".index").val(i);
+		});
+		
+		$(document).on("click",".btnstate", function(){
+			var $tr = $(this).parents("tr")
+			var bkNo = $tr.find(".bkNo").text();
+			var state = $(this).parent("td").find(".bkState").val();
+			if(confirm(state+"로 변경 하시겠습니까?")){
+				$.ajax({
+					url:"bookstate.do",
+					type:"post",
+					dataType:"json",
+					data:{"bkNo":bkNo,
+							"state" : state
+					},
+					success:function(data){
+						console.log(data);
+						if(data[0]==true){
+							alert("수정되었습니다.");
+							$tr.find(".state").find(".bkState").val(data[1].state);
+							
+							if(data[1].state=="예약취소"){
+								$tr.find(".bkPrice").text("-");
+								$tr.find(".bkCancel").text(data[1].cancelForm);								
+							}
+						}else{
+							alert("오류가 발생하였습니다.");
+						}						
+					}
+				});
+			}
+			
+		});
+		$(document).on("click", ".btnreset", function(){
+			var index = $(this).parent("td").find("input[type='hidden']").val();
+			var state = stateList[index];			
+			$(this).parent("td").find(".bkState").find("option[value='"+state+"']").prop("selected", true);
 		});
 	});
 </script>
@@ -36,22 +74,34 @@
 				</tr>
 				<c:forEach var="book" items="${bList }">
 					<tr>
-						<td>${book.no }</td>
+						<td class="bkNo">${book.no }</td>
 						<td>${book.mem.name }</td>
 						<td>${book.str.name }</td>
 						<td>${book.tel }</td>
 						<td>${book.startDateForm }</td>
 						<td>${book.endDateForm }</td>
-						<td>${book.priceForm }</td>
-						<td>
-							<select class="bkState">
+						<td class="bkPrice">
+							<c:choose>							
+								<c:when test="${book.state=='예약취소' }">
+									-								
+								</c:when>
+								<c:otherwise>
+									${book.priceForm }
+								</c:otherwise>
+							</c:choose>							
+						</td>
+						<td class="state">	
+							<select class="bkState" name="state">
 								<option value = "입금대기">입금대기</option>
 								<option value = "입금완료">입금완료</option>
 								<option value = "예약취소">예약취소</option>
 								<option value = "예약종료">예약종료</option>
 							</select>
+							<input type="hidden" class="index">
+							<button class="btnstate">수정</button>
+							<button class="btnreset">취소</button>						
 						</td>
-						<td>${book.cancelForm }</td>	
+						<td class="bkCancel">${book.cancelForm }</td>	
 					</tr>				
 				</c:forEach>
 			</table>	

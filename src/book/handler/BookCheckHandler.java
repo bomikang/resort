@@ -10,6 +10,8 @@ public class BookCheckHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("get")){
+			req.getSession().getAttribute("myinfo");
+			
 			return "index.jsp?page=/WEB-INF/book/bk_check&menu=/WEB-INF/book/bk_menu";
 		}
 		return null;
