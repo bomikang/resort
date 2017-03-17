@@ -4,4 +4,8 @@
 /.dbeaver-data-sources.xml
 /Scripts
 /build
+<<<<<<< HEAD
 /.tern-project
+=======
+/.tern-project
+>>>>>>> refs/remotes/origin/master
