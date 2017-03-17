@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,21 +17,6 @@
 	</c:if>
 	<c:if test="${strList.size() > 0}">
 		<table>
-			<caption>시설구분번호별 시설이름</caption>
-			<tr>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-			</tr>
-			<tr>
-				<td>숲속의집</td>
-				<td>산림휴양관</td>
-				<td>캐라반</td>
-				<td>돔하우스</td>
-			</tr>
-		</table>
-		<table>
 			<caption></caption>
 			<tr>
 				<th>시설번호</th>
@@ -44,11 +28,10 @@
 			<c:forEach var="list" items="${strList}">
 				<tr>
 					<td>${list.no}</td>
-					<td>${list.id}</td>
+					<td>${list.id}<small>(${list.nameById})</small></td>
 					<td><a href="structureUpdate.do?no=${list.no}">${list.name}</a></td>
 					<td>${list.people}</td>
-					<td><fmt:formatNumber value="${list.price}" pattern="#,###" /></td>
-					
+					<td>${list.originPriceToString}</td>
 				</tr>
 			</c:forEach>
 		</table>

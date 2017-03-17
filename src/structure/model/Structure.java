@@ -1,5 +1,9 @@
 package structure.model;
 
+import java.util.Calendar;
+
+import book.model.Book;
+
 public class Structure {
 	private int no;
 	private int id;
@@ -86,8 +90,8 @@ public class Structure {
 			width = "39.66㎡"; break;
 		case 8:
 			width = "46.27㎡"; break;
-		case 12:
-			width = "80㎡"; break;
+		case 17:
+			width = "86㎡"; break;
 		}
 		return width;
 	}
@@ -97,18 +101,26 @@ public class Structure {
 		String result = "";
 		switch (this.id) {
 		case 1:
-			result = "숲속의집";
-			break;
+			result = "숲속의집"; break;
 		case 2:
-			result = "산림휴양관";
-			break;
+			result = "산림휴양관"; break;
 		case 3:
-			result = "캐라반";
-			break;
+			result = "캐라반"; break;
 		case 4:
-			result = "돔하우스";
-			break;
+			result = "돔하우스"; break;
 		}
 		return result;
 	}
+
+	/* 시설 안내 화면에서 성수기 요금을 보여주기 */
+	public String getOriginPriceToString(){
+		return String.format("%,d", getPrice());
+	}
+	
+	/* 시설 안내 화면에서 비수기 요금을 보여주기 */
+	public String getLessPriceToString(){
+		int price = (int) (getPrice() * 0.7);
+		return String.format("%,d", price);
+	}
+	
 }

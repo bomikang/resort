@@ -6,9 +6,19 @@
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<style>
+	.error{ display : none; color:red; padding:0; margin:0 0 0 90px; font-size: 12px;}
+</style>
 <script>
 	$(function(){
 		$("#btnAddStr").click(function() {
+			if( !checkInputEmpty($("input[type='text']"))){
+				alert("ㅎ");
+				return false;
+			}
+			
 			var repImage = document.getElementById("repImage"); //대표이미지
 			var innerImage = document.getElementById("innerImage"); //내부이미지
 			
@@ -52,21 +62,25 @@
 			<p>
 				<label for="">호수(숲속의 집은 방 이름을 입력해주세요.)</label><br />
 				<input type="text" name="name" id="name"/>
+				<span class="error">호수를 입력해주세요.</span>
 			</p>
 			
 			<p>
 				<label for="">수용 인원</label><br />
 				<input type="text" name="people" placeholder="ex) 4"/>
+				<span class="error">수용 인원을 입력해주세요.</span>
 			</p>
 			
 			<p>
 				<label for="">가격</label><br />
 				<input type="text" name="price" placeholder="ex) 90000"/>
+				<span class="error">가격을 입력해주세요.</span>
 			</p>
 			
 			<p>
 				<label for="">옵션</label><br />
 				<input type="text" name="option" />
+				<span class="error">옵션을 입력해주세요.</span>
 			</p>
 			
 			<p>

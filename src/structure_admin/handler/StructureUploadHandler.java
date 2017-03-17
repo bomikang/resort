@@ -80,6 +80,6 @@ public class StructureUploadHandler implements CommandHandler {
 			JdbcUtil.close(con);			
 		}
 		return "structureList.do";
-	}
+	}//end of postProcess
 
 }
