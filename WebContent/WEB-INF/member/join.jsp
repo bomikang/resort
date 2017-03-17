@@ -37,7 +37,8 @@ fieldset{
 
 <script>
 $(function(){
- 	$("form[name='f1']").submit(function() {
+	
+ 	$("form[name='f1']").submit(function() { // submit 버튼 클릭스 아이디 공란 Check,password 재학인 조건문 
          if(!checkInputEmpty($("input[name]"))){
             return false;
          }   
@@ -50,7 +51,7 @@ $(function(){
       });
 	
 	
-	
+	// 아이디 중복 확인 버튼 클릭스 화면 갱신 없이 ajax 로 데이터 값 읽어오기 
 	$("#btn").click(function(){
 		$.ajax({
 			url:"checkId.do",
@@ -59,7 +60,7 @@ $(function(){
 			dataType:"json",
 			data:{"id":$("#id").val()},//게시글의 번호
 			success:function(data){
-				console.log(data);
+										// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 						if(data=="ok"){
 							alert("사용가능 아이디 입니다.");			
 						}else{
