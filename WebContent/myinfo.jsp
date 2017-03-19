@@ -91,32 +91,11 @@
 					success:function(data){
 												// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 								if(data=="ok"){
-									alert("개인정보가 수정되었습니다.");
-									location.href="index.jsp";
+									alert("개인정보가 수정되었습니다.");			
 								}
 					} 
 				});
-			}); 
-	
-			$("#btn2_1").click(function(){
-				$.ajax({
-					url:"updateInfo.do",
-					type:"post",
-					timeout:30000,
-					dataType:"json",
-					data:{"id":$("#id").val()},
-					success:function(data){
-												// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
-								if(data=="ok"){
-									alert("개인정보가 수정되었습니다.");
-									location.href="index.jsp";
-								}
-					} 
-				});
-			}); 
-			
-		
-		
+			})
 	});	
 </script>
 </head>
@@ -149,8 +128,8 @@
 					<tr>
 						<td>사용자 아이디 </td>
 						<td> ${info.id } <button type="button" id="btn2">수정</button>
-							<span id="IdUpdate" class="update" >
-								<input type="text" name="id" id="id" placeholder="아이디">
+							<span id="IdUpdate" class="update">
+								<input type="text" name="id" placeholder="아이디">
 									<button type="button" id="btn2_1">완료</button>
 									<button type="button" id="btn2_2">취소</button>
 							</span>
@@ -170,7 +149,7 @@
 						<td>본인확인 이메일  ${info.mail }</td>
 						<td>${info.mail } <button type="button" id="btn4">수정</button>
 							<span id="mailUpdate" class="update">
-								<input type="text" name="mail" id="mail" placeholder="e-mail">
+								<input type="text" name="mail" placeholder="e-mail">
 									<button type="button" id="btn4_1">완료</button>
 									<button type="button" id="btn4_2">취소</button>
 							</span>
@@ -180,7 +159,7 @@
 						<td>본인확인 전화번호 </td>
 						<td> ${info.tel } <button type="button" id="btn5">수정</button>
 							<span id="telUpdate" class="update">
-								<input type="text" name="tel" id="tel" placeholder="전화번호">
+								<input type="text" name="tel" placeholder="전화번호">
 									<button type="button" id="btn5_1">완료</button>
 									<button type="button" id="btn5_2">취소</button>
 							</span>
