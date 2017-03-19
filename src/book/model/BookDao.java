@@ -281,6 +281,7 @@ public class BookDao {
 	/**
 	 * 사용자가 선택한 시설에 원하는 기간동안 사용이 가능한지를 조회하는 메소드
 	 * 사용할 수 있는 경우 true를 반환(rs.next가 존재하지 않는 경우)
+	 * 메소드 확인 필요!!
 	 * */
 	public boolean checkBookDate(Connection conn, Book book) throws SQLException{
 		PreparedStatement pstmt = null;

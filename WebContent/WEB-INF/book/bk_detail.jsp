@@ -12,6 +12,13 @@
 		$("#btnBack").click(function(){
 			location.href = "bookcheck.do";
 		});
+		$(".bkcancel").submit(function(){
+			var bkNo = $(this).find("input[name='bkNo']").val();
+		
+			if(!confirm("예약번호 : "+bkNo+"의 예약을 취소하시겠습니까?")){
+				return false;
+			}
+		});
 	});
 </script>
 <div id="bk_detail">
@@ -59,15 +66,31 @@
 				<th>예약 구분</th>
 				<td>${book.state }</td>
 			</tr>
+			<c:if test="${!empty book.cancelDate }">
+			<tr>
+				<th>취소 날짜 </th>
+				<td>${book.cancelForm }</td>
+			</tr>
+			</c:if>
 			<tr>
 				<th>가격</th>
 				<td>${book.priceForm }</td>
 			</tr>
 		</table>	
-		<form>
-			<input type="hidden" value="${book.no }" name="bkNo">
-			<input type="submit" value="취소하기">
-			<button type="button" id="btnBack">돌아가기</button>
-		</form>			
+		<c:choose>
+			<c:when test="${book.state=='예약취소' }">
+				<button type="button" id="btnBack">확인</button>
+			</c:when>
+			<c:when test="${book.state=='예약완료' }">
+				<button type="button" id="btnBack">확인</button>
+			</c:when>
+			<c:otherwise>
+				<form action="bookcancel.do" method="post" class="bkcancel">
+					<input type="hidden" value="${book.no }" name="bkNo">
+					<input type="submit" value="취소하기">
+					<button type="button" id="btnBack">돌아가기</button>
+				</form>	
+			</c:otherwise>
+		</c:choose>		
 	</c:if>
 </div>

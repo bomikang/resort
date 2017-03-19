@@ -82,7 +82,9 @@ public class BookProcessHandler implements CommandHandler{
 				conn.commit();
 				req.setAttribute("result", true);
 				req.setAttribute("book", book);
-				return "/WEB-INF/book/bk_price.jsp";
+				String 	url= "bookcheckdetail.do?bkNo="+book.getNo();
+				res.sendRedirect(url);
+				return null;
 			}catch (Exception e) {
 				e.printStackTrace();
 				System.out.println(2);

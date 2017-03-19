@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script>
+	$(function(){
+		$(".bkcancel").submit(function(){
+			var bkNo = $(this).find("input[name='bkNo']").val();
+		
+			if(!confirm("예약번호 : "+bkNo+"의 예약을 취소하시겠습니까?")){
+				return false;
+			}
+		});
+	});
+</script>
 <c:if test="${empty myinfo }">
 	<script>
 		alert("로그인이 필요한 페이지 입니다.");
@@ -32,10 +43,15 @@
 					<td>${book.startDateForm } ~ ${book.endDateForm }</td>
 					<td>${book.state }</td>
 					<td>
-						<form action="" method="post">
+						<c:if test="${book.state!='예약취소' }">
+						<form action="bookcancel.do" method="post" class="bkcancel">
 							<input type="hidden" name="bkNo" value="${book.no }">
 							<input type="submit" value="취소하기">
 						</form>
+						</c:if>
+						<c:if test="${book.state=='예약취소' }">
+							-
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>

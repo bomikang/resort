@@ -192,10 +192,6 @@ response.setHeader("pragma","no-cache");
 							var endDate = new Date(bList[j][index].endDate);
 							console.log(startDate.getDate()+","+endDate.getDate());
 							
-							if(date.getTime()>=endDate.getTime()){
-								index++;
-							}
-							
 							if(date.getTime()>=startDate.getTime()&&date.getTime()<endDate.getTime()){
 								//index번째 예약 내역의 시작날짜와 끝 날짜 사이에 있을 때
 								console.log("일치");
@@ -207,7 +203,12 @@ response.setHeader("pragma","no-cache");
 								
 							}else{
 								dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
-							}							
+							}
+							
+							if(date.getTime()>=(endDate.getTime()-(24*60*60*1000))){
+								
+								index++;
+							}
 						}else{ 
 							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
 						} 						
