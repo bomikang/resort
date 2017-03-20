@@ -244,6 +244,12 @@ response.setHeader("pragma","no-cache");
 			alert("시설을 조회하는데 문제가 발생하였습니다.");
 		</script>
 	</c:if>
+	<c:if test="${noCount == true }">
+		<script type="text/javascript">
+			alert("지정된 예약횟수를 초과하여 예약 할 수 없습니다.");
+			location.href="book.do";
+		</script>
+	</c:if>
 	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
 	<h2 id="bkTable"></h2>
 	<p>시설 이름 : 

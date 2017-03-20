@@ -187,7 +187,7 @@ public class BookDao {
 		List<Book> bList = new ArrayList<>();
 		ResultSet rs = null;		
 		try{
-			String sql = "select * from resort.book where bk_mem = ? and (bk_state !='예약취소' or bk_state != '예약종료')";
+			String sql = "select * from resort.book where bk_mem = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mem.getNo());
 			rs = pstmt.executeQuery();
@@ -325,7 +325,7 @@ public class BookDao {
 		}finally {
 			JdbcUtil.close(pstmt);
 		}
-	}
+	}// end of autoBookCancel
 	
 	/**
 	 * 현재 날짜가 예약의 퇴실날짜를 경과한 경우 예약 종료로 만드는 구문 (관리자로 로그인 할 시 호출할 예정!)
@@ -342,5 +342,33 @@ public class BookDao {
 		}finally {
 			JdbcUtil.close(pstmt);
 		}
-	}
+	}// end of autoBookEnd
+	
+	/**
+	 * 로그인한 내역? 하여튼 회원내역(회원번호)를 바탕으로 예약내역 갯수를 반환할 메소드 (필요할 경우 대비)
+	 * */
+	public Integer selectCountByMember(Connection conn, Member mem)throws SQLException{		
+		PreparedStatement pstmt = null;
+		List<Book> bList = new ArrayList<>();
+		ResultSet rs = null;		
+		try{
+			String sql = "select * from resort.book where bk_mem = ? and (bk_state !='예약취소' and bk_state != '예약종료')";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mem.getNo());
+			rs = pstmt.executeQuery();
+			MemberDao mDao = MemberDao.getInstance();
+			StructureDao sDao = StructureDao.getInstance();
+			
+			while(rs.next()){
+				Book book = new Book();
+				book.setNo(rs.getString("bk_no"));								//예약번호				
+				bList.add(book);
+			}	
+			
+			return bList.size();			
+		}finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(rs);
+		}
+	}//end of selectCountByMember
 }

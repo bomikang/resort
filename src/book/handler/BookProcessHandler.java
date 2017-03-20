@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import auth.handler.LoginMemberInfo;
 import book.model.Book;
 import book.model.BookDao;
 import jdbc.ConnectionProvider;
@@ -21,6 +22,7 @@ public class BookProcessHandler implements CommandHandler{
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("get")){
+			LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");			
 			int strNo = Integer.parseInt(req.getParameter("strNo"));
 			long date = Long.parseLong(req.getParameter("date"));
 			
@@ -28,6 +30,14 @@ public class BookProcessHandler implements CommandHandler{
 			Connection conn = null;
 			try{
 				conn = ConnectionProvider.getConnection();
+				BookDao bDao = BookDao.getInstance();
+				Member mem = new Member(myInfo.getMy_id());
+				mem.setNo(myInfo.getMy_no());
+				Integer count = bDao.selectCountByMember(conn, mem);
+				if(count>10){
+					req.setAttribute("noCount", true);
+					return "index.jsp?page=/WEB-INF/book/bk_now&menu=/WEB-INF/book/bk_menu";
+				}
 				StructureDao sDao = StructureDao.getInstance();
 				Structure str = sDao.getStructureByNo(conn, strNo);
 				if(str == null){
