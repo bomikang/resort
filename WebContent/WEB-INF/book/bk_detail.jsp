@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+	#bk_detail #warning{color:orange;}
+</style>
 <c:if test="${empty myinfo }">
 	<script>
 		alert("로그인이 필요한 페이지 입니다.");
@@ -32,6 +35,12 @@
 	</c:if>
 	<c:if test="${!empty book }">
 		<h2>예약 내역</h2>
+		<c:if test="${pageId=='process' }">
+			<span id="warning">인터넷으로 예약하신 후 예약일로 부터 3일 이내(휴일제외) 지정계좌로 사용료를 결제하셔야만 예약이 확정되며, 사용료 입금시에는 
+				반드시 예약번호와 예약자 성명을 함께 기재하여 입금해 주십시오.(계좌번호 : 유진뱅크 123-45-123456 옥성휴양림)<br>
+				예약일 포함 3일 이내에 결제하지 않으시면 자동으로 예약이 취소되므로 이점 유의하시기 바랍니다.
+			</span>
+		</c:if>
 		<h4>[예약자 정보]</h4>
 		<table border="1">
 			<tr>

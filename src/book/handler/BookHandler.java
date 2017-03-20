@@ -63,7 +63,7 @@ public class BookHandler implements CommandHandler {
 				conn = ConnectionProvider.getConnection();
 				BookDao bDao = BookDao.getInstance();
 				StructureDao sDao = StructureDao.getInstance();				
-				List<Structure> sList = sDao.selectAllStructure(conn);
+				List<Structure> sList = sDao.selectAllStructureById(conn, strId);
 				List<List<Book>> bookList = new ArrayList<>();
 				for(int i=0;i<sList.size();i++){
 					List<Book>bList = bDao.selectThisMonthByStr(conn, date, sList.get(i).getNo(), strId);

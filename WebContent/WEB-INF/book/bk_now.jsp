@@ -38,6 +38,7 @@ response.setHeader("pragma","no-cache");
 		setScreen(date); 
 		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");			
 		
+		/** combo box 내에서 선택된 아이템이 변할 때 마다 그에 맞는 화면으로 전환하도록 함(필요시 버튼삽입 필요)*/
 		$(document).on("change", "#bkStrId", function(){
 			setScreen(date);
 		});
@@ -238,11 +239,13 @@ response.setHeader("pragma","no-cache");
 	</c:if>
 	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
 	<h2 id="bkTable"></h2>
+	<p>시설 이름 : 
 	<select id="bkStrId">
 		<c:forEach items="${keyList }" var="key">
 			<option value="${key }">${strId.get(key) }</option>
 		</c:forEach>
 	</select>
+	</p>
 	<div id="bookTable" >
 		
 	</div>
