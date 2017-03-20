@@ -66,6 +66,30 @@ public class StructureDao {
 		}
 		return list;
 	}
+	
+	/*select distinct str_id*/
+	public List<Integer> selectDistinctId(Connection con){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Integer> list = new ArrayList<>();
+		
+		try {
+			pstmt = con.prepareStatement("select distinct str_id from structure");
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				list.add(rs.getInt("str_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+		return list;
+	}
+	
 	/*select all structure by id*/
 	public List<Structure> selectAllStructureById(Connection con, int houseId){
 		PreparedStatement pstmt = null;
