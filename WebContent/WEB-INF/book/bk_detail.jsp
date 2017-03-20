@@ -19,6 +19,9 @@
 				return false;
 			}
 		});
+		<c:if test="${pageId=='process' }">
+			alert("예약이 성공적으로 완료되었습니다.");
+		</c:if>
 	});
 </script>
 <div id="bk_detail">
@@ -64,33 +67,37 @@
 			</tr>
 			<tr>
 				<th>예약 구분</th>
-				<td>${book.state }</td>
-			</tr>
+				<td>${book.state }
 			<c:if test="${!empty book.cancelDate }">
-			<tr>
-				<th>취소 날짜 </th>
-				<td>${book.cancelForm }</td>
-			</tr>
+			(취소 날짜  : ${book.cancelForm })
 			</c:if>
+				</td>
 			<tr>
 				<th>가격</th>
 				<td>${book.priceForm }</td>
 			</tr>
-		</table>	
+		</table>
 		<c:choose>
-			<c:when test="${book.state=='예약취소' }">
+			<c:when test="${pageId=='check' }">
+				<c:choose>
+					<c:when test="${book.state=='예약취소' }">
+						<button type="button" id="btnBack">확인</button>
+					</c:when>
+					<c:when test="${book.state=='예약완료' }">
+						<button type="button" id="btnBack">확인</button>
+					</c:when>
+					<c:otherwise>
+						<form action="bookcancel.do" method="post" class="bkcancel">
+							<input type="hidden" value="${book.no }" name="bkNo">
+							<input type="submit" value="취소하기">
+							<button type="button" id="btnBack">돌아가기</button>
+						</form>	
+					</c:otherwise>
+				</c:choose>
+			</c:when>	
+			<c:when test="${pageId=='process' }">
 				<button type="button" id="btnBack">확인</button>
 			</c:when>
-			<c:when test="${book.state=='예약완료' }">
-				<button type="button" id="btnBack">확인</button>
-			</c:when>
-			<c:otherwise>
-				<form action="bookcancel.do" method="post" class="bkcancel">
-					<input type="hidden" value="${book.no }" name="bkNo">
-					<input type="submit" value="취소하기">
-					<button type="button" id="btnBack">돌아가기</button>
-				</form>	
-			</c:otherwise>
 		</c:choose>		
 	</c:if>
 </div>

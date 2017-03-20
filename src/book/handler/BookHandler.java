@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +25,33 @@ public class BookHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("get")){
+			Connection conn = null;
+			try{
+				conn = ConnectionProvider.getConnection();
+				StructureDao sDao = StructureDao.getInstance();				
+				List<Structure> sList = sDao.selectAllStructure(conn);
+				HashMap<Integer, String> strList = new HashMap<>();
+				List<Integer> keyList = new ArrayList<>();
+				for(int i=0;i<sList.size();i++){
+					
+					if(i==0||(i>0&&(sList.get(i).getId()!=sList.get(i-1).getId()))){
+						keyList.add(sList.get(i).getId());
+						System.out.println(sList.get(i).getId());
+					}
+					strList.put(sList.get(i).getId(), sList.get(i).getNameById());
+				}
+				req.setAttribute("keyList", keyList);
+				req.setAttribute("strId", strList);
+				
+			}finally {
+				JdbcUtil.close(conn);
+			}
 			return "index.jsp?page=/WEB-INF/book/bk_now&menu=/WEB-INF/book/bk_menu";
+		
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			String dateText = req.getParameter("date");
+			int strId = Integer.parseInt(req.getParameter("strId"));
+			System.out.println("strId : " + strId);
 			Date date = new Date();
 			if(dateText!=null){
 				long time = Long.parseLong(req.getParameter("date"));
@@ -41,7 +66,7 @@ public class BookHandler implements CommandHandler {
 				List<Structure> sList = sDao.selectAllStructure(conn);
 				List<List<Book>> bookList = new ArrayList<>();
 				for(int i=0;i<sList.size();i++){
-					List<Book>bList = bDao.selectThisMonthByStr(conn, date, sList.get(i).getNo());
+					List<Book>bList = bDao.selectThisMonthByStr(conn, date, sList.get(i).getNo(), strId);
 					if(!bList.isEmpty()){
 						bookList.add(bList);
 					}

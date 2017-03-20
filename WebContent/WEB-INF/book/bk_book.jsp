@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 	$(function(){
+		/*고객 휴대폰 번호 입력해 놓는 구문 필요*/
 	
 		setDateForm();	
 		setPriceForm();

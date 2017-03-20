@@ -29,7 +29,6 @@ public class BookCancelHandler implements CommandHandler {
 				book.setCancelDate(new Date());
 				bDao.updateCancelDate(conn, book);
 				conn.commit();
-				
 				res.sendRedirect("bookcheck.do");
 				return null;
 			}catch (Exception e) {

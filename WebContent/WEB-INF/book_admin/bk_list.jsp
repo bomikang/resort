@@ -12,6 +12,12 @@
 		$(".bkState").each(function(i, obj) {
 			$(obj).val(stateList[i]);
 			$(obj).next(".index").val(i);
+			if(stateList[i]=='예약종료'){
+				$(obj).empty();
+				$(obj).html("<option>예약종료</option>");
+				$(obj).nextAll(".btnstate").css("display", "none");
+				$(obj).nextAll(".btnreset").css("display", "none");
+			}
 		});
 		
 		$(document).on("click",".btnstate", function(){
@@ -35,6 +41,9 @@
 							if(data[1].state=="예약취소"){
 								$tr.find(".bkPrice").text("-");
 								$tr.find(".bkCancel").text(data[1].cancelForm);								
+							}else{
+								$tr.find(".bkPrice").text(data[1].priceForm);
+								$tr.find(".bkCancel").text("");
 							}
 						}else{
 							alert("오류가 발생하였습니다.");
@@ -76,7 +85,7 @@
 					<tr>
 						<td class="bkNo">${book.no }</td>
 						<td>${book.mem.name }</td>
-						<td>${book.str.name }</td>
+						<td>${book.str.name }(${book.str.nameById })</td>
 						<td>${book.tel }</td>
 						<td>${book.startDateForm }</td>
 						<td>${book.endDateForm }</td>

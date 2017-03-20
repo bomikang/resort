@@ -21,7 +21,7 @@ response.setHeader("pragma","no-cache");
 <script type="text/javascript">
 	
 	$(function(){	
-
+		console.log($("#bkStrId").val());
 		/* 서버시간 알리미용 임시 테스트 */
 		var st = srvTime();
 		var now = new Date(st);
@@ -30,15 +30,18 @@ response.setHeader("pragma","no-cache");
 		setInterval(function() {			
 			$("#serverTime").html(now.getHours()+":"+now.getMinutes()+":"+now.getSeconds());
 			now.setSeconds(now.getSeconds()+1);
-		}, 1000);
+		}, 1000);		
 		
-
 		/* 달력에 날짜 넣기 */		
 		var date = new Date();
 /* 		setMonthTable(date); */		
 		setScreen(date); 
 		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");			
-		 
+		
+		$(document).on("change", "#bkStrId", function(){
+			setScreen(date);
+		});
+		
 		$(document).on("click", ".nextMonth", function(){			
 			var thisMonth = date.getMonth();
 			var thisYear = date.getFullYear();
@@ -55,7 +58,7 @@ response.setHeader("pragma","no-cache");
 			setScreen(date);
 			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");			
 		});
-
+		
 		
 		$(document).on("click", ".prevMonth", function(){
 			var thisMonth = date.getMonth();
@@ -97,7 +100,7 @@ response.setHeader("pragma","no-cache");
 		
 	});//ready
 	var xmlHttp;
-
+	/* 서버 시간을 표기하기 위한 메소드(인터넷 참조) */
 	function srvTime(){	
 		if (window.XMLHttpRequest) {//분기하지 않으면 IE에서만 작동된다.
 	
@@ -133,7 +136,9 @@ response.setHeader("pragma","no-cache");
 				type:"post",
 				timeout:30000,
 				dataType:"json",
-				data:{"date":date.getTime()},//현재 시간
+				data:{"date":date.getTime(),
+					"strId":$("#bkStrId").val()},//현재 시간
+				
 				success:function(data){
 					console.log(data);
 					setMonthTable(date, data);					
@@ -233,6 +238,11 @@ response.setHeader("pragma","no-cache");
 	</c:if>
 	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
 	<h2 id="bkTable"></h2>
+	<select id="bkStrId">
+		<c:forEach items="${keyList }" var="key">
+			<option value="${key }">${strId.get(key) }</option>
+		</c:forEach>
+	</select>
 	<div id="bookTable" >
 		
 	</div>

@@ -82,7 +82,7 @@ public class BookProcessHandler implements CommandHandler{
 				conn.commit();
 				req.setAttribute("result", true);
 				req.setAttribute("book", book);
-				String 	url= "bookcheckdetail.do?bkNo="+book.getNo();
+				String 	url= "bookcheckdetail.do?bkNo="+book.getNo()+"&pageId=process";
 				res.sendRedirect(url);
 				return null;
 			}catch (Exception e) {

@@ -16,11 +16,13 @@ public class BookCheckDetailHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String bkNo = req.getParameter("bkNo");
+		String pageId = req.getParameter("pageId");
 		Connection conn = null;
 		try{
 			conn = ConnectionProvider.getConnection();
 			BookDao bDao = BookDao.getInstance();
 			Book book = bDao.selectByNo(conn, bkNo);
+			req.setAttribute("pageId", pageId);
 			req.setAttribute("book", book);
 			return "index.jsp?page=/WEB-INF/book/bk_detail&menu=/WEB-INF/book/bk_menu";
 		}finally {
