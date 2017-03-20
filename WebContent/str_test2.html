@@ -11,10 +11,9 @@
 </style>
 <script>
 	function checkRadioIsChecked($radio){
-		var count = false;
+		//시설이름이 체크되어 있으면 그 value값을 리턴
 		var strIdText = "";
 		
-		//라디오버튼이 하나라도 선택되었을 시 그 value값에 따라 return 되는 값  
 		$radio.each(function(i, obj) {
 			if ($(obj).prop("checked") == true) {
 				switch ($(obj).val()) {
@@ -26,10 +25,7 @@
 			}
 		});
 		
-		if(strIdText != "") {
-			return strIdText;
-		}
-		else 			  return false;
+		return strIdText;
 	}
 	
 	$(function(){
@@ -40,14 +36,10 @@
 			}
 			 */
 			 
-			/* 라디오 버튼 체크 여부 */
+			/* 시설이름 체크 여부 체크*/
+			if (checkRadioIsChecked($("input[type='radio']")) == "")
+				alert("시설 이름을 선택해주세요.");	
 			
-			
-			alert(checkRadioIsChecked($("input[type='radio']")));
-			/*  
-			if ( !checkRadioIsChecked($("input[type='radio']")) ) {
-				return false;				
-			} */
 			/* 
 			var strIdText = "";
 			
