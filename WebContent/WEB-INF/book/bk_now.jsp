@@ -1,3 +1,4 @@
+<%@page import="com.sun.java.swing.plaf.windows.resources.windows"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
@@ -97,7 +98,12 @@ response.setHeader("pragma","no-cache");
 			</c:if>
 		});
 		
-		
+		$(document).on("click",".toStr",function(){
+			var url = $(this).attr("href");
+			console.log(url);
+			window.open()
+			return false;
+		});
 		
 	});//ready
 	var xmlHttp;
@@ -178,7 +184,8 @@ response.setHeader("pragma","no-cache");
 		for(var j=0;j < names.length;j++){
 			var index = 0;
 			dateForm += "<tr>";
-			dateForm += "<th><a href='#'>";
+			var url="structure.do?people=4&houseId="+names[j].id;
+			dateForm += "<th><a href='"+url+"' target='_blank'>";
 			dateForm += names[j].name;
 			console.log("j : "+j+"|"+names);
 			dateForm += "</a></th>";
