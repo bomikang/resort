@@ -10,7 +10,7 @@
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <style>
-	.error{display : none; color:red; font-size: 12px;}
+	.error, .error_reg{display : none; color:red; font-size: 12px;}
 </style>
 <script>
 	//시설이름이 체크되어 있으면 그 value값을 리턴
@@ -20,27 +20,27 @@
 		$radio.each(function(i, obj) {
 			if ($(obj).prop("checked") == true) {
 				switch ($(obj).val()) {
-					case "1": strIdText = "숲속의집"; break;
-					case "2": strIdText = "산림휴양관"; break;
-					case "3": strIdText = "캐라반"; break;
-					case "4": strIdText = "돔하우스"; break;
+				case "1": strIdText = "숲속의집"; break;
+				case "2": strIdText = "산림휴양관"; break;
+				case "3": strIdText = "캐라반"; break;
+				case "4": strIdText = "돔하우스"; break;
 				}
 			}
 		});
 		
 		return strIdText;
 	}
-	//호수, 수용인원, 가격만 정규표현식 검사
+	//정규표현식 검사 함수
 	function checkRegExr(objInput){
 		var reg = "";
 		
+		//호수 : 영문, 한글, 숫자, 특수문자(-, _)만 20글자까지 입력가능
+		//수용인원 : 1~99까지
+		//가격 : 10000~9999999까지
 		switch (objInput.attr("name")) {
-			case "name": //호수 : 영문, 한글, 숫자, 특수문자(-, _)만 20글자까지 입력가능
-				reg = /^[a-zA-z0-9가-힣\s-_]{1,20}$/; break;
-			case "people": //수용인원 : 1~99까지
-				reg = /^[1-9]{1}[0-9]{0,1}$/; break;
-			case "price": //가격 : 10000~9999999까지
-				reg = /^[1-9]{1}[0-9]{4,6}$/; break;
+		case "name": reg = /^[a-zA-z0-9가-힣\s-_]{1,20}$/; break;
+		case "people": reg = /^[1-9]{1}[0-9]{0,1}$/; break;
+		case "price": reg = /^[1-9]{1}[0-9]{4,6}$/; break;
 		}
 		
 		if ( !reg.test( objInput.val() ) ) {
@@ -71,7 +71,7 @@
 				return false;
 			}
 			
-			/* 3. 대표이미지 또는 내부이미지 둘 중 하나라도 선택된 것이 없으면 return false */
+			/* 4. 대표이미지 또는 내부이미지 둘 중 하나라도 선택된 것이 없으면 return false */
 			var repImage = document.getElementById("repImage"); //대표이미지
 			var innerImage = document.getElementById("innerImage"); //내부이미지
 			
@@ -92,7 +92,7 @@
 			
 			$("#setDbImage").val(setDbImage); //hidden에 심음
 			
-			/* 4. 모든 것이 완벽하게 들어갔을 시 confirm창 띄워 확인 */
+			/* 5. 모든 것이 완벽하게 들어갔을 시 confirm창 띄워 확인 */
 			var name = $("#name").val();
 			var check = confirm(strIdText +"의 "+name+" 을(를) 등록하시겠습니까?");
 			 
