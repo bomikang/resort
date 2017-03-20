@@ -66,7 +66,29 @@ public class StructureDao {
 		}
 		return list;
 	}
-	
+	/*select all structure by id*/
+	public List<Structure> selectAllStructureById(Connection con, int houseId){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Structure> list = new ArrayList<>();
+		
+		try {
+			pstmt = con.prepareStatement("select * from structure where str_id = ?");
+			pstmt.setInt(1, houseId);
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Structure structure = createStructure(rs);
+				list.add(structure);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+		return list;
+	}
 
 	/* select all structure by name and people */
 	public List<Structure> selectAllStrByIdAndPeople(Connection con, int houseId, int peopleCnt){
