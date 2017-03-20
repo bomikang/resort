@@ -187,7 +187,7 @@ public class MemberDao {
 		}
 	}
 	
-	
+	// 개인정보 변경 시 사용
 	public int updateInFo(Connection conn, Member member) throws SQLException{
 		PreparedStatement pstmt = null;	
 		try {
@@ -209,6 +209,7 @@ public class MemberDao {
 		
 		}
 	}
+	//탈퇴 시 사용
 	public int member_WithDrawal(Connection conn, Member member) throws SQLException{
 		PreparedStatement pstmt = null;	
 		try {
