@@ -29,18 +29,14 @@ public class BookHandler implements CommandHandler {
 			try{
 				conn = ConnectionProvider.getConnection();
 				StructureDao sDao = StructureDao.getInstance();				
-				List<Structure> sList = sDao.selectAllStructure(conn);
-				HashMap<Integer, String> strList = new HashMap<>();
-				List<Integer> keyList = new ArrayList<>();
-				for(int i=0;i<sList.size();i++){
-					
-					if(i==0||(i>0&&(sList.get(i).getId()!=sList.get(i-1).getId()))){
-						keyList.add(sList.get(i).getId());
-						System.out.println(sList.get(i).getId());
-					}
-					strList.put(sList.get(i).getId(), sList.get(i).getNameById());
+				List<Integer> idList = sDao.selectDistinctId(conn);
+				List<Structure> strList = new ArrayList<>();
+				
+				for(int i=0;i<idList.size();i++){					
+					Structure str = new Structure();
+					str.setId(idList.get(i));
+					strList.add(str);
 				}
-				req.setAttribute("keyList", keyList);
 				req.setAttribute("strId", strList);
 				
 			}finally {

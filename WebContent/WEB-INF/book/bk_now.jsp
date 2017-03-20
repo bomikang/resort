@@ -248,8 +248,8 @@ response.setHeader("pragma","no-cache");
 	<h2 id="bkTable"></h2>
 	<p>시설 이름 : 
 	<select id="bkStrId">
-		<c:forEach items="${keyList }" var="key">
-			<option value="${key }">${strId.get(key) }</option>
+		<c:forEach items="${strId }" var="str">
+			<option value="${str.id }">${str.nameById }</option>
 		</c:forEach>
 	</select>
 	</p>

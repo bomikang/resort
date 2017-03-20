@@ -310,4 +310,37 @@ public class BookDao {
 			JdbcUtil.close(rs);
 		}
 	}// end of checkBookDate
+	/**
+	 * 예약 후 3일 이내에 입금이 되지 않은 경우 예약 취소로 변경하는 메소드(관리자로 로그인 할 시 호출할 예정!)
+	 * 호출할 handler에서 connection에 auto_commit false로 변경 후 사용요망
+	 * */
+	public void autoBookCancel(Connection conn)throws SQLException{
+		PreparedStatement pstmt = null;
+		
+		try{
+			String sql = "update resort.book set bk_state='예약취소', bk_canceldate = now() where bk_regdate<date_sub(now(),interval 3 day) and bk_state = '입금대기'";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.executeUpdate();			
+		}finally {
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	/**
+	 * 현재 날짜가 예약의 퇴실날짜를 경과한 경우 예약 종료로 만드는 구문 (관리자로 로그인 할 시 호출할 예정!)
+	 * 호출할 handler에서 connection에 auto_commit false로 변경 후 사용요망
+	 * */
+	public void autoBookEnd(Connection conn)throws SQLException{
+		PreparedStatement pstmt = null;
+		
+		try{
+			String sql = "update resort.book set bk_state='예약종료' where bk_enddate < now() and bk_state = '입금완료'";
+			pstmt = conn.prepareStatement(sql);	
+			
+			pstmt.executeUpdate();			
+		}finally {
+			JdbcUtil.close(pstmt);
+		}
+	}
 }
