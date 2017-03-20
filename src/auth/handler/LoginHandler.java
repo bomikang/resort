@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
-import member.handler.LoginMemberInfo;
+import member.model.LoginMemberInfo;
 import member.model.Member;
 import member.model.MemberDao;
 import mvc.controller.CommandHandler;

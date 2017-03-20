@@ -81,7 +81,7 @@
 			});	
 		 
 		 
-			$("#btn1_1").click(function(){
+			 $("#btn1_1").click(function(){
 				$.ajax({
 					url:"updateInfo.do",
 					type:"post",
@@ -96,15 +96,15 @@
 								}
 					} 
 				});
-			}); 
+			});    
 	
-			$("#btn2_1").click(function(){
+			  $("#btn3_1").click(function(){
 				$.ajax({
 					url:"updateInfo.do",
 					type:"post",
 					timeout:30000,
 					dataType:"json",
-					data:{"id":$("#id").val()},
+					data:{"password":$("#password").val()},
 					success:function(data){
 												// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 								if(data=="ok"){
@@ -114,9 +114,62 @@
 					} 
 				});
 			}); 
-			
-		
-		
+			  $("#btn4_1").click(function(){
+					$.ajax({
+						url:"updateInfo.do",
+						type:"post",
+						timeout:30000,
+						dataType:"json",
+						data:{"mail":$("#mail").val()},
+						success:function(data){
+													// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
+									if(data=="ok"){
+										alert("개인정보가 수정되었습니다.");
+										location.href="index.jsp";
+									}
+						} 
+					});
+				});   
+			  $("#btn5_1").click(function(){
+					$.ajax({
+						url:"updateInfo.do",
+						type:"post",
+						timeout:30000,
+						dataType:"json",
+						data:{"tel":$("#tel").val()},
+						success:function(data){
+													// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
+									if(data=="ok"){
+										alert("개인정보가 수정되었습니다.");
+										location.href="index.jsp";
+									}
+						} 
+					});
+				});
+			  $("#withdrawal").click(function(){
+					$.ajax({
+						url:"withdrawal.do",
+						type:"post",
+						timeout:30000,
+						dataType:"json",
+						success:function(data){
+													// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
+									if(data=="ok"){
+										
+										if (confirm("정말 탈퇴하시겠습니까?") == true){    //확인
+											location.href="index.jsp";
+										}else{   //취소
+										    return;
+										}
+					
+										
+									
+										location.href="index.jsp";
+									}
+						} 
+					});
+				});
+	
 	});	
 </script>
 </head>
@@ -146,21 +199,12 @@
 							</span>
 						</form></td>
 			</tr>
-					<tr>
-						<td>사용자 아이디 </td>
-						<td> ${info.id } <button type="button" id="btn2">수정</button>
-							<span id="IdUpdate" class="update" >
-								<input type="text" name="id" id="id" placeholder="아이디">
-									<button type="button" id="btn2_1">완료</button>
-									<button type="button" id="btn2_2">취소</button>
-							</span>
-						</td>
-					</tr>
+					
 					<tr>
 						<td>비밀번호 변경  </td>
 						<td>${info.password } <button type="button" id="btn3">수정</button>
 							<span id="passwordUpdate" class="update">
-								<input type="text" name="password" placeholder="비밀번호">
+								<input type="text" name="password" id="password" placeholder="비밀번호">
 									<button type="button" id="btn3_1">완료</button>
 									<button type="button" id="btn3_2">취소</button>
 							</span>
@@ -188,7 +232,7 @@
 					</tr>
 					<tr>
 						<td>탈퇴</td>
-						<td>테스트 중 <button type="button" id="btn6">탈 퇴</button>
+						<td><button type="button" id="withdrawal">탈 퇴</button></a>
 							
 						</td>
 					</tr>

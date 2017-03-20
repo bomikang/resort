@@ -1,4 +1,4 @@
-package member.handler;
+package member.model;
 
 public class LoginMemberInfo { // 로그인 이후 세션에 데이터 남기는 개인정보 클래스
 	private int my_no;

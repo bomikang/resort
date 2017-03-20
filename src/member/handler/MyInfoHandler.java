@@ -1,12 +1,13 @@
 package member.handler;
 
 import java.sql.Connection;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
+import member.model.LoginMemberInfo;
 import member.model.Member;
 import member.model.MemberDao;
 import mvc.controller.CommandHandler;

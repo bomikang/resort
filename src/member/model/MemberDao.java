@@ -209,7 +209,22 @@ public class MemberDao {
 		
 		}
 	}
+	public int member_WithDrawal(Connection conn, Member member) throws SQLException{
+		PreparedStatement pstmt = null;	
+		try {
+			String sql = "UPDATE member set mem_outdate=? where mem_no =? "; 
 
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setTimestamp(1,new Timestamp(member.getOutDate().getTime()));
+			pstmt.setInt(2, member.getNo());
+						
+			return pstmt.executeUpdate();			
+		} finally {
+			
+			JdbcUtil.close(pstmt);
+		
+		}
+	}
 	
 
 	
