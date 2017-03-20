@@ -41,6 +41,7 @@ public class BookProcessHandler implements CommandHandler{
 				JdbcUtil.close(conn);
 			}
 			return "index.jsp?page=/WEB-INF/book/bk_book&menu=/WEB-INF/book/bk_menu";
+		
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			int strNo = Integer.parseInt(req.getParameter("strNo"));
 			int memNo = Integer.parseInt(req.getParameter("memNo"));

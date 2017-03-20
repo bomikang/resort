@@ -4,9 +4,25 @@
 <script>
 	$(function(){
 		/*고객 휴대폰 번호 입력해 놓는 구문 필요*/
-	
+		
 		setDateForm();	
 		setPriceForm();
+		
+		$.ajax({
+			url:"bookcheckdate.do",
+			type:"post",
+			timeout:30000,
+			dataType:"json",
+			data:{"startDate":$("#start").val(),
+					"endDate" : $("#end").val(),
+					"strNo" : ${str.no }
+			},
+			success:function(data){
+				if(data==false){
+					location.href="book.do";
+				}							
+			} 
+		});
 		
 		$(document).on("change","#period",function() {	
 			setDateForm();	

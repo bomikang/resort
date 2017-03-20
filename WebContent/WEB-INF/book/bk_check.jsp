@@ -33,6 +33,7 @@
 			<th>시설 명</th>
 			<th>예약 기간</th>
 			<th>예약 구분</th>
+			<th>예약 날짜</th>
 			<th>취소</th>
 		</tr>
 		<c:if test="${empty bList }">
@@ -45,7 +46,8 @@
 				<tr>
 					<td><a href="bookcheckdetail.do?bkNo=${book.no }&pageId=check">${book.no }</a></td>
 					<td>${book.mem.name }</td>
-					<td>${book.str.nameById }<br>${book.str.name }</td>
+					<!-- 시설명 클릭시 시설정보로 넘어갈 수 있도록 -->
+					<td><a href="structure.do?people=4&houseId=${book.str.id }" target="_blank">${book.str.nameById }<br>${book.str.name }</a></td>
 					<td>${book.startDateForm } ~ ${book.endDateForm }</td>
 					<!-- 예약상태에 따른 글씨색 변화 -->
 					<c:choose>
@@ -62,6 +64,7 @@
 							<td class='stateEnd'>${book.state }</td>
 						</c:when>
 					</c:choose>				
+					<td>${book.regDateForm }</td>
 					<td>
 						<c:if test="${book.state!='예약취소' }">
 						<form action="bookcancel.do" method="post" class="bkcancel">

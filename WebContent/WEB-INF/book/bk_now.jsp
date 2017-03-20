@@ -90,11 +90,11 @@ response.setHeader("pragma","no-cache");
 				location.href="login.do";
 			</c:if>	
 			<c:if test="${!empty myinfo }">
-			//alert("예약가능합니다.");	
-			var strNo = $(this).find(".strNo").val();
-			var date = $(this).find(".date").val();
-			var url="bookprocess.do?strNo="+strNo+"&date="+date;
-			location.href=url;
+				//alert("예약가능합니다.");	
+				var strNo = $(this).find(".strNo").val();
+				var date = $(this).find(".date").val();
+				var url="bookprocess.do?strNo="+strNo+"&date="+date;
+				location.href=url;
 			</c:if>
 		});
 		
@@ -195,7 +195,7 @@ response.setHeader("pragma","no-cache");
 				//console.log(bList[j][index].startDate);
 				if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
 					//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-					dateForm += "<td><a href='#' class='isBooked'>X</a></td>";
+					dateForm += "<td><a href='#' class='isBooked'>★</a></td>";
 				}else{	
 					//다음달 혹은 오늘 이후날짜
 					if(bList[j]!= undefined){

@@ -48,6 +48,10 @@
 				<td>${book.no }</td>
 			</tr>
 			<tr>
+				<th>예약날짜</th>
+				<td>${book.regDateForm }</td>
+			</tr>
+			<tr>
 				<th>예약자</th>
 				<td>${book.mem.name }</td>
 			</tr>
@@ -77,9 +81,9 @@
 			<tr>
 				<th>예약 구분</th>
 				<td>${book.state }
-			<c:if test="${!empty book.cancelDate }">
-			(취소 날짜  : ${book.cancelForm })
-			</c:if>
+				<c:if test="${!empty book.cancelDate }">
+				(취소 날짜  : ${book.cancelForm })
+				</c:if>
 				</td>
 			<tr>
 				<th>가격</th>

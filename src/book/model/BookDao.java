@@ -187,7 +187,7 @@ public class BookDao {
 		List<Book> bList = new ArrayList<>();
 		ResultSet rs = null;		
 		try{
-			String sql = "select * from resort.book where bk_mem = ? and (bk_state !='예약취소' or bk_state != '예약종료') order by bk_startdate";
+			String sql = "select * from resort.book where bk_mem = ? and (bk_state !='예약취소' or bk_state != '예약종료')";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mem.getNo());
 			rs = pstmt.executeQuery();
