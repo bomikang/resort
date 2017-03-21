@@ -8,6 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<a href="qnainsert.do">게시글 등록</a>
 </body>
 </html>
