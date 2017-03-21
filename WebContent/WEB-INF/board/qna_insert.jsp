@@ -5,13 +5,19 @@
 <html>
 <head>
 <meta content="text/html; charset=UTF-8">
-
-<script>
-	
-</script>
 <title>Insert title here</title>
 </head>
 <body>
-	${myinfo}
+	<c:if test="${empty customer}">
+		<script>
+			location.href="login.do";
+		</script>
+	</c:if>
+	<form action="">
+		<p>
+			<label for="">작성자</label>
+			<input type="text" name=""/>
+		</p>
+	</form>
 </body>
 </html>
