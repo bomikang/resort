@@ -43,7 +43,7 @@ public class BookHandler implements CommandHandler {
 			}
 			return "index.jsp?page=/WEB-INF/book/bk_now&menu=/WEB-INF/book/bk_menu";
 		
-		}else if(req.getMethod().equalsIgnoreCase("post")){
+		}else if(req.getMethod().equalsIgnoreCase("post")){//ajax
 			String dateText = req.getParameter("date");
 			int strId = Integer.parseInt(req.getParameter("strId"));
 			System.out.println("strId : " + strId);

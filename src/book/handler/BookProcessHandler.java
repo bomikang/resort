@@ -34,9 +34,11 @@ public class BookProcessHandler implements CommandHandler{
 				Member mem = new Member(myInfo.getMy_id());
 				mem.setNo(myInfo.getMy_no());
 				Integer count = bDao.selectCountByMember(conn, mem);
-				if(count>10){
+				if(count>=10){
 					req.setAttribute("noCount", true);
 					return "index.jsp?page=/WEB-INF/book/bk_now&menu=/WEB-INF/book/bk_menu";
+				}else{
+					req.setAttribute("noCount", false);
 				}
 				StructureDao sDao = StructureDao.getInstance();
 				Structure str = sDao.getStructureByNo(conn, strNo);
