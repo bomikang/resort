@@ -33,7 +33,7 @@ response.setHeader("pragma","no-cache");
 	<div class="wrapper">
 		<div class="login_area">
 			<div>
-			<c:if test="${empty myinfo }">
+			<c:if test="${empty customer }">
 				<p><b>손님!</b> 옥성자연휴양림에 오신걸 환영합니다</p>
 				<a href="login.do">로그인</a>
 				<a href="join.do">회원가입</a>
@@ -43,6 +43,13 @@ response.setHeader("pragma","no-cache");
 				<a href="logout.do">로그아웃</a>
 				<a href="myinfo.do">회원정보</a>
 			</c:if>
+			<c:if test="${!empty admin }">
+				<p><b>${myinfo.my_name }</b> 관리자 모드 입니다 </p>
+				<a href="logout.do">로그아웃</a>
+				<a href="myinfo.do">관리자페이지</a>
+				
+			</c:if>
+			
 			</div>
 		</div>
 		<header class="header_menu" style="z-index:9999;">

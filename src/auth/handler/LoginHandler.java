@@ -61,6 +61,10 @@ public class LoginHandler implements CommandHandler {
 				if(myinfo.getIsMng().equals(false)){ // 일반회원일 경우
 					req.getSession().setAttribute("myinfo",myinfo);
 				}
+				if(myinfo != null){
+					req.getSession().setAttribute("customer",myinfo);
+					
+				}
 				
 				return "index.jsp";
 			}finally{
