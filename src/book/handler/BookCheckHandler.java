@@ -6,11 +6,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import auth.handler.LoginMemberInfo;
+
 import book.model.Book;
 import book.model.BookDao;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
+import member.model.LoginMemberInfo;
 import member.model.Member;
 import mvc.controller.CommandHandler;
 
