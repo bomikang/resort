@@ -7,6 +7,7 @@
 		
 		setDateForm();	
 		setPriceForm();
+		setTelForm();
 		
 		$.ajax({
 			url:"bookcheckdate.do",
@@ -57,6 +58,26 @@
 		$("#bookProcess").submit(function(){
 			if(!confirm("선택하신 기간으로 예약 하시겠습니까?")){
 				return false;
+			}else{
+				$.ajax({
+					url:"bookcheckdate.do",
+					type:"post",
+					timeout:30000,
+					dataType:"json",
+					data:{"startDate":$("#start").val(),
+							"endDate" : $("#end").val(),
+							"strNo" : ${str.no }
+					},
+					success:function(data){
+						if(data==false){
+							alert("예약이 진행 중이라 예약 하실 수 없습니다.");
+							location.href="book.do";
+						}else{
+							alert("예약가능합니다.");
+						}							
+					} 
+				});			 
+				 return false;
 			}
 		});
 		
@@ -64,6 +85,18 @@
 			location.href="book.do";
 		});
 	});//ready
+	/* 예약을 진행할 로그인된 회원의 휴대폰 번호를 3자리로 나누어 각자의 자리에 입력 */
+	function setTelForm(){
+		var tel = "${myinfo.my_tel }";
+		console.log(tel);
+		var tels = tel.split("-");
+		if(tels.length==3){
+			$("select[name='bktel1']").val(tels[0]);
+			$("input[name='bkTel2']").val(tels[1]);
+			$("input[name='bkTel3']").val(tels[2]);
+		}		
+	}
+	
 	function setPriceForm(){
 		$("#totalPrice").empty();
 		var price = Number(${str.price});
@@ -77,9 +110,19 @@
 			}
 			temp.setDate(temp.getDate()+1);
 		}
-		$("#totalPrice").html(total+"원");
+		
+		$("#totalPrice").html(number_format(total)+"원");
 	}
-	
+	/* 인터넷 블로그에서 발췌한 함수(javaScript 내 Format화 된 String 생성)*/
+	function number_format( number ){	
+	  var nArr = String(number).split('').join(',').split('');//모든 숫자를 쪼개어 사이사이에 ","삽입
+	  for( var i=nArr.length-1, j=1; i>=0; i--, j++){
+		  if( j%6 != 0 && j%2 == 0) nArr[i] = '';
+		  //쉼표가 들어가는 자리(2의 배수==(j%2==0)) && 쉼표가 있어야할 자리 외의 숫자는 공백처리하여 format된 것 처럼 만듦
+	  }
+	  return nArr.join('');
+	}
+	/*이전 화면에서 넘어 온 시작 날짜값을 바탕으로 1박2일, 2박 3일, 3박 4일의 기간을 기준으로 끝날짜를 계산하여 input form에 넣는 함수 */
 	function setDateForm(){		
 		var date = new Date(${startDate});
 		
@@ -91,7 +134,7 @@
 		var endForm = convertToString(date.getTime());
 		$("#end").val(endForm);
 	}
-	
+	/*date 객체의 getTime()으로 가져온 시간 값을 다시 String형태의 date값으로 변환 */
 	function convertToString(date){
 		var temp = new Date(date);
 		if(temp.getMonth()<9){
@@ -128,7 +171,7 @@
 			</tr>
 			<tr>
 				<th>객실 요금</th>
-				<td>[성수기] : ${str.price }원/1박   [비수기] : ${str.price*0.7 }원/1박</td>
+				<td>[성수기] : ${str.originPriceToString }원/1박   [비수기] : ${str.lessPriceToString }원/1박</td>
 			</tr>
 			<tr>
 				<th>이용 기간</th>

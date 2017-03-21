@@ -144,6 +144,9 @@ public class Book {
 	public String getRegDateForm(){
 		return dateTimeFormat.format(regDate);
 	}
+	public String getRegDateNoTimeForm(){
+		return dateFormat.format(regDate);
+	}
 	public String getStartDateForm(){
 		return dateFormat.format(startDate);
 	}
