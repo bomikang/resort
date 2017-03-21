@@ -22,16 +22,16 @@
 		<c:set var="user" value="${admin}"></c:set>
 	</c:if>
 	
-	<form action="">
+	<form action="qnainsert.do" method="post">
 		<fieldset>
 			<legend>1:1 문의 등록</legend>
 			<p>
 				<label for="">작성자</label>
-				<input type="text" name="name" value="${user.my_name }" disabled="disabled"/>
+				<input type="text" name="name" value="${user.my_name}" disabled="disabled"/>
 			</p>
 			<p>
 				<label for="">이메일</label>
-				<input type="text" name="email"/>
+				<input type="text" name="email" value="${user.my_mail}" disabled="disabled"/>
 			</p>
 			<p>
 				<label for="">제목</label>
