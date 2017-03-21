@@ -54,6 +54,7 @@ public class LoginHandler implements CommandHandler {
 						member.getMail(),
 						member.getIsMng(),
 						member.getTel());
+				
 				if(myinfo.getIsMng().equals(true)){ // 관리자일 경우
 					req.getSession().setAttribute("admin",myinfo);
 				}
@@ -61,7 +62,7 @@ public class LoginHandler implements CommandHandler {
 				if(myinfo.getIsMng().equals(false)){ // 일반회원일 경우
 					req.getSession().setAttribute("myinfo",myinfo);
 				}
-				if(myinfo != null){
+				if(myinfo != null){ 				// 손님일 경우
 					req.getSession().setAttribute("customer",myinfo);
 					
 				}

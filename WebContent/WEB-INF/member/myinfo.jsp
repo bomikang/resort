@@ -147,27 +147,24 @@
 					});
 				});
 			  $("#withdrawal").click(function(){
+					var cf = confirm("정말 탈퇴하시겠습니까?");
+					
+					if(cf==true){
 					$.ajax({
 						url:"withdrawal.do",
 						type:"post",
 						timeout:30000,
 						dataType:"json",
 						success:function(data){
-													// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
-									if(data=="ok"){
-										
-										if (confirm("정말 탈퇴하시겠습니까?") == true){    //확인
-											location.href="index.jsp";
-										}else{   //취소
-										    return;
-										}
-					
-										
-									
-										location.href="index.jsp";
-									}
+						
+													
+							location.href="index.jsp";
+								console.log(data);			
 						} 
 					});
+					}else {
+						return false;
+					}
 				});
 	
 	});	
@@ -232,7 +229,7 @@
 					</tr>
 					<tr>
 						<td>탈퇴</td>
-						<td><button type="button" id="withdrawal">탈 퇴</button></a>
+						<td><button type="button" id="withdrawal">탈 퇴</button>
 							
 						</td>
 					</tr>
