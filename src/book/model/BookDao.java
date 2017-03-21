@@ -380,15 +380,20 @@ public class BookDao {
 		try{
 			//select * from resort.book as b left join resort.`structure` as s on b.bk_str=s.str_no where b.bk_mem=3 and s.str_id=1 and b.bk_state='예약취소';
 			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str=s.str_no "
-						+"where b.bk_mem=? and s.str_id=? and (";
-			for(int i=0;i<state.length;i++){
-				if(i==0){
-					sql += " b.bk_state='"+state[i]+"' ";
-				}else{
-					sql += "or b.bk_state='"+state[i]+"' ";
+						+"where b.bk_mem=? and s.str_id=?";
+			if(state.length>0){
+				sql += " and (";
+				for(int i=0;i<state.length;i++){
+					if(i==0){
+						sql += " b.bk_state='"+state[i]+"' ";
+					}else{
+						sql += "or b.bk_state='"+state[i]+"' ";
+					}
 				}
+				sql += ")";
 			}
-			sql += ") order by bk_no desc";
+			
+			sql += " order by bk_no desc";
 			System.out.println("condition.getMem().getNo() : " + condition.getMem().getNo());
 			System.out.println("condition.getStr().getId() : "+condition.getStr().getId());
 			System.out.println("selectByMember SQL : "+sql);
@@ -429,4 +434,74 @@ public class BookDao {
 			JdbcUtil.close(rs);
 		}
 	}//end of selectByMember
+	
+	/**
+	 * 로그인한 내역? 하여튼 회원내역(회원번호)과 조건을 바탕으로 예약내역을 조회할 시 가져 올 Method
+	 * */
+	public List<Book> selectAllWithCondition(Connection conn, int year, int month, int strId,String[] state)throws SQLException{		
+		PreparedStatement pstmt = null;
+		List<Book> bList = new ArrayList<>();
+		ResultSet rs = null;	
+		
+		try{
+			//select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no where (year(b.bk_startdate)=2017 and month(b.bk_startdate)=3) and (year(b.bk_enddate)=2017 and month(b.bk_enddate)=3) and s.str_id=1 and b.bk_state='예약취소';
+			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no "
+						+"where (year(b.bk_startdate)=? and month(b.bk_startdate)=?) "
+						+"and (year(b.bk_enddate)=? and month(b.bk_enddate)=?) and s.str_id=? ";
+			if(state.length>0){
+				sql += "and (";	
+				for(int i=0;i<state.length;i++){
+					if(i==0){
+						sql += " b.bk_state='"+state[i]+"' ";
+					}else{
+						sql += "or b.bk_state='"+state[i]+"' ";
+					}
+				}
+				sql +=")";
+			}
+			sql += " order by bk_no desc";
+			
+			System.out.println("selectByMember SQL : "+sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, year);
+			pstmt.setInt(2, month);
+			pstmt.setInt(3, year);
+			pstmt.setInt(4, month);
+			pstmt.setInt(5, strId);
+			
+			rs = pstmt.executeQuery();
+			MemberDao mDao = MemberDao.getInstance();
+			StructureDao sDao = StructureDao.getInstance();
+			
+			while(rs.next()){
+				Book book = new Book();
+				book.setNo(rs.getString("bk_no"));								//예약번호
+				book.setRegDate(rs.getTimestamp("bk_regdate"));				//예약날짜
+				book.setStartDate(rs.getTimestamp("bk_startdate"));			//숙박시작날짜
+				book.setEndDate(rs.getTimestamp("bk_enddate"));				//숙박끝날짜
+				
+				if(rs.getTimestamp("bk_canceldate")!=null){
+					book.setCancelDate(rs.getTimestamp("bk_canceldate"));	//취소 했을시(취소날짜)
+				}
+				
+				book.setState(rs.getString("bk_state"));					//예약의 진행상태
+				book.setTel(rs.getString("bk_tel"));						//예약자 연락처
+				
+				int memNo = rs.getInt("bk_mem");
+				int strNo = rs.getInt("bk_str");
+				
+				
+				book.setMem(mDao.selectByNo(conn, memNo));
+				book.setStr(sDao.getStructureByNo(conn, strNo));
+				
+				bList.add(book);
+			}	
+			
+			return bList;			
+		}finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(rs);
+		}
+	}//end of selectAllWithCondition
+	
 }

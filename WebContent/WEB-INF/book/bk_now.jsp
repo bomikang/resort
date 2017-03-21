@@ -85,6 +85,10 @@ response.setHeader("pragma","no-cache");
 		});
 		
 		$(document).on("click", ".noBooked", function(){
+			<c:if test="${!empty admin }">
+				alert("관리자는 예약할 수 없습니다.");
+				return false;
+			</c:if>			
 			<c:if test="${empty myinfo }">
 				alert("로그인이 필요한 페이지 입니다.");
 				location.href="login.do";

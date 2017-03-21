@@ -62,6 +62,42 @@
 </script>
 <div id="bk_list">
 	<h4>전체 예약 목록</h4>
+	<!-- 기간별(시작날짜|끝날짜가 그 달일 때), 상태별, 시설별로 관리자가 조회 할 수 있도록 bk_check참조하여 만들기 -->
+	<form name="book1">
+		<fieldset>
+			<p>
+				조회 기준 : 
+				<input type="radio">전체 내역 보기
+				<input type="radio">조건별 검색 
+			</p>		
+			<p>
+				이용 기간 :
+				<select name="year" id="year">
+						<option value="2017">2017</option>
+				</select> 
+				년 
+				<select name="month" id="month">
+						<option value="3">3</option>
+				</select>
+				월
+			</p>
+			<p>
+				예약 상태 : 
+				<input type="checkbox" value="입금대기" id="bkReady" name="bkState" checked="checked"><label for="bkReady">입금대기</label>
+				<input type="checkbox" value="입금완료" id="bkProcess" name="bkState" checked="checked"><label for="bkRbkProcesseady">입금완료</label>
+				<input type="checkbox" value="예약취소" id="bkCancel" name="bkState"><label for="bkCancel">예약취소</label>
+				<input type="checkbox" value="예약종료" id="bkEnd" name="bkState"><label for="bkEnd">예약종료</label>
+			</p>
+			<p>시설 구분 : 
+				<select id="bkStrId" name="bkStrId">
+					<c:forEach items="${strId }" var="str">
+						<option value="${str.id }">${str.nameById }</option>
+					</c:forEach>
+				</select>
+			</p>
+			<p><input type="submit" value="조회하기"></p>
+		</fieldset>
+	</form>
 	<c:choose>
 		<c:when test="${empty bList }">
 			<script type="text/javascript">

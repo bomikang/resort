@@ -60,8 +60,8 @@
 	
 		var tableForm = "<tr><th>접수 날짜</th><th>시설 명</th><th>이용 기간</th><th>예약 번호</th><th>총 금액</th><th>예약 구분</th><th>취소</th></tr>";
 		
-		if(bList==null||bList==undefined){
-			tableForm = "<tr><td colspan='7'>예약 정보가 없습니다.</td></tr>";
+		if(bList==null||bList==undefined||bList.length==0){
+			tableForm += "<tr><td colspan='7'>예약 정보가 없습니다.</td></tr>";
 		}else{
 			for(var j=0;j<bList.length;j++){
 				var strUrl = "structure.do?people=4&houseId="+bList[j].str.id;
@@ -98,8 +98,7 @@
 					tableForm += "-";
 				}
 				tableForm += "</td></tr>";
-			}
-			
+			}			
 		}		
 		$("#bkTable").append(tableForm);
 	}
@@ -186,13 +185,5 @@
 				</tr>
 			</c:forEach>
 		</c:if> --%>
-<!-- 		<tr>
-			<th>예약 번호</th>
-			<th>예약자</th>
-			<th>시설 명</th>
-			<th>예약 기간</th>
-			<th>예약 구분</th>
-			<th>취소</th>
-		</tr> -->
 	</table>
 </div>
