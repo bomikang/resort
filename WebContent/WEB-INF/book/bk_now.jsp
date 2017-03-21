@@ -214,12 +214,11 @@ response.setHeader("pragma","no-cache");
 									dateForm += "<td><a href='#' class='isBooked'>△</a></td>";
 								}
 								
-							}else{
+							}else{								
 								dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
 							}
 							
 							if(date.getTime()>=(endDate.getTime()-(24*60*60*1000))){
-								
 								index++;
 							}
 						}else{ 

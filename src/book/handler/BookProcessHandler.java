@@ -21,8 +21,11 @@ public class BookProcessHandler implements CommandHandler{
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		if(req.getMethod().equalsIgnoreCase("get")){
-			LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");			
+		LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
+		if(myInfo==null){
+			res.sendRedirect("login.do");
+		}
+		if(req.getMethod().equalsIgnoreCase("get")){			
 			int strNo = Integer.parseInt(req.getParameter("strNo"));
 			long date = Long.parseLong(req.getParameter("date"));
 			

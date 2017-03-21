@@ -83,12 +83,12 @@ public class BookDao {
 			
 			int year = cal.get(Calendar.YEAR);
 			int month = cal.get(Calendar.MONTH)+1;
-			
-			String sql = "select * from resort.book"
-							+" where((year(bk_startdate)=? and month(bk_startdate)=?)or(year(bk_enddate)=? and month(bk_enddate)=?))"
-							+"and bk_state!='예약취소' and bk_state!='예약종료' and bk_str=? "
-							+"and (select distinct str_id from resort.`structure` where str_no=?)=? "
-							+"order by bk_startdate";
+			//select * from resort.book as b left join resort.`structure` as s on b.bk_str=s.str_no where ((year(bk_startdate)=2017 and month(b.bk_startdate)=3)or(year(b.bk_enddate)=2017 and month(b.bk_enddate)=3))and b.bk_state!='예약취소' and b.bk_state!='예약종료' and b.bk_str=1
+			//and s.str_id=1 order by bk_startdate;
+			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str=s.str_no "
+							+"where ((year(bk_startdate)=? and month(b.bk_startdate)=?)or(year(b.bk_enddate)=? and month(b.bk_enddate)=?)) "
+							+"and b.bk_state!='예약취소' and b.bk_state!='예약종료' "
+							+"and b.bk_str=? and s.str_id=? order by bk_startdate ";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, year);
@@ -96,8 +96,7 @@ public class BookDao {
 			pstmt.setInt(3, year);
 			pstmt.setInt(4, month);
 			pstmt.setInt(5, str);
-			pstmt.setInt(6, str);
-			pstmt.setInt(7, strId);
+			pstmt.setInt(6, strId);
 			
 			rs = pstmt.executeQuery();
 			
