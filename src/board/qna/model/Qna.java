@@ -2,6 +2,7 @@ package board.qna.model;
 
 import java.util.Date;
 
+import book.model.Book;
 import member.model.Member;
 
 public class Qna {
@@ -10,10 +11,10 @@ public class Qna {
 	private String title;
 	private Date regDate;
 	private int article; //원 게시물 번호(관리자 일 때)
-	private String content; //
+	private String content; //게시글 내용
 	
 	public Qna() {}
-
+	
 	public Qna(int no, Member member, String title, Date regDate, int article, String content) {
 		this.no = no;
 		this.member = member;
@@ -22,7 +23,7 @@ public class Qna {
 		this.article = article;
 		this.content = content;
 	}
-
+	
 	public int getNo() {
 		return no;
 	}
@@ -71,4 +72,9 @@ public class Qna {
 		this.content = content;
 	}
 	
+	/*method*/
+	//Date 객체를 "yyyy-MM-dd" 형태의 String으로 반환
+	public String getRegDateNoTimeForm(){
+		return Book.dateFormat.format(regDate);
+	}
 }

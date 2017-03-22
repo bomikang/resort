@@ -8,12 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:if test="${empty customer}">
-		<script>
-			location.href="login.do";
-		</script>
-	</c:if>
-	
 	<c:if test="${!empty myinfo}">
 		<c:set var="user" value="${myinfo}"></c:set>
 	</c:if>
