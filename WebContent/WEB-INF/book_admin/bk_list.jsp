@@ -121,6 +121,7 @@
 	
 	function setTable(data){
 		stateList = new Array();
+		var totalPrice = 0;
 		$("#bkTable").empty();	
 	
 		var bList =  data[1];
@@ -131,6 +132,7 @@
 			tableForm += "<tr><td colspan='9'>조회할 정보가 없습니다.</td></tr>";
 		}else{
 			for(var j=0;j<bList.length;j++){	
+				totalPrice += Number(bList[j].price);
 				stateList.push(bList[j].state);
 				tableForm += "<tr>";
 				tableForm += "<th class='bkNo'>"+bList[j].no+"</th>";//예약번호
@@ -146,7 +148,10 @@
 				
 				
 				tableForm += "<td class='bkCancel'>"+bList[j].cancelForm +"</td></tr>";
-			}			
+			}
+			
+				tableForm += "<tr><th>총 금액</th><th></th><th></th><th></th><th></th><th></th><th>"+number_format(totalPrice)+" 원</th><th></th><th></th></tr>";
+			
 		}		
 		$("#bkTable").append(tableForm);
 		setState(stateList);
@@ -156,6 +161,15 @@
 			$(obj).val(stateList[i]);
 			$(obj).next(".index").val(i);
 		});
+	}
+	/* 인터넷 블로그에서 발췌한 함수(javaScript 내 Format화 된 String 생성)*/
+	function number_format( number ){	
+	  var nArr = String(number).split('').join(',').split('');//모든 숫자를 쪼개어 사이사이에 ","삽입
+	  for( var i=nArr.length-1, j=1; i>=0; i--, j++){
+		  if( j%6 != 0 && j%2 == 0) nArr[i] = '';
+		  //쉼표가 들어가는 자리(2의 배수==(j%2==0)) && 쉼표가 있어야할 자리 외의 숫자는 공백처리하여 format된 것 처럼 만듦
+	  }
+	  return nArr.join('');
 	}
 </script>
 <div id="bk_list">
@@ -196,6 +210,7 @@
 			<p><input type="submit" value="조회하기"></p>
 		</fieldset>
 	</form>
+	<br>
 	<table border="1" id="bkTable"></table>
 	<%-- <c:choose>
 		<c:when test="${empty bList }">
