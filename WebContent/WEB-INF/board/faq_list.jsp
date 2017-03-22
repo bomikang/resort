@@ -29,9 +29,20 @@ response.setHeader("pragma","no-cache");
 			var url = "faqupdate.do?fNo="+fNo;
 			location.href=url;
 		});
-		
-		$(".faqTitle").click(function(){		
-			$(this).parents("dt").next(".faqDetail").slideToggle();
+		/* 글 클릭시 내용이 보이도록 slide() 사용, 화면에 한 질문에 대한 답만 볼 수 있도록 처리 */
+		$(".faqTitle").click(function(){
+			if($(this).parents("dt").next(".faqDetail").css("display")=="none"){
+				//선택한 질문에 대한 답이 화면에 노출되어있지 않은 경우(노출 필요)
+				$(".faqDetail").each(function(i, obj){
+					if($(obj).css("display")!="none"){
+						$(obj).slideUp();
+					}
+				});
+				$(this).parents("dt").next(".faqDetail").slideDown();
+			}else{
+				$(this).parents("dt").next(".faqDetail").slideUp();
+			}			
+			return false;
 		});
 		
 		$("#btnRmv").click(function(){
