@@ -20,6 +20,7 @@ public class QnaDao {
 		return instance;
 	}
 	
+	/*회원이 작성한 게시글의 리스트만 불러오는 메소드*/
 	public List<Qna> selectAllQnaByMember(Connection con, Member member){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -42,6 +43,30 @@ public class QnaDao {
 		}
 		return list;
 	}//selectAllQnaByMember
+	
+	/*관리자의 게시글을 제외한 회원의 모든 게시글 리스트를 가져오는 메소드*/
+	public List<Qna> selectAllQnaExceptAdmin(Connection con){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Qna> list = new ArrayList<>();
+		
+		String sql = "select q.qna_no, mem_no, qna_title, qna_regdate, qna_article, qna_detail "
+					+ "from qna q, qna_detail qd where q.qna_article = 0 and q.qna_no = qd.qna_no";	
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Qna qna = createQna(rs, con);
+				qna.setContent(rs.getString("qna_detail"));
+				list.add(qna);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}//selectAllQnaWhenAdmin
 	
 	public void insertQna(Connection con, Qna qna){
 		PreparedStatement pstmtTitle = null;
@@ -70,6 +95,7 @@ public class QnaDao {
 		}
 	}//insertQna
 	
+	/*마지막 게시글 번호 가져오는 메소드 <= qna_detail에 insert 할 때 필요*/
 	public int getLastQnaNo(Connection con){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -89,9 +115,35 @@ public class QnaDao {
 			JdbcUtil.close(pstmt);
 		}
 		return res;
-	}//getLastQnaNo 마지막 게시글 번호 가져오는 메소드
+	}//getLastQnaNo 
 	
-	public Qna getQnaFromUser(Connection con, int qnaNo){
+	
+	public void updateQna(Connection con, Qna qna){
+		PreparedStatement pstmtTitle = null;
+		PreparedStatement pstmtContent = null;
+		
+		try {
+			//제목수정(qna)
+			pstmtTitle = con.prepareStatement("update qna set qna_title = ? where qna_no = ?");
+			pstmtTitle.setString(1, qna.getTitle());
+			pstmtTitle.setInt(2, qna.getNo());
+			pstmtTitle.executeUpdate();
+			
+			//내용수정(qna_detail)
+			pstmtContent = con.prepareStatement("update qna_detail set qna_detail = ? where qna_no = ?");
+			pstmtContent.setString(1, qna.getContent());
+			pstmtContent.setInt(2, qna.getNo());
+			pstmtContent.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcUtil.close(pstmtContent);
+			JdbcUtil.close(pstmtTitle);
+		}
+	}//updateQna
+	
+	/*게시글 번호로 제목과 내용을 불러오는 메소드*/
+	public Qna getQnaByNo(Connection con, int qnaNo){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Qna qna = null;
@@ -115,8 +167,9 @@ public class QnaDao {
 			JdbcUtil.close(pstmt);
 		}
 		return qna;
-	}//getQnaFromUsert 회원이 남긴 게시글 불러오는 메소드
+	}//getQnaFromUser
 	
+	/*
 	public Qna getQnaFromAdmin(Connection con, int qnaNo){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -141,7 +194,7 @@ public class QnaDao {
 		}
 		return qna;
 	}//getQnaFromAdmin 관리자가 회원의 게시글에 남긴 답글 불러오는 메소드
-	
+	*/
 	
 
 	

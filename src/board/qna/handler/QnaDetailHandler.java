@@ -15,26 +15,24 @@ public class QnaDetailHandler implements CommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		if (req.getMethod().equalsIgnoreCase("get")) {
-			Connection con = null;
+		Connection con = null;
+
+		try {
+			con = ConnectionProvider.getConnection();
 			
-			try {
-				con = ConnectionProvider.getConnection();
-				
-				int qnaNo = Integer.parseInt(req.getParameter("qnano"));
-				
-				QnaDao dao = QnaDao.getInstance();
-				Qna qna = dao.getQnaFromUser(con, qnaNo);
-				
-				req.setAttribute("qna", qna);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally{
-				JdbcUtil.close(con);
-			}
-			return "index.jsp?page=/WEB-INF/board/qna_detail&menu=/WEB-INF/board/board_menu";
-		}	
-		return null;
+			int qnaNo = Integer.parseInt(req.getParameter("qnano"));
+
+			QnaDao dao = QnaDao.getInstance();
+			Qna qna = dao.getQnaByNo(con, qnaNo);
+
+			req.setAttribute("qna", qna);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(con);
+		}
+		return "index.jsp?page=/WEB-INF/board/qna_detail&menu=/WEB-INF/board/board_menu";
+
 	}
 
 }

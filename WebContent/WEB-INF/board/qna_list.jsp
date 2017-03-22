@@ -15,12 +15,15 @@
 	</c:if>
 	
 	<c:if test="${!empty myinfo}">
+		<p>일반회원임</p>
 		<a href="qnainsert.do">게시글 등록</a>
-		<c:set var="user" value="${myinfo}"></c:set>
 	</c:if>
 	
 	<c:if test="${!empty admin}">
-		<c:set var="user" value="${admin}"></c:set>
+		<p>관리자임</p>
+		<a href="qna.do">게시글 전체 보기</a>
+		<a href="#">답변 완료 게시글 목록</a>
+		<a href="#">답변 미완료 게시글 목록</a>
 	</c:if>
 	
 	<c:if test="${qnaList.size() == 0}">
@@ -29,9 +32,9 @@
 	<c:if test="${qnaList.size() > 0}">
 		<table>
 			<tr>
-				<th>게시글 번호</th>
+				<th>번호</th>
 				<th>제목</th>
-				<th>등록 날짜</th>
+				<th>등록일</th>
 			</tr>
 			<c:forEach var="list" items="${qnaList}">
 				<tr>

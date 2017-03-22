@@ -25,15 +25,30 @@ public class QnaHandler implements CommandHandler {
 			try {
 				con = ConnectionProvider.getConnection();
 				
-				//로그인이 되어있는 회원 정보 가져오기(우선 일반회원일 때만)
-				LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
-				MemberDao memberDao = MemberDao.getInstance();
-				Member member = memberDao.selectByNo(con, myInfo.getMy_no());
+				LoginMemberInfo memInfo = null;
 				
-				QnaDao dao = QnaDao.getInstance();
-				List<Qna> list = dao.selectAllQnaByMember(con, member);
 				
-				req.setAttribute("qnaList", list);
+				if (req.getSession().getAttribute("myinfo") != null) {
+					memInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
+					
+					MemberDao memberDao = MemberDao.getInstance();
+					Member member = memberDao.selectByNo(con, memInfo.getMy_no());
+					
+					QnaDao dao = QnaDao.getInstance();
+					List<Qna> list = dao.selectAllQnaByMember(con, member);
+					
+					req.setAttribute("qnaList", list);
+				}else if(req.getSession().getAttribute("admin") != null){
+					memInfo = (LoginMemberInfo) req.getSession().getAttribute("admin");
+					
+					MemberDao memberDao = MemberDao.getInstance();
+					Member member = memberDao.selectByNo(con, memInfo.getMy_no());
+					
+					QnaDao dao = QnaDao.getInstance();
+					List<Qna> list = dao.selectAllQnaExceptAdmin(con);
+					
+					req.setAttribute("qnaList", list);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally{

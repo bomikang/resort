@@ -21,23 +21,23 @@
 			<legend>1:1 문의 등록</legend>
 			<p>
 				<label for="">작성자</label>
-				<input type="text" name="name" value="${user.my_name}" disabled="disabled"/>
+				<input type="text" name="name" value="${user.my_name}" readonly="readonly"/>
 			</p>
 			<p>
 				<label for="">이메일</label>
-				<input type="text" name="email" value="${user.my_mail}" disabled="disabled"/>
+				<input type="text" name="email" value="${user.my_mail}" readonly="readonly"/>
 			</p>
 			<p>
 				<label for="">제목</label>
-				<input type="text" name="title" />
+				<input type="text" name="title" required="required"/>
 			</p>
 			<p>
 				<label for="">내용</label>
-				<textarea name="content" cols="100" rows="10"></textarea>
+				<textarea name="content" cols="100" rows="10" required="required"></textarea>
 			</p>
 			<p>
 				<input type="submit" value="등록" />
-				<input type="button" value="취소" />
+				<input type="button" value="취소" onclick="location.replace('qna.do')"/><!-- 리스트로 이동 -->
 			</p>
 		</fieldset>
 	</form>
