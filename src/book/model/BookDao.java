@@ -334,7 +334,7 @@ public class BookDao {
 		PreparedStatement pstmt = null;
 		
 		try{
-			String sql = "update resort.book set bk_state='예약종료' where bk_enddate < now() and bk_state = '입금완료'";
+			String sql = "update resort.book set bk_state='예약종료' where bk_enddate < now() and (bk_state = '입금완료' or bk_state='입금대기')";
 			pstmt = conn.prepareStatement(sql);	
 			
 			pstmt.executeUpdate();			

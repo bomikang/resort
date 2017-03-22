@@ -26,7 +26,7 @@ public class BookCancelHandler implements CommandHandler {
 				BookDao bDao = BookDao.getInstance();
 				Book book = new Book();
 				book.setNo(bkNo);
-				book.setCancelDate(new Date());
+				book.setCancelDate(new Date(System.currentTimeMillis()));
 				bDao.updateCancelDate(conn, book);
 				conn.commit();
 				res.sendRedirect("bookcheck.do");

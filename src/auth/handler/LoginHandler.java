@@ -5,6 +5,7 @@ import java.sql.Connection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import book.model.BookDao;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
 import member.model.LoginMemberInfo;
@@ -56,6 +57,14 @@ public class LoginHandler implements CommandHandler {
 						member.getTel());
 				if(myinfo.getIsMng().equals(true)){ // 관리자일 경우
 					req.getSession().setAttribute("admin",myinfo);
+					/**
+					 * 유진작업 - 관리자일 경우 수행할 메소드(자동취소, 자동 완료) 2개 추가 - 문제발생 시 알려주세요! 
+					 * */
+					conn.setAutoCommit(false);
+					BookDao bDao = BookDao.getInstance();
+					bDao.autoBookCancel(conn);
+					bDao.autoBookEnd(conn);
+					conn.commit();
 				}
 				
 				if(myinfo.getIsMng().equals(false)){ // 일반회원일 경우

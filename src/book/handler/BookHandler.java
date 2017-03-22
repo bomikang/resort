@@ -23,6 +23,7 @@ public class BookHandler implements CommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
 		if(req.getMethod().equalsIgnoreCase("get")){
 			Connection conn = null;
 			try{
