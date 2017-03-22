@@ -1,6 +1,8 @@
 package board.qna.handler;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,29 +28,21 @@ public class QnaHandler implements CommandHandler {
 				con = ConnectionProvider.getConnection();
 				
 				LoginMemberInfo memInfo = null;
-				
+				MemberDao memberDao = MemberDao.getInstance();
+				QnaDao dao = QnaDao.getInstance();
+				List<Qna> list = new ArrayList<>();
 				
 				if (req.getSession().getAttribute("myinfo") != null) {
 					memInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
 					
-					MemberDao memberDao = MemberDao.getInstance();
 					Member member = memberDao.selectByNo(con, memInfo.getMy_no());
-					
-					QnaDao dao = QnaDao.getInstance();
-					List<Qna> list = dao.selectAllQnaByMember(con, member);
-					
-					req.setAttribute("qnaList", list);
+					list = dao.selectAllQnaByMember(con, member);
 				}else if(req.getSession().getAttribute("admin") != null){
 					memInfo = (LoginMemberInfo) req.getSession().getAttribute("admin");
 					
-					MemberDao memberDao = MemberDao.getInstance();
-					Member member = memberDao.selectByNo(con, memInfo.getMy_no());
-					
-					QnaDao dao = QnaDao.getInstance();
-					List<Qna> list = dao.selectAllQnaExceptAdmin(con);
-					
-					req.setAttribute("qnaList", list);
+					list = dao.selectAllQnaExceptAdmin(con);
 				}
+				req.setAttribute("qnaList", list);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally{
