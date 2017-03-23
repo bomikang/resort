@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.review.model.Review;
 import board.review.model.ReviewDao;
-import board.review.model.Review_Deatail;
+import board.review.model.Review_Detail;
 import board.review.model.Review_DetailDao;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
 import member.model.LoginMemberInfo;
+import member.model.Member;
+import member.model.MemberDao;
 import mvc.controller.CommandHandler;
 
 public class ReviewInsertHandler implements CommandHandler {
@@ -31,6 +33,7 @@ public class ReviewInsertHandler implements CommandHandler {
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
 			LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession(false).getAttribute("myinfo");
+			LoginMemberInfo admin = (LoginMemberInfo)req.getSession(false).getAttribute("admin");
 			Connection conn = null;
 			
 			try{
@@ -38,7 +41,7 @@ public class ReviewInsertHandler implements CommandHandler {
 				conn.setAutoCommit(false);
 				
 				Date date = new Date();
-				
+				MemberDao memDao = MemberDao.getInstance();
 				Review rev = new Review(0,
 										userInfo.getMy_no(),
 										title,
@@ -53,17 +56,15 @@ public class ReviewInsertHandler implements CommandHandler {
 				for(int i=0;i<rev_no.size();i++){
 					number =rev_no.get(i).getRev_no();
 				}
-				Review_Deatail detail = new Review_Deatail(number, content);
+				Review_Detail detail = new Review_Detail(number, content);
 				detailDao.insert(conn, detail);
-				
 				conn.commit();
-				
 				
 			}finally {
 				JdbcUtil.close(conn);
-			}
-			return "/WEB-INF/view/newArticleSucess.jsp";
+			}	
 		}
+		res.sendRedirect("review.do");
 		return null;
 	}
 

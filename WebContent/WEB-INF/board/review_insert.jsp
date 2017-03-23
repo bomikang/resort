@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action ="insert.do" method = "post" name="f1">
+	<form action ="rev_insert.do" method = "post" name="f1">
 		<p>
 			<label>제목</label>
 			<input type="text" name="title">

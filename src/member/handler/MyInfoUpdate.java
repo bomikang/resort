@@ -23,8 +23,6 @@ public class MyInfoUpdate implements CommandHandler {
 			return "index.jsp?page=/WEB-INF/member/myinfo&menu=/WEB-INF/member/mem_menu";
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			Connection conn = null;
-			
-		
 			try{
 				conn=ConnectionProvider.getConnection();   
 				String name = req.getParameter("name");
@@ -32,9 +30,6 @@ public class MyInfoUpdate implements CommandHandler {
 				String pwd = req.getParameter("password");
 				String mail = req.getParameter("mail");
 				String tel = req.getParameter("tel");
-			
-				
-				
 				MemberDao dao = MemberDao.getInstance();
 				LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession().getAttribute("myinfo");
 				Member memberinfo=dao.selectByNo(conn, userInfo.getMy_no());

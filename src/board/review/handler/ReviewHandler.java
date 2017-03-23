@@ -29,9 +29,7 @@ public class ReviewHandler implements CommandHandler {
 			} finally {
 				JdbcUtil.close(conn);
 			}
-
 			return "index.jsp?page=/WEB-INF/board/review_list&menu=/WEB-INF/board/board_menu";
-
 		}
 		return null;
 
