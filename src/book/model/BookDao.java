@@ -93,6 +93,11 @@ public class BookDao {
 							+"and b.bk_str=? and s.str_id=? order by bk_startdate ";
 			
 			pstmt = conn.prepareStatement(sql);
+			System.out.println(year);
+			System.out.println(month);
+			System.out.println(str);
+			System.out.println(strId);
+			System.out.println("selectThisMonthByStr : "+sql);
 			pstmt.setInt(1, year);
 			pstmt.setInt(2, month);
 			pstmt.setInt(3, year);
@@ -375,14 +380,15 @@ public class BookDao {
 	/**
 	 * 회원이 예약내역을 조회할 시 사용하는 메소드 
 	 * */
-	public List<Book> selectByMember(Connection conn, Book condition, String[] state)throws SQLException{		
+	public List<Book> selectByMemberWithCon(Connection conn, int mem, int year, int month, int strId,String[] state)throws SQLException{		
 		PreparedStatement pstmt = null;
 		List<Book> bList = new ArrayList<>();
 		ResultSet rs = null;		
 		try{
 			//select * from resort.book as b left join resort.`structure` as s on b.bk_str=s.str_no where b.bk_mem=3 and s.str_id=1 and b.bk_state='예약취소';
-			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str=s.str_no "
-						+"where b.bk_mem=? and s.str_id=?";
+			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no "
+					+"where ((year(b.bk_startdate)=? and month(b.bk_startdate)=?) "
+					+"or (year(b.bk_enddate)=? and month(b.bk_enddate)=?)) and b.bk_mem= ? and s.str_id=? ";
 			if(state.length>0){
 				sql += " and (";
 				for(int i=0;i<state.length;i++){
@@ -395,13 +401,19 @@ public class BookDao {
 				sql += ")";
 			}
 			
-			sql += " order by bk_no desc";
-			System.out.println("condition.getMem().getNo() : " + condition.getMem().getNo());
-			System.out.println("condition.getStr().getId() : "+condition.getStr().getId());
-			System.out.println("selectByMember SQL : "+sql);
+			sql += " order by b.bk_regdate desc";
+			System.out.println("selectByMemberWithCon : "+sql);
+			System.out.println("year : "+year);
+			System.out.println("month : "+month);
+			System.out.println("mem : "+mem);
+			System.out.println("strId : "+strId);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, condition.getMem().getNo());
-			pstmt.setInt(2, condition.getStr().getId());
+			pstmt.setInt(1, year);
+			pstmt.setInt(2, month);
+			pstmt.setInt(3, year);
+			pstmt.setInt(4, month);
+			pstmt.setInt(5, mem);
+			pstmt.setInt(6, strId);
 			rs = pstmt.executeQuery();
 			MemberDao mDao = MemberDao.getInstance();
 			StructureDao sDao = StructureDao.getInstance();
@@ -448,8 +460,8 @@ public class BookDao {
 		try{
 			//select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no where (year(b.bk_startdate)=2017 and month(b.bk_startdate)=3) and (year(b.bk_enddate)=2017 and month(b.bk_enddate)=3) and s.str_id=1 and b.bk_state='예약취소';
 			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no "
-						+"where (year(b.bk_startdate)=? and month(b.bk_startdate)=?) "
-						+"or (year(b.bk_enddate)=? and month(b.bk_enddate)=?) and s.str_id=? ";
+						+"where ((year(b.bk_startdate)=? and month(b.bk_startdate)=?) "
+						+"or (year(b.bk_enddate)=? and month(b.bk_enddate)=?)) and s.str_id=? ";
 			if(state.length>0){
 				sql += "and (";	
 				for(int i=0;i<state.length;i++){

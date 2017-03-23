@@ -24,7 +24,7 @@ import structure.model.Structure;
 import structure.model.StructureDao;
 
 public class BookListHandler implements CommandHandler {
-	Comparator<Integer> reverse = new Comparator<Integer>() {
+	public static Comparator<Integer> reverse = new Comparator<Integer>() {
 		@Override
 		public int compare(Integer o1, Integer o2) {
 			return -(o1-o2);

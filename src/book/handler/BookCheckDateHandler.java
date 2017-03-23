@@ -2,6 +2,7 @@ package book.handler;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,11 @@ public class BookCheckDateHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("post")){
+			Calendar tempCal = Calendar.getInstance();
+			tempCal.setTime(new Date(System.currentTimeMillis()));	
+			tempCal.set(Calendar.MONTH, tempCal.get(Calendar.MONTH)+2);
+			tempCal.set(Calendar.DAY_OF_MONTH, 1);		
+			
 			String startDate = req.getParameter("startDate");
 			String endDate = req.getParameter("endDate");
 			String strNo = req.getParameter("strNo");
@@ -30,6 +36,9 @@ public class BookCheckDateHandler implements CommandHandler {
 			Date start = Book.dateFormat.parse(startDate);
 			Date end = Book.dateFormat.parse(endDate);
 			
+			Calendar endCal = Calendar.getInstance();
+			endCal.setTime(end);
+			
 			Book book = new Book();
 			book.setStartDate(start);
 			book.setEndDate(end);
@@ -38,9 +47,15 @@ public class BookCheckDateHandler implements CommandHandler {
 			Connection conn = null;
 			try{
 				conn = ConnectionProvider.getConnection();
-				BookDao bDao = BookDao.getInstance();
-				boolean result = bDao.checkBookDate(conn, book);
 				
+				boolean result = false;
+				
+				if(tempCal.getTimeInMillis()<endCal.getTimeInMillis()){
+					result = false;
+				}else{
+					BookDao bDao = BookDao.getInstance();
+					result = bDao.checkBookDate(conn, book);
+				}
 				ObjectMapper om= new ObjectMapper();
 				String json = om.writeValueAsString(result);
 				// json �߽�
