@@ -362,8 +362,6 @@ public class BookDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mem.getNo());
 			rs = pstmt.executeQuery();
-			MemberDao mDao = MemberDao.getInstance();
-			StructureDao sDao = StructureDao.getInstance();
 			
 			while(rs.next()){
 				Book book = new Book();

@@ -21,7 +21,6 @@ public class BookProcessHandler implements CommandHandler{
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		long nowTime = System.currentTimeMillis();
 		System.out.println();
 		LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
 		if(myInfo==null){
