@@ -6,6 +6,18 @@
 <head>
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#btnInsert").click(function() {
+			var check = confirm("문의 게시글을 등록하시겠습니까?");
+			 
+			if ( !check ) return false;
+			
+			$("form[name='f1']").attr("action", "qnainsert.do");
+		});
+	});
+</script>
 </head>
 <body>
 	<c:if test="${!empty myinfo}">
@@ -16,7 +28,7 @@
 		<c:set var="user" value="${admin}"></c:set>
 	</c:if>
 	
-	<form action="qnainsert.do" method="post">
+	<form action="" method="post" id='f1'>
 		<fieldset>
 			<legend>1:1 문의 등록</legend>
 			<p>
@@ -36,7 +48,7 @@
 				<textarea name="content" cols="100" rows="10" required="required"></textarea>
 			</p>
 			<p>
-				<input type="submit" value="등록" />
+				<input type="submit" value="등록" id="btnInsert"/>
 				<input type="button" value="취소" onclick="location.replace('qna.do')"/><!-- 리스트로 이동 -->
 			</p>
 		</fieldset>

@@ -25,7 +25,7 @@ public class QnaInsertHandler implements CommandHandler {
 			return "index.jsp?page=/WEB-INF/board/qna_insert&menu=/WEB-INF/board/board_menu";
 		}else{
 			Connection con = null;
-			int qnano = 0; //qna_detail페이지로 보내주기 위한 변수
+			int qnaNo = 0; //qna_detail페이지로 보내주기 위한 변수
 			
 			try {
 				con = ConnectionProvider.getConnection();
@@ -36,23 +36,22 @@ public class QnaInsertHandler implements CommandHandler {
 				/* 로그인 되어있는 사람의 상태가 관리자일 때와 일반 회원일 때로 구분하는 구문 필요 
 				 * 우선 일반회원의 경우에만 완료.*/
 				
-				
 				LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
 				MemberDao memberDao = MemberDao.getInstance();
 				Member member = memberDao.selectByNo(con, myInfo.getMy_no());
 				
 				QnaDao qnaDao = QnaDao.getInstance();
-				Qna qna = new Qna(0, member, title, new Date(), 0, content);
+				Qna qna = new Qna(0, member, title, new Date(), 0, content, false);
 				
 				qnaDao.insertQna(con, qna);
 				
-				qnano = qnaDao.getLastQnaNo(con);
+				qnaNo = qnaDao.getLastQnaNo(con);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally{
 				JdbcUtil.close(con);
 			}
-			return "qnadetail.do?qnano="+qnano;
+			return "qnadetail.do?qnano="+qnaNo;
 		}
 		
 	}

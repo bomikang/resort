@@ -12,16 +12,18 @@ public class Qna {
 	private Date regDate;
 	private int article; //원 게시물 번호(관리자 일 때)
 	private String content; //게시글 내용
+	private boolean reply; //답변 여부 체크 변수
 	
 	public Qna() {}
 	
-	public Qna(int no, Member member, String title, Date regDate, int article, String content) {
+	public Qna(int no, Member member, String title, Date regDate, int article, String content, boolean reply) {
 		this.no = no;
 		this.member = member;
 		this.title = title;
 		this.regDate = regDate;
 		this.article = article;
 		this.content = content;
+		this.reply = reply;
 	}
 	
 	public int getNo() {
@@ -72,9 +74,25 @@ public class Qna {
 		this.content = content;
 	}
 	
+	public boolean getReply() {
+		return reply;
+	}
+
+	public void setReply(boolean reply) {
+		this.reply = reply;
+	}
+
 	/*method*/
 	//Date 객체를 "yyyy-MM-dd" 형태의 String으로 반환
 	public String getRegDateNoTimeForm(){
 		return Book.dateFormat.format(regDate);
+	}
+	
+	public String getStringReply(){
+		if ( getReply() ) {
+			return "O";
+		}else{
+			return "X";
+		}
 	}
 }
