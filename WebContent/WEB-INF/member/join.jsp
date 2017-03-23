@@ -59,6 +59,43 @@ $(function(){
 	var check_Tel = document.getElementById("tel");
 	var check_Mail = document.getElementById("email");
 	var check_Pwd2 = document.getElementById("password2");
+	$("form[name='f1']").submit(function() { 
+		if($("#password").val() != $("#password2").val()){
+            alert("패스워드가 일치하지 않습니다.");
+			return false;            
+        }  
+		if(reg_uid.test($("#id").val())==false){ 
+			alert("형식에 맞지 않는 ID입니다.");
+			return false;
+		}
+		if(reg_upw.test($("#password").val())==false){
+			alert("형식에 맞지 앟는 패스워드 입니다.");
+			return false;
+   	 	}
+		if(reg_name.test($("#name").val())==false){
+			alert("형식에 맞지 않는 이름 입니다.");
+			return false;
+   	 	}
+		if(reg_tel.test($("#tel").val())==false){
+			alert("형식에 맞지 않는 전화번호 입니다.");
+			return false;
+   	 	}	
+	
+		if(reg_mail.test($("#email").val())==false){
+			alert("형식에 맞지 않는 이메일입니다.");
+			return false;   
+   	 	}	
+		if(reg_uid.test($("#id").val())==true&&reg_uid.test($("#id").val())==true&&reg_name.test($("#name").val())==true&&
+				reg_tel.test($("#tel").val())==true&&reg_mail.test($("#email").val())==true){
+			var cf = confirm("가입 하시겠습니까?");
+				if(cf == true){
+					return true;
+				}else{
+					return false;
+				}
+			
+	}
+});
 	check_Pwd2.onchange=function(){
 		if($("#password").val() != $("#password2").val()){
             $(".error").css("display","block");
@@ -98,6 +135,7 @@ $(function(){
 	check_Mail.onchange=function(){
 		if(reg_mail.test($("#email").val())==false){
             $(".ex").eq(4).css("display","block");
+            
    	 	}else{
    	 		 $(".ex").eq(4).css("display","none");
    	 	}
@@ -123,7 +161,13 @@ $(function(){
 						}				
 			} 
 		});
-	});	 	
+	});
+	/* $("#sub").click(function(){
+		var cf = confirm("가입하시겠습니까?");
+			if(cf == true){}
+	
+	
+	}); */
 });
 </script>
 </head>
@@ -157,7 +201,7 @@ $(function(){
 				<span class="ex">한글 2~20자 사용 가능합니다.</span>
 			</p>
 			<p>
-				<label>전화번호 : </label><input type="text" id="tel"name="tel" required="required" placeholder="예)010-xxxx-xxxx">
+				<label>전화번호 : </label><input type="text" id="tel"name="tel" required="required" placeholder="예)01041378012">
 				<span class="ex">010,016,011,사용 가능합니다.</span>
 			</p>
 			<p>
