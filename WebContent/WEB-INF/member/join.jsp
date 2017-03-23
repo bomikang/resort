@@ -65,11 +65,10 @@ $(function(){
         }else{
         	$(".error").css("display","none");
         }  
-	}
+	}	
 	check_Id.onchange=function(){
 		if(reg_uid.test($("#id").val())==false){ 
             $(".ex").eq(0).css("display","block");
-   		
 		}else{
 			$(".ex").eq(0).css("display","none");
 		}	
