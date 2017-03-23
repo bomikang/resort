@@ -17,10 +17,6 @@ public class MemberDao {
 	public static MemberDao getInstance(){
 		return dao;
 	}
-	
-	
-	
-	
 	public void insert(Connection conn, Member mem) throws SQLException{
 		PreparedStatement pstmt = null;
 		try{
@@ -161,7 +157,7 @@ public class MemberDao {
 			
 		}
 	}
-	// �̺��� ��û
+	// 유진씨 요청 메서드
 	public Member selectByNo(Connection conn, int no) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -191,23 +187,45 @@ public class MemberDao {
 		}
 	}
 	
-	
-	/*public int updatePwd(Connection conn, Member member) throws SQLException{
+	// 개인정보 변경 시 사용
+	public int updateInFo(Connection conn, Member member) throws SQLException{
 		PreparedStatement pstmt = null;	
 		try {
-			String sql = "UPDATE member set password = ? where memberid = ?"; 
+			String sql = "UPDATE member set mem_name=?, mem_id=?,mem_pwd=?,mem_mail=?,mem_tel=? where mem_no =? "; 
 
 			pstmt= conn.prepareStatement(sql);
-			pstmt.setString(1, member.getPassword());
+			
+			pstmt.setString(1, member.getName());
 			pstmt.setString(2, member.getId());
+			pstmt.setString(3, member.getPassword());
+			pstmt.setString(4, member.getMail());
+			pstmt.setString(5, member.getTel());
+			pstmt.setInt(6, member.getNo());
+			
 			return pstmt.executeUpdate();			
 		} finally {
 			
 			JdbcUtil.close(pstmt);
 		
 		}
-	}*/
+	}
+	//탈퇴 시 사용
+	public int member_WithDrawal(Connection conn, Member member) throws SQLException{
+		PreparedStatement pstmt = null;	
+		try {
+			String sql = "UPDATE member set mem_outdate=? where mem_no =? "; 
 
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setTimestamp(1,new Timestamp(member.getOutDate().getTime()));
+			pstmt.setInt(2, member.getNo());
+						
+			return pstmt.executeUpdate();			
+		} finally {
+			
+			JdbcUtil.close(pstmt);
+		
+		}
+	}
 	
 
 	

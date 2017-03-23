@@ -22,10 +22,9 @@ public class StructureUploadHandler implements CommandHandler {
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if (req.getMethod().equalsIgnoreCase("get")) {
 			return "index.jsp?page=/WEB-INF/structure_admin/str_room_in&menu=/WEB-INF/structure/str_menu";
-		}else if(req.getMethod().equalsIgnoreCase("post")){
+		}else{
 			return postProcess(req, res);
 		}
-		return null;
 	}
 	
 	private String postProcess(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -80,7 +79,7 @@ public class StructureUploadHandler implements CommandHandler {
 		}finally {
 			JdbcUtil.close(con);			
 		}
-		return "index.jsp?page=/WEB-INF/structure_admin/str_room_de&menu=/WEB-INF/structure/str_menu";
-	}
+		return "structureList.do";
+	}//end of postProcess
 
 }

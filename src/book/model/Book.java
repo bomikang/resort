@@ -10,7 +10,7 @@ import structure.model.Structure;
 
 public class Book {
 	/* FIELDS */
-	private int no;	
+	private String no;	
 	private Member mem;
 	private Structure str;
 	private String tel;
@@ -20,13 +20,13 @@ public class Book {
 	private Date cancelDate;
 	private String state;
 	public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/* CONSTRUCTOR */
 	public Book() {}
 	
 	/* GETTER */
-	public int getNo() {
+	public String getNo() {
 		return no;
 	}
 
@@ -62,7 +62,7 @@ public class Book {
 		return state;
 	}
 	/* SETTER */
-	public void setNo(int no) {
+	public void setNo(String no) {
 		this.no = no;
 	}
 
@@ -144,6 +144,9 @@ public class Book {
 	public String getRegDateForm(){
 		return dateTimeFormat.format(regDate);
 	}
+	public String getRegDateNoTimeForm(){
+		return dateFormat.format(regDate);
+	}
 	public String getStartDateForm(){
 		return dateFormat.format(startDate);
 	}
@@ -154,7 +157,18 @@ public class Book {
 		if(cancelDate!=null){
 			return dateTimeFormat.format(cancelDate);
 		}
-		return null;
+		return "";
 		
 	}
+	/**
+	 * 예약 시점에 BookDao 내 insert함수를 사용하기 위해 임시로 생성한 Book객체 내 regDate(객체 생성 시점 시간)를 바탕으로  
+	 * 예약번호를 String형태로 생성해 반환해 주는 Method(auto_increment대신 15자리의 시간정보를 담은 String을 primary key로 사용하기 위해서...)
+	 * */
+	public String getNoForm() {
+		SimpleDateFormat bookNoFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		System.out.println(bookNoFormat.format(regDate));
+		return bookNoFormat.format(regDate);
+	}
+	
+	
 }

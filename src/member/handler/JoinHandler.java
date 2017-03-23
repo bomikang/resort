@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,9 +40,6 @@ public class JoinHandler implements CommandHandler {
 					);								
 			Connection conn = null;
 			try{
-				
-				
-				
 				conn = ConnectionProvider.getConnection();
 				MemberDao dao = MemberDao.getInstance();
 				dao.insert(conn,mem);

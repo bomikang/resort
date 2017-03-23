@@ -8,6 +8,13 @@
    	if(includeMenu == null) includeMenu = "/WEB-INF/introduce/intro_menu";
    	if(includePage == null) includePage = "/WEB-INF/introduce/intro_main";
 %>
+<%-- <%
+/*캐시에 Data를 남기지 않는구문(로그아웃 이후 뒤로가기 Data기록 안남기기 위해 사용)  */
+response.setHeader("cache-control","no-store");
+response.setHeader("expires","0");
+response.setHeader("pragma","no-cache");
+
+%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,21 +27,28 @@
 	.wrapper{ background:url("image/bg_img7_1.jpg") no-repeat fixed center center; background-size:100% !important;}
 </style>
 <title>Insert title here</title>
-</head>	
+</head>		
 <body>
 	<div class="wrapper">
 		<div class="login_area">
 			<div>
-			<c:if test="${empty myinfo }">
+			<c:if test="${empty customer }">
 				<p><b>손님!</b> 옥성자연휴양림에 오신걸 환영합니다</p>
 				<a href="login.do">로그인</a>
 				<a href="join.do">회원가입</a>
 			</c:if>
 			<c:if test="${!empty myinfo }">
 				<p><b>${myinfo.my_name }</b> 옥성자연휴양림에 오신걸 환영합니다</p>
-				<a href="#">로그아웃</a>
-				<a href="#">회원정보</a>
+				<a href="logout.do">로그아웃</a>
+				<a href="myinfo.do">회원정보</a>
 			</c:if>
+			<c:if test="${!empty admin }">
+				<p><b>${myinfo.my_name }</b> 관리자 모드 입니다 </p>
+				<a href="logout.do">로그아웃</a>
+				<a href="myinfo.do">관리자페이지</a>
+				
+			</c:if>
+			
 			</div>
 		</div>
 		<header class="header_menu" style="z-index:9999;">
