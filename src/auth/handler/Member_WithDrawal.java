@@ -30,9 +30,9 @@ public class Member_WithDrawal implements CommandHandler {
 				conn=ConnectionProvider.getConnection();   
 				LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession().getAttribute("myinfo");	
 				MemberDao dao = MemberDao.getInstance();
-				Member mInfo=dao.selectByNo(conn, userInfo.getMy_no());
+				Member mInfo=dao.selectByNo(conn, userInfo.getMy_no()); // 해당 아이디 개인정보
 				Date nowTime = new Date();
-				Member memberDrawal = new Member(mInfo.getNo(),
+				Member memberDrawal = new Member(mInfo.getNo(),			
 												mInfo.getId(),
 												mInfo.getPassword(),
 												mInfo.getName(),
@@ -40,7 +40,14 @@ public class Member_WithDrawal implements CommandHandler {
 												mInfo.getTel(),
 												mInfo.getRegDate(),
 												nowTime,mInfo.getIsMng());
-				
+				Member member_NoDrawal = new Member(mInfo.getNo(),			
+												 mInfo.getId(),
+												 mInfo.getPassword(),
+												 mInfo.getName(),
+												 mInfo.getMail(),
+												 mInfo.getTel(),
+												 mInfo.getRegDate(),
+												 null,mInfo.getIsMng());
 				String result = "";
 				if(memberDrawal.getOutDate()!=null){
 					result = "ok";
@@ -56,7 +63,11 @@ public class Member_WithDrawal implements CommandHandler {
 					PrintWriter pw = res.getWriter();
 					pw.print(json);
 					pw.flush();
-				}				
+				}
+				if(member_NoDrawal.getOutDate()==null){
+					result = "no";
+				}	
+			
 				}finally{
 					JdbcUtil.close(conn);
 				}

@@ -8,6 +8,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<table>
+		<c:forEach var="i"  items="${list }">
+			<tr>
+				<td>${i.rev_no }</td>
+				<td><a href="#">${i.rev_title }</a></td>
+				<td>${i.rev_name}</td>
+				<td>${i.rev_regdate }</td>
+				<td>${i.rev_readcnt }</td>
+		</tr>
+		</c:forEach>
+	</table>
 </body>
 </html>

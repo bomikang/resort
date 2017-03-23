@@ -55,7 +55,7 @@
 		});
 
 		
-		$("#bookProcess").submit(function(){
+		$("#btnBook").click(function(){
 			if(!confirm("선택하신 기간으로 예약 하시겠습니까?")){
 				return false;
 			}else{
@@ -74,6 +74,7 @@
 							location.href="book.do";
 						}else{
 							alert("예약가능합니다.");
+							$("#bookProcess").submit();
 						}							
 					} 
 				});			 
@@ -154,7 +155,7 @@
 </script>
 <div id="bk_book">
 	<!-- 예약폼이 들어갈 예정입니다. -->
-	<form action="bookprocess.do" method="post" id=bookProcess">
+	<form action="bookprocess.do" method="post" id="bookProcess">
 		<!-- 예약정보1 - 시설정보 및 기간 설정에 따른 가격 계산 -->
 		<input type="hidden" value="${str.no }" name="strNo">
 		<input type="hidden" value="${myinfo.my_no }" name="memNo">
@@ -223,7 +224,7 @@
 				<tr>
 			</tr>
 		</table>
-		<input type="submit" value="예약하기">
+		<button type="button" id="btnBook">예약하기</button>
 		<button type="button" id="btnBack">취소하기</button> 
 	</form>
 	<a href="book.do">[돌아가기]</a>

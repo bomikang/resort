@@ -9,8 +9,24 @@
 	#bk_check .bkStrIdName{color:green; font-weight: bold;}
 </style>
 <script>
+
 	$(function(){
+		var date = new Date();
+		$("#year").val(date.getFullYear());
+		$("#month").val((date.getMonth()+1));
+		
+		setFormTagDisabled();
 		setScreen();
+		
+		/* Radio Button */
+		$("#all").click(function(){
+			console.log("전체내역");
+			setFormTagDisabled();			
+		});
+		
+		$("#withCon").click(function(){
+			setFormTagAbled();
+		});
 		
 		//setTable(${bList});
 		$(document).on("submit", ".bkcancel", function(){
@@ -20,6 +36,7 @@
 				return false;
 			}
 		});
+		
 		/* 예약상태와 시설 구분을 선택한 후 조회하기 버튼 클릭 시 ajax통해 table을 다시 구성하도록 만듦 */
 		$(document).on("submit","form[name='book1']",function(){
 			setScreen();
@@ -28,23 +45,32 @@
 		
 	});//ready
 	function setScreen(){
-		var stateList = new Array();
-		$("input[name='bkState']").each(function(i, obj) {
+		var sList = new Array();
+		$("input[name='cdState']").each(function(i, obj) {
 			if($(obj).prop("checked")==true){
-				stateList.push($(obj).val());
+				sList.push($(obj).val());
 				console.log($(obj).val());
 			}	
 		});
-		var bkState = stateList.join(",");
-			
-		var strId = $("select[name='bkStrId']").val();
-		
+		var bkState = sList.join(",");
+		console.log(bkState);	
+		var strId = $("#bkStrId").val();
+		console.log(strId);
+		var year = $("#year").val();
+		var month = $("#month").val();
+		var condition="";
+		$("input[name='condition']").each(function(i, obj) {
+			if($(obj).prop("checked")==true){
+				condition=$(obj).attr("id");
+			}			
+		});
+		console.log(condition);
 		$.ajax({
 			url:"bookcheck.do",
 			type:"post",
 			timeout:30000,
 			dataType:"json",
-			data:{"bkState":bkState,"strId":strId},
+			data:{"cdState":bkState,"strId":strId, "year":year, "month":month, "condition":condition},
 			success:function(data){
 				console.log(data);
 				$("#bkCheckRes").html("<span class='bkStrIdName'>"+data[0]+"</span>로 검색한 결과입니다.");
@@ -60,8 +86,8 @@
 	
 		var tableForm = "<tr><th>접수 날짜</th><th>시설 명</th><th>이용 기간</th><th>예약 번호</th><th>총 금액</th><th>예약 구분</th><th>취소</th></tr>";
 		
-		if(bList==null||bList==undefined){
-			tableForm = "<tr><td colspan='7'>예약 정보가 없습니다.</td></tr>";
+		if(bList==null||bList==undefined||bList.length==0){
+			tableForm += "<tr><td colspan='7'>예약 정보가 없습니다.</td></tr>";
 		}else{
 			for(var j=0;j<bList.length;j++){
 				var strUrl = "structure.do?people=4&houseId="+bList[j].str.id;
@@ -98,10 +124,27 @@
 					tableForm += "-";
 				}
 				tableForm += "</td></tr>";
-			}
-			
+			}			
 		}		
 		$("#bkTable").append(tableForm);
+	}
+	
+	function setFormTagAbled(){
+		$("#all").removeAttr("checked");
+		$("#year").removeProp("disabled");
+		$("#month").removeProp("disabled");
+		$("input[name='cdState']").each(function(i, obj) {
+			$(obj).removeProp("disabled");
+		});
+		$("#bkStrId").removeProp("disabled");
+	}
+	function setFormTagDisabled(){
+		$("#year").prop("disabled","disabled");
+		$("#month").prop("disabled","disabled");
+		$("input[name='cdState']").each(function(i, obj) {
+			$(obj).prop("disabled","disabled");
+		});
+		$("#bkStrId").prop("disabled", "disabled");
 	}
 </script>
 <c:if test="${empty myinfo }">
@@ -113,6 +156,45 @@
 <div id="bk_check">
 	<h2>예약 확인 및 취소</h2>
 	<form action="bookcheck.do" method="post" name="book1">
+		<fieldset>
+			<p>
+				조회 기준 : 
+				<input type="radio" name="condition" id="all" checked="checked">전체 내역 보기
+				<input type="radio" name="condition" id="withCon">조건별 검색 
+			</p>		
+			<p>
+				이용 기간 :
+				<select name="year" id="year">
+					<c:forEach items="${years }" var="year">
+						<option value="${year }">${year }</option>
+					</c:forEach>
+				</select> 
+				년 
+				<select name="month" id="month">
+						<c:forEach items="${months }" var="month">
+							<option value="${month }">${month }</option>
+						</c:forEach>
+				</select>
+				월
+			</p>
+			<p>
+				예약 상태 : 
+				<input type="checkbox" value="입금대기" id="bkReady" name="cdState" checked="checked"><label for="bkReady">입금대기</label>
+				<input type="checkbox" value="입금완료" id="bkProcess" name="cdState" checked="checked"><label for="bkRbkProcesseady">입금완료</label>
+				<input type="checkbox" value="예약취소" id="bkCancel" name="cdState"><label for="bkCancel">예약취소</label>
+				<input type="checkbox" value="예약종료" id="bkEnd" name="cdState"><label for="bkEnd">예약종료</label>
+			</p>
+			<p>시설 구분 : 
+				<select id="bkStrId" name="bkStrId">
+					<c:forEach items="${strId }" var="str">
+						<option value="${str.id }">${str.nameById }</option>
+					</c:forEach>
+				</select>
+			</p>
+			<p><input type="submit" value="조회하기"></p>
+		</fieldset>
+	</form>
+	<%-- <form action="bookcheck.do" method="post" name="book1">
 		<fieldset>		
 			<p>
 				예약 상태 : 
@@ -130,7 +212,7 @@
 			</p>
 			<p><input type="submit" value="조회하기"></p>
 		</fieldset>
-	</form>
+	</form> --%>
 	<p id="bkCheckRes"></p>
 	<table border="1" id="bkTable">
 		<tr>
@@ -186,13 +268,5 @@
 				</tr>
 			</c:forEach>
 		</c:if> --%>
-<!-- 		<tr>
-			<th>예약 번호</th>
-			<th>예약자</th>
-			<th>시설 명</th>
-			<th>예약 기간</th>
-			<th>예약 구분</th>
-			<th>취소</th>
-		</tr> -->
 	</table>
 </div>

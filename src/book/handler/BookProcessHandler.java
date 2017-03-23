@@ -21,6 +21,7 @@ public class BookProcessHandler implements CommandHandler{
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		System.out.println();
 		LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
 		if(myInfo==null){
 			res.sendRedirect("login.do");
@@ -82,7 +83,8 @@ public class BookProcessHandler implements CommandHandler{
 				}
 				System.out.println(1);
 				Book book = new Book();
-				Date regDate = new Date();
+				
+				Date regDate = new Date(System.currentTimeMillis());
 				book.setRegDate(regDate);
 				System.out.println(book.getNoForm());
 				book.setNo(book.getNoForm());				

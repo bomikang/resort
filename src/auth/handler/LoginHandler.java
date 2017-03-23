@@ -4,7 +4,9 @@ import java.sql.Connection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import book.model.BookDao;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
 import member.model.LoginMemberInfo;
@@ -47,6 +49,8 @@ public class LoginHandler implements CommandHandler {
 				}
 				
 				// 세션에 DATA 남기기위한 작업
+				
+				
 				LoginMemberInfo myinfo = new LoginMemberInfo(
 						member.getNo(),
 						member.getId(),
@@ -54,13 +58,22 @@ public class LoginHandler implements CommandHandler {
 						member.getMail(),
 						member.getIsMng(),
 						member.getTel());
+				
 				if(myinfo.getIsMng().equals(true)){ // 관리자일 경우
 					req.getSession().setAttribute("admin",myinfo);
+					/**
+					 * 유진작업 - 관리자일 경우 수행할 메소드(자동취소, 자동 완료) 2개 추가 - 문제발생 시 알려주세요! 
+					 * */
+					conn.setAutoCommit(false);
+					BookDao bDao = BookDao.getInstance();
+					bDao.autoBookCancel(conn);
+					bDao.autoBookEnd(conn);
+					conn.commit();
 				}
 				if(myinfo.getIsMng().equals(false)){ // 일반회원일 경우
 					req.getSession().setAttribute("myinfo",myinfo);
 				}
-				if(myinfo != null){
+				if(myinfo != null){ 				// 손님일 경우
 					req.getSession().setAttribute("customer",myinfo);
 					
 				}
