@@ -17,6 +17,7 @@
 		
 		$("#withCon").prop("checked",true);
 		setScreen();
+		setFormTagAbled();
 		
 		/* Radio Button */
 		$("#all").click(function(){

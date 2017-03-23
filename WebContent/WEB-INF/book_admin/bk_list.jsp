@@ -84,6 +84,23 @@
 				$("#bkStrNo").css("opacity", "1");
 			}
 		});
+		/* 예약자 이름 클릭 시 */
+		$(document).on("click",".searchMem", function(){
+			var bkMem = $(this).attr("value");
+			console.log("bkMem : "+bkMem);
+			$.ajax({
+				url:"booklist.do",
+				type:"post",
+				timeout:30000,
+				dataType:"json",
+				data:{"type":"mem","bkMem":bkMem},
+				success:function(data){
+					console.log(data);
+					setTable(data);					
+				} 
+			});
+			return false;
+		});
 	});//ready
 	
 	function setBkStrNo(){
@@ -201,7 +218,7 @@
 				tableForm += "<tr>";
 				tableForm += "<th class='bkNo'>"+bList[j].no+"</th>";//예약번호
 				tableForm += "<td>"+bList[j].str.nameById+"<br>"+bList[j].str.name+"</td>";//시설명 			
-				tableForm += "<td>"+bList[j].mem.name+"<br>("+bList[j].tel+")</td>";//예약자명 	
+				tableForm += "<td><a href='#' value='"+bList[j].mem.no+"' class='searchMem'>"+bList[j].mem.name+"<br>("+bList[j].tel+")</a></td>";//예약자명 	
 				tableForm += "<td>"+bList[j].startDateForm+"</td>";//시작날짜
 				tableForm += "<td>"+bList[j].endDateForm+"</td>";//끝날짜				
 				tableForm += "<td>"+bList[j].priceForm +"</td>"//총가격
@@ -275,6 +292,7 @@
 	</form>
 	<br>
 	<table border="1" id="bkTable"></table>
+
 	<%-- <c:choose>
 		<c:when test="${empty bList }">
 			<script type="text/javascript">

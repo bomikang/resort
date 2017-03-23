@@ -19,6 +19,8 @@ import book.model.Book;
 import book.model.BookDao;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
+import member.model.Member;
+import member.model.MemberDao;
 import mvc.controller.CommandHandler;
 import structure.model.Structure;
 import structure.model.StructureDao;
@@ -120,6 +122,7 @@ public class BookListHandler implements CommandHandler {
 				return null;
 				
 			}else if(req.getParameter("type").equalsIgnoreCase("strList")){
+				/* 시설 구분 선택 시 세부 시설명 Setting하기 위해 사용 */
 				String strId = req.getParameter("strId");
 				
 				if(strId==null){
@@ -143,6 +146,34 @@ public class BookListHandler implements CommandHandler {
 					}finally {
 						JdbcUtil.close(conn);
 					}
+				}
+			}else if(req.getParameter("type").equalsIgnoreCase("mem")){
+				/* member 이름 클릭 시 그 회원의 전체 내역을 조회하여 보여주기 위해 */
+				Connection conn = null;
+				try{
+					conn = ConnectionProvider.getConnection();
+					String bkMem = req.getParameter("bkMem");
+					if(bkMem != null){
+						MemberDao mDao = MemberDao.getInstance();
+						Member mem = mDao.selectByNo(conn, Integer.parseInt(bkMem));
+						if(mem != null){//Member Table 내 물리 삭제 대비
+							BookDao bDao = BookDao.getInstance();							
+							List<Book> bList = bDao.selectByMember(conn, mem);
+							
+							//data�� json ���� ����
+							ObjectMapper om= new ObjectMapper();
+							String json = "["+om.writeValueAsString(mem.getName())+","+om.writeValueAsString(bList)+"]";
+							// json �߽�
+							res.setContentType("application/json;charset=utf-8");
+							PrintWriter pw = res.getWriter();
+							pw.print(json);
+							pw.flush();
+						}
+						
+					}
+					
+				}finally {
+					JdbcUtil.close(conn);
 				}
 			}
 		}
