@@ -188,6 +188,7 @@
 			</p>		
 			<p>
 				이용 기간 :
+				<input type="date" required="required">
 				<select name="year" id="year">
 					<c:forEach items="${years }" var="year">
 						<option value="${year }">${year }</option>
