@@ -32,7 +32,5 @@ public class QnaDetailHandler implements CommandHandler {
 			JdbcUtil.close(con);
 		}
 		return "index.jsp?page=/WEB-INF/board/qna_detail&menu=/WEB-INF/board/board_menu";
-
 	}
-
 }
