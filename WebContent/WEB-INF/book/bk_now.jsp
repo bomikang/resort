@@ -182,10 +182,10 @@ response.setHeader("pragma","no-cache");
 		}	
 		dateForm += "</tr>";
 		var names = data[0];
-		var bList = data[1];
 		var today = new Date();
 		
 		for(var j=0;j < names.length;j++){
+			var bList = data[1][names[j].name];
 			var index = 0;
 			dateForm += "<tr>";
 			var url="structure.do?people=4&houseId="+names[j].id;
@@ -195,53 +195,36 @@ response.setHeader("pragma","no-cache");
 			dateForm += "</a></th>";
 			date.setMonth(m);
 			for(var k=0;k<last[m];k++){	
-				var startDate = "";
-				var endDate = "";
-				date.setDate(k+1);
-				//console.log(bList[j][index].startDate);
-				if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
-					//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-					dateForm += "<td><a href='#' class='isBooked'>★</a></td>";
-					if(bList[j]!= undefined){
-						var tempDate = new Date(bList[j][index].endDate);
-						tempDate.setDate(tempDate.getDate()-1);
-						if(tempDate.getDate()==k+1){
-							index++;
+				date.setDate(k+1);				
+				if(bList != undefined){
+					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
+						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
+						dateForm += "<td><a href='#' class='isBooked'>★</a></td>";
+					}else{
+						//시설에 대한 예약 내역이 존재할 때
+						if((k+1)==bList[index].date){
+							console.log("일치");
+							if(bList[index].state=="입금완료"){
+								dateForm += "<td><a href='#' class='isBooked'>X</a></td>";
+							}else if(bList[index].state=="입금대기"){
+								dateForm += "<td><a href='#' class='isBooked'>△</a></td>";
+							}
+						}else{
+							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
 						}
 					}
-				}else{	
-					//다음달 혹은 오늘 이후날짜
-					if(bList[j]!= undefined){
-						//시설에 대한 예약 내역이 존재할 때
-						if(bList[j][index] != undefined){//시작날짜를 기준으로 정렬 된 예약내역							
-							var startDate = new Date(bList[j][index].startDate);
-							var endDate = new Date(bList[j][index].endDate);
-							console.log(startDate.getDate()+","+endDate.getDate());
-							
-							if(date.getTime()>=startDate.getTime()&&date.getTime()<endDate.getTime()){
-								//index번째 예약 내역의 시작날짜와 끝 날짜 사이에 있을 때
-								console.log("일치");
-								if(bList[j][index].state=="입금완료"){
-									dateForm += "<td><a href='#' class='isBooked'>X</a></td>";
-								}else if(bList[j][index].state=="입금대기"){
-									dateForm += "<td><a href='#' class='isBooked'>△</a></td>";
-								}
-								
-							}else{								
-								dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
-							}
-							
-							if(date.getTime()>=(endDate.getTime()-(24*60*60*1000))){
-								index++;
-							}
-						}else{ 
-							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
-						} 						
+					if((bList[index+1] != undefined) && (k+1)==bList[index].date){
+						index++;
+					}
+				}else{
+					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
+						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
+						dateForm += "<td><a href='#' class='isBooked'>★</a></td>";
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
 						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
 					}
-				}
+				}							
 			}
 			dateForm += "</tr>";
 		}
