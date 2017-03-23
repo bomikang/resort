@@ -5,6 +5,10 @@
 <script>
 	var stateList = new Array();
 	$(function(){
+		var date = new Date();
+		$("#year").val(date.getFullYear());
+		$("#month").val((date.getMonth()+1));
+		
 		setFormTagDisabled();
 		setScreen();		
 		
@@ -185,11 +189,15 @@
 			<p>
 				이용 기간 :
 				<select name="year" id="year">
-						<option value="2017">2017</option>
+					<c:forEach items="${years }" var="year">
+						<option value="${year }">${year }</option>
+					</c:forEach>
 				</select> 
 				년 
 				<select name="month" id="month">
-						<option value="3">3</option>
+						<c:forEach items="${months }" var="month">
+							<option value="${month }">${month }</option>
+						</c:forEach>
 				</select>
 				월
 			</p>

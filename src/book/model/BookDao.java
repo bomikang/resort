@@ -8,7 +8,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jdbc.JdbcUtil;
 import member.model.Member;
@@ -371,7 +373,7 @@ public class BookDao {
 		}
 	}//end of selectCountByMember
 	/**
-	 * 로그인한 내역? 하여튼 회원내역(회원번호)과 조건을 바탕으로 예약내역을 조회할 시 가져 올 Method
+	 * 회원이 예약내역을 조회할 시 사용하는 메소드 
 	 * */
 	public List<Book> selectByMember(Connection conn, Book condition, String[] state)throws SQLException{		
 		PreparedStatement pstmt = null;
@@ -436,7 +438,7 @@ public class BookDao {
 	}//end of selectByMember
 	
 	/**
-	 * 로그인한 내역? 하여튼 회원내역(회원번호)과 조건을 바탕으로 예약내역을 조회할 시 가져 올 Method
+	 * 관리자가 조건에 따라 예약 내역을 조회할 시 필요한 메소드 
 	 * */
 	public List<Book> selectAllWithCondition(Connection conn, int year, int month, int strId,String[] state)throws SQLException{		
 		PreparedStatement pstmt = null;
@@ -447,7 +449,7 @@ public class BookDao {
 			//select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no where (year(b.bk_startdate)=2017 and month(b.bk_startdate)=3) and (year(b.bk_enddate)=2017 and month(b.bk_enddate)=3) and s.str_id=1 and b.bk_state='예약취소';
 			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no "
 						+"where (year(b.bk_startdate)=? and month(b.bk_startdate)=?) "
-						+"and (year(b.bk_enddate)=? and month(b.bk_enddate)=?) and s.str_id=? ";
+						+"or (year(b.bk_enddate)=? and month(b.bk_enddate)=?) and s.str_id=? ";
 			if(state.length>0){
 				sql += "and (";	
 				for(int i=0;i<state.length;i++){
@@ -468,7 +470,9 @@ public class BookDao {
 			pstmt.setInt(3, year);
 			pstmt.setInt(4, month);
 			pstmt.setInt(5, strId);
-			
+			System.out.println("year : "+year);
+			System.out.println("month : "+month);
+			System.out.println("strId : "+strId);
 			rs = pstmt.executeQuery();
 			MemberDao mDao = MemberDao.getInstance();
 			StructureDao sDao = StructureDao.getInstance();
@@ -503,5 +507,65 @@ public class BookDao {
 			JdbcUtil.close(rs);
 		}
 	}//end of selectAllWithCondition
+	
+	/**
+	 * 예약내역 조건 중 년, 월을 Setting하기 위해 사용할 함수
+	 * */
+	public Set<Integer> selectYearOfBook(Connection conn)throws SQLException{		
+		PreparedStatement pstmt = null;
+		Set<Integer> yearList = new HashSet<>();
+		ResultSet rs = null;	
+		
+		try{
+			String sql = "select year(bk_startdate), year(bk_enddate) from resort.book";
+			pstmt = conn.prepareStatement(sql);			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				Integer startYear = rs.getInt("year(bk_startdate)");
+				Integer endYear = rs.getInt("year(bk_enddate)");
+				
+				if(startYear!= null && endYear != null){
+					yearList.add(startYear);
+					yearList.add(endYear);
+				}
+			}	
+			
+			return yearList;			
+		}finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(rs);
+		}
+	}//end of selectYearOfBook
+	
+	/**
+	 * 예약내역 조건 중 년, 월을 Setting하기 위해 사용할 함수
+	 * */
+	public Set<Integer> selectMonthOfBook(Connection conn)throws SQLException{		
+		PreparedStatement pstmt = null;
+		Set<Integer> monthList = new HashSet<>();
+		ResultSet rs = null;	
+		
+		try{
+			String sql = "select month(bk_startdate), month(bk_enddate) from resort.book";
+			pstmt = conn.prepareStatement(sql);			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				Integer startMonth = rs.getInt("month(bk_startdate)");
+				Integer endMonth = rs.getInt("month(bk_enddate)");
+				
+				if(startMonth!= null && endMonth != null){
+					monthList.add(startMonth);
+					monthList.add(endMonth);
+				}
+			}	
+			
+			return monthList;			
+		}finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(rs);
+		}
+	}//end of selectMonthOfBook
 	
 }
