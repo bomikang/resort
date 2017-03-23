@@ -5,41 +5,49 @@
 <script>
 	$(function(){
 		$("#btnUpdate").click(function(){
-			if(!confirm("수정 하시겠습니까?")){
-				return false;
-			}else{
-				$("form[name='updFaq']").submit();
-			}
+			<c:if test="${!empty admin}">		
+				if(!confirm("수정 하시겠습니까?")){
+					return false;
+				}else{
+					$("form[name='updFaq']").submit();
+				}
+			</c:if>	
+			<c:if test="${empty admin}">
+				alert("관리자 계정으로 로그인해 주세요.");
+				locaion.href="faq.do";
+			</c:if>
 		});
 		$("#btnDelete").click(function(){
-			if(!confirm("삭제 하시겠습니까?")){
-				return false;
-			}else{
-				$("form[name='dltFaq']").submit();
-			}
+			<c:if test="${!empty admin}">		
+				if(!confirm("삭제 하시겠습니까?")){
+					return false;
+				}else{
+					$("form[name='dltFaq']").submit();
+				}
+			</c:if>			
+			<c:if test="${empty admin}">
+				alert("관리자 계정으로 로그인해 주세요.");
+				locaion.href="faq.do";
+			</c:if>
 		});
 		
 		$("#btnAdd").click(function(){
-			if(!confirm("등록 하시겠습니까?")){
-				return false;
-			}else{
-				$("form[name='addFaq']").submit();
-			}
+			<c:if test="${!empty admin}">
+				if(!confirm("등록 하시겠습니까?")){
+					return false;
+				}else{
+					$("form[name='addFaq']").submit();
+				}
+			</c:if>
+			<c:if test="${empty admin}">
+				alert("관리자 계정으로 로그인해 주세요.");
+				locaion.href="faq.do";
+			</c:if>
 		});
 		
 		$("#btnBack").click(function(){
 			location.href="faq.do";
-		});
-		
-		$(document).on("submit","form[name='addFaq'], form[name='updFaq']", function(){
-			<c:if test="${empty admin }">
-				alert("관리자만 접근 가능합니다.");
-				location.href="login.do"; 
-				return false;
-			</c:if>
-			
-		});
-		
+		});		
 	
 	});
 </script>
