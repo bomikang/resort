@@ -2,14 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+	#bk_list #bkStrNo{opacity: 0;}
+</style>
 <script>
 	var stateList = new Array();
 	$(function(){
 		var date = new Date();
-		$("#year").val(date.getFullYear());
-		$("#month").val((date.getMonth()+1));
 		
-		setFormTagDisabled();
+		$("#startDate").val(convertToString(date));
+		$("#endDate").val(convertToString(date));
+		
+		$("#withCon").prop("checked", true);
 		setScreen();		
 		
 		/* Radio Button */
@@ -69,20 +73,87 @@
 			setScreen();
 			return false;
 		});
-	});
+		
+		$("#bkStrId").change(function(){
+			if($("#bkStrId").val() == "0"){
+				$("#bkStrNo").val("0");
+				$("#bkStrNo").css("opacity", "0");
+			}else if($("#bkStrId").val() != "0"){
+				setBkStrNo();
+				$("#bkStrNo").val("0");
+				$("#bkStrNo").css("opacity", "1");
+			}
+		});
+		/* 예약자 이름 클릭 시 */
+		$(document).on("click",".searchMem", function(){
+			var bkMem = $(this).attr("value");
+			console.log("bkMem : "+bkMem);
+			$.ajax({
+				url:"booklist.do",
+				type:"post",
+				timeout:30000,
+				dataType:"json",
+				data:{"type":"mem","bkMem":bkMem},
+				success:function(data){
+					console.log(data);
+					setTable(data);					
+				} 
+			});
+			return false;
+		});
+	});//ready
+	
+	function setBkStrNo(){
+		var strId = $("#bkStrId").val();
+		
+		$.ajax({
+			url:"booklist.do",
+			type:"post",
+			timeout:30000,
+			dataType:"json",
+			data:{"type":"strList","strId":strId},
+			success:function(data){
+				console.log(data);
+				$("#bkStrNo").empty();
+				$("#bkStrNo").append("<option value='0'>전체보기</option>");
+				var strList = data[0];
+				for(var i=0;i<strList.length;i++){
+					var optionForm = "<option value='"+strList[i].no+"'>"+strList[i].name+"</option>"
+					$("#bkStrNo").append(optionForm);
+				}
+			} 
+		}); 
+	}
+	/*date 객체의 getTime()으로 가져온 시간 값을 다시 String형태의 date값으로 변환 */
+	function convertToString(date){
+		var temp = new Date(date);
+		if(temp.getMonth()<9){
+			if(temp.getDate()<9){
+				return temp.getFullYear()+"-0"+(temp.getMonth()+1)+"-0"+temp.getDate();
+			}else{
+				return temp.getFullYear()+"-0"+(temp.getMonth()+1)+"-"+temp.getDate();
+			}
+		}else{
+			if(temp.getDate()<9){
+				return temp.getFullYear()+"-"+(temp.getMonth()+1)+"-0"+temp.getDate();
+			}else{
+				return temp.getFullYear()+"-"+(temp.getMonth()+1)+"-"+temp.getDate();
+			}			
+		}
+	}
 	
 	function setFormTagAbled(){
-		$("#all").removeAttr("checked");
-		$("#year").removeProp("disabled");
-		$("#month").removeProp("disabled");
+		$("#startDate").removeProp("disabled");
+		$("#endDate").removeProp("disabled");
 		$("input[name='cdState']").each(function(i, obj) {
 			$(obj).removeProp("disabled");
 		});
 		$("#bkStrId").removeProp("disabled");
 	}
+	
 	function setFormTagDisabled(){
-		$("#year").prop("disabled","disabled");
-		$("#month").prop("disabled","disabled");
+		$("#startDate").prop("disabled","disabled");
+		$("#endDate").prop("disabled","disabled");
 		$("input[name='cdState']").each(function(i, obj) {
 			$(obj).prop("disabled","disabled");
 		});
@@ -90,6 +161,7 @@
 	}
 	
 	function setScreen(){
+		/* 예약상태  */
 		var sList = new Array();
 		$("input[name='cdState']").each(function(i, obj) {
 			if($(obj).prop("checked")==true){
@@ -99,23 +171,29 @@
 		});
 		var bkState = sList.join(",");
 		console.log(bkState);	
+		/* 시설 ID */
 		var strId = $("#bkStrId").val();
 		console.log(strId);
-		var year = $("#year").val();
-		var month = $("#month").val();
+		var strNo = $("#bkStrNo").val();
+		console.log(strNo);
+		/* 기간 */
+		var start = $("#startDate").val();
+		var end = $("#endDate").val();
+		/* 전체선택/조건별검색 */
 		var condition="";
 		$("input[name='condition']").each(function(i, obj) {
 			if($(obj).prop("checked")==true){
 				condition=$(obj).attr("id");
 			}			
 		});
-		
+		/* 예약자명 */
+		var memName = $("#memName").val();
 		$.ajax({
 			url:"booklist.do",
 			type:"post",
 			timeout:30000,
 			dataType:"json",
-			data:{"cdState":bkState,"strId":strId, "year":year, "month":month, "condition":condition},
+			data:{"type":"setTable","cdState":bkState,"strId":strId,"strNo":strNo, "start":start, "end":end, "condition":condition,"memName":memName},
 			success:function(data){
 				console.log(data);
 				setTable(data);					
@@ -130,7 +208,7 @@
 	
 		var bList =  data[1];
 	
-		var tableForm = "<tr><th>예약 번호</th><th>시설 명</th><th>예약자명</th><th>연락처</th><th>시작날짜</th><th>끝날짜</th><th>총 금액</th><th>예약 구분</th><th>취소 날짜</th></tr>";
+		var tableForm = "<tr><th>예약 번호</th><th>시설 명</th><th>예약자</th><th>입실날짜</th><th>퇴실날짜</th><th>총 금액</th><th>예약 구분</th><th>취소 날짜</th></tr>";
 		
 		if(bList==null||bList==undefined||bList.length==0){
 			tableForm += "<tr><td colspan='9'>조회할 정보가 없습니다.</td></tr>";
@@ -141,8 +219,7 @@
 				tableForm += "<tr>";
 				tableForm += "<th class='bkNo'>"+bList[j].no+"</th>";//예약번호
 				tableForm += "<td>"+bList[j].str.nameById+"<br>"+bList[j].str.name+"</td>";//시설명 			
-				tableForm += "<td>"+bList[j].mem.name+"</td>";//예약자명 	
-				tableForm += "<td>"+bList[j].tel+"</td>";//연락처 	
+				tableForm += "<td><a href='#' value='"+bList[j].mem.no+"' class='searchMem'>"+bList[j].mem.name+"<br>("+bList[j].tel+")</a></td>";//예약자명 	
 				tableForm += "<td>"+bList[j].startDateForm+"</td>";//시작날짜
 				tableForm += "<td>"+bList[j].endDateForm+"</td>";//끝날짜				
 				tableForm += "<td>"+bList[j].priceForm +"</td>"//총가격
@@ -154,12 +231,13 @@
 				tableForm += "<td class='bkCancel'>"+bList[j].cancelForm +"</td></tr>";
 			}
 			
-				tableForm += "<tr><th>총 금액</th><th></th><th></th><th></th><th></th><th></th><th>"+number_format(totalPrice)+" 원</th><th></th><th></th></tr>";
+				tableForm += "<tr><th>총 금액</th><th></th><th></th><th></th><th></th><th>"+number_format(totalPrice)+" 원</th><th></th><th></th></tr>";
 			
 		}		
 		$("#bkTable").append(tableForm);
 		setState(stateList);
 	}//table 구성 함수 
+	
 	function setState(stateList){		
 		$(".bkState").each(function(i, obj) {
 			$(obj).val(stateList[i]);
@@ -183,23 +261,14 @@
 		<fieldset>
 			<p>
 				조회 기준 : 
-				<input type="radio" name="condition" id="all" checked="checked">전체 내역 보기
+				<input type="radio" name="condition" id="all">전체 내역 보기
 				<input type="radio" name="condition" id="withCon">조건별 검색 
 			</p>		
 			<p>
 				이용 기간 :
-				<select name="year" id="year">
-					<c:forEach items="${years }" var="year">
-						<option value="${year }">${year }</option>
-					</c:forEach>
-				</select> 
-				년 
-				<select name="month" id="month">
-						<c:forEach items="${months }" var="month">
-							<option value="${month }">${month }</option>
-						</c:forEach>
-				</select>
-				월
+				<input type="date" required="required" name="startDate" id="startDate">
+				~
+				<input type="date" required="required" name="endDate" id="endDate">
 			</p>
 			<p>
 				예약 상태 : 
@@ -210,16 +279,22 @@
 			</p>
 			<p>시설 구분 : 
 				<select id="bkStrId" name="bkStrId">
+					<option value="0">전체</option>
 					<c:forEach items="${strId }" var="str">
 						<option value="${str.id }">${str.nameById }</option>
 					</c:forEach>
 				</select>
+				<select id="bkStrNo" name="bkStrNo">
+					<option value="0">전체</option>
+				</select>
 			</p>
+			<p>예약자명 : <input type="text" name="memName" id="memName"></p>
 			<p><input type="submit" value="조회하기"></p>
 		</fieldset>
 	</form>
 	<br>
 	<table border="1" id="bkTable"></table>
+
 	<%-- <c:choose>
 		<c:when test="${empty bList }">
 			<script type="text/javascript">

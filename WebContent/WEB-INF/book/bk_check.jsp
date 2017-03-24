@@ -15,8 +15,9 @@
 		$("#year").val(date.getFullYear());
 		$("#month").val((date.getMonth()+1));
 		
-		setFormTagDisabled();
+		$("#withCon").prop("checked",true);
 		setScreen();
+		setFormTagAbled();
 		
 		/* Radio Button */
 		$("#all").click(function(){
@@ -130,7 +131,6 @@
 	}
 	
 	function setFormTagAbled(){
-		$("#all").removeAttr("checked");
 		$("#year").removeProp("disabled");
 		$("#month").removeProp("disabled");
 		$("input[name='cdState']").each(function(i, obj) {
@@ -159,7 +159,7 @@
 		<fieldset>
 			<p>
 				조회 기준 : 
-				<input type="radio" name="condition" id="all" checked="checked">전체 내역 보기
+				<input type="radio" name="condition" id="all">전체 내역 보기
 				<input type="radio" name="condition" id="withCon">조건별 검색 
 			</p>		
 			<p>
@@ -186,6 +186,7 @@
 			</p>
 			<p>시설 구분 : 
 				<select id="bkStrId" name="bkStrId">
+					<option value="0">전체 보기</option>
 					<c:forEach items="${strId }" var="str">
 						<option value="${str.id }">${str.nameById }</option>
 					</c:forEach>

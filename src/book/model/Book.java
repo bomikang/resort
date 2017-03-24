@@ -13,6 +13,7 @@ public class Book {
 	private String no;	
 	private Member mem;
 	private Structure str;
+	private String name;
 	private String tel;
 	private Date regDate;
 	private Date startDate;
@@ -61,6 +62,11 @@ public class Book {
 	public String getState() {
 		return state;
 	}
+	
+	public String getName() {
+		return name;
+	}
+
 	/* SETTER */
 	public void setNo(String no) {
 		this.no = no;
@@ -97,6 +103,11 @@ public class Book {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	/* METHODS */
 	/**
 	 * 시설 가격과 숙박 기간을 바탕으로 총 예약 금액을 계산한다.

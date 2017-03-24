@@ -177,8 +177,8 @@
 			<tr>
 				<th>이용 기간</th>
 				<td>
-					시작날짜 : <input type="date" readonly="readonly" id="start" name="start">
-					끝날짜 : <input type="date" readonly="readonly" id="end" name="end">
+					입실날짜 : <input type="date" readonly="readonly" id="start" name="start">
+					퇴실날짜 : <input type="date" readonly="readonly" id="end" name="end">
 					<select id="period">
 						<option value="1">1박2일</option>
 						<option value="2">2박3일</option>

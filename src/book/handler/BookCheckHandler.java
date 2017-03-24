@@ -170,7 +170,11 @@ public class BookCheckHandler implements CommandHandler {
 				// json �߽�
 				String json = "";				
 				if(!condition.equals("all")){
-					json = "["+om.writeValueAsString(str.getNameById())+","+om.writeValueAsString(bList)+"]";
+					if(Integer.parseInt(strId)==0){
+						json = "["+om.writeValueAsString("전체 시설")+","+om.writeValueAsString(bList)+"]";
+					}else{
+						json = "["+om.writeValueAsString(str.getNameById())+","+om.writeValueAsString(bList)+"]";
+					}
 				}else{//전체 검색일 경우
 					json = "["+om.writeValueAsString("전체 보기")+","+om.writeValueAsString(bList)+"]";
 				}				
