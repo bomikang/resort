@@ -37,7 +37,7 @@ public class JoinId_Checking implements CommandHandler {
 				Pattern patt = Pattern.compile(reg_uid);	// 정규표현식 패턴 적용
 				Matcher match = patt.matcher(checkId); 		// 가져온 ID 패턴과 매치
 				for(int i=0;i<mem.size();i++){
-					System.out.println(mem.get(i).getId());
+					
 					if(mem.get(i).getId().equals(checkId)){
 						result = "no";				// input 창의 아이디와 DB 아이디 비교 후 동일하면 "no" 값 반환
 						break;

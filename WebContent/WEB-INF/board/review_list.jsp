@@ -9,13 +9,23 @@
 </head>
 <body>
 	<table>
+	<tr>
+				<td><b>게시물 번호</b></td>
+				<td><b>제목</b></td>
+				<td><b>작성자</b></td>
+				<td><b>작성날짜</b></td>
+				<td><b>조회수</b></td>
+				
+			</tr>
 		<c:forEach var="i"  items="${list }">
+			
 			<tr>
 				<td>${i.rev_no }</td>
-				<td><a href="rev_detail.do">${i.rev_title }</a></td>
+				<td><a href="rev_detail.do?no=${i.rev_no }">${i.rev_title }(${i.rev_replycnt })</a></td>
 				<td>${i.rev_name}</td>
 				<td>${i.rev_regdate }</td>
 				<td>${i.rev_readcnt }</td>
+				
 		</tr>
 		</c:forEach>
 	</table>

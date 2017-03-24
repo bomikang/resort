@@ -40,33 +40,19 @@ public class Member_WithDrawal implements CommandHandler {
 												mInfo.getTel(),
 												mInfo.getRegDate(),
 												nowTime,mInfo.getIsMng());
-				Member member_NoDrawal = new Member(mInfo.getNo(),			
-												 mInfo.getId(),
-												 mInfo.getPassword(),
-												 mInfo.getName(),
-												 mInfo.getMail(),
-												 mInfo.getTel(),
-												 mInfo.getRegDate(),
-												 null,mInfo.getIsMng());
-				String result = "";
-				if(memberDrawal.getOutDate()!=null){
-					result = "ok";
 					dao.member_WithDrawal(conn, memberDrawal);
-					
 					
 					//json 사용 시 필요구문
 					ObjectMapper om= new ObjectMapper();
-					String json = om.writeValueAsString(result);	//  JSP화면 JSON 데이터 result값 반환 
+					String json = om.writeValueAsString(memberDrawal);	//  JSP화면 JSON 데이터 result값 반환 
 					HttpSession session = req.getSession(false); // 세션값이 없으면 null 값을 반환	
 					session.invalidate();
 					res.setContentType("application/json;charset=utf-8");
 					PrintWriter pw = res.getWriter();
 					pw.print(json);
 					pw.flush();
-				}
-				if(member_NoDrawal.getOutDate()==null){
-					result = "no";
-				}	
+				
+				
 			
 				}finally{
 					JdbcUtil.close(conn);

@@ -9,8 +9,10 @@ public class Review {
 	private String rev_name;	//작성자	-> session DATA가져오기
 	private Date rev_regdate; // 등록날짜
 	private int rev_readcnt; // 조회수 
-	
-	public Review(int rev_no, int rev_mem, String rev_title, String rev_name, Date rev_regdate, int rev_readcnt) {
+	private int rev_replycnt; // 댓글수
+
+	public Review(int rev_no, int rev_mem, String rev_title, String rev_name, Date rev_regdate, int rev_readcnt,
+			int rev_replycnt) {
 		super();
 		this.rev_no = rev_no;
 		this.rev_mem = rev_mem;
@@ -18,6 +20,13 @@ public class Review {
 		this.rev_name = rev_name;
 		this.rev_regdate = rev_regdate;
 		this.rev_readcnt = rev_readcnt;
+		this.rev_replycnt = rev_replycnt;
+	}
+	public int getRev_replycnt() {
+		return rev_replycnt;
+	}
+	public void setRev_replycnt(int rev_replycnt) {
+		this.rev_replycnt = rev_replycnt;
 	}
 	public int getRev_no() {
 		return rev_no;

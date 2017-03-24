@@ -42,11 +42,13 @@ public class ReviewInsertHandler implements CommandHandler {
 				
 				Date date = new Date();
 				MemberDao memDao = MemberDao.getInstance();
+				
 				Review rev = new Review(0,
 										userInfo.getMy_no(),
 										title,
 										userInfo.getMy_name(),
 										date,
+										0,
 										0);
 				ReviewDao dao = ReviewDao.getInstance();
 				dao.insert(conn,rev);

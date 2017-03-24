@@ -39,7 +39,8 @@ public class ReviewDao {
 										   rs.getString("rev_title"),
 										   rs.getString("rev_name"),	// 작성자
 										   rs.getDate("rev_regdate"),
-										   rs.getInt("rev_readcnt"));
+										   rs.getInt("rev_readcnt"),
+										   rs.getInt("rev_replycnt"));
 					review_list.add(review);
 				
 				}while(rs.next());
@@ -71,14 +72,14 @@ public class ReviewDao {
 		}
 	}
 	// 조회수 쿼리 .. 게시판  디테일 핸들러 만들때 사용 
-	public int rev_ReadCnt(Connection conn,Review rev) throws SQLException{
+	public int rev_ReadCnt(Connection conn,int no) throws SQLException{
 		PreparedStatement pstmt = null;	
 		try {
 			String sql = "update review set rev_readcnt = rev_readcnt+1 where rev_no= ? "; 
 
 			pstmt= conn.prepareStatement(sql);
 			
-			pstmt.setInt(1,rev.getRev_readcnt());
+			pstmt.setInt(1,no);
 			return pstmt.executeUpdate();			
 		} finally {
 			
@@ -86,6 +87,7 @@ public class ReviewDao {
 		
 		}
 	}
+	
 	public Review selectByNo(Connection conn,int no)throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -101,7 +103,9 @@ public class ReviewDao {
 						rs.getString("rev_title"),
 						rs.getString("rev_name"),
 						rs.getDate("rev_regdate"), 
-						rs.getInt("rev_readcnt"));
+						rs.getInt("rev_readcnt"),
+						rs.getInt("rev_replycnt")	
+						);
 			}
 			return rev;
 			

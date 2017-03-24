@@ -46,6 +46,7 @@ fieldset{
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/common.js"></script>
 <script>
+var duplicatedFlag = false;
 $(function(){
 	var reg_uid = /^[a-z0-9_]{5,12}$/; // 영소문자,숫자 5~12글자 
 	var reg_upw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-]|.*[0-9]).{6,24}$/; //6~24자 영문대소문자, 숫자, 특수문자 혼합하여 사용
@@ -60,6 +61,12 @@ $(function(){
 	var check_Mail = document.getElementById("email");
 	var check_Pwd2 = document.getElementById("password2");
 	$("form[name='f1']").submit(function() { 
+		if(duplicatedFlag == false)
+		{
+			alert("아이디 중복버튼을 클릭해주세요");
+			return false;
+		}
+		
 		if($("#password").val() != $("#password2").val()){
             alert("패스워드가 일치하지 않습니다.");
 			return false;            
@@ -85,6 +92,7 @@ $(function(){
 			alert("형식에 맞지 않는 이메일입니다.");
 			return false;   
    	 	}	
+		
 		if(reg_uid.test($("#id").val())==true&&reg_uid.test($("#id").val())==true&&reg_name.test($("#name").val())==true&&
 				reg_tel.test($("#tel").val())==true&&reg_mail.test($("#email").val())==true){
 			var cf = confirm("가입 하시겠습니까?");
@@ -140,8 +148,10 @@ $(function(){
    	 		 $(".ex").eq(4).css("display","none");
    	 	}
 	}
+	
 	// 아이디 중복 확인 버튼 클릭스 화면 갱신 없이 ajax 로 데이터 값 읽어오기 
 	$("#btn").click(function(){
+		duplicatedFlag = false;	
 		$.ajax({
 			url:"checkId.do",
 			type:"post",
@@ -149,25 +159,29 @@ $(function(){
 			dataType:"json",
 			data:{"id":$("#id").val()},//게시글의 번호
 			success:function(data){
+				
 										// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 						if(data=="ok"){
-							alert("사용가능 아이디 입니다.");			
+							alert("사용가능 아이디 입니다.");	
+							duplicatedFlag = true;
 						}else if(data=="no"){
-							alert("사용불가 아이디 입니다.");
+							$(".error").eq(0).css("display","block");
+							alert("중복된 아이디 입니다. 확인하여 주십시오.")
+							$("form[name='f1']").submit(function() { 
+								alert("중복된 아이디 입니다. 확인하여 주십시오.!")
+								return false;
+							});		
+							
+							
 						}
 						if(data=="noID"){
 							alert("형식에 맞지 않는 ID 입니다.");
-							 $(".ex").eq(0).css("display","block");
+							
 						}				
 			} 
 		});
 	});
-	/* $("#sub").click(function(){
-		var cf = confirm("가입하시겠습니까?");
-			if(cf == true){}
 	
-	
-	}); */
 });
 </script>
 </head>
@@ -182,6 +196,7 @@ $(function(){
 			<p>
 				<label>아이디 : </label>  <input type="text" name="id" id="id" required="required" placeholder="아이디를 입력하세요" > 
 				<span class="ex">5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</span>
+				<span class="error">사용중인 아이디 입니다.</span>
 				<button id="btn" type="button">아이디중복</button>
 			</p>
 			<p>
