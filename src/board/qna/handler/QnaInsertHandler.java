@@ -2,7 +2,9 @@ package board.qna.handler;
 
 import java.sql.Connection;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,20 +34,29 @@ public class QnaInsertHandler implements CommandHandler {
 				
 				String title = req.getParameter("title");
 				String content = req.getParameter("content");
+				int article = 0; //원게시물 번호 <= 관리자일 때 파라미터 받아 옴
 				
-				/* 로그인 되어있는 사람의 상태가 관리자일 때와 일반 회원일 때로 구분하는 구문 필요 
-				 * 우선 일반회원의 경우에만 완료.*/
-				
-				LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
+				LoginMemberInfo memInfo = null;
 				MemberDao memberDao = MemberDao.getInstance();
-				Member member = memberDao.selectByNo(con, myInfo.getMy_no());
+				
+				if (req.getSession().getAttribute("myinfo") != null) {//일반회원
+					memInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
+				}else if(req.getSession().getAttribute("admin") != null){ //관리자
+					memInfo = (LoginMemberInfo) req.getSession().getAttribute("admin");
+					article = Integer.parseInt(req.getParameter("article"));
+				}
+				
+				Member member = memberDao.selectByNo(con, memInfo.getMy_no());
 				
 				QnaDao qnaDao = QnaDao.getInstance();
-				Qna qna = new Qna(0, member, title, new Date(), 0, content, false);
-				
+				Qna qna = new Qna(0, member, title, new Date(), article, content, false);
 				qnaDao.insertQna(con, qna);
 				
-				qnaNo = qnaDao.getLastQnaNo(con);
+				//detail로 넘겨줄 때 필요한 게시물 번호
+				//일반회원일 때는 마지막 게시물 번호가 방금등록한 번호임
+				//관리자일 때는 받아온 article번호를 넘겨줌
+				if (article == 0) qnaNo = qnaDao.getLastQnaNo(con);
+				else qnaNo = article;
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally{

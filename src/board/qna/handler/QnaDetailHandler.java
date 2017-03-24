@@ -23,9 +23,11 @@ public class QnaDetailHandler implements CommandHandler {
 			int qnaNo = Integer.parseInt(req.getParameter("qnano"));
 
 			QnaDao dao = QnaDao.getInstance();
-			Qna qna = dao.getQnaByNo(con, qnaNo);
-
+			Qna qna = dao.getQnaByNo(con, qnaNo); //회원의 게시글
+			Qna qnaFromAdmin = dao.getQnaFromAdmin(con, qnaNo); //관리자 게시글
+			
 			req.setAttribute("qna", qna);
+			if (qnaFromAdmin != null) req.setAttribute("qnaAdmin", qnaFromAdmin); //관리자 게시글이 존재하면 심어줌
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
