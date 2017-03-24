@@ -1,9 +1,9 @@
 package board.review.model;
 
-public class Review_Deatail {
+public class Review_Detail {
 	private int rev_no;
 	private String rev_detail;
-	public Review_Deatail(int rev_no, String rev_detail) {
+	public Review_Detail(int rev_no, String rev_detail) {
 		super();
 		this.rev_no = rev_no;
 		this.rev_detail = rev_detail;
