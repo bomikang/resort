@@ -28,15 +28,25 @@ public class BookDao {
 	/**
 	 * 관리자 화면에서 모든 예약 내역을 관리하기 위해 DB에 저장된 모든 내역을 ArrayList형태로 반환해주는 Methods
 	 * */
-	public List<Book> selectAll(Connection conn)throws SQLException{
+	public List<Book> selectAll(Connection conn, String bkName)throws SQLException{
 		List<Book> bList = new ArrayList<>();
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try{
-			String sql = "select * from resort.book";
+			String sql = "select * from resort.book ";
+			
+			if(bkName != "0"){
+				sql += "where bk_name=? ";
+			}
+			
 			pstmt = conn.prepareStatement(sql);
+			
+			if(bkName != "0"){
+				pstmt.setString(1, bkName);
+			}
+			
 			rs = pstmt.executeQuery();
 			MemberDao mDao = MemberDao.getInstance();
 			StructureDao sDao = StructureDao.getInstance();
@@ -53,7 +63,7 @@ public class BookDao {
 				
 				book.setState(rs.getString("bk_state"));					//예약의 진행상태
 				book.setTel(rs.getString("bk_tel"));						//예약자 연락처
-				
+				book.setName(rs.getString("bk_name"));
 				int memNo = rs.getInt("bk_mem");
 				int strNo = rs.getInt("bk_str");
 				
@@ -123,7 +133,7 @@ public class BookDao {
 				
 				book.setState(rs.getString("bk_state"));					//예약의 진행상태
 				book.setTel(rs.getString("bk_tel"));						//예약자 연락처
-				
+				book.setName(rs.getString("bk_name"));
 				int memNo = rs.getInt("bk_mem");
 				int strNo = rs.getInt("bk_str");
 				
@@ -169,7 +179,7 @@ public class BookDao {
 				
 				book.setState(rs.getString("bk_state"));					//예약의 진행상태
 				book.setTel(rs.getString("bk_tel"));						//예약자 연락처
-				
+				book.setName(rs.getString("bk_name"));
 				int memNo = rs.getInt("bk_mem");
 				int strNo = rs.getInt("bk_str");
 				
@@ -217,7 +227,7 @@ public class BookDao {
 				int memNo = rs.getInt("bk_mem");
 				int strNo = rs.getInt("bk_str");
 				
-				
+				book.setName(rs.getString("bk_name"));
 				book.setMem(mDao.selectByNo(conn, memNo));
 				book.setStr(sDao.getStructureByNo(conn, strNo));
 				
@@ -237,8 +247,8 @@ public class BookDao {
 		PreparedStatement pstmt = null;
 		
 		try{
-			String sql = "insert into resort.`book`(bk_mem, bk_str, bk_regdate, bk_startdate, bk_enddate, bk_state, bk_tel, bk_no)"
-							+"values(?, ?, ?, ?, ?, '입금대기', ?,?)";
+			String sql = "insert into resort.`book`(bk_mem, bk_str, bk_regdate, bk_startdate, bk_enddate, bk_state, bk_tel, bk_no, bk_name)"
+							+"values(?, ?, ?, ?, ?, '입금대기', ?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, book.getMem().getNo());
 			pstmt.setInt(2, book.getStr().getNo());
@@ -247,6 +257,7 @@ public class BookDao {
 			pstmt.setString(5, book.getEndDateForm());
 			pstmt.setString(6, book.getTel());
 			pstmt.setString(7, book.getNoForm());
+			pstmt.setString(8, book.getMem().getName());
 			
 			pstmt.executeUpdate();			
 		}finally {
@@ -321,15 +332,18 @@ public class BookDao {
 	 * 호출할 handler에서 connection에 auto_commit false로 변경 후 사용요망
 	 * */
 	public void autoBookCancel(Connection conn)throws SQLException{
-		PreparedStatement pstmt = null;
-		
-		try{
-			String sql = "update resort.book set bk_state='예약취소', bk_canceldate = now() where bk_regdate<date_sub(now(),interval 3 day) and bk_state = '입금대기'";
-			pstmt = conn.prepareStatement(sql);
+		Calendar cal = Calendar.getInstance();
+		if(cal.get(Calendar.HOUR_OF_DAY)>=15){
+			PreparedStatement pstmt = null;
 			
-			pstmt.executeUpdate();			
-		}finally {
-			JdbcUtil.close(pstmt);
+			try{
+				String sql = "update resort.book set bk_state='예약취소', bk_canceldate = now() where bk_regdate<date_sub(now(),interval 3 day) and bk_state = '입금대기'";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.executeUpdate();			
+			}finally {
+				JdbcUtil.close(pstmt);
+			}
 		}
 	}// end of autoBookCancel
 	
@@ -338,15 +352,18 @@ public class BookDao {
 	 * 호출할 handler에서 connection에 auto_commit false로 변경 후 사용요망
 	 * */
 	public void autoBookEnd(Connection conn)throws SQLException{
-		PreparedStatement pstmt = null;
-		
-		try{
-			String sql = "update resort.book set bk_state='예약종료' where bk_enddate < now() and (bk_state = '입금완료' or bk_state='입금대기')";
-			pstmt = conn.prepareStatement(sql);	
+		Calendar cal = Calendar.getInstance();
+		if(cal.get(Calendar.HOUR_OF_DAY)>=15){
+			PreparedStatement pstmt = null;
 			
-			pstmt.executeUpdate();			
-		}finally {
-			JdbcUtil.close(pstmt);
+			try{
+				String sql = "update resort.book set bk_state='예약종료' where bk_enddate < now() and (bk_state = '입금완료' or bk_state='입금대기')";
+				pstmt = conn.prepareStatement(sql);	
+				
+				pstmt.executeUpdate();			
+			}finally {
+				JdbcUtil.close(pstmt);
+			}
 		}
 	}// end of autoBookEnd
 	
@@ -434,7 +451,7 @@ public class BookDao {
 				
 				book.setState(rs.getString("bk_state"));					//예약의 진행상태
 				book.setTel(rs.getString("bk_tel"));						//예약자 연락처
-				
+				book.setName(rs.getString("bk_name"));
 				int memNo = rs.getInt("bk_mem");
 				int strNo = rs.getInt("bk_str");
 				
@@ -512,14 +529,14 @@ public class BookDao {
 	/**
 	 * 관리자가 조건에 따라 예약 내역을 조회할 시 필요한 메소드 
 	 * */
-	public List<Book> selectAllWithCondition(Connection conn, String start, String end, int strId,int sNo,String[] state)throws SQLException{		
+	public List<Book> selectAllWithCondition(Connection conn, String start, String end, int strId,int sNo, String memName,String[] state)throws SQLException{		
 		PreparedStatement pstmt = null;
 		List<Book> bList = new ArrayList<>();
 		ResultSet rs = null;	
 		
 		try{
 			//select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no where (year(b.bk_startdate)=2017 and month(b.bk_startdate)=3) and (year(b.bk_enddate)=2017 and month(b.bk_enddate)=3) and s.str_id=1 and b.bk_state='예약취소';
-			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no "
+			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str=s.str_no "
 						+"where ((b.bk_startdate>=? and b.bk_startdate<=?) "
 						+"or (b.bk_enddate>=? and b.bk_enddate<=?)) ";
 			if(strId != 0){
@@ -537,7 +554,10 @@ public class BookDao {
 						sql += "or b.bk_state='"+state[i]+"' ";
 					}
 				}
-				sql +=")";
+				sql +=") ";
+			}
+			if(memName != "0"){
+				sql += " and bk_name = ? ";
 			}
 			sql += " order by b.bk_startdate";
 			
@@ -551,7 +571,14 @@ public class BookDao {
 				pstmt.setInt(5, strId);
 				if(sNo != 0){
 					pstmt.setInt(6, sNo);
+					if(memName != null){
+						pstmt.setString(7, memName);
+					}
+				}else if(sNo==0 && memName != "0"){
+					pstmt.setString(6, memName);
 				}
+			}else if(strId == 0 && memName != "0"){
+				pstmt.setString(5, memName);
 			}
 			
 			rs = pstmt.executeQuery();
@@ -571,7 +598,7 @@ public class BookDao {
 				
 				book.setState(rs.getString("bk_state"));					//예약의 진행상태
 				book.setTel(rs.getString("bk_tel"));						//예약자 연락처
-				
+				book.setName(rs.getString("bk_name"));
 				int memNo = rs.getInt("bk_mem");
 				int strNo = rs.getInt("bk_str");
 				

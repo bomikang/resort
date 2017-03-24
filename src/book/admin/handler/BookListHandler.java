@@ -82,6 +82,11 @@ public class BookListHandler implements CommandHandler {
 					start = Book.dateFormat.format(cal);
 					end = Book.dateFormat.format(cal);
 				}
+				String memName = req.getParameter("memName");
+				System.out.println("memNamae : "+memName);
+				if(memName==""){
+					memName="0";
+				}
 				Connection conn = null;
 				try{
 					conn= ConnectionProvider.getConnection();
@@ -102,9 +107,9 @@ public class BookListHandler implements CommandHandler {
 					BookDao bDao = BookDao.getInstance();
 					List<Book>bList = null;
 					if(!condition.equals("all")){
-						bList =bDao.selectAllWithCondition(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo),states);
+						bList =bDao.selectAllWithCondition(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo),memName,states);
 					}else{
-						bList = bDao.selectAll(conn);
+						bList = bDao.selectAll(conn, memName);
 					}
 					req.setAttribute("bList", bList);
 					

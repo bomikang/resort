@@ -152,7 +152,8 @@ response.setHeader("pragma","no-cache");
 				
 				success:function(data){
 					console.log(data);
-					setMonthTable(date, data);					
+					setMonthTable(date, data);		
+					$("#bkStr").html($("#bkStrId").find("option[selected='true']").text());
 				} 
 			}); 
 	}// end of setScreen
@@ -247,13 +248,15 @@ response.setHeader("pragma","no-cache");
 	</c:if>
 	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
 	<h2 id="bkTable"></h2>
-	<p>시설 이름 : 
-	<select id="bkStrId">
-		<c:forEach items="${strId }" var="str">
-			<option value="${str.id }">${str.nameById }</option>
-		</c:forEach>
-	</select>
+	<p>
+		시설 이름 : 
+		<select id="bkStrId">
+			<c:forEach items="${strId }" var="str">
+				<option value="${str.id }">${str.nameById }</option>
+			</c:forEach>
+		</select>
 	</p>
+	<h2 id="bkStr">${strId.get(0).nameById }</h2>
 	<div id="bookTable" >
 		
 	</div>

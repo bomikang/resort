@@ -186,13 +186,14 @@
 				condition=$(obj).attr("id");
 			}			
 		});
-		
+		/* 예약자명 */
+		var memName = $("#memName").val();
 		$.ajax({
 			url:"booklist.do",
 			type:"post",
 			timeout:30000,
 			dataType:"json",
-			data:{"type":"setTable","cdState":bkState,"strId":strId,"strNo":strNo, "start":start, "end":end, "condition":condition},
+			data:{"type":"setTable","cdState":bkState,"strId":strId,"strNo":strNo, "start":start, "end":end, "condition":condition,"memName":memName},
 			success:function(data){
 				console.log(data);
 				setTable(data);					
@@ -230,7 +231,7 @@
 				tableForm += "<td class='bkCancel'>"+bList[j].cancelForm +"</td></tr>";
 			}
 			
-				tableForm += "<tr><th>총 금액</th><th></th><th></th><th></th><th></th><th></th><th>"+number_format(totalPrice)+" 원</th><th></th><th></th></tr>";
+				tableForm += "<tr><th>총 금액</th><th></th><th></th><th></th><th></th><th>"+number_format(totalPrice)+" 원</th><th></th><th></th></tr>";
 			
 		}		
 		$("#bkTable").append(tableForm);
@@ -287,6 +288,7 @@
 					<option value="0">전체</option>
 				</select>
 			</p>
+			<p>예약자명 : <input type="text" name="memName" id="memName"></p>
 			<p><input type="submit" value="조회하기"></p>
 		</fieldset>
 	</form>
