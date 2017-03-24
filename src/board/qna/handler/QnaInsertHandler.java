@@ -36,13 +36,11 @@ public class QnaInsertHandler implements CommandHandler {
 				String content = req.getParameter("content");
 				int article = 0; //원게시물 번호 <= 관리자일 때 파라미터 받아 옴
 				
-				LoginMemberInfo memInfo = null;
+				//LoginMemberInfo memInfo = null;
+				LoginMemberInfo memInfo = (LoginMemberInfo) req.getSession().getAttribute("user_info");
 				MemberDao memberDao = MemberDao.getInstance();
 				
-				if (req.getSession().getAttribute("myinfo") != null) {//일반회원
-					memInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
-				}else if(req.getSession().getAttribute("admin") != null){ //관리자
-					memInfo = (LoginMemberInfo) req.getSession().getAttribute("admin");
+				if(memInfo.getIsMng() == true){ //관리자
 					article = Integer.parseInt(req.getParameter("article"));
 				}
 				

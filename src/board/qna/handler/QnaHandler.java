@@ -32,19 +32,15 @@ public class QnaHandler implements CommandHandler {
 			try {
 				con = ConnectionProvider.getConnection();
 				
-				LoginMemberInfo memInfo = null;
+				LoginMemberInfo memInfo = (LoginMemberInfo) req.getSession().getAttribute("user_info");
 				MemberDao memberDao = MemberDao.getInstance();
 				QnaDao dao = QnaDao.getInstance();
 				List<Qna> list = new ArrayList<>();
 				
-				if (req.getSession().getAttribute("myinfo") != null) { //일반회원
-					memInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
-					
+				if (memInfo.getIsMng() == false) { //일반회원
 					Member member = memberDao.selectByNo(con, memInfo.getMy_no());
 					list = dao.selectAllQnaByMember(con, member);
-				}else if(req.getSession().getAttribute("admin") != null){ //관리자
-					memInfo = (LoginMemberInfo) req.getSession().getAttribute("admin");
-					
+				}else if(memInfo.getIsMng() == true){ //관리자
 					list = dao.incompleteReplyList(con);
 				}
 				

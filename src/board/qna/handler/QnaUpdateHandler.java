@@ -47,11 +47,15 @@ public class QnaUpdateHandler implements CommandHandler {
 			
 			try {
 				con = ConnectionProvider.getConnection();
-				
+			
+				int article = 0;
 				String title = req.getParameter("title");
 				String content = req.getParameter("content");
 				
-				/* 답글이 달려있으면 수정 못하게 하는 기능 추가해야함. */
+				/*관리자일 때만 넘어오는 article 파라미터 존재*/
+				if (req.getParameter("article") != null) {
+					article = Integer.parseInt(req.getParameter("article"));
+				}
 				
 				QnaDao qnaDao = QnaDao.getInstance();
 				Qna qna = qnaDao.getQnaByNo(con, qnaNo);
@@ -59,6 +63,8 @@ public class QnaUpdateHandler implements CommandHandler {
 				qna.setContent(content);
 				
 				qnaDao.updateQna(con, qna);
+				
+				if (article != 0) qnaNo = article; //관리자는 답변을 달았던 회원의 게시물을 보여줌	
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally{
@@ -67,5 +73,4 @@ public class QnaUpdateHandler implements CommandHandler {
 			return "qnadetail.do?qnano="+qnaNo;
 		}
 	}
-
 }
