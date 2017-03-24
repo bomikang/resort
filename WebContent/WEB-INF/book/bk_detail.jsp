@@ -53,7 +53,7 @@
 			</tr>
 			<tr>
 				<th>예약자</th>
-				<td>${book.mem.name }</td>
+				<td>${book.name }</td>
 			</tr>
 			<tr>
 				<th>연락처</th>
