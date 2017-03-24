@@ -17,15 +17,33 @@ import member.model.Member;
 import member.model.MemberDao;
 import mvc.controller.CommandHandler;
 
-public class QnaInsertHandler implements CommandHandler {
+public class QnaUpdateHandler implements CommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if (req.getMethod().equalsIgnoreCase("get")) {
-			return "index.jsp?page=/WEB-INF/board/qna_insert&menu=/WEB-INF/board/board_menu";
+			Connection con = null;
+
+			try {
+				con = ConnectionProvider.getConnection();
+
+				int qnaNo = Integer.parseInt(req.getParameter("qnano"));
+
+				QnaDao dao = QnaDao.getInstance();
+				Qna qna = dao.getQnaByNo(con, qnaNo);
+
+				req.setAttribute("qna", qna);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				JdbcUtil.close(con);
+			}
+			
+			return "index.jsp?page=/WEB-INF/board/qna_update&menu=/WEB-INF/board/board_menu";
 		}else{
 			Connection con = null;
-			int qnaNo = 0; //qna_detail페이지로 보내주기 위한 변수
+			
+			int qnaNo = Integer.parseInt(req.getParameter("qnano"));
 			
 			try {
 				con = ConnectionProvider.getConnection();
@@ -33,19 +51,14 @@ public class QnaInsertHandler implements CommandHandler {
 				String title = req.getParameter("title");
 				String content = req.getParameter("content");
 				
-				/* 로그인 되어있는 사람의 상태가 관리자일 때와 일반 회원일 때로 구분하는 구문 필요 
-				 * 우선 일반회원의 경우에만 완료.*/
-				
-				LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
-				MemberDao memberDao = MemberDao.getInstance();
-				Member member = memberDao.selectByNo(con, myInfo.getMy_no());
+				/* 답글이 달려있으면 수정 못하게 하는 기능 추가해야함. */
 				
 				QnaDao qnaDao = QnaDao.getInstance();
-				Qna qna = new Qna(0, member, title, new Date(), 0, content, false);
+				Qna qna = qnaDao.getQnaByNo(con, qnaNo);
+				qna.setTitle(title);
+				qna.setContent(content);
 				
-				qnaDao.insertQna(con, qna);
-				
-				qnaNo = qnaDao.getLastQnaNo(con);
+				qnaDao.updateQna(con, qna);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally{
@@ -53,7 +66,6 @@ public class QnaInsertHandler implements CommandHandler {
 			}
 			return "qnadetail.do?qnano="+qnaNo;
 		}
-		
 	}
 
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import book.model.BookDao;
 import jdbc.ConnectionProvider;
@@ -48,6 +49,8 @@ public class LoginHandler implements CommandHandler {
 				}
 				
 				// 세션에 DATA 남기기위한 작업
+				
+				
 				LoginMemberInfo myinfo = new LoginMemberInfo(
 						member.getNo(),
 						member.getId(),
@@ -67,7 +70,6 @@ public class LoginHandler implements CommandHandler {
 					bDao.autoBookEnd(conn);
 					conn.commit();
 				}
-				
 				if(myinfo.getIsMng().equals(false)){ // 일반회원일 경우
 					req.getSession().setAttribute("myinfo",myinfo);
 				}

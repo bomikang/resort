@@ -156,7 +156,7 @@
 			<p>
 				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
 				<input type="submit" value="등록" id="btnAddStr"/>
-				<input type="button" value="취소" onclick="location.replace('structureList.do')"/><!-- 취소하면 리스트로 --><!-- 취소하면 리스트로 -->
+				<input type="button" value="취소" onclick="location.replace('structureList.do')"/><!-- 취소하면 리스트로 -->
 			</p>
 		</fieldset>
 	</form>
