@@ -51,7 +51,6 @@ public class QnaHandler implements CommandHandler {
 				JdbcUtil.close(con);
 			}
 			return "index.jsp?page=/WEB-INF/board/qna_list&menu=/WEB-INF/board/board_menu";
-			
 		}else{
 			Connection con = null;
 			
@@ -63,14 +62,22 @@ public class QnaHandler implements CommandHandler {
 				QnaDao dao = QnaDao.getInstance();
 				List<Qna> list = new ArrayList<>();
 				
-				if (checkReply.equals("incomplete")){ //답변 미완료
-					list = dao.incompleteReplyList(con);
-				}else if (checkReply.equals("complete")){ //답변 완료
-					list = dao.completeReplyList(con);
-				}else if (checkReply.equals("all")) { //게시글 전체
-					list = dao.selectAllQnaExceptAdmin(con);
+				//맨 처음 게시판 들어왔을 때 리스트 보이도록
+				if (checkReply.equals("justList")){
+					LoginMemberInfo memInfo = (LoginMemberInfo) req.getSession().getAttribute("user_info");
+					MemberDao memberDao = MemberDao.getInstance();
+					if (memInfo.getIsMng() == false) { //일반회원
+						Member member = memberDao.selectByNo(con, memInfo.getMy_no());
+						list = dao.selectAllQnaByMember(con, member);
+					}else if(memInfo.getIsMng() == true){ //관리자
+						list = dao.incompleteReplyList(con);
+					}
 				}
+				else if (checkReply.equals("incomplete")){ list = dao.incompleteReplyList(con);	}//답변 미완료(관리자) 
+				else if (checkReply.equals("complete")){ list = dao.completeReplyList(con); }//답변 완료(관리자)
+				else if (checkReply.equals("all")) { list = dao.selectAllQnaExceptAdmin(con); }//게시글 전체(관리자)
 				
+				//json
 				ObjectMapper om = new ObjectMapper();
 				String json = om.writeValueAsString(list);
 				
