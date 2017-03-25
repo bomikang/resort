@@ -147,7 +147,7 @@
 		$("#bkStrId").prop("disabled", "disabled");
 	}
 </script>
-<c:if test="${empty myinfo }">
+<c:if test="${empty user_info }">
 	<script>
 		alert("로그인이 필요한 페이지 입니다.");
 		location.href="login.do";

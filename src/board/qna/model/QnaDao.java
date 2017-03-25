@@ -256,14 +256,13 @@ public class QnaDao {
 		return qna;
 	}//getQnaByNo
 	
-	
-	/*
+	/* 관리자 답변의 제목과 내용 가져오기 */
 	public Qna getQnaFromAdmin(Connection con, int qnaNo){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Qna qna = null;
 		
-		String sql = "select q.qna_no, mem_no, qna_title, qna_regdate, qna_article, qna_detail "
+		String sql = "select q.*, qna_detail "
 				+ "from qna q, qna_detail qd where q.qna_article = ? and q.qna_no = qd.qna_no";
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -281,10 +280,8 @@ public class QnaDao {
 			JdbcUtil.close(pstmt);
 		}
 		return qna;
-	}//getQnaFromAdmin 관리자가 회원의 게시글에 남긴 답글 불러오는 메소드
-	*/
+	}//getQnaFromAdmin
 	
-
 	
 	/* method */
 	private Qna createQna(ResultSet rs, Connection con) throws SQLException {

@@ -22,7 +22,7 @@ public class BookProcessHandler implements CommandHandler{
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		System.out.println();
-		LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
+		LoginMemberInfo myInfo = (LoginMemberInfo) req.getSession(false).getAttribute("user_info");
 		if(myInfo==null){
 			res.sendRedirect("login.do");
 		}

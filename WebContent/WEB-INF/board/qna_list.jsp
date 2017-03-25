@@ -58,72 +58,71 @@
 </script>
 </head>
 <body>
-	<c:if test="${empty customer}">
+	<!-- 손님 -->
+	<c:if test="${empty user_info}">
 		<script>
 			location.href="login.do";
 		</script>
 	</c:if>
 	
-	<c:if test="${!empty myinfo}">
-		<c:set var="user" value="${myinfo}"></c:set>
-		<p>일반회원임</p>
-		<a href="qnainsert.do">게시글 등록</a>
-		
-		<c:if test="${qnaList.size() == 0}">
-			<p>등록된 게시물이 없습니다</p>
-		</c:if>
-		<c:if test="${qnaList.size() > 0}">
-			<table style="width:500px; text-align:center;">
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>등록일</th>
-					<th>답변여부</th>
-				</tr>
-				<c:forEach var="list" items="${qnaList}">
+	<c:if test="${!empty user_info}">
+		<!-- 일반회원 -->
+		<c:if test="${user_info.isMng == false }">
+			<a href="qnainsert.do">게시글 등록</a>
+			<c:if test="${qnaList.size() == 0}">
+				<p>등록된 게시물이 없습니다</p>
+			</c:if>
+			<c:if test="${qnaList.size() > 0}">
+				<table style="width:500px; text-align:center;">
 					<tr>
-						<td>${list.no}</td>
-						<td><a href="qnadetail.do?qnano=${list.no}">${list.title}</a></td>
-						<td>${list.regDateNoTimeForm}</td>
-						<td>${list.stringReply}</td>
+						<th>번호</th>
+						<th>제목</th>
+						<th>등록일</th>
+						<th>답변여부</th>
 					</tr>
-				</c:forEach>
-			</table>
+					<c:forEach var="list" items="${qnaList}">
+						<tr>
+							<td>${list.no}</td>
+							<td><a href="qnadetail.do?qnano=${list.no}">${list.title}</a></td>
+							<td>${list.regDateNoTimeForm}</td>
+							<td>${list.stringReply}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:if>
+		</c:if>
+		
+		<!-- 관리자 -->
+		<c:if test="${user_info.isMng == true }">
+			<!-- 밑 세 개 버튼만 ajax로 끌고 옴 -->
+			<a href="#" id="incomp_list" style="border:1px solid black;">답변 미완료 목록</a>
+			<a href="#" id="comp_list" style="border:1px solid black;">답변 완료 목록</a>
+			<a href="#" id="all_list" style="border:1px solid black;">전체 목록</a>
+			
+			<c:if test="${qnaList.size() == 0}">
+				<p>등록된 게시물이 없습니다</p>
+			</c:if>
+			<c:if test="${qnaList.size() > 0}">
+				<table id="qna_table" style="width:500px; text-align:center;">
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>등록일</th>
+						<th>작성자</th>
+						<th>답변여부</th>
+					</tr>
+					<c:forEach var="list" items="${qnaList}">
+						<tr>
+							<td>${list.no}</td>
+							<td><a href="qnadetail.do?qnano=${list.no}">${list.title}</a></td>
+							<td>${list.regDateNoTimeForm}</td>
+							<td>${list.member.id}</td>
+							<td>${list.stringReply}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:if>
 		</c:if>
 	</c:if>
-	
-	<c:if test="${!empty admin}">
-		<p>관리자임</p>
-		<!-- 밑 세 개 버튼만 ajax로 끌고 옴 -->
-		<a href="#" id="incomp_list" style="border:1px solid black;">답변 미완료 목록</a>
-		<a href="#" id="comp_list" style="border:1px solid black;">답변 완료 목록</a>
-		<a href="#" id="all_list" style="border:1px solid black;">전체 목록</a>
-		
-		<c:if test="${qnaList.size() == 0}">
-			<p>등록된 게시물이 없습니다</p>
-		</c:if>
-		<c:if test="${qnaList.size() > 0}">
-			<table id="qna_table" style="width:500px; text-align:center;">
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>등록일</th>
-					<th>작성자</th>
-					<th>답변여부</th>
-				</tr>
-				<c:forEach var="list" items="${qnaList}">
-					<tr>
-						<td>${list.no}</td>
-						<td><a href="qnadetail.do?qnano=${list.no}">${list.title}</a></td>
-						<td>${list.regDateNoTimeForm}</td>
-						<td>${list.member.id}</td>
-						<td>${list.stringReply}</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</c:if>
-	</c:if>
-	
-	
 </body>
 </html>

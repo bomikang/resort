@@ -24,18 +24,19 @@ public class ReviewDetailList implements CommandHandler{
 		try{
 			conn = ConnectionProvider.getConnection();
 			LoginMemberInfo userinfo = (LoginMemberInfo) req.getSession(false).getAttribute("myinfo");
-			
 			ReviewDao rev_dao = ReviewDao.getInstance();
 			Review_DetailDao detail_dao = Review_DetailDao.getInstance();
-			
-		//	Review_Detail detail = detail_dao.selectByNo(conn, userinfo.getMy_no());
-			//Review rev_list= rev_dao.selectByNo(conn,userinfo.getMy_no());
-		//	req.setAttribute("rev_list",detail );
-		//req.setAttribute("rev_detail", rev_list);
+			int no = Integer.parseInt(req.getParameter("no"));
+			Review rev_list= rev_dao.selectByNo(conn,no); // 화면에서 받은 매개변수로..
+				System.out.println(rev_list.getRev_no());
+			Review_Detail detail = detail_dao.selectByNo(conn,no);//  게시물번호 입력해야됨 
+			//rev_dao.rev_ReadCnt(conn,userinfo.getMy_no());
+			req.setAttribute("rev_list",rev_list );
+			req.setAttribute("rev_detail", detail);
 		}finally{
 			JdbcUtil.close(conn);
 		}
-		return "/WEB-INF/view/articleread.jsp";
+		return "index.jsp?page=/WEB-INF/board/review_detail&menu=/WEB-INF/board/board_menu";
 	}
 
 }

@@ -20,12 +20,11 @@
 </script>
 </head>
 <body>
-	<c:if test="${!empty myinfo}">
-		<c:set var="user" value="${myinfo}"></c:set>
-	</c:if>
-	
-	<c:if test="${!empty admin}">
-		<c:set var="user" value="${admin}"></c:set>
+	<c:if test="${!empty user_info}">
+		<!-- 일반회원 -->
+		<c:if test="${user_info.isMng == false }">
+			<c:set var="user" value="${user_info}"></c:set>
+		</c:if>
 	</c:if>
 	
 	<form action="" method="post" id='f1'>
