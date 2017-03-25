@@ -26,7 +26,7 @@
 		}else {
 			$("form[name='adminForm']").css("display", "none");	
 		}
-	}
+	}//checkEmptyAdmin
 	
 	$(function(){
 		checkEmptyAdmin();
@@ -96,7 +96,7 @@
 		$("#btnDelete").click(function() {
 			showConfirm("정말 삭제하시겠습니까?", "qnadelete.do", "memberForm");
 		});
-	});
+	});//ready
 </script>
 </head>
 <body>

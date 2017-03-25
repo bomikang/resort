@@ -22,7 +22,7 @@
 				table += "</tr>";
 			}
 		$("#qna_table").html(table);
-	}//createQnaTable(data)
+	}//createQnaTable
 
 	function getQnaList(checkReply){
 		$.ajax({
@@ -35,7 +35,7 @@
 				createQnaTable(data);
 			}
 		});
-	}//getQnaList(checkReply)
+	}//getQnaList
 
 	$(function(){
 		//답변 미완료 목록 매개변수 : incomplete
