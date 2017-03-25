@@ -22,7 +22,7 @@ public class ReviewHandler implements CommandHandler {
 			try {
 				conn = ConnectionProvider.getConnection();
 				ReviewDao dao = ReviewDao.getInstance();
-				LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession().getAttribute("myinfo");
+				LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession().getAttribute("user_info");
 				List<Review> rev_list = dao.listAll(conn);
 				
 				req.setAttribute("list", rev_list);

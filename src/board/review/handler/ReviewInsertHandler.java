@@ -32,8 +32,8 @@ public class ReviewInsertHandler implements CommandHandler {
 			//처리
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
-			LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession(false).getAttribute("myinfo");
-			LoginMemberInfo admin = (LoginMemberInfo)req.getSession(false).getAttribute("admin");
+			LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession(false).getAttribute("user_info");
+			
 			Connection conn = null;
 			
 			try{

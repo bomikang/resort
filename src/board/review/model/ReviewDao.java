@@ -88,7 +88,7 @@ public class ReviewDao {
 		}
 	}
 	
-	public Review selectByNo(Connection conn,int no)throws SQLException{
+	public Review selectByNo(Connection conn,int no)throws SQLException{ // 게시물 번호 찾기
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
@@ -109,6 +109,70 @@ public class ReviewDao {
 			}
 			return rev;
 			
+		}finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			
+		}
+	}
+	
+	public int delete(Connection conn, int no) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "delete from review where rev_no =?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			return pstmt.executeUpdate();
+			
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		
+		}
+	}
+	
+	public int selectCount(Connection conn)throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			String sql =" select count(*) from review";
+			pstmt= conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				return rs.getInt(1);
+			}
+			return 0;
+		}finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+		
+		
+	}
+	
+	public List<Review> selectOrderBy(Connection conn, int startRow,int size)throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			pstmt = conn.prepareStatement(
+					"select * from review order by rev_no desc limit ?,?"
+					);
+			pstmt.setInt(1,startRow);
+			pstmt.setInt(2, size);
+			rs = pstmt.executeQuery();
+			List<Review> result = new ArrayList<>();
+			while(rs.next()){
+				Review review = new Review(rs.getInt("rev_no"), 	// 게시물번호
+						rs.getInt("rev_mem"),	// 회원번호
+					   rs.getString("rev_title"),
+					   rs.getString("rev_name"),	// 작성자
+					   rs.getDate("rev_regdate"),
+					   rs.getInt("rev_readcnt"),
+					   rs.getInt("rev_replycnt"));
+						result.add(review);	
+			}
+			return result;	
 		}finally{
 			JdbcUtil.close(rs);
 			JdbcUtil.close(pstmt);
