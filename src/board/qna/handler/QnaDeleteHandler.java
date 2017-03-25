@@ -22,32 +22,37 @@ public class QnaDeleteHandler implements CommandHandler {
 				con = ConnectionProvider.getConnection();
 				
 				int qnaNo = Integer.parseInt(req.getParameter("qnano"));
-				int article = 0;
-				
-				/*관리자일 때만 넘어오는 article 파라미터 존재*/
-				if (req.getParameter("article") != null) {
-					article = Integer.parseInt(req.getParameter("article"));
-				}
 				
 				QnaDao dao = QnaDao.getInstance();
 				Qna qna = dao.getQnaByNo(con, qnaNo);
 				
 				dao.deleteQnaWhenUser(con, qna);
 				
-				//관리자는 삭제 후 회원 게시물 detail로 감
-				if (article != 0) { 
-					qnaNo = article;
-					return "qnadetail.do?qnano="+qnaNo;
-				}
+				return "qnadetail.do?qnano="+qnaNo;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}else{
-			System.out.println("ㅎㅎ");
+			/*관리자는 삭제할 때 메소드 방식이 post*/
+			Connection con = null;
+			
+			try {
+				con = ConnectionProvider.getConnection();
+				
+				int qnaNo = Integer.parseInt(req.getParameter("qnano"));
+				int article = Integer.parseInt(req.getParameter("article"));
+				
+				QnaDao dao = QnaDao.getInstance();
+				Qna qna = dao.getQnaByNo(con, qnaNo);
+				
+				dao.deleteQnaWhenUser(con, qna);
+				
+				return "qnadetail.do?qnano="+article;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
-		
-		return "qna.do";
+		return null;
 	}
 
 }

@@ -8,13 +8,13 @@
    	if(includeMenu == null) includeMenu = "/WEB-INF/introduce/intro_menu";
    	if(includePage == null) includePage = "/WEB-INF/introduce/intro_main";
 %>
-<%-- <%
+<%
 /*캐시에 Data를 남기지 않는구문(로그아웃 이후 뒤로가기 Data기록 안남기기 위해 사용)  */
 response.setHeader("cache-control","no-store");
 response.setHeader("expires","0");
 response.setHeader("pragma","no-cache");
 
-%> --%>
+%>
 <!DOCTYPE html>
 <html>
 <head>

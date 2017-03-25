@@ -15,9 +15,9 @@
 		$("form[name='"+formName+"']").attr("action", actionPath);
 	}//showConfirm
 	
-	$(function(){
+	function checkEmptyAdmin(){
 		/* 답변이 존재하면 관리자  답변 내용을 보여주고, 본인의 수정 버튼을 비활성화
-			답변이 존재하지 않으면 관리자 답변 내용 숨김*/
+		답변이 존재하지 않으면 관리자 답변 내용 숨김*/
 		if ( ${!empty qnaAdmin} ) {
 			$("form[name='adminForm']").css("display", "block");
 			$("#btnReply").css("display", "none");
@@ -26,6 +26,10 @@
 		}else {
 			$("form[name='adminForm']").css("display", "none");	
 		}
+	}
+	
+	$(function(){
+		checkEmptyAdmin();
 		
 		/* <관리자> */
 		//답변 버튼을 클릭했을 때 관리자 답변 form 뜨도록함
@@ -78,9 +82,8 @@
 				$("#adminContent").attr("readonly", "readonly") //readonly 재설정
 				return false;
 			}else if($(this).val() == "삭제"){
-				//showConfirm("정말 삭제하시겠습니까?", "qnadelete.do", "adminForm");
-				//var check = confirm("정말 삭제하시겠습니까?");
-				//if ( !check ) return false;
+				var check = confirm("정말 삭제하시겠습니까?");
+				if ( !check ) return false;
 				
 				$("form[name='adminForm']").attr("action", "qnadelete.do");
 			}
@@ -97,7 +100,7 @@
 </script>
 </head>
 <body>
-	<form action="" method="get" name='memberForm'>
+	<form action="qnadelete.do" method="get" name="memberForm">
 		<fieldset>
 			<legend>1:1 문의 상세보기</legend>
 			<p>
@@ -122,7 +125,7 @@
 					<!-- 회원 -->
 					<c:if test="${user_info.isMng == false}">
 						<input type="submit" value="수정" id="btnUpdate"/>
-						<input type="button" value="삭제" id="btnDelete"/>
+						<input type="submit" value="삭제" id="btnDelete"/>
 						<input type="button" value="목록" onclick="location.replace('qna.do')" /><!-- list화면으로 이동 -->
 					</c:if>
 					
@@ -176,7 +179,7 @@
 							<input type="hidden" name="article" value="${qna.no}" /><!-- 회원 게시글 번호 심기 -->
 							<input type="hidden" name="qnano" value="${qnaAdmin.no}" /><!-- 관리자 게시글 번호 심기 -->
 							<input type="submit" value="수정" id="btnUpdateAdminQna"/>
-							<input type="button" value="삭제" id="btnDeleteAdminQna"/>
+							<input type="submit" value="삭제" id="btnDeleteAdminQna"/>
 							<input type="button" value="목록" onclick="location.replace('qna.do')" /><!-- list화면으로 이동 -->
 						</p>
 					</c:if>
