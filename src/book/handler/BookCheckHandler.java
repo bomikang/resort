@@ -29,7 +29,7 @@ public class BookCheckHandler implements CommandHandler {
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		LoginMemberInfo myinfo = (LoginMemberInfo) req.getSession().getAttribute("myinfo");
+		LoginMemberInfo myinfo = (LoginMemberInfo) req.getSession(false).getAttribute("user_info");
 		if(myinfo==null){
 			return "login.do";
 		}

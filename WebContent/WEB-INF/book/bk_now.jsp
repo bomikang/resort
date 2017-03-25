@@ -84,16 +84,16 @@ response.setHeader("pragma","no-cache");
 			return false;
 		});
 		
-		$(document).on("click", ".noBooked", function(){
-			<c:if test="${!empty admin }">
-				alert("관리자는 예약할 수 없습니다.");
-				return false;
-			</c:if>			
-			<c:if test="${empty myinfo }">
+		$(document).on("click", ".noBooked", function(){		
+			<c:if test="${empty user_info }">
 				alert("로그인이 필요한 페이지 입니다.");
 				location.href="login.do";
 			</c:if>	
-			<c:if test="${!empty myinfo }">
+			<c:if test="${!empty user_info }">
+				<c:if test="${user_info.isMng==true }">
+					alert("관리자는 예약할 수 없습니다.");
+					return false;
+				</c:if>	
 				//alert("예약가능합니다.");	
 				var strNo = $(this).find(".strNo").val();
 				var date = $(this).find(".date").val();

@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
+	var reg_tel1 = /^\d{3,4}$/; 
+	var reg_tel2 = /^\d{4}$/; 
 	$(function(){
 		/*고객 휴대폰 번호 입력해 놓는 구문 필요*/
 		
@@ -59,25 +61,33 @@
 			if(!confirm("선택하신 기간으로 예약 하시겠습니까?")){
 				return false;
 			}else{
-				$.ajax({
-					url:"bookcheckdate.do",
-					type:"post",
-					timeout:30000,
-					dataType:"json",
-					data:{"startDate":$("#start").val(),
-							"endDate" : $("#end").val(),
-							"strNo" : ${str.no }
-					},
-					success:function(data){
-						if(data==false){
-							alert("예약이 진행 중이라 예약 하실 수 없습니다.");
-							location.href="book.do";
-						}else{
-							alert("예약가능합니다.");
-							$("#bookProcess").submit();
-						}							
-					} 
-				});			 
+				//예약하기 버튼클릭 후 예약진행을 선택한 경우	
+				var tel1 = $("input[name='bkTel2']").val();
+				var tel2 = $("input[name='bkTel3']").val();
+				if(reg_tel1.test(tel1)==false||reg_tel2.test(tel2)==false){
+					alert("형식에 맞지 않는 전화번호 입니다.");
+					return false;
+		   	 	}else{			
+					$.ajax({
+						url:"bookcheckdate.do",
+						type:"post",
+						timeout:30000,
+						dataType:"json",
+						data:{"startDate":$("#start").val(),
+								"endDate" : $("#end").val(),
+								"strNo" : ${str.no }
+						},
+						success:function(data){
+							if(data==false){
+								alert("예약이 진행 중이라 예약 하실 수 없습니다.");
+								location.href="book.do";
+							}else{
+								alert("예약가능합니다.");
+								$("#bookProcess").submit();
+							}							
+						} 
+					});	
+		   	 	}
 				 return false;
 			}
 		});
@@ -88,7 +98,7 @@
 	});//ready
 	/* 예약을 진행할 로그인된 회원의 휴대폰 번호를 3자리로 나누어 각자의 자리에 입력 */
 	function setTelForm(){
-		var tel = "${myinfo.my_tel }";
+		var tel = "${user_info.my_tel }";
 		console.log(tel);
 		var tels = tel.split("-");
 		if(tels.length==3){
@@ -158,7 +168,7 @@
 	<form action="bookprocess.do" method="post" id="bookProcess">
 		<!-- 예약정보1 - 시설정보 및 기간 설정에 따른 가격 계산 -->
 		<input type="hidden" value="${str.no }" name="strNo">
-		<input type="hidden" value="${myinfo.my_no }" name="memNo">
+		<input type="hidden" value="${user_info.my_no }" name="memNo">
 		
 		<h4>예약 객실</h4>
 		<table border="1">
@@ -200,7 +210,7 @@
 		<table border="1">
 			<tr>
 				<th>예약자명</th>
-				<td><input type="text" readonly="readonly" disabled="disabled" required="required" value="${myinfo.my_name }"></td>
+				<td><input type="text" readonly="readonly" disabled="disabled" required="required" value="${user_info.my_name }"></td>
 			</tr>
 			<tr>
 				<th>연락처</th>
@@ -219,7 +229,7 @@
 				<tr>
 				<th>메일주소</th>
 				<td>
-					<input type="text" readonly="readonly" value="${myinfo.my_mail }">					
+					<input type="text" readonly="readonly" value="${user_info.my_mail }">					
 				</td>
 				<tr>
 			</tr>
