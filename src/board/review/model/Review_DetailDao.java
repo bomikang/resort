@@ -47,4 +47,19 @@ public class Review_DetailDao {
 			
 		}
 	}
+	public int delete(Connection conn, int no) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "delete from review_detail where rev_no =?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			return pstmt.executeUpdate();
+			
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		
+		}
+	}
 }

@@ -1,32 +1,31 @@
-package member.handler;
+package board.review.handler;
 
 import java.sql.Connection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import board.review.model.Review;
+import board.review.model.ReviewDao;
+import board.review.model.Review_DetailDao;
 import jdbc.ConnectionProvider;
 import jdbc.JdbcUtil;
 import member.model.LoginMemberInfo;
-import member.model.Member;
-import member.model.MemberDao;
 import mvc.controller.CommandHandler;
 
-public class MyInfoHandler implements CommandHandler{
+public class ReviewListPage implements CommandHandler{
 
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		Connection conn = null;
 		try{
 			conn = ConnectionProvider.getConnection();
-			MemberDao dao = MemberDao.getInstance();
-			LoginMemberInfo userinfo = (LoginMemberInfo)req.getSession(false).getAttribute("user_info");
-			Member detailinfo = dao.selectByNo(conn, userinfo.getMy_no()); 
-			req.setAttribute("info", detailinfo);
+			
 		}finally{
 			JdbcUtil.close(conn);
 		}
-		return "index.jsp?page=/WEB-INF/member/myinfo&menu=/WEB-INF/member/mem_menu";
+		res.sendRedirect("review.do");
+		return null;
 	}
 
 }
