@@ -8,35 +8,57 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
-	function divisionPage(){
-
+	function createQnaTable(data, $tableName){
 		///////////////////////////////////////////////각 페이지 버튼 눌렀을 때 페이지 분리
 		var listSize = data.length; //리스트사이즈
 		
 		/*ex) 리스트가 33개면 4페이지*/
 		var btnPageNum = 1; // X페이지 숫자 버튼(1페이지부터 시작)
-		if( (listSize/10) != 0 ){ btnPageNum = (listSize / 10); }
-		if( (listSize%10) != 0 ){ btnPageNum = btnPageNum+1; } //나머지가 존재하면 1페이지 더하기
-		parseInt(btnPageNum);
+		if( listSize/10 != 0 ) btnPageNum = listSize/10; 
+		if( listSize%10 != 0 ) btnPageNum = btnPageNum+1;  //나머지가 존재하면 1페이지 더하기
+		btnPageNum = parseInt(btnPageNum);
 		
 		/* 페이지번호에 뿌리기 */
 		var aBtn = "";
 		for (var i = 0; i < btnPageNum; i++) {
-			aBtn += "<a href='#'>["+(i+1)+"]</a>";
+			aBtn += "<button>"+ (i+1) +"</button>";
 		}
 		$(".pageBtnArea").html(aBtn);
 		
+		/* 기본 테이블 만들기 */
+		var tableItem = "<tr>";
+			tableItem += "<th>번호</th><th>제목</th><th>등록일</th><th>작성자</th><th>답변여부</th>";
+			tableItem += "</tr>";
+			for (var i = 0; i < listSize; i++) {
+				if (i > 9) {
+					break;
+				}
+				tableItem += "<tr>";
+				tableItem += "<td>"+ data[i].no +"</td>"; //번호
+				tableItem += "<td><a href='qnadetail.do?qnano="+ data[i].no +"'>"+ data[i].title +"</a></td>"; //제목
+				tableItem += "<td>"+ data[i].regDateNoTimeForm +"</td>"; //등록일
+				tableItem += "<td>"+ data[i].member.id +"</td>";
+				tableItem += "<td>"+ data[i].stringReply +"</td>";
+				tableItem += "</tr>";
+			}
+		$($tableName).html(tableItem);
+		
+	}//createQnaTable
+	
+	function createTableByClickedNum(data, $tableName){
+		var listSize = data.length; //리스트사이즈
+		
 		/* 페이지번호 누름 */
-		$(".pageBtnArea").find("a").each(function(i, obj) {
+		$(".pageBtnArea").find("button").each(function(i, obj) {
 			$(obj).click(function() {
 				var aIndex = (i+1);
 				var minSize = (aIndex * 10) - 10; //초기 리스트 0번째 부터
 				var maxSize = (aIndex * 10); //[1] => 0~9번째, 총 10개
 				
 				//10개 미만 || 리스트개수보다 최대개수가 더 많으면 최대개수를 리스트개수로
-				if ( (listSize < 11) || (maxSize-listSize) != 0){ 
-					maxSize = listSize;
-				}
+				if( listSize<11 ) maxSize = listSize;
+				else if( maxSize-listSize > 0 ) maxSize = listSize;
+				
 				var tableItem = "<tr>";
 					tableItem += "<th>번호</th><th>제목</th><th>등록일</th><th>작성자</th><th>답변여부</th>";
 					tableItem += "</tr>";
@@ -49,29 +71,13 @@
 					tableItem += "<td>"+ data[a].stringReply +"</td>";
 					tableItem += "</tr>";
 				}
-				$table.html(tableItem);
-				return false;
+				$tableName.html(tableItem);
 			});
+			
 		});
-	}
-	
-	function createQnaTable(data, $table){
-		var tableItem = "<tr>";
-			tableItem += "<th>번호</th><th>제목</th><th>등록일</th><th>작성자</th><th>답변여부</th>";
-			tableItem += "</tr>";
-			for (var i = 0; i < 10; i++) {
-				tableItem += "<tr>";
-				tableItem += "<td>"+ data[i].no +"</td>"; //번호
-				tableItem += "<td><a href='qnadetail.do?qnano="+ data[i].no +"'>"+ data[i].title +"</a></td>"; //제목
-				tableItem += "<td>"+ data[i].regDateNoTimeForm +"</td>"; //등록일
-				tableItem += "<td>"+ data[i].member.id +"</td>";
-				tableItem += "<td>"+ data[i].stringReply +"</td>";
-				tableItem += "</tr>";
-			}
-		$table.html(tableItem);
-	}//createQnaTable
+	}//createTableByClickedNum
 
-	function getQnaList(checkReply, $table){
+	function getQnaList(checkReply, $tableName){
 		$.ajax({
 			url:"qna.do",
 			type:"post",
@@ -79,7 +85,8 @@
 			dataType:"json",
 			data:{"checkReply":checkReply},
 			success:function(data){
-				createQnaTable(data, $table);
+				createQnaTable(data, $tableName);
+				createTableByClickedNum(data, $tableName);
 			}
 		});
 	}//getQnaList
@@ -101,6 +108,13 @@
 			getQnaList("all", $("#admin_table"));
 		});
 		
+		// <<버튼 클릭 / >>버튼 클릭
+		$("#goFirst").click(function() {
+			$(".pageBtnArea").find("button").eq(0).click();
+		});
+		$("#goLast").click(function(){
+			$(".pageBtnArea").find("button").last().click();
+		});	
 	});
 </script>
 </head>
@@ -127,9 +141,9 @@
 		
 		<!-- 관리자 -->
 		<c:if test="${user_info.isMng == true }">
-			<a href="#" id="incomp_list" style="border:1px solid black;">답변 미완료 목록</a>
-			<a href="#" id="comp_list" style="border:1px solid black;">답변 완료 목록</a>
-			<a href="#" id="all_list" style="border:1px solid black;">전체 목록</a>
+			<button id="incomp_list">답변 미완료 목록</button>
+			<button id="comp_list">답변 완료 목록</button>
+			<button id="all_list">전체 목록</button>
 			
 			<c:if test="${qnaList.size() == 0}">
 				<p>등록된 게시물이 없습니다</p>
@@ -142,11 +156,9 @@
 	</c:if>
 	
 	<div class="pageDivArea">
-		<a href="#">first</a>
-		<a href="#">prev</a>
+		<button id="goFirst"> << </button>
 		<div class='pageBtnArea'></div>
-		<a href="#">next</a>
-		<a href="#">last</a>
+		<button id="goLast"> >> </button>
 	</div>
 	
 	<table id="testArea"></table>

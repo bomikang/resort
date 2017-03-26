@@ -29,13 +29,14 @@
 	}//checkEmptyAdmin
 	
 	$(function(){
-		checkEmptyAdmin();
+		checkEmptyAdmin();//답변 존재 여부 함수 호출
 		
 		/* <관리자> */
 		//답변 버튼을 클릭했을 때 관리자 답변 form 뜨도록함
 		$("#btnReply").click(function() {
 			$("form[name='adminForm']").css("display", "block");
 		});
+		//관리자 답변 등록
 		$("#btnAdminInsert").click(function() {
 			var check = confirm("답변을 등록하시겠습니까?");
 			if ( !check ) return false;
@@ -82,16 +83,13 @@
 				$("#adminContent").attr("readonly", "readonly") //readonly 재설정
 				return false;
 			}else if($(this).val() == "삭제"){
-				var check = confirm("정말 삭제하시겠습니까?");
-				if ( !check ) return false;
-				
-				$("form[name='adminForm']").attr("action", "qnadelete.do");
+				showConfirm("정말 삭제하시겠습니까?", "qnadelete.do", "adminForm");
 			}
 		});
 		
 		/* <회원> */
 		$("#btnUpdate").click(function() {
-			showConfirm("문의 게시글을 수정하시겠습니까?", "qnaupdate.do", "memberForm");
+			$("form[name='memberForm']").attr("action", "qnaupdate.do");
 		});
 		$("#btnDelete").click(function() {
 			showConfirm("정말 삭제하시겠습니까?", "qnadelete.do", "memberForm");
@@ -100,7 +98,7 @@
 </script>
 </head>
 <body>
-	<form action="qnadelete.do" method="get" name="memberForm">
+	<form action="" method="get" name="memberForm">
 		<fieldset>
 			<legend>1:1 문의 상세보기</legend>
 			<p>
@@ -117,7 +115,7 @@
 			</p>
 			<p>
 				<label for="">내용</label>
-				<textarea name="content" cols="100" rows="10" readonly="readonly">${qna.content}</textarea>
+				<textarea name="content" readonly="readonly">${qna.content}</textarea>
 			</p>
 			<p>
 				<input type="hidden" name="qnano" value="${qna.no}" /><!-- 게시물 번호 hidden으로 심기 -->
@@ -156,7 +154,7 @@
 			<c:if test="${empty qnaAdmin}">
 				<p>
 					<label for="">내용</label>
-					<textarea name="content" cols="100" rows="10" id="adminContent"></textarea>
+					<textarea name="content" id="adminContent" required="required"></textarea>
 				</p>
 				<p>
 					<input type="hidden" name="article" value="${qna.no}" /><!-- 회원 게시글 번호 심기 -->
@@ -169,7 +167,7 @@
 			<c:if test="${!empty qnaAdmin}">
 				<p>
 					<label for="">내용</label>
-					<textarea name="content" cols="100" rows="10" readonly="readonly" id="adminContent">${qnaAdmin.content}</textarea>
+					<textarea name="content" readonly="readonly" id="adminContent" required="required">${qnaAdmin.content}</textarea>
 				</p>
 				
 				<!-- 로그인 상태면서 관리자 -->

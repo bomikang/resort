@@ -28,7 +28,7 @@ public class QnaDeleteHandler implements CommandHandler {
 				
 				dao.deleteQnaWhenUser(con, qna);
 				
-				return "qnadetail.do?qnano="+qnaNo;
+				return "qna.do";
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

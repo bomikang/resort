@@ -7,16 +7,41 @@
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<style>
+	.err{display:none; color:red; font-size:12px;}
+	input[name='title']{width:300px;}
+</style>
 <script type="text/javascript">
-	$(function(){
-		$("#btnInsert").click(function() {
-			var check = confirm("문의 게시글을 등록하시겠습니까?");
-			 
-			if ( !check ) return false;
-			
-			$("form[name='f1']").attr("action", "qnainsert.do");
+	function checkRegExr($input, limit){
+		$($input).keyup(function() {
+			if ( $(this).val().length > limit-1 ) {
+				$(this).next(".err").css("display", "block"); //err 메시지 표신
+				$(this).val($(this).val().substring(0, limit)); //넘어온 제한 글자수 만큼 짜름
+			}else{
+				$(this).next(".err").css("display", "none");
+			}
 		});
-	});
+	}//checkRegExr
+
+	$(function(){
+		checkRegExr($("input[name='title']"), 50);
+		checkRegExr($("textarea[name='content']"), 400);
+		
+		$("#btnInsert").click(function() {
+			/* 1. 에러 메시지가 보이는 지 체크 */
+			if ($(".err").css("display") == "block") return false;
+			
+			/* 2. confirm창 */
+			var check = confirm("게시글을 등록하시겠습니까?");
+			if ( !check ) return false;
+		});
+		
+		$("#btnCancel").click(function() {
+			var check = confirm("게시글 등록을 취소하시겠습니까?");
+			if ( check ) location.replace('qna.do');
+			else return false;
+		});
+	});//ready
 </script>
 </head>
 <body>
@@ -27,7 +52,7 @@
 		</c:if>
 	</c:if>
 	
-	<form action="" method="post" id='f1'>
+	<form action="qnainsert.do" method="post" id='f1'>
 		<fieldset>
 			<legend>1:1 문의 등록</legend>
 			<p>
@@ -41,14 +66,16 @@
 			<p>
 				<label for="">제목</label>
 				<input type="text" name="title" required="required"/>
+				<span class="err">더 이상 입력이 불가능 합니다.</span>
 			</p>
 			<p>
 				<label for="">내용</label>
-				<textarea name="content" cols="100" rows="10" required="required"></textarea>
+				<textarea name="content" required="required"></textarea>
+				<span class="err">더 이상 입력이 불가능 합니다.</span>
 			</p>
 			<p>
 				<input type="submit" value="등록" id="btnInsert"/>
-				<input type="button" value="취소" onclick="location.replace('qna.do')"/><!-- 리스트로 이동 -->
+				<input type="button" value="취소" id="btnCancel"/><!-- 리스트로 이동 -->
 			</p>
 		</fieldset>
 	</form>
