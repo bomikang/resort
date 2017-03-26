@@ -16,8 +16,10 @@ response.setHeader("pragma","no-cache");
 <script>
 	$(function(){
 		$("#btnAdd").click(function(){
-			<c:if test="${!empty admin}">
-				location.href="faqinsert.do";
+			<c:if test="${!empty user_info}">
+				<c:if test="${user_info.isMng == true}">
+					location.href="faqinsert.do";
+				</c:if>
 			</c:if>
 		});
 		
@@ -76,16 +78,20 @@ response.setHeader("pragma","no-cache");
 						<td>
 							<dl>
 								<dt class="faqTitleDt">
-									<c:if test="${!empty admin }">
-										<input type="checkbox" name="faqCheck" value="${fItem.no }" class="faqCheck">
+									<c:if test="${!empty user_info}">
+										<c:if test="${user_info.isMng == true }">
+											<input type="checkbox" name="faqCheck" value="${fItem.no }" class="faqCheck">
+										</c:if>
 									</c:if>
 									<a href="#" class="faqTitle">${fItem.title }</a>
 								</dt>
 								<dd class="faqDetail">
 									<p>${fItem.detail }</p>
-									<c:if test="${!empty admin }">
-										<p><input type="hidden" name="fNo" value="${fItem.no }">
-										<button class="btnEdit">수정</button></p>
+									<c:if test="${!empty user_info}">
+										<c:if test="${user_info.isMng == true }">
+											<p><input type="hidden" name="fNo" value="${fItem.no }">
+											<button class="btnEdit">수정</button></p>
+										</c:if>
 									</c:if>	
 								</dd>
 							</dl>
@@ -98,9 +104,11 @@ response.setHeader("pragma","no-cache");
 			</c:otherwise>
 		</c:choose>
 	</table>
-	<c:if test="${!empty admin}">
-		<button id="btnAdd">글 등록</button>
-		<button id="btnRmv">글 삭제</button>
+	<c:if test="${!empty user_info}">
+		<c:if test="${user_info.isMng == true }">
+			<button id="btnAdd">글 등록</button>
+			<button id="btnRmv">글 삭제</button>
+		</c:if>
 	</c:if>
 	<form action="faqdelete.do" method="post" id="delete">
 		<input type="hidden" name="numbers" id="numbers">

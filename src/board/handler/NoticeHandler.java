@@ -1,6 +1,7 @@
 package board.handler;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +18,12 @@ public class NoticeHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if (req.getMethod().equalsIgnoreCase("get")) {
-			String index = req.getParameter("index");
+			String index = req.getParameter("page");
+			System.out.println("index : "+index);
 			if(index == ""|| index == null){
 				index="1";						
 			}
+			System.out.println("index : "+index);
 			Connection conn = null;
 			try{
 				conn = ConnectionProvider.getConnection();
@@ -31,12 +34,18 @@ public class NoticeHandler implements CommandHandler {
 				req.setAttribute("nList", nList);
 				
 				/*중요공지 리스트*/
-				if(index=="1"){
-					List<Notice> rnList = nDao.selectRealNotice(conn);
-					req.setAttribute("rnList", rnList);
+				List<Notice> rnList = new ArrayList<>();
+				if(index.equals("1")){
+					System.out.println("rnList : true");
+					rnList = nDao.selectRealNotice(conn);
 				}
+				req.setAttribute("rnList", rnList);
 				
 				int maxIndex = nDao.getMaxIndex(conn);
+				if(maxIndex<Integer.parseInt(index)){
+					index = maxIndex+"";
+				}
+				req.setAttribute("index", Integer.parseInt(index));
 				req.setAttribute("maxIndex", maxIndex);
 			}finally {
 				JdbcUtil.close(conn);
