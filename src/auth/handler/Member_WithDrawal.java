@@ -25,10 +25,10 @@ public class Member_WithDrawal implements CommandHandler {
 		if(req.getMethod().equalsIgnoreCase("post")){
 			Connection conn = null;
 			
-		
+			
 			try{
 				conn=ConnectionProvider.getConnection();   
-				LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession().getAttribute("myinfo");	
+				LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession().getAttribute("user_info");	
 				MemberDao dao = MemberDao.getInstance();
 				Member mInfo=dao.selectByNo(conn, userInfo.getMy_no()); // 해당 아이디 개인정보
 				Date nowTime = new Date();
@@ -51,9 +51,6 @@ public class Member_WithDrawal implements CommandHandler {
 					PrintWriter pw = res.getWriter();
 					pw.print(json);
 					pw.flush();
-				
-				
-			
 				}finally{
 					JdbcUtil.close(conn);
 				}

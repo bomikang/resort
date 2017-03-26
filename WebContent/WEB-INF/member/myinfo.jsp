@@ -16,8 +16,12 @@
 	}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/logout_history.js"></script><!--로그아웃상태 시 뒤로가기버튼 막음  -->
 <script src="js/common.js"></script>
 <script>
+
+
+
 	$(function(){
 		 $("#btn1").click(function(){
 			$("#nameUpdate").css("display","block");
@@ -92,7 +96,7 @@
 												// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 								if(data=="ok"){
 									alert("개인정보가 수정되었습니다.");
-									location.href="index.jsp";
+									location.replace("index.jsp");
 								}
 					} 
 				});
@@ -109,7 +113,7 @@
 												// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 								if(data=="ok"){
 									alert("개인정보가 수정되었습니다.");
-									location.href="index.jsp";
+									location.replace("index.jsp");
 								}
 					} 
 				});
@@ -125,7 +129,7 @@
 													// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 									if(data=="ok"){
 										alert("개인정보가 수정되었습니다.");
-										location.href="index.jsp";
+										location.replace("index.jsp");
 									}
 						} 
 					});
@@ -141,7 +145,7 @@
 													// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 									if(data=="ok"){
 										alert("개인정보가 수정되었습니다.");
-										location.href="index.jsp";
+										location.replace("index.jsp");
 									}
 						} 
 					});
@@ -158,7 +162,7 @@
 						success:function(data){
 						
 													
-							location.href="index.jsp";
+							location.replace("index.jsp");
 								console.log(data);			
 						} 
 					});

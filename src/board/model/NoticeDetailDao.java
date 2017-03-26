@@ -63,7 +63,7 @@ public class NoticeDetailDao {
 	/**
 	 * 공지사항 게시물 내용 update
 	 * */
-	public void updateNotice(Connection conn, NoticeDetail noticeDetail) throws SQLException{
+	public int updateNotice(Connection conn, NoticeDetail noticeDetail) throws SQLException{
 		PreparedStatement pstmt = null;
 		try{
 			String sql = "update resort.notice_detail set nc_detail = ? where nc_no = ?";
@@ -71,7 +71,9 @@ public class NoticeDetailDao {
 			pstmt.setString(1, noticeDetail.getDetail());
 			pstmt.setInt(2, noticeDetail.getNo());
 			
-			pstmt.executeUpdate();			
+			int res = pstmt.executeUpdate();
+			System.out.println("res : "+res);
+			return res;
 		}finally {
 			JdbcUtil.close(pstmt);
 		}
@@ -135,4 +137,34 @@ public class NoticeDetailDao {
 			JdbcUtil.close(pstmt);
 		}
 	}// end of selectNoticeByTitle
+	
+	/**
+	 * Notice Detail 정보 삭제(여러개)
+	 * */
+	public int deleteNoticeDetails(Connection conn, String[] nums)throws SQLException{
+		PreparedStatement pstmt = null;
+		
+		try{
+			if(nums.length==0){
+				return 0;
+			}
+			
+			String sql = "delete from resort.notice_detail ";
+			
+			for(int i=0;i<nums.length;i++){
+				if(i==0){
+					sql += " where nc_no="+nums[i];
+				}else{
+					sql += " or nc_no="+nums[i];
+				}
+			}
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int res = pstmt.executeUpdate();
+			return res;
+		}finally {
+			JdbcUtil.close(pstmt);
+		}		
+	}//end of deleteNoticeDetails
 }

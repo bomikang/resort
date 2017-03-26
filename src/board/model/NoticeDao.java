@@ -207,17 +207,19 @@ public class NoticeDao {
 	/**
 	 * 공지사항 게시물 Update
 	 * */
-	public void updateNotice(Connection conn, Notice notice) throws SQLException{
+	public int updateNotice(Connection conn, Notice notice) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
-			String sql = "update resort.notice set nc_title=?, nc_state=? where n.nc_no=?";
+			String sql = "update resort.notice set nc_title=?, nc_state=? where nc_no=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, notice.getTitle());
 			pstmt.setBoolean(2, notice.isState());
 			pstmt.setInt(3, notice.getNo());
 			
-			pstmt.executeUpdate();			
+			int res = pstmt.executeUpdate();
+			System.out.println("res : "+res);
+			return res;
 		}finally {
 			JdbcUtil.close(rs);
 			JdbcUtil.close(pstmt);
@@ -244,7 +246,7 @@ public class NoticeDao {
 	/**
 	 * 조회수 증가시키는 method
 	 * */
-	public void updateReadCntNotice(Connection conn, int nNo) throws SQLException{
+	public Notice updateReadCntNotice(Connection conn, int nNo) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
@@ -252,11 +254,16 @@ public class NoticeDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, nNo);
 			
-			pstmt.executeUpdate();			
+			int res = pstmt.executeUpdate();
+			if(res>0){
+				Notice notice = selectNoticeByNo(conn, nNo);
+				return notice;
+			}
 		}finally {
 			JdbcUtil.close(rs);
 			JdbcUtil.close(pstmt);
 		}
+		return null;
 	}// end of updateReadCntNotice
 	/**
 	 * index 설정 위해 전체 갯수 가져오는 메소드 
@@ -289,4 +296,35 @@ public class NoticeDao {
 		}
 		return result;
 	}// end of getMaxIndex
+	
+	/**
+	 * Notice 정보 삭제(여러개)
+	 * */
+	public int deleteNotices(Connection conn, String[] nums)throws SQLException{
+		PreparedStatement pstmt = null;
+		
+		try{
+			if(nums.length==0){
+				return 0;
+			}
+			
+			String sql = "delete from resort.notice ";
+			
+			for(int i=0;i<nums.length;i++){
+				if(i==0){
+					sql += " where nc_no="+nums[i];
+				}else{
+					sql += " or nc_no="+nums[i];
+				}
+			}
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int res = pstmt.executeUpdate();
+			return res;
+			
+		}finally {
+			JdbcUtil.close(pstmt);
+		}		
+	}//end of deleteNotices
 }
