@@ -36,7 +36,12 @@
 		<c:if test="${!empty notice }">
 			<c:if test="${!empty detail }">
 				<tr>
-					<th colspan="3">${notice.title }</th>
+					<th colspan="3">
+						<c:if test="${notice.isState()==true }">
+							<b>[공지]</b>
+						</c:if>
+							${notice.title }
+					</th>
 				</tr>
 				<tr>
 					<td></td>
