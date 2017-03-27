@@ -33,7 +33,7 @@
 			}else{
 				if(confirm("정말 삭제 하시겠습니까?")){
 					var numbers = chcList.join(",");
-					var url = "noticedelete.do?page=${index}&numbers="+numbers;
+					var url = "noticedelete.do?page=${index.nowIndex }&numbers="+numbers;
 					location.href=url;			
 				}else{
 					return false;
@@ -43,40 +43,42 @@
 	});//ready
 	
 	function setPageIndex(){
-		var maxIndex = ${maxIndex};
-		var index = ${index};
-		console.log("maxIndex : "+maxIndex);
-		var indexForm = "<a href='notice.do?page=1' title='첫 페이지'>[<<]</a>";
-		if(${index}>1){
-			indexForm += "<a href='notice.do?page=${index-1}' title='이전 페이지'>[<]</a>";
-		}else{
+		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
+		<c:if test="${!empty index }">
+			var indexForm = "<a href='notice.do?page=1' title='첫 페이지'>[<<]</a>";
+			if( ${index.getStart()} > 10 ){
+				indexForm += "<a href='notice.do?page=${index.getStart()-10}' title='이전 10페이지'>[<]</a>";
+			}else{
+				indexForm += "[<]";
+			}
 			
-		}
-		
-		for(var i=1;i<=maxIndex;i++){
-			if(i==1){
-				if(i == ${index}){
-					indexForm += "<b>"+i+"</b>";
-				}else{
-					indexForm += "<a href='notice.do?page="+i+"'>"+i+"</a>";	
-				}
-			}else if(i>1){
-				if(i == ${index}){
-					indexForm += " | <b>"+i+"</b>";
-				}else{
-					indexForm += " | <a href='notice.do?page="+i+"'>"+i+"</a>";
+			for(var i = ${index.getStart()}; i <= ${index.getEnd()}; i++){
+				if(i==1){
+					if(i == ${index.getNowIndex() }){
+						indexForm += "<b>"+i+"</b>";
+					}else{
+						indexForm += "<a href='notice.do?page="+i+"'>"+i+"</a>";	
+					}
+				}else if(i>1){
+					if(i == ${index.getNowIndex() }){
+						indexForm += " | <b>"+i+"</b>";
+					}else{
+						indexForm += " | <a href='notice.do?page="+i+"'>"+i+"</a>";
+					}
 				}
 			}
-		}
-		
-		
-		if(${index} < maxIndex){
-			indexForm += "<a href='notice.do?page=${index+1}' title='다음 페이지'>[>]</a>";
-		}
-		
-		indexForm += "<a href='notice.do?page="+maxIndex+"' title='마지막 페이지'>[>>]</a>";
-		
-		$("#page_index").html(indexForm);
+			
+			
+			if(${index.getEnd()} < ${index.getMaxIndex()}){
+				indexForm += "<a href='notice.do?page=${index.getStart()+10}' title='다음 10페이지'>[>]</a>";
+			}else{
+				indexForm += "[>]";
+			}
+			
+			indexForm += "<a href='notice.do?page=${index.getMaxIndex()}' title='마지막 페이지'>[>>]</a>";
+			
+			$("#page_index").html(indexForm);
+		</c:if>
 	}
 	
 	
@@ -105,7 +107,7 @@
 						</c:if>
 					</c:if>
 					<td>공지</td>
-					<td class='nTitle'><a href="noticedetail.do?page=${index }&no=${real.no }" class="toNoticeDetail">${real.title }</a></td>
+					<td class='nTitle'><a href="noticedetail.do?page=${index.getNowIndex() }&no=${real.no }" class="toNoticeDetail">${real.title }</a></td>
 					<td>${real.writer.my_name }</td>
 					<td>${real.regDateForm }</td>
 					<td>${real.readCnt }</td>
@@ -121,7 +123,7 @@
 						</c:if>
 					</c:if>
 					<td>${notc.no }</td>
-					<td class='nTitle'><a href="noticedetail.do?page=${index }&no=${notc.no }" class="toNoticeDetail">${notc.title }</a></td>
+					<td class='nTitle'><a href="noticedetail.do?page=${index.getNowIndex() }&no=${notc.no }" class="toNoticeDetail">${notc.title }</a></td>
 					<td>${notc.writer.my_name }</td>
 					<td>${notc.regDateForm }</td>
 					<td>${notc.readCnt }</td>
@@ -129,9 +131,14 @@
 			</c:forEach>
 		</c:if>
 		<c:if test="${empty rnList && empty nList }">
-			<tr>
-				<td colspan="5">공지사항이 없습니다.</td>
-			</tr>
+			<c:if test="${!empty user_info }">		
+				<c:if test="${user_info.isMng==true }">
+					<td colspan="6">공지사항이 없습니다.</td>
+				</c:if>
+				<c:if test="${user_info.isMng==false }">
+					<td colspan="5">공지사항이 없습니다.</td>
+				</c:if>
+			</c:if>
 		</c:if>
 	</table>
 	<c:if test="${!empty user_info}">

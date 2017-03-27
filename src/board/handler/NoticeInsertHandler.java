@@ -30,7 +30,8 @@ public class NoticeInsertHandler implements CommandHandler{
 				String real = req.getParameter("real");
 				System.out.println("real : "+real);
 				boolean realNotice = false;
-				if(real.equalsIgnoreCase("on")){
+				
+				if(real !=null && real.equalsIgnoreCase("on")){
 					realNotice = true;
 				}
 				
