@@ -9,9 +9,9 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <style>
-	#show_image{width:50%; text-align: center;}
+	#show_image{width:100%; text-align: center;}
 	#show_image img{width:600px; box-shadow: 0px 0px 10px 5px gray;}
-	.resort_gallery{width:50%; border:1px solid black; text-align: left;}
+	.resort_gallery{width:100%; text-align: center; margin:0 auto;}
 	.resort_gallery li{ display: inline-block; margin:10px; opacity:0.5; text-align: center;}
 	.resort_gallery li img{width:200px; height:140px; border:3px solid black;  border-radius: 10px;}
 </style>
@@ -40,6 +40,7 @@
 	});
 </script>
 <body>
+	<img src="image/resortgallery/intro_gallery_top.gif">
 	<div id="show_image">
 		<img src="image/resortgallery/01waterfall.jpg" alt="" />
 		<p>계곡</p>
