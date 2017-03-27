@@ -101,12 +101,14 @@ public class NoticeDao {
 		ResultSet rs = null;
 		try{
 			String sql = "select n.nc_no, m.mem_name, m.mem_ismng, n.nc_title, n.nc_regdate, n.nc_readcnt, n.nc_state "
-						+"from resort.notice as n left join resort.`member` as m on n.nc_mem=m.mem_no where where nc_title like ?  order by n.nc_no desc limit 10 offset ?";
+						+"from resort.notice as n left join resort.`member` as m on n.nc_mem=m.mem_no where nc_title like ?  order by n.nc_no desc limit 10 offset ?";
 			pstmt = conn.prepareStatement(sql);
-			if(!search.contains("%")){
-				search = "%"+search+"%";
-			}else{
-				
+			if(search != null){
+				if(!search.isEmpty() && !search.contains("%")){
+					search = "%"+search+"%";
+				}else{
+					
+				}
 			}
 			pstmt.setString(1, search);
 			pstmt.setInt(2, (index-1)*10);
@@ -268,14 +270,27 @@ public class NoticeDao {
 	/**
 	 * index 설정 위해 전체 갯수 가져오는 메소드 
 	 * */
-	public int getMaxIndex(Connection conn) throws SQLException{
+	public int getMaxIndex(Connection conn, String key) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 1;
 		try{
 			String sql = "select count(nc_no) from resort.notice as n left join resort.`member` as m on n.nc_mem=m.mem_no "
 						+"where m.mem_ismng=true";
+			if(key != null){
+				sql += " and n.nc_title like ?";
+			}
+			
 			pstmt = conn.prepareStatement(sql);
+			
+			if(key != null){
+				if(!key.isEmpty()&&!key.contains("%")){
+					key = "%"+key+"%";
+				}else{
+					
+				}
+				pstmt.setString(1, key);
+			}
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){

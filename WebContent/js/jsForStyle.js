@@ -18,6 +18,7 @@ $(function(){
 			var sub_item = [];
 			for (var j = 0; j < sub_menu[i].length; j++) {
 				sub_item[j] = "<li><a href='#'>"+ sub_menu[i][j] +"</a></li>";
+				
 			}
 			$("#menu_area ol").html(sub_item);
 			$("#menu_area ol").stop(true).slideDown();

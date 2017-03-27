@@ -9,7 +9,39 @@
 <script>
 	$(function(){
 		setPageIndex();	//페이지 인덱스 보여주는 함수(수정 완전 필요!)
-	
+		$(".pageIndex").click(function(){
+			<c:if test="${!empty key }">
+				var key = "${key}";
+				var index = $(this).text();
+				var srcCon = $("select[name='srcCon']").val();
+				$("#index").val(index);
+				$("#srcText").val(key);
+				
+				$("form[name='searchNotice']").attr("action","notice.do");
+				$("form[name='searchNotice']").submit();
+				return false;
+			</c:if>
+		});
+		$("#btnSearch").click(function(){
+			var key = $("#srcText").val();
+			var paramKey = "${key}";
+			var index = "";
+			var srcCon = $("select[name='srcCon']").val();
+			<c:if test="${empty key }">
+				index="1";
+			</c:if>
+			<c:if test="${!empty key }">
+				if(paramKey==key){
+					index="${index.getNowIndex() }";
+				}else{
+					index="1";
+				}
+			</c:if>
+			$("#index").val(index);
+			
+			$("form[name='searchNotice']").attr("action","notice.do");
+		});
+		
 		$("#btnAdd").click(function(){
 			<c:if test="${!empty user_info }">		
 				<c:if test="${user_info.isMng==true }">
@@ -21,6 +53,7 @@
 				</c:if>
 			</c:if>	
 		});
+		
 		$("#btnRmv").click(function(){
 			var chcList = new Array();
 			$(".noticeCheck").each(function(i, obj) {
@@ -40,14 +73,15 @@
 				}
 			}
 		});
+		
 	});//ready
 	
 	function setPageIndex(){
 		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
 		<c:if test="${!empty index }">
-			var indexForm = "<a href='notice.do?page=1' title='첫 페이지'>[<<]</a>";
+			var indexForm = "<a class='pageIndex' href='notice.do?page=1' title='첫 페이지'>[<<]</a>";
 			if( ${index.getStart()} > 10 ){
-				indexForm += "<a href='notice.do?page=${index.getStart()-10}' title='이전 10페이지'>[<]</a>";
+				indexForm += "<a class='pageIndex' href='notice.do?page=${index.getStart()-10}' title='이전 10페이지'>[<]</a>";
 			}else{
 				indexForm += "[<]";
 			}
@@ -57,25 +91,25 @@
 					if(i == ${index.getNowIndex() }){
 						indexForm += "<b>"+i+"</b>";
 					}else{
-						indexForm += "<a href='notice.do?page="+i+"'>"+i+"</a>";	
+						indexForm += "<a class='pageIndex' href='notice.do?page="+i+"'>"+i+"</a>";	
 					}
 				}else if(i>1){
 					if(i == ${index.getNowIndex() }){
 						indexForm += " | <b>"+i+"</b>";
 					}else{
-						indexForm += " | <a href='notice.do?page="+i+"'>"+i+"</a>";
+						indexForm += " | <a class='pageIndex' href='notice.do?page="+i+"'>"+i+"</a>";
 					}
 				}
 			}
 			
 			
 			if(${index.getEnd()} < ${index.getMaxIndex()}){
-				indexForm += "<a href='notice.do?page=${index.getStart()+10}' title='다음 10페이지'>[>]</a>";
+				indexForm += "<a class='pageIndex' href='notice.do?page=${index.getStart()+10}' title='다음 10페이지'>[>]</a>";
 			}else{
 				indexForm += "[>]";
 			}
 			
-			indexForm += "<a href='notice.do?page=${index.getMaxIndex()}' title='마지막 페이지'>[>>]</a>";
+			indexForm += "<a class='pageIndex' href='notice.do?page=${index.getMaxIndex()}' title='마지막 페이지'>[>>]</a>";
 			
 			$("#page_index").html(indexForm);
 		</c:if>
@@ -130,23 +164,37 @@
 				</tr>
 			</c:forEach>
 		</c:if>
-		<c:if test="${empty rnList && empty nList }">
+		<c:if test="${empty nList}">
 			<c:if test="${!empty user_info }">		
 				<c:if test="${user_info.isMng==true }">
-					<td colspan="6">공지사항이 없습니다.</td>
+					<tr><td colspan="6">공지사항이 없습니다.</td></tr>
 				</c:if>
 				<c:if test="${user_info.isMng==false }">
-					<td colspan="5">공지사항이 없습니다.</td>
+					<tr><td colspan="5">공지사항이 없습니다.</td></tr>
 				</c:if>
 			</c:if>
 		</c:if>
 	</table>
+	<!-- 조건별 검색 -->
+	<p id="page_search">
+		<form action="" method="get" name="searchNotice">
+			<input type="hidden" name="page" value="" id="index">
+			검색 : 
+			<select name="srcCon">
+				<option value="byTitle">제목</option>
+			</select>
+			<input type="text" size="10" name="key" id="srcText" value="${key }">
+			<input type="submit" id="btnSearch" value="검색">
+		</form>
+	</p>
+	
 	<c:if test="${!empty user_info}">
 		<c:if test="${user_info.isMng==true}">
 			<button id="btnAdd">글 등록</button>
 			<button id="btnRmv">글 삭제</button>
 		</c:if>
 	</c:if>
+	
 	<p id="page_index">
 	</p>
 	<!-- <form action="faqdelete.do" method="post" id="delete">

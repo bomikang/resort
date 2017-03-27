@@ -166,7 +166,12 @@
 		</div>
 		
 		<div>
-			<a href="book.do">예약하기</a>
+			<c:if test="${!empty param.houseId}">
+				<a href="book.do?id=${param.houseId}">예약하기</a>
+			</c:if>
+			<c:if test="${empty param.houseId}">
+				<a href="book.do?id=1">예약하기</a>
+			</c:if>
 		</div>
 	</c:if>
 </body>

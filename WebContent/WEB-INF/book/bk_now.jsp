@@ -19,11 +19,11 @@ response.setHeader("pragma","no-cache");
 	#bk_now #server{text-align: right;color: blue;}
 	#bk_now #server #serverTime{width: 110px; float: right;}
 </style>
-<script type="text/javascript">
-	
+<script type="text/javascript">	
 	$(function(){	
 		console.log($("#bkStrId").val());
 		/* 서버시간 알리미용 임시 테스트 */
+		$("#bkStrId").val("${id}");
 		var st = srvTime();
 		var now = new Date(st);
 		console.log("서버시간 : "+now.getTime());
@@ -32,7 +32,7 @@ response.setHeader("pragma","no-cache");
 			$("#serverTime").html(now.getHours()+":"+now.getMinutes()+":"+now.getSeconds());
 			now.setSeconds(now.getSeconds()+1);
 		}, 1000);		
-		
+		popUp("bookNotice.jsp", "주의사항", 900, 700);
 		/* 달력에 날짜 넣기 */		
 		var date = new Date();
 /* 		setMonthTable(date); */		
@@ -58,7 +58,8 @@ response.setHeader("pragma","no-cache");
 			}
 			
 			setScreen(date);
-			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");			
+			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");	
+			return false;
 		});
 		
 		
@@ -76,7 +77,8 @@ response.setHeader("pragma","no-cache");
 			}
 			
 			setScreen(date);
-			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");			
+			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");	
+			return false;
 		});
 		
 		$(document).on("click", ".isBooked", function(){
@@ -110,6 +112,13 @@ response.setHeader("pragma","no-cache");
 		});
 		
 	});//ready
+	function popUp(url, name, width, height){
+		var x = (screen.availWidth-width)/2;
+		var y = (screen.availHeight-height)/2;
+		
+		window.open(url, name,  'width='+width+',height='+height+', left='+x+', top='+y+'');
+	}
+	
 	var xmlHttp;
 	/* 서버 시간을 표기하기 위한 메소드(인터넷 참조) */
 	function srvTime(){	
