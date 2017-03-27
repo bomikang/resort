@@ -31,7 +31,17 @@
 				<li><span class="bold">위치</span> : 경상북도 구미시 옥성면 휴양림길 150</li>
 				<li><span class="bold">구역 면적</span> : 153ha</li>
 				<li><span class="bold">휴양림 지정</span> : 산림청 고시 제2000-29호</li>
-				<li><span class="bold">숙박시설 </span> : <!-- 숙박시설 가져와 뿌리기 --></li>
+				<li><span class="bold">숙박시설 </span> : 
+					<c:if test="${!empty sList }">
+						<b>${sList.get(0).nameById }</b>(${sList.get(0).people } 실/호) 
+						<c:forEach items="${sList }" var="str" begin="1">
+							/ <b>${str.nameById }</b>(${str.people } 실/호) 
+						</c:forEach>
+					</c:if>
+					<c:if test="${empty sList }">
+						0
+					</c:if>
+				</li>
 				<li><span class="bold">주차장 </span> : 6개소</li>
 			</ul>
 		</dd>
