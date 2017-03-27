@@ -615,4 +615,65 @@ public class BookDao {
 			JdbcUtil.close(rs);
 		}
 	}//end of selectAllWithCondition
+	/**
+	 * Test용
+	 * 관리자 화면에서 모든 예약 내역을 관리하기 위해 DB에 저장된 모든 내역을 ArrayList형태로 반환해주는 Methods
+	 * */
+	public List<Book> selectAll(Connection conn, String bkName, int index)throws SQLException{
+		List<Book> bList = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try{
+			String sql = "select * from resort.book ";
+			
+			if(bkName != "0"){
+				sql += "where bk_name=? ";
+			}
+			sql += "limit 10 offset ? ";
+			pstmt = conn.prepareStatement(sql);
+			
+			if(bkName != "0"){
+				pstmt.setString(1, bkName);
+				pstmt.setInt(2, (index-1)*10);
+			}else{
+				pstmt.setInt(1, (index-1)*10);
+			}
+			
+			rs = pstmt.executeQuery();
+			MemberDao mDao = MemberDao.getInstance();
+			StructureDao sDao = StructureDao.getInstance();
+			while(rs.next()){
+				Book book = new Book();
+				book.setNo(rs.getString("bk_no"));							//예약번호
+				book.setRegDate(rs.getTimestamp("bk_regdate"));				//예약날짜
+				book.setStartDate(rs.getTimestamp("bk_startdate"));			//숙박시작날짜
+				book.setEndDate(rs.getTimestamp("bk_enddate"));				//숙박끝날짜
+				
+				if(rs.getTimestamp("bk_canceldate")!=null){
+					book.setCancelDate(rs.getTimestamp("bk_canceldate"));	//취소 했을시(취소날짜)
+				}
+				
+				book.setState(rs.getString("bk_state"));					//예약의 진행상태
+				book.setTel(rs.getString("bk_tel"));						//예약자 연락처
+				book.setName(rs.getString("bk_name"));
+				int memNo = rs.getInt("bk_mem");
+				int strNo = rs.getInt("bk_str");
+				
+				
+				book.setMem(mDao.selectByNo(conn, memNo));
+				book.setStr(sDao.getStructureByNo(conn, strNo));			
+				
+				bList.add(book);
+			}
+			
+			return bList;			
+		}finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(rs);
+		}
+		
+	}//end of selectAll(with Paging)
+	
 }
