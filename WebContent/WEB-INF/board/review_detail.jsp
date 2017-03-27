@@ -8,7 +8,7 @@
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-	#no_delete{
+	.no{
 		display: none;
 	}
 </style>
@@ -28,11 +28,14 @@
 		<td>내용 :${rev_detail.rev_detail }</td>
 	</tr>	
 </table>
-	<c:if test="${delete }">
-		<span id="delete"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete">삭제</a></span>
+	<c:if test="${ok }">
+		<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete">삭제</a></span>
+		<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }">글 수정</a></span>
 	</c:if>
-	<c:if test="${no_delete }">
-		<span id="no_delete"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete">삭제</a></span>
+	<c:if test="${no }">
+		<span class="no"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete">삭제</a></span>
+		<span class="no"><a href="rev_update.do?no=${rev_list.rev_no }">글 수정</a></span>
 	</c:if>
+	<a href="rev_update.do?no=${rev_list.rev_no }">글 수정</a>
 </body>
 </html>

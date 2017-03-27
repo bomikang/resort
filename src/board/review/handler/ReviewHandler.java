@@ -1,11 +1,13 @@
 package board.review.handler;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import board.review.model.ListPageCount;
 import board.review.model.Review;
 import board.review.model.ReviewDao;
 import jdbc.ConnectionProvider;
@@ -14,18 +16,21 @@ import member.model.LoginMemberInfo;
 import mvc.controller.CommandHandler;
 
 public class ReviewHandler implements CommandHandler {
-
+	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if (req.getMethod().equalsIgnoreCase("get")) {
 			Connection conn = null;
 			try {
 				conn = ConnectionProvider.getConnection();
+				String pageNoVal = req.getParameter("pageNo"); // 클릭한 해당 페이지 위치	
 				ReviewDao dao = ReviewDao.getInstance();
-				LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession().getAttribute("user_info");
-				List<Review> rev_list = dao.listAll(conn);
-				
-				req.setAttribute("list", rev_list);
+				int pageno = 1;
+				if(pageNoVal != null){
+					pageno = Integer.parseInt(pageNoVal);
+				}
+				ListPageCount listPage = dao.getArticlePage(pageno);
+				req.setAttribute("cntPage", listPage);
 			} finally {
 				JdbcUtil.close(conn);
 			}
@@ -34,4 +39,5 @@ public class ReviewHandler implements CommandHandler {
 		return null;
 
 	}
+	
 }
