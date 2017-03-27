@@ -62,7 +62,7 @@ response.setHeader("pragma","no-cache");
 		<header class="header_menu" style="z-index:9999;">
 			<div>
 				<div id="logo_area">
-					<a href="index.jsp"><img src="image/logo2.png" alt="" /></a>
+					<a href="index.jsp"><img src="image/logo2-1.png" alt="" /></a>
 				</div>
 				<div id="menu_area">
 					<ul>
@@ -84,10 +84,14 @@ response.setHeader("pragma","no-cache");
 		<section class="content">
 			<div>
 				<nav>
-					<jsp:include page='<%= includeMenu+".jsp" %>'></jsp:include>
+					<div>
+						<jsp:include page='<%= includeMenu+".jsp" %>'></jsp:include>
+					</div>
 				</nav>
 				<article>
-					<jsp:include page='<%= includePage+".jsp" %>'></jsp:include>
+					<div>
+						<jsp:include page='<%= includePage+".jsp" %>'></jsp:include>
+					</div>
 				</article>
 			</div>
 		</section>

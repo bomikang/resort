@@ -3,8 +3,8 @@
  */
 
 $(function(){
-	$(".content_rep_img > div").animate({height:"120px", opacity:"0.3"}, "slow");
-	$(".content_rep_img > div").animate({width:"100%", opacity:"1"}, "slow");
+	//$(".content_rep_img > div").animate({height:"120px", opacity:"0.3"}, "slow");
+	//$(".content_rep_img > div").animate({width:"100%", opacity:"1"}, "slow");
 	
 	var sub_menu = new Array(4);
 	sub_menu[0] = ["옥성원 소개글", "옥성원 갤러리", "찾아오시는 길"];
@@ -44,11 +44,11 @@ $(window).scroll(function() {
 		$(".header_menu").addClass("stickyHeader");
         $("#logo_area img").finish().css("height","45px");
         $("#menu_area ul li").finish().css("line-height", "55px");
-        $("#menu_area ul li a").finish().css("font-size", "16px");
+        $("#menu_area ul li a").finish().css("font-size", "20px");
     }else{
 		$('.header_menu').removeClass("stickyHeader");
 		$("#logo_area img").finish().animate({"height":"95px"}, "fast");
 		$("#menu_area ul li").finish().animate({"line-height":"105px"}, "fast");
-		$("#menu_area ul li a").finish().animate({"font-size":"22px"}, "fast");
+		$("#menu_area ul li a").finish().animate({"font-size":"26px"}, "fast");
     }
 });
