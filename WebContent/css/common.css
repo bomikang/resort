@@ -42,7 +42,7 @@ a{text-decoration: none; color:black; margin:0; padding:0;}
 .content div nav div{width:100%;}
 .content div nav div a{display:block; padding:15px; font-family:"NanumSquareB"; font-size:20px; margin-bottom:5px; color:#fff;}
 .content div article{width:1027px; float:right; margin-bottom:30px;}
-.content div article div{min-height:760px; background:rgba(255,255,255,1); padding:20px;}
+.content div article .first_div{min-height:760px; background:rgba(255,255,255,1); padding:20px;}
 footer{clear:both;}
 footer > div{width:1300px; margin:0 auto;  padding:40px 0; text-align: center;}
 

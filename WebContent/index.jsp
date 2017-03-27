@@ -89,7 +89,7 @@ response.setHeader("pragma","no-cache");
 					</div>
 				</nav>
 				<article>
-					<div>
+					<div class="first_div">
 						<jsp:include page='<%= includePage+".jsp" %>'></jsp:include>
 					</div>
 				</article>
