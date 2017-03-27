@@ -40,7 +40,7 @@
 	});
 </script>
 <body>
-	<img src="image/resortgallery/intro_gallery_top.gif">
+	<img src="image/intro_gallery_top.gif">
 	<div id="show_image">
 		<img src="image/resortgallery/01waterfall.jpg" alt="" />
 		<p>계곡</p>
