@@ -45,12 +45,16 @@ public class NoticeHandler implements CommandHandler {
 					maxIndex = nDao.getMaxIndex(conn, null);
 				}else{
 					if(condition.equals("byTitle")){
+						maxIndex = nDao.getMaxIndex(conn, srcText);
+						if(Integer.parseInt(index)>maxIndex){
+							index = "1";
+						}
 						List<Notice> nList = nDao.selectNoticeByTitle(conn, srcText, Integer.parseInt(index));
 						if(!nList.isEmpty()){
 							req.setAttribute("nList", nList);
 						}
 					}
-					maxIndex = nDao.getMaxIndex(conn, srcText);
+					
 				}
 				/*중요공지 리스트*/
 				List<Notice> rnList = new ArrayList<>();

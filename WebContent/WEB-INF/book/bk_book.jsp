@@ -29,7 +29,8 @@
 		
 		$(document).on("change","#period",function() {	
 			setDateForm();	
-			setPriceForm();					
+			setPriceForm();	
+			$("#btnBook").attr("disabled","disabled");
 		});//기간을 변경할 때
 		
 		$("#btnDate").click(function(){
@@ -50,6 +51,7 @@
 						setPriceForm();
 					}else{
 						alert("예약가능합니다.");
+						$("#btnBook").removeAttr("disabled");
 					}							
 				} 
 			});			 
@@ -234,7 +236,7 @@
 				<tr>
 			</tr>
 		</table>
-		<button type="button" id="btnBook">예약하기</button>
+		<button type="button" id="btnBook" disabled="disabled">예약하기</button>
 		<button type="button" id="btnBack">취소하기</button> 
 	</form>
 	<a href="book.do">[돌아가기]</a>

@@ -33,6 +33,7 @@ public class NoticeDao {
 						+"from resort.notice as n left join resort.`member` as m on n.nc_mem=m.mem_no order by n.nc_no desc limit 10 offset ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, (index-1)*10);
+
 			rs = pstmt.executeQuery();
 			while(rs.next()){
 				int no = rs.getInt("nc_no");
@@ -112,6 +113,7 @@ public class NoticeDao {
 			}
 			pstmt.setString(1, search);
 			pstmt.setInt(2, (index-1)*10);
+			
 			rs = pstmt.executeQuery();
 			while(rs.next()){
 				int no = rs.getInt("nc_no");
@@ -303,7 +305,7 @@ public class NoticeDao {
 					}else if(totalCnt%10 == 0){
 						result = (totalCnt/10);
 					}
-				}
+				}				
 			}
 		}finally {
 			JdbcUtil.close(rs);
