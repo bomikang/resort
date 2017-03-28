@@ -23,8 +23,9 @@
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
 <style>
-	.room_menu li{display: inline-block; border:1px solid black;}
-	.room_info_area td, th{border:1px solid black;}
+	.room_menu li{display: inline-block;}
+	.bigImage{text-align: center; padding-top:20px;}
+	.bigImage img{max-width:610px; max-height:410px; min-height:410px;box-shadow: 0px 0px 10px 5px gray;}
 </style>
 <script>
 	/* bxSlider 적용 함수 */
@@ -112,7 +113,7 @@
 			getStructures("${firstRoomNo}"); //첫번째 시설 번호 넘겨줌
 		}
 		
-		$(".room_menu li a").each(function(i, obj) {
+		$(".room_menu li button").each(function(i, obj) {
 			$(obj).click(function() {
 				str_no = $(obj).find("span").text(); //시설번호
 				
@@ -121,7 +122,11 @@
 		});
 		
 		$(document).on("click", ".sliderImages .slide img", function() {
-			$(".bigImage img").attr("src", $(this).attr("src"));
+			var thisImg = $(this).attr("src");
+			
+			$(".bigImage").find("img").fadeOut(300, function() {
+				$(".bigImage").find("img").attr("src", thisImg);
+			}).fadeIn(300);
 		});
 	});
 </script>
@@ -137,7 +142,7 @@
 			<a href="structure.do?people=8">8인실</a>
 			<ul class="room_menu">
 				<c:forEach var="rooms" items="${strList}">
-					<li><a href="#">${rooms.name}<span class="str_no" style="display:none;">${rooms.no}</span></a></li>
+					<li><button>${rooms.name}<span class="str_no" style="display:none;">${rooms.no}</span></button></li>
 				</c:forEach>
 			</ul>
 		</c:if>

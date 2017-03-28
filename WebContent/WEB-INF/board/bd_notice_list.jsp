@@ -5,6 +5,10 @@
 	#notice_list #page_index{text-align: center;}
 	#notice_list .realNotice td{background: rgba(255,255,0,0.5);}
 	#notice_list .toNoticeDetail{width: 100%; overflow: hidden; white-space: nowrap; color:black; text-decoration: none;}
+	
+	form[name='searchNotice'] label{color:#43493e;}
+	#srcText{width:200px; height:17px; position:relative; top:-2px;}
+	#btnSearch{width:50px; background:#43493e; padding:5px 0;}
 </style>
 <script>
 	$(function(){
@@ -178,20 +182,24 @@
 	<!-- 조건별 검색 -->
 	<p id="page_search">
 		<form action="" method="get" name="searchNotice">
-			<input type="hidden" name="page" value="" id="index">
-			검색 : 
-			<select name="srcCon">
-				<option value="byTitle">제목</option>
-			</select>
-			<input type="text" size="10" name="key" id="srcText" value="${key }">
-			<input type="submit" id="btnSearch" value="검색">
+			<p class="act_btn_area">
+				<input type="hidden" name="page" value="" id="index">
+				<label for="">검색 :</label> 
+				<select name="srcCon">
+					<option value="byTitle">제목</option>
+				</select>
+				<input type="text" size="10" name="key" id="srcText" value="${key }">
+				<input type="submit" id="btnSearch" value="검색">
+			</p>
 		</form>
 	</p>
 	
 	<c:if test="${!empty user_info}">
 		<c:if test="${user_info.isMng==true}">
-			<button id="btnAdd">글 등록</button>
-			<button id="btnRmv">글 삭제</button>
+			<p class="act_btn_area">
+				<button id="btnAdd">글 등록</button>
+				<button id="btnRmv">글 삭제</button>
+			</p>
 		</c:if>
 	</c:if>
 	
