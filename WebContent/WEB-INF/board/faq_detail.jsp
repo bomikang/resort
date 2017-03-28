@@ -67,7 +67,7 @@
 		<c:if test="${user_info.isMng == false }">	
 			<script type="text/javascript">
 				alert("관리자만 접근 가능합니다.");
-				location.href="login.do"; 
+				location.href="login.do?category=faq"; 
 			</script>
 		</c:if>
 	</c:if>

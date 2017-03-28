@@ -31,9 +31,7 @@ public class BookCheckHandler implements CommandHandler {
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		LoginMemberInfo myinfo = (LoginMemberInfo) req.getSession(false).getAttribute("user_info");
-		if(myinfo==null){
-			return "login.do";
-		}
+
 		if(req.getMethod().equalsIgnoreCase("get")){	
 			if(myinfo != null){
 				Connection conn = null;
@@ -90,6 +88,8 @@ public class BookCheckHandler implements CommandHandler {
 					JdbcUtil.close(conn);
 				}
 				return "index.jsp?page=/WEB-INF/book/bk_check&menu=/WEB-INF/book/bk_menu";	
+			}else{
+				return "index.jsp?page=/WEB-INF/book/bk_check&menu=/WEB-INF/book/bk_menu";
 			}
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			/*예약상태 조건*/

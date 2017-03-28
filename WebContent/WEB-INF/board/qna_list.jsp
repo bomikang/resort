@@ -122,7 +122,7 @@
 	<!-- 손님 -->
 	<c:if test="${empty user_info}">
 		<script>
-			location.href="login.do";
+			location.href="login.do?category=qna";
 		</script>
 	</c:if>
 	

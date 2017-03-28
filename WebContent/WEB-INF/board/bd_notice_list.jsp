@@ -49,7 +49,7 @@
 				</c:if>
 				<c:if test="${user_info.isMng==false }">
 					alert("관리자만 접근할 수 있습니다.");
-					location.href="login.do";
+					location.href="login.do?category=notice";
 				</c:if>
 			</c:if>	
 		});

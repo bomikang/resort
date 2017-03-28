@@ -15,12 +15,21 @@ import member.model.MemberDao;
 import mvc.controller.CommandHandler;
 
 public class LoginHandler implements CommandHandler {
-
+	private String returnTo = "";
+	
 	@Override
-	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {		
 		if (req.getMethod().equalsIgnoreCase("get")) {
+			returnTo = req.getParameter("category");
+			System.out.println("returnTo : "+returnTo);
+			if(returnTo==null){
+				returnTo = "index.jsp";
+			}else if(returnTo.isEmpty()){
+				returnTo = "index.jsp";
+			}
 			return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 		}else if(req.getMethod().equalsIgnoreCase("post")){
+			System.out.println("returnTo : "+returnTo);
 			String id = req.getParameter("id");
 			String password = req.getParameter("password");
 			
@@ -69,7 +78,14 @@ public class LoginHandler implements CommandHandler {
 						member.getIsMng(),
 						member.getTel());
 				req.getSession().setAttribute("user_info",myinfo);
-				return "index.jsp";
+				String url = "";
+				if(returnTo.equals("index.jsp")){
+					url = returnTo;
+				}else{
+					url=returnTo+".do";
+				}				
+				res.sendRedirect(url);
+				return null;
 			}finally{
 				JdbcUtil.close(conn);	
 			}

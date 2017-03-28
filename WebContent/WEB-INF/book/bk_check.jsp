@@ -201,7 +201,7 @@
 <c:if test="${empty user_info }">
 	<script>
 		alert("로그인이 필요한 페이지 입니다.");
-		location.href="login.do";
+		location.href="login.do?category=bookcheck";
 	</script>
 </c:if>	
 <div id="bk_check">

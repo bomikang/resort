@@ -91,7 +91,7 @@ response.setHeader("pragma","no-cache");
 		$(document).on("click", ".noBooked", function(){		
 			<c:if test="${empty user_info }">
 				alert("로그인이 필요한 페이지 입니다.");
-				location.href="login.do";
+				location.href="login.do?category=book";
 			</c:if>	
 			<c:if test="${!empty user_info }">
 				<c:if test="${user_info.isMng==true }">
