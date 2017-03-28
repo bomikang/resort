@@ -11,6 +11,10 @@
 	.pageDivArea{text-align: center;}
 	#goFirst, #goLast{width:20px; background:none; border:none;}
 	.paging_btn_num{background:none; border:none; width:18px;}
+	#structureTable td:FIRST-CHILD{width:100px;}
+	#structureTable td:NTH-CHILD(2) {width:270px;}
+	#structureTable td:NTH-CHILD(3) {width:350px;}
+	#structureTable td:NTH-CHILD(4) {width:100px;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>

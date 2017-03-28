@@ -7,6 +7,8 @@
 	#bk_check .stateCancel{color:red; font-weight: bold;}
 	#bk_check .stateEnd{color:gray; font-weight: bold; text-decoration: line-through;}
 	#bk_check .bkStrIdName{color:green; font-weight: bold;}
+	#bk_check_field p{width:500px; margin:15px 0;}
+	#page_index{text-align: center;}
 </style>
 <script>
 
@@ -56,36 +58,36 @@
 		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
 		var index = data[2];
 		if(index != null){
-			var indexForm = "<a class='pageIndex' href='#' index='1' title='첫 페이지'>[<<]</a>";
+			var indexForm = "<a class='pageIndex paging_btn' href='#' index='1' title='첫 페이지'><img src='image/paging_left2.png'/></a>";
 			if(index.start > 10 ){
-				indexForm += "<a class='pageIndex' href='#' index='"+(index.start-10)+"' title='이전 10페이지'>[<]</a>";
+				indexForm += "<a class='pageIndex paging_btn' href='#' index='"+(index.start-10)+"' title='이전 10페이지'><img src='image/paging_left1.png'/></a>";
 			}else{
-				indexForm += "[<]";
+				indexForm += "<a class='paging_btn'><img src='image/paging_left1.png'/></a>";
 			}
 			
 			for(var i = index.start; i <= index.end; i++){
 				if(i==1){
 					if(i == index.nowIndex){
-						indexForm += "<b>"+i+"</b>";
+						indexForm += "<b><a class='paging_btn_num'>"+i+"</a></b>";
 					}else{
-						indexForm += "<a class='pageIndex' href='#' index='"+i+"'>"+i+"</a>";	
+						indexForm += "<a class='pageIndex paging_btn_num' href='#' index='"+i+"'>"+i+"</a>";	
 					}
 				}else if(i>1){
 					if(i == index.nowIndex){
-						indexForm += " | <b>"+i+"</b>";
+						indexForm += " | <b><a class='paging_btn_num'>"+i+"</a></b>";
 					}else{
-						indexForm += " | <a class='pageIndex' href='#' index='"+i+"'>"+i+"</a>";
+						indexForm += " | <a class='pageIndex paging_btn_num' href='#' index='"+i+"'>"+i+"</a>";
 					}
 				}
 			}
 			
 			if(index.end < index.maxIndex){
-				indexForm += "<a class='pageIndex' href='#' index='"+(index.start+10)+"' title='다음 10페이지'>[>]</a>";
+				indexForm += "<a class='pageIndex paging_btn' href='#' index='"+(index.start+10)+"' title='다음 10페이지'><img src='image/paging_right1.png'/></a>";
 			}else{
-				indexForm += "[>]";
+				indexForm += "<a class='paging_btn'><img src='image/paging_right1.png'/></a>";
 			}
 			
-			indexForm += "<a class='pageIndex' href='#' index='"+index.maxIndex+"' title='마지막 페이지'>[>>]</a>";
+			indexForm += "<a class='pageIndex paging_btn' href='#' index='"+index.maxIndex+"' title='마지막 페이지'><img src='image/paging_right2.png'/></a>";
 			$("#page_index").html(indexForm);
 		}
 	}
@@ -207,44 +209,46 @@
 <div id="bk_check">
 	<h2>예약 확인 및 취소</h2>
 	<form action="bookcheck.do" method="post" name="book1">
-		<fieldset>
+		<fieldset id="bk_check_field">
 			<input type="hidden" name="index" id="pageIndex">
 			<p>
-				조회 기준 : 
-				<input type="radio" name="condition" id="all">전체 내역 보기
-				<input type="radio" name="condition" id="withCon">조건별 검색 
+				<label for="">조회 기준 : </label> 
+				<input type="radio" name="condition" id="all"><span  class='small_label'>전체 내역 보기</span>
+				<input type="radio" name="condition" id="withCon"><span  class='small_label'>조건별 검색 </span>
 			</p>		
 			<p>
-				이용 기간 :
+				<label for="">이용 기간 : </label>
 				<select name="year" id="year">
 					<c:forEach items="${years }" var="year">
 						<option value="${year }">${year }</option>
 					</c:forEach>
 				</select> 
-				년 
+				<span class='small_label'>년</span> 
 				<select name="month" id="month">
 						<c:forEach items="${months }" var="month">
 							<option value="${month }">${month }</option>
 						</c:forEach>
 				</select>
-				월
+				<span class='small_label'>월</span> 
 			</p>
 			<p>
-				예약 상태 : 
-				<input type="checkbox" value="입금대기" id="bkReady" name="cdState" checked="checked"><label for="bkReady">입금대기</label>
-				<input type="checkbox" value="입금완료" id="bkProcess" name="cdState" checked="checked"><label for="bkRbkProcesseady">입금완료</label>
-				<input type="checkbox" value="예약취소" id="bkCancel" name="cdState"><label for="bkCancel">예약취소</label>
-				<input type="checkbox" value="예약종료" id="bkEnd" name="cdState"><label for="bkEnd">예약종료</label>
+				<label for="">예약 상태 : </label>
+				<input type="checkbox" value="입금대기" id="bkReady" name="cdState" checked="checked"><label for="bkReady" class='small_label'>입금대기</label>
+				<input type="checkbox" value="입금완료" id="bkProcess" name="cdState" checked="checked"><label for="bkRbkProcesseady" class='small_label'>입금완료</label>
+				<input type="checkbox" value="예약취소" id="bkCancel" name="cdState"><label for="bkCancel" class='small_label'>예약취소</label>
+				<input type="checkbox" value="예약종료" id="bkEnd" name="cdState"><label for="bkEnd" class='small_label'>예약종료</label>
 			</p>
-			<p>시설 구분 : 
+			<p>
+				<label for="">시설 구분 : </label> 
 				<select id="bkStrId" name="bkStrId">
 					<option value="0">전체 보기</option>
 					<c:forEach items="${strId }" var="str">
 						<option value="${str.id }">${str.nameById }</option>
 					</c:forEach>
 				</select>
+				<input type="submit" value="조회하기">
 			</p>
-			<p><input type="submit" value="조회하기"></p>
+			
 		</fieldset>
 	</form>
 	<%-- <form action="bookcheck.do" method="post" name="book1">
@@ -267,7 +271,7 @@
 		</fieldset>
 	</form> --%>
 	<p id="bkCheckRes"></p>
-	<table border="1" id="bkTable">
+	<table id="bkTable">
 		<tr>
 			<th>접수 날짜</th>	
 			<th>시설 명</th>								
