@@ -3,6 +3,8 @@
 	#bk_notice{font-size: 14px;}
 	#bk_notice #toReserve{width:100%; text-align: right;}
 	#bk_notice #toReserve a{padding:5px; border:1px solid black; text-decoration: none; font-weight: bold;}
+	#bk_notice .noticeRed{color:red;}
+	#bk_notice .noticeRed dt{font-weight: bold; color:black !important;}
 </style>
 <!-- 옥성 자연 휴양림 참조 -->
 <div id="bk_notice">
@@ -82,7 +84,7 @@
 			<h3>환불기준</h3>
 		</dt>
 		<dd>
-			<dl>
+			<dl class="noticeRed">
 				<dt>성수기(주중)</dt>
 				<dd>사용예정일 10일전에 예약을 취소한 경우 : 전액 환불</dd>
 				<dd>사용예정일 7~9일전에 예약을 취소한 경우 : 90%환불</dd>
@@ -112,7 +114,7 @@
 			<h3>배상기준</h3>
 		</dt>
 		<dd>
-			<dl>
+			<dl class="noticeRed">
 				<dt>성수기</dt>
 				<dd>사용예정일 10일전에 통보한 경우 : 사용료 전액 환불</dd>
 				<dd>사용예정일 7~9일전에 통보한 경우 : 전액+사용료의 10%배상</dd>

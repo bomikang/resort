@@ -167,7 +167,7 @@
 					break;
 				}
 				tableForm += "<td>";
-				if(bList[j].state != '예약취소'){
+				if(bList[j].state == '입금대기'){
 					tableForm += "<form action='bookcancel.do' method='post' class='bkcancel'>";
 					tableForm += "<input type='hidden' name='bkNo' value='"+bList[j].no+"'>";
 					tableForm += "<input type='submit' value='취소하기'>";

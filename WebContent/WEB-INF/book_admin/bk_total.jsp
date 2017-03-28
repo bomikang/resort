@@ -82,12 +82,20 @@
 		$("#bkTable").append(tableForm);
 	}
 </script>
-<%-- <c:if test="${empty user_info }">
+<c:if test="${!empty user_info }">
+	<c:if test="${user_info.isMng==false }">
+		<script>
+			alert("관리자만 접근 가능합니다.");
+			location.href="index.jsp";
+		</script>
+	</c:if>	
+</c:if>
+<c:if test="${empty user_info }">
 	<script>
-		alert("로그인이 필요한 페이지 입니다.");
+		alert("관리자만 접근 가능합니다.");
 		location.href="login.do";
 	</script>
-</c:if>	 --%>
+</c:if>	
 <div id="bk_total">
 	<h2 id="totalTitle"></h2>
 	<form action="booktotal.do" method="post" name="book1">

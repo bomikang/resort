@@ -20,6 +20,7 @@
 					"endDate" : $("#end").val(),
 					"strNo" : ${str.no }
 			},
+			async:false,
 			success:function(data){
 				if(data==false){
 					location.href="book.do";
@@ -45,10 +46,15 @@
 				},
 				success:function(data){
 					if(data==false){
+						var period = $("#period").val();
 						alert("예약할 수 없는 날짜입니다.");
-						$("#period").val("1");	
-						setDateForm();
-						setPriceForm();
+						if(period=="1"){
+							location.href="book.do";
+						}else{
+							$("#period").val("1");	
+							setDateForm();
+							setPriceForm();
+						}
 					}else{
 						alert("예약가능합니다.");
 						$("#btnBook").removeAttr("disabled");
@@ -84,7 +90,6 @@
 								alert("예약이 진행 중이라 예약 하실 수 없습니다.");
 								location.href="book.do";
 							}else{
-								alert("예약가능합니다.");
 								$("#bookProcess").submit();
 							}							
 						} 
@@ -95,7 +100,9 @@
 		});
 		
 		$("#btnBack").click(function(){
-			location.href="book.do";
+			if(confirm("예약을 취소하고 이전화면으로 돌아가시겠습니까?")){
+				location.href="book.do";
+			}
 		});
 	});//ready
 	/* 예약을 진행할 로그인된 회원의 휴대폰 번호를 3자리로 나누어 각자의 자리에 입력 */
