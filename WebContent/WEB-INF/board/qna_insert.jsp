@@ -9,7 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <style>
 	.err{display:none; color:red; font-size:12px;}
-	input[name='title']{width:300px;}
+	
 </style>
 <script type="text/javascript">
 	function checkRegExr($input, limit){
