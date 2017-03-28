@@ -3,7 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-	#bk_list #bkStrNo{opacity: 0;}
+	#bk_list #bkStrNo{display: none;}
 </style>
 <script>
 	var stateList = new Array();
@@ -77,11 +77,11 @@
 		$("#bkStrId").change(function(){
 			if($("#bkStrId").val() == "0"){
 				$("#bkStrNo").val("0");
-				$("#bkStrNo").css("opacity", "0");
+				$("#bkStrNo").css("display", "none");
 			}else if($("#bkStrId").val() != "0"){
 				setBkStrNo();
 				$("#bkStrNo").val("0");
-				$("#bkStrNo").css("opacity", "1");
+				$("#bkStrNo").css("display", "inline");
 			}
 		});
 		/* 예약자 이름 클릭 시 */
