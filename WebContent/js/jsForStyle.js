@@ -6,6 +6,7 @@ $(function(){
 	//$(".content_rep_img > div").animate({height:"120px", opacity:"0.3"}, "slow");
 	//$(".content_rep_img > div").animate({width:"100%", opacity:"1"}, "slow");
 	
+	
 	var sub_menu = new Array(4);
 	sub_menu[0] = ["옥성원 소개글", "옥성원 갤러리", "찾아오시는 길"];
 	sub_menu[1] = ["예약안내", "예약하기", "예약조회 및 취소"];
