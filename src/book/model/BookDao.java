@@ -487,66 +487,98 @@ public class BookDao {
 	/**
 	 * 관리자가 조건에 따라 예약 내역을 조회할 시 필요한 메소드 - 사용
 	 * */
-	public List<Book> selectAllWithCondition(Connection conn, String start, String end, int strId,int sNo, String memName,String[] state, int index)throws SQLException{		
+	public List<Book> selectAllWithCondition(Connection conn, String start, String end, int strId,int sNo, String memName,String[] state, int index,String condition)throws SQLException{		
 		PreparedStatement pstmt = null;
 		List<Book> bList = new ArrayList<>();
 		ResultSet rs = null;	
 		
 		try{
-			//select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no where (year(b.bk_startdate)=2017 and month(b.bk_startdate)=3) and (year(b.bk_enddate)=2017 and month(b.bk_enddate)=3) and s.str_id=1 and b.bk_state='예약취소';
-			String sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str=s.str_no "
-						+"where ((b.bk_startdate>=? and b.bk_startdate<=?) "
-						+"or (b.bk_enddate>=? and b.bk_enddate<=?)) ";
-			if(strId != 0){
-				sql+=" and s.str_id=? ";
-				if(sNo != 0){
-					sql+=" and s.str_no=? ";
+			String sql="";
+			if(condition.equals("all")){//전체 조회
+				sql = "select * from resort.book ";
+				
+				if(memName != null){
+					sql += "where bk_name=? ";
 				}
-			}
-			if(state.length>0){
-				sql += "and (";	
-				for(int i=0;i<state.length;i++){
-					if(i==0){
-						sql += " b.bk_state='"+state[i]+"' ";
-					}else{
-						sql += "or b.bk_state='"+state[i]+"' ";
+				if(index != -1){
+					sql += " order by bk_regdate desc limit 10 offset ? ";
+				}
+				pstmt = conn.prepareStatement(sql);
+				
+				if(memName != null){
+					pstmt.setString(1, memName);
+					if(index != -1){
+						pstmt.setInt(2, (index-1)*10);
+					}
+				}else if(index != -1){
+					pstmt.setInt(1, (index-1)*10);
+				}
+			}else{//조건별 조회
+				//select * from resort.book as b left join resort.`structure` as s on b.bk_str = s.str_no where (year(b.bk_startdate)=2017 and month(b.bk_startdate)=3) and (year(b.bk_enddate)=2017 and month(b.bk_enddate)=3) and s.str_id=1 and b.bk_state='예약취소';
+				sql = "select * from resort.book as b left join resort.`structure` as s on b.bk_str=s.str_no "
+							+"where ((b.bk_startdate>=? and b.bk_startdate<=?) "
+							+"or (b.bk_enddate>=? and b.bk_enddate<= ?)) ";
+				if(strId != 0){
+					sql+=" and s.str_id=? ";
+					if(sNo != 0){
+						sql+=" and s.str_no=? ";
 					}
 				}
-				sql +=") ";
+				if(state.length>0){
+					sql += "and (";	
+					for(int i=0;i<state.length;i++){
+						if(i==0){
+							sql += " b.bk_state='"+state[i]+"' ";
+						}else{
+							sql += "or b.bk_state='"+state[i]+"' ";
+						}
+					}
+					sql +=") ";
+				}
+				if(memName != null){
+					sql += " and bk_name = ? ";
+				}
+				sql += " order by b.bk_startdate ";
+				
+				if(index != -1){
+					sql += " limit 10 offset ?";
+				}
+				System.out.println("selectByMember SQL : "+sql);
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, start);
+				pstmt.setString(2, end);
+				pstmt.setString(3, start);
+				pstmt.setString(4, end);
+				if(strId != 0){
+					pstmt.setInt(5, strId);
+					if(sNo != 0){
+						pstmt.setInt(6, sNo);
+						if(memName != null){
+							pstmt.setString(7, memName);
+							if(index != -1){
+								pstmt.setInt(8, (index-1)*10);
+							}
+						}else if(index != -1){
+							pstmt.setInt(7, (index-1)*10);
+						}
+					}else if(sNo==0 && memName != null){
+						pstmt.setString(6, memName);
+						if(index != -1){
+							pstmt.setInt(7, (index-1)*10);
+						}
+					}else if(index != -1){
+						pstmt.setInt(6, (index-1)*10);
+					}
+				}else if(strId == 0 && memName != null){
+					pstmt.setString(5, memName);
+					if(index != -1){
+						pstmt.setInt(6, (index-1)*10);
+					}
+				}else if(index != -1){
+					pstmt.setInt(5, (index-1)*10);
+				}
 			}
-			if(memName != null){
-				sql += " and bk_name = ? ";
-			}
-			sql += " order by b.bk_startdate limit 10 offset ?";
 			
-			System.out.println("selectByMember SQL : "+sql);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, start);
-			pstmt.setString(2, end);
-			pstmt.setString(3, start);
-			pstmt.setString(4, end);
-			if(strId != 0){
-				pstmt.setInt(5, strId);
-				if(sNo != 0){
-					pstmt.setInt(6, sNo);
-					if(memName != null){
-						pstmt.setString(7, memName);
-						pstmt.setInt(8, (index-1)*10);
-					}else{
-						pstmt.setInt(7, (index-1)*10);
-					}
-				}else if(sNo==0 && memName != null){
-					pstmt.setString(6, memName);
-					pstmt.setInt(7, (index-1)*10);
-				}else{
-					pstmt.setInt(6, (index-1)*10);
-				}
-			}else if(strId == 0 && memName != null){
-				pstmt.setString(5, memName);
-				pstmt.setInt(6, (index-1)*10);
-			}else{
-				pstmt.setInt(5, (index-1)*10);
-			}
 			
 			rs = pstmt.executeQuery();
 			MemberDao mDao = MemberDao.getInstance();
@@ -581,11 +613,11 @@ public class BookDao {
 			JdbcUtil.close(rs);
 		}
 	}//end of selectAllWithCondition
-	
-	/**
+/*	
+	*//**
 	 * Test용
 	 * 관리자 화면에서 모든 예약 내역을 관리하기 위해 DB에 저장된 모든 내역을 ArrayList형태로 반환해주는 Methods
-	 * */
+	 * *//*
 	public List<Book> selectAll(Connection conn, String bkName, int index)throws SQLException{
 		List<Book> bList = new ArrayList<>();
 		
@@ -642,9 +674,10 @@ public class BookDao {
 		}
 		
 	}//end of selectAll(with Paging)
+	*///삭제예정
 	
 	/*
-	 * index 설정 위해 전체 갯수 가져오는 메소드 - 사용
+	 * index 설정 위해 전체 갯수 가져오는 메소드 - 사용(관리자)
 	 * */
 	public int getMaxIndex(Connection conn, String start, String end, int strId,int sNo, String memName,String[] state, String condition) throws SQLException{
 		PreparedStatement pstmt = null;
@@ -733,7 +766,7 @@ public class BookDao {
 		return result;
 	}// end of getMaxIndex
 	/**
-	 * index 설정 위해 전체 갯수 가져오는 메소드 - 사용
+	 * index 설정 위해 전체 갯수 가져오는 메소드 - 사용(회원)
 	 * */
 	public int getMaxIndex(Connection conn, int mem, int year, int month, int strId,String[] state,String condition) throws SQLException{
 		PreparedStatement pstmt = null;

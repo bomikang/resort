@@ -113,13 +113,10 @@ public class BookListHandler implements CommandHandler {
 					BookDao bDao = BookDao.getInstance();
 					List<Book>bList = null;
 					int maxIndex = 1;
-					if(!condition.equals("all")){
-						bList =bDao.selectAllWithCondition(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo),memName,states, Integer.parseInt(index));
-						maxIndex = bDao.getMaxIndex(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo), memName, states, condition);
-					}else{
-						bList = bDao.selectAll(conn, memName, Integer.parseInt(index));
-						maxIndex = bDao.getMaxIndex(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo), memName, states, condition);
-					}
+			
+					bList =bDao.selectAllWithCondition(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo),memName,states, Integer.parseInt(index),condition);
+					maxIndex = bDao.getMaxIndex(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo), memName, states, condition);
+					
 					req.setAttribute("bList", bList);
 					IndexOfPage indexs = new IndexOfPage(maxIndex, Integer.parseInt(index));
 					//data�� json ���� ����

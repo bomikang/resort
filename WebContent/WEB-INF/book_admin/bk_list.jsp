@@ -87,6 +87,7 @@
 		/* 예약자 이름 클릭 시 */
 		$(document).on("click",".searchMem", function(){
 			var bkMem = $(this).attr("value");
+
 			console.log("bkMem : "+bkMem);
 			$.ajax({
 				url:"booklist.do",
@@ -96,7 +97,8 @@
 				data:{"type":"mem","bkMem":bkMem},
 				success:function(data){
 					console.log(data);
-					setTable(data);					
+					setTable(data);	
+					$("#page_index").html("");
 				} 
 			});
 			return false;
@@ -105,6 +107,7 @@
 		$(document).on("click",".pageIndex", function(){
 			var index = $(this).attr("index");
 			$("#pageIndex").val(index);
+			
 			setScreen();
 			return false;
 		});

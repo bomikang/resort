@@ -5,3 +5,4 @@
 <a href="bookcheck.do">예약 조회/취소</a>
 <br><br>
 <a href="booklist.do">예약 List(관리자)</a>
+<a href="booktotal.do">예약 실적조회(관리자)</a>
