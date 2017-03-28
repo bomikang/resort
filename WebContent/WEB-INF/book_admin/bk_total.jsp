@@ -93,7 +93,7 @@
 <c:if test="${empty user_info }">
 	<script>
 		alert("관리자만 접근 가능합니다.");
-		location.href="login.do";
+		location.href="login.do?category=booktotal";
 	</script>
 </c:if>	
 <div id="bk_total">

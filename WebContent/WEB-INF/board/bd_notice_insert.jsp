@@ -21,7 +21,7 @@
 			</c:if>
 			<c:if test="${empty user_info}">
 				alert("접근권한이 없습니다.");
-				location.href="login.do";
+				location.href="login.do?category=notice";
 			</c:if>
 		});
 		
@@ -54,7 +54,7 @@
 			</c:if>
 			<c:if test="${empty user_info}">
 				alert("접근권한이 없습니다.");
-				location.href="login.do";
+				location.href="login.do?category=notice";
 			</c:if>
 		});
 		
@@ -74,7 +74,7 @@
 			</c:if>
 			<c:if test="${empty user_info}">
 				alert("접근권한이 없습니다.");
-				location.href="login.do";
+				location.href="login.do?category=notice";
 			</c:if>
 		});
 	});//ready

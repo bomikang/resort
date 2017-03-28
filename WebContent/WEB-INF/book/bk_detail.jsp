@@ -4,12 +4,6 @@
 <style>
 	#bk_detail #warning{color:orange;}
 </style>
-<c:if test="${empty user_info }">
-	<script>
-		alert("로그인이 필요한 페이지 입니다.");
-		location.href="login.do";
-	</script>
-</c:if>	
 <script>
 	$(function(){
 		$("#btnBack").click(function(){
@@ -27,6 +21,12 @@
 		</c:if>
 	});
 </script>
+<c:if test="${empty user_info }">
+	<script>
+		alert("로그인이 필요한 페이지 입니다.");
+		location.href="login.do?category=bookcheckdetail";
+	</script>
+</c:if>	
 <div id="bk_detail">
 	<c:if test="${empty book }">
 		<script type="text/javascript">

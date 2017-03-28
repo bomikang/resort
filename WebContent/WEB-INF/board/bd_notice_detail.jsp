@@ -8,6 +8,8 @@
 </style>
 <script>
 	$(function(){
+		$("#detail").html("${detail.detail }");
+	
 		$("#btnBack").click(function(){
 			location.href="notice.do?page=${index}";
 		});
@@ -50,8 +52,8 @@
 					<td id="td_writed_man">작성자 : ${notice.writer.my_name } / 조회수 : ${notice.readCnt }</td>
 				</tr>
 				<tr>
-					<td colspan="2">
-						${detail.detail }
+					<td colspan="2" id="detail">
+						<!-- 공지사항 내용부분 -->
 					</td>
 				</tr>
 			</c:if>

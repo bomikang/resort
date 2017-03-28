@@ -66,14 +66,15 @@ response.setHeader("pragma","no-cache");
 				}
 			}
 		});
-	});
+		
+	});//ready
 </script>
 <div id="faqList">
 	<h2>자주 묻는 질문</h2>
 	<table border="1">
 		<c:choose>
 			<c:when test="${!empty fList }">
-				<c:forEach items="${fList }" var="fItem">
+				<c:forEach items="${fList }" var="fItem" varStatus="status">
 					<tr>
 						<td>
 							<dl>
@@ -86,7 +87,11 @@ response.setHeader("pragma","no-cache");
 									<a href="#" class="faqTitle">${fItem.title }</a>
 								</dt>
 								<dd class="faqDetail">
-									<p>${fItem.detail }</p>
+									<p class="detail">
+										<script type="text/javascript">										
+											$(".detail").eq(${status.index }).html("${fItem.detail }");
+										</script>
+									</p>
 									<c:if test="${!empty user_info}">
 										<c:if test="${user_info.isMng == true }">
 											<p><input type="hidden" name="fNo" value="${fItem.no }">
