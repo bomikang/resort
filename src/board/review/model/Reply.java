@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Reply {
 	private int rep_no; 		//댓글번호
-	private Review rep_review; // 게시물번호 -> 리뷰테이블 외래키 지정
+	private int rep_review; // 게시물번호 -> 리뷰테이블 외래키 지정
 	private int rep_mem;	   // 회원번호 -> session DATA 가져오기//
 	private String rep_name;   // 작성자 -> 동일//
 	private String rep_detail; // 답글(내용)
 	private Date rep_regdate; // 등록날짜
 	
-	public Reply(int rep_no, Review rep_review, int rep_mem, String rep_name, String rep_detail, Date rep_regdate) {
+	public Reply(int rep_no, int rep_review, int rep_mem, String rep_name, String rep_detail, Date rep_regdate) {
 		super();
 		this.rep_no = rep_no;
 		this.rep_review = rep_review;
@@ -25,10 +25,10 @@ public class Reply {
 	public void setRep_no(int rep_no) {
 		this.rep_no = rep_no;
 	}
-	public Review getRep_review() {
+	public int getRep_review() {
 		return rep_review;
 	}
-	public void setRep_review(Review rep_review) {
+	public void setRep_review(int rep_review) {
 		this.rep_review = rep_review;
 	}
 	public int getRep_mem() {

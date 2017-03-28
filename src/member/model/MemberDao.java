@@ -227,6 +227,47 @@ public class MemberDao {
 		}
 	}
 	
-
+	// 유진씨 요청 메서드
+	public List<Member> selectByNameTelID(Connection conn, String id, String name, String tel) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Member> mList = new ArrayList<>();
+		try{
+			String sql = "select * from member where mem_tel=? and mem_name=? and mem_outdate is null ";
 	
+			if(id != null){
+				sql += " and mem_id=?";
+			}
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tel);
+			pstmt.setString(2, name);
+			
+			if(id != null){				
+				pstmt.setString(3, id);
+			}
+			
+			rs = pstmt.executeQuery();
+			Member member= null;
+			//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng
+			while(rs.next()){
+				System.out.println("1");
+				member = new Member(
+						rs.getInt("mem_no"),
+						rs.getString("mem_id"),
+						rs.getString("mem_pwd"),
+						rs.getString("mem_name"),
+						rs.getString("mem_mail"),
+						rs.getString("mem_tel"),
+						null,
+						rs.getDate("mem_outdate"),
+						rs.getBoolean("mem_ismng"));
+				mList.add(member);
+			}
+			return mList;
+		}finally{
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}	
+	}	
 }
