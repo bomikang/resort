@@ -18,6 +18,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import book.model.Book;
 import book.model.BookDao;
 import jdbc.ConnectionProvider;
+import jdbc.IndexOfPage;
 import jdbc.JdbcUtil;
 import member.model.Member;
 import member.model.MemberDao;
@@ -71,7 +72,12 @@ public class BookListHandler implements CommandHandler {
 				if(sNo.isEmpty()){
 					sNo="0";
 				}
-				
+				String index = req.getParameter("index");
+				if(index==null){
+					index="1";
+				}else if(index.equals("")){
+					index="1";
+				}
 				String condition = req.getParameter("condition");
 				String start = req.getParameter("start");
 				System.out.println("start : "+start);
@@ -85,7 +91,7 @@ public class BookListHandler implements CommandHandler {
 				String memName = req.getParameter("memName");
 				System.out.println("memNamae : "+memName);
 				if(memName==""){
-					memName="0";
+					memName=null;
 				}
 				Connection conn = null;
 				try{
@@ -106,16 +112,16 @@ public class BookListHandler implements CommandHandler {
 					
 					BookDao bDao = BookDao.getInstance();
 					List<Book>bList = null;
-					if(!condition.equals("all")){
-						bList =bDao.selectAllWithCondition(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo),memName,states);
-					}else{
-						bList = bDao.selectAll(conn, memName);
-					}
-					req.setAttribute("bList", bList);
+					int maxIndex = 1;
+			
+					bList =bDao.selectAllWithCondition(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo),memName,states, Integer.parseInt(index),condition);
+					maxIndex = bDao.getMaxIndex(conn, start, end, Integer.parseInt(strId), Integer.parseInt(sNo), memName, states, condition);
 					
+					req.setAttribute("bList", bList);
+					IndexOfPage indexs = new IndexOfPage(maxIndex, Integer.parseInt(index));
 					//data�� json ���� ����
 					ObjectMapper om= new ObjectMapper();
-					String json = "["+om.writeValueAsString(str.getNameById())+","+om.writeValueAsString(bList)+"]";
+					String json = "["+om.writeValueAsString(str.getNameById())+","+om.writeValueAsString(bList)+","+om.writeValueAsString(indexs)+"]";
 					// json �߽�
 					res.setContentType("application/json;charset=utf-8");
 					PrintWriter pw = res.getWriter();

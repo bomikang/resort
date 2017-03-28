@@ -26,6 +26,8 @@
 	.room_menu li{display: inline-block;}
 	.bigImage{text-align: center; padding-top:20px;}
 	.bigImage img{max-width:610px; max-height:410px; min-height:410px;box-shadow: 0px 0px 10px 5px gray;}
+	#room_name .go_book{width:130px;}
+	
 </style>
 <script>
 	/* bxSlider 적용 함수 */
@@ -73,7 +75,7 @@
 			table += "<td>무료 주차</td>";
 		table += "</tr>";
 		
-		$(".room_info_area #room_name").html(data.nameById+" 이용안내");
+		$(".room_info_area #room_name label").html(data.nameById+" 이용안내");
 		$(".room_info_area > table").html(table);
 		$(".room_info_area #furniture").html(data.option);
 	}
@@ -158,7 +160,16 @@
 			<!-- gallery -->
 		</p>
 		<div class="room_info_area">
-			<p id="room_name"></p>
+			<p id="room_name">
+				<label for=""></label>
+				<c:if test="${!empty param.houseId}">
+					<a href="book.do?id=${param.houseId}" class="moving_btn go_book">예약하러 가기</a>
+				</c:if>
+				<c:if test="${empty param.houseId}">
+					<a href="book.do?id=1" class="moving_btn go_book">예약하러 가기</a>
+				</c:if>
+			</p>
+			
 			<table></table>
 			
 			<h4>내부 시설 안내</h4>
@@ -168,15 +179,6 @@
 				※ 최대인원을 초과하여서는 입실이 안되며, 애완동물(애완견) 동반시 이용 불가합니다. <br /> 
      			이와 같은 사유로 객실을 이용하지 못할 경우 사용자 과실로 처리되며, 환불기준에 의거하여 환불되오니 이용에 착오없으시기 바랍니다.
 			</p>
-		</div>
-		
-		<div>
-			<c:if test="${!empty param.houseId}">
-				<a href="book.do?id=${param.houseId}">예약하기</a>
-			</c:if>
-			<c:if test="${empty param.houseId}">
-				<a href="book.do?id=1">예약하기</a>
-			</c:if>
 		</div>
 	</c:if>
 </body>

@@ -87,6 +87,7 @@
 		/* 예약자 이름 클릭 시 */
 		$(document).on("click",".searchMem", function(){
 			var bkMem = $(this).attr("value");
+
 			console.log("bkMem : "+bkMem);
 			$.ajax({
 				url:"booklist.do",
@@ -96,13 +97,60 @@
 				data:{"type":"mem","bkMem":bkMem},
 				success:function(data){
 					console.log(data);
-					setTable(data);					
+					setTable(data);	
+					$("#page_index").html("");
 				} 
 			});
 			return false;
 		});
+		
+		$(document).on("click",".pageIndex", function(){
+			var index = $(this).attr("index");
+			$("#pageIndex").val(index);
+			
+			setScreen();
+			return false;
+		});
+		
 	});//ready
-	
+	function setPageIndex(data){
+		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
+		var index = data[2];
+		if(index != null){
+			var indexForm = "<a class='pageIndex paging_btn' href='#' index='1' title='첫 페이지'><img src='image/paging_left2.png'/></a>";
+			if(index.start > 10 ){
+				indexForm += "<a class='pageIndex paging_btn' href='#' index='"+(index.start-10)+"' title='이전 10페이지'><img src='image/paging_left1.png'/></a>";
+			}else{
+				indexForm += "<a class='paging_btn'><img src='image/paging_left1.png'/></a>";
+			}
+			
+			for(var i = index.start; i <= index.end; i++){
+				if(i==1){
+					if(i == index.nowIndex){
+						indexForm += "<b><a class='paging_btn_num'>"+i+"</a></b>";
+					}else{
+						indexForm += "<a class='pageIndex paging_btn_num' href='#' index='"+i+"'>"+i+"</a>";	
+					}
+				}else if(i>1){
+					if(i == index.nowIndex){
+						indexForm += " | <b><a class='paging_btn_num'>"+i+"</a></b>";
+					}else{
+						indexForm += " | <a class='pageIndex paging_btn_num' href='#' index='"+i+"'>"+i+"</a>";
+					}
+				}
+			}
+			
+			if(index.end < index.maxIndex){
+				indexForm += "<a class='pageIndex paging_btn' href='#' index='"+(index.start+10)+"' title='다음 10페이지'><img src='image/paging_right1.png'/></a>";
+			}else{
+				indexForm += "<a class='paging_btn'><img src='image/paging_right1.png'/></a>";
+			}
+			
+			indexForm += "<a class='pageIndex paging_btn' href='#' index='"+index.maxIndex+"' title='마지막 페이지'><img src='image/paging_right2.png'/></a>";
+			$("#page_index").html(indexForm);
+		}
+	}
+	/*시설 구분 선택 후 세부 시설이름 선택위한 comboBox구성 */
 	function setBkStrNo(){
 		var strId = $("#bkStrId").val();
 		
@@ -141,7 +189,7 @@
 			}			
 		}
 	}
-	
+	/* 조건별 조회 */
 	function setFormTagAbled(){
 		$("#startDate").removeProp("disabled");
 		$("#endDate").removeProp("disabled");
@@ -150,7 +198,7 @@
 		});
 		$("#bkStrId").removeProp("disabled");
 	}
-	
+	/* 전체 조회 */
 	function setFormTagDisabled(){
 		$("#startDate").prop("disabled","disabled");
 		$("#endDate").prop("disabled","disabled");
@@ -159,7 +207,7 @@
 		});
 		$("#bkStrId").prop("disabled", "disabled");
 	}
-	
+	/* 검색 조건 Form을 바탕으로 ajax함수를 통해 화면 구성 */
 	function setScreen(){
 		/* 예약상태  */
 		var sList = new Array();
@@ -186,6 +234,11 @@
 				condition=$(obj).attr("id");
 			}			
 		});
+		/* 페이지 인덱스 */
+		var index = $("#pageIndex").val();
+		if(index==null || index==undefined){
+			index = "1";
+		}
 		/* 예약자명 */
 		var memName = $("#memName").val();
 		$.ajax({
@@ -193,14 +246,15 @@
 			type:"post",
 			timeout:30000,
 			dataType:"json",
-			data:{"type":"setTable","cdState":bkState,"strId":strId,"strNo":strNo, "start":start, "end":end, "condition":condition,"memName":memName},
+			data:{"type":"setTable","cdState":bkState,"strId":strId,"strNo":strNo, "start":start, "end":end, "condition":condition,"memName":memName, "index":index},
 			success:function(data){
 				console.log(data);
-				setTable(data);					
+				setTable(data);	
+				setPageIndex(data);
 			} 
 		}); 
 	}//화면구성함수
-	
+	/* ajax를 통해 가져온 data로 table 구성 */
 	function setTable(data){
 		stateList = new Array();
 		var totalPrice = 0;
@@ -237,7 +291,7 @@
 		$("#bkTable").append(tableForm);
 		setState(stateList);
 	}//table 구성 함수 
-	
+	/* table 내 예약 상태 comboBox value 정하는 함수 */
 	function setState(stateList){		
 		$(".bkState").each(function(i, obj) {
 			$(obj).val(stateList[i]);
@@ -259,6 +313,7 @@
 	<!-- 기간별(시작날짜|끝날짜가 그 달일 때), 상태별, 시설별로 관리자가 조회 할 수 있도록 bk_check참조하여 만들기 -->
 	<form name="book1" action="booklist.do" method="post">
 		<fieldset>
+			<input type="hidden" name="index" id="pageIndex">
 			<p>
 				조회 기준 : 
 				<input type="radio" name="condition" id="all">전체 내역 보기
@@ -294,7 +349,7 @@
 	</form>
 	<br>
 	<table border="1" id="bkTable"></table>
-
+	<p id="page_index"></p>
 	<%-- <c:choose>
 		<c:when test="${empty bList }">
 			<script type="text/javascript">

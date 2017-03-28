@@ -67,7 +67,7 @@ response.setHeader("pragma","no-cache");
 				<div id="menu_area">
 					<ul>
 						<li><a href="introduce.do">휴양림소개</a></li>
-						<li><a href="book.do">예약안내</a></li>
+						<li><a href="bookinform.do">예약안내</a></li>
 						<li><a href="structure.do">시설현황</a></li>
 						<li><a href="board.do">자유게시판</a></li>
 					</ul>

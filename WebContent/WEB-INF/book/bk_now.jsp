@@ -19,6 +19,7 @@ response.setHeader("pragma","no-cache");
 	#bk_now #server{text-align: right;color: blue;}
 	#bk_now #server #serverTime{width: 110px; float: right;}
 	#bookTable td:HOVER {background:#ecbb5c;}
+	#bk_now .bkIcon{width:15px; height: 15px;}
 </style>
 <script type="text/javascript">	
 	$(function(){	
@@ -210,18 +211,18 @@ response.setHeader("pragma","no-cache");
 				if(bList != undefined){
 					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'>★</a></td>";
+						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약 내역이 존재할 때
 						if((k+1)==bList[index].date){
 							console.log("일치");
 							if(bList[index].state=="입금완료"){
-								dateForm += "<td><a href='#' class='isBooked'>X</a></td>";
+								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 							}else if(bList[index].state=="입금대기"){
-								dateForm += "<td><a href='#' class='isBooked'>△</a></td>";
+								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/booked.png'></a></td>";
 							}
 						}else{
-							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
+							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 						}
 					}
 					if((bList[index+1] != undefined) && (k+1)==bList[index].date){
@@ -230,10 +231,10 @@ response.setHeader("pragma","no-cache");
 				}else{
 					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'>★</a></td>";
+						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
-						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
+						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 					}
 				}							
 			}

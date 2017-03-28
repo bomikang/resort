@@ -9,6 +9,7 @@
 	form[name='searchNotice'] label{color:#43493e;}
 	#srcText{width:200px; height:17px; position:relative; top:-2px;}
 	#btnSearch{width:50px; background:#43493e; padding:5px 0;}
+	#btnSearch:HOVER{color:#43493e; border-color:#43493e; background:#fff;}
 </style>
 <script>
 	$(function(){
@@ -83,37 +84,37 @@
 	function setPageIndex(){
 		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
 		<c:if test="${!empty index }">
-			var indexForm = "<a class='pageIndex' href='notice.do?page=1' title='첫 페이지'>[<<]</a>";
+			var indexForm = "<a class='pageIndex paging_btn' href='notice.do?page=1' title='첫 페이지'><img src='image/paging_left2.png'/></a>";
 			if( ${index.getStart()} > 10 ){
-				indexForm += "<a class='pageIndex' href='notice.do?page=${index.getStart()-10}' title='이전 10페이지'>[<]</a>";
+				indexForm += "<a class='pageIndex paging_btn' href='notice.do?page=${index.getStart()-10}' title='이전 10페이지'><img src='image/paging_left1.png'/></a>";
 			}else{
-				indexForm += "[<]";
+				indexForm += "<a class='paging_btn'><img src='image/paging_left1.png'/></a>";
 			}
 			
 			for(var i = ${index.getStart()}; i <= ${index.getEnd()}; i++){
 				if(i==1){
 					if(i == ${index.getNowIndex() }){
-						indexForm += "<b>"+i+"</b>";
+						indexForm += "<b><a class='paging_btn_num'>"+i+"</a></b>";
 					}else{
-						indexForm += "<a class='pageIndex' href='notice.do?page="+i+"'>"+i+"</a>";	
+						indexForm += "<a class='pageIndex paging_btn_num' href='notice.do?page="+i+"'>"+i+"</a>";	
 					}
 				}else if(i>1){
 					if(i == ${index.getNowIndex() }){
-						indexForm += " | <b>"+i+"</b>";
+						indexForm += " | <b><a class='paging_btn_num'>"+i+"</a></b>";
 					}else{
-						indexForm += " | <a class='pageIndex' href='notice.do?page="+i+"'>"+i+"</a>";
+						indexForm += " | <a class='pageIndex paging_btn_num' href='notice.do?page="+i+"'>"+i+"</a>";
 					}
 				}
 			}
 			
 			
 			if(${index.getEnd()} < ${index.getMaxIndex()}){
-				indexForm += "<a class='pageIndex' href='notice.do?page=${index.getStart()+10}' title='다음 10페이지'>[>]</a>";
+				indexForm += "<a class='pageIndex paging_btn' href='notice.do?page=${index.getStart()+10}' title='다음 10페이지'><img src='image/paging_right1.png'/></a>";
 			}else{
-				indexForm += "[>]";
+				indexForm += "<a class='paging_btn'><img src='image/paging_right1.png'/></a>";
 			}
 			
-			indexForm += "<a class='pageIndex' href='notice.do?page=${index.getMaxIndex()}' title='마지막 페이지'>[>>]</a>";
+			indexForm += "<a class='pageIndex paging_btn' href='notice.do?page=${index.getMaxIndex()}' title='마지막 페이지'><img src='image/paging_right2.png'/></a>";
 			
 			$("#page_index").html(indexForm);
 		</c:if>

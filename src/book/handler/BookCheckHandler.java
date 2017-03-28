@@ -18,6 +18,7 @@ import book.admin.handler.BookListHandler;
 import book.model.Book;
 import book.model.BookDao;
 import jdbc.ConnectionProvider;
+import jdbc.IndexOfPage;
 import jdbc.JdbcUtil;
 import member.model.LoginMemberInfo;
 import member.model.Member;
@@ -110,6 +111,12 @@ public class BookCheckHandler implements CommandHandler {
 				year = cal.get(Calendar.YEAR)+"";
 				month = (cal.get(Calendar.MONTH)+1)+"";
 			}
+			String index = req.getParameter("index");
+			if(index==null){
+				index="1";
+			}else if(index.equals("")){
+				index="1";
+			}
 			Connection conn = null;
 			try{
 				conn= ConnectionProvider.getConnection();
@@ -154,15 +161,11 @@ public class BookCheckHandler implements CommandHandler {
 				mList.sort(null);
 				
 				List<Book>bList = null;
-				System.out.println("condition : "+condition);
-				if(!condition.equalsIgnoreCase("all")){
-					bList =bDao.selectByMemberWithCon(conn, myinfo.getMy_no(), Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(strId), states);
-				}else{
-					Member mem = new Member(myinfo.getMy_id());
-					mem.setNo(myinfo.getMy_no());
-					
-					bList = bDao.selectByMember(conn, mem);
-				}
+				
+				System.out.println("condition : "+condition);	
+				bList =bDao.selectByMemberWithCon(conn, myinfo.getMy_no(), Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(strId), states, condition, Integer.parseInt(index));
+				int maxIndex = bDao.getMaxIndex(conn, myinfo.getMy_no(), Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(strId), states, condition);
+				IndexOfPage indexObj = new IndexOfPage(maxIndex, Integer.parseInt(index));
 				req.setAttribute("bList", bList);
 				
 				//data�� json ���� ����
@@ -171,14 +174,14 @@ public class BookCheckHandler implements CommandHandler {
 				String json = "";				
 				if(!condition.equals("all")){
 					if(Integer.parseInt(strId)==0){
-						json = "["+om.writeValueAsString("전체 시설")+","+om.writeValueAsString(bList)+"]";
+						json = "["+om.writeValueAsString("전체 시설")+","+om.writeValueAsString(bList);
 					}else{
-						json = "["+om.writeValueAsString(str.getNameById())+","+om.writeValueAsString(bList)+"]";
+						json = "["+om.writeValueAsString(str.getNameById())+","+om.writeValueAsString(bList);
 					}
 				}else{//전체 검색일 경우
-					json = "["+om.writeValueAsString("전체 보기")+","+om.writeValueAsString(bList)+"]";
+					json = "["+om.writeValueAsString("전체 보기")+","+om.writeValueAsString(bList);
 				}				
-				
+				json += ","+om.writeValueAsString(indexObj)+"]";
 				res.setContentType("application/json;charset=utf-8");
 				PrintWriter pw = res.getWriter();
 				pw.print(json);

@@ -44,7 +44,52 @@
 			return false;
 		});
 		
+		$(document).on("click",".pageIndex", function(){
+			var index = $(this).attr("index");
+			$("#pageIndex").val(index);
+			setScreen();
+			return false;
+		});
+		
 	});//ready
+	function setPageIndex(data){
+		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
+		var index = data[2];
+		if(index != null){
+			var indexForm = "<a class='pageIndex' href='#' index='1' title='첫 페이지'>[<<]</a>";
+			if(index.start > 10 ){
+				indexForm += "<a class='pageIndex' href='#' index='"+(index.start-10)+"' title='이전 10페이지'>[<]</a>";
+			}else{
+				indexForm += "[<]";
+			}
+			
+			for(var i = index.start; i <= index.end; i++){
+				if(i==1){
+					if(i == index.nowIndex){
+						indexForm += "<b>"+i+"</b>";
+					}else{
+						indexForm += "<a class='pageIndex' href='#' index='"+i+"'>"+i+"</a>";	
+					}
+				}else if(i>1){
+					if(i == index.nowIndex){
+						indexForm += " | <b>"+i+"</b>";
+					}else{
+						indexForm += " | <a class='pageIndex' href='#' index='"+i+"'>"+i+"</a>";
+					}
+				}
+			}
+			
+			if(index.end < index.maxIndex){
+				indexForm += "<a class='pageIndex' href='#' index='"+(index.start+10)+"' title='다음 10페이지'>[>]</a>";
+			}else{
+				indexForm += "[>]";
+			}
+			
+			indexForm += "<a class='pageIndex' href='#' index='"+index.maxIndex+"' title='마지막 페이지'>[>>]</a>";
+			$("#page_index").html(indexForm);
+		}
+	}
+	
 	function setScreen(){
 		var sList = new Array();
 		$("input[name='cdState']").each(function(i, obj) {
@@ -65,17 +110,23 @@
 				condition=$(obj).attr("id");
 			}			
 		});
+		/* 페이지 인덱스 */
+		var index = $("#pageIndex").val();
+		if(index==null || index==undefined){
+			index = "1";
+		}
 		console.log(condition);
 		$.ajax({
 			url:"bookcheck.do",
 			type:"post",
 			timeout:30000,
 			dataType:"json",
-			data:{"cdState":bkState,"strId":strId, "year":year, "month":month, "condition":condition},
+			data:{"cdState":bkState,"strId":strId, "year":year, "month":month, "condition":condition,"index":index},
 			success:function(data){
 				console.log(data);
 				$("#bkCheckRes").html("<span class='bkStrIdName'>"+data[0]+"</span>로 검색한 결과입니다.");
-				setTable(data);					
+				setTable(data);		
+				setPageIndex(data);
 			} 
 		}); 
 	}
@@ -157,6 +208,7 @@
 	<h2>예약 확인 및 취소</h2>
 	<form action="bookcheck.do" method="post" name="book1">
 		<fieldset>
+			<input type="hidden" name="index" id="pageIndex">
 			<p>
 				조회 기준 : 
 				<input type="radio" name="condition" id="all">전체 내역 보기
@@ -270,4 +322,5 @@
 			</c:forEach>
 		</c:if> --%>
 	</table>
+	<p id="page_index"></p>
 </div>

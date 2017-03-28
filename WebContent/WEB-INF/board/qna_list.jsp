@@ -7,6 +7,11 @@
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<style>
+	.pageBtnArea{display:inline-block;}
+	#goFirst, #goLast{width:20px; background:none; border:none;}
+	.paging_btn_num{background:none; border:none; width:18px;}
+</style>
 <script>
 	function createQnaTable(data, $tableName){
 		///////////////////////////////////////////////각 페이지 버튼 눌렀을 때 페이지 분리
@@ -21,7 +26,7 @@
 		/* 페이지번호에 뿌리기 */
 		var aBtn = "";
 		for (var i = 0; i < btnPageNum; i++) {
-			aBtn += "<button>"+ (i+1) +"</button>";
+			aBtn += "<button class='paging_btn_num'>"+ (i+1) +"</button>";
 		}
 		$(".pageBtnArea").html(aBtn);
 		
@@ -29,17 +34,22 @@
 		var tableItem = "<tr>";
 			tableItem += "<th>번호</th><th>제목</th><th>등록일</th><th>작성자</th><th>답변여부</th>";
 			tableItem += "</tr>";
-			for (var i = 0; i < listSize; i++) {
-				if (i > 9) {
-					break;
+			if (listSize < 1) {
+				tableItem += "<tr><td colspan='5'>게시물이 없습니다.</td></tr>";
+			}
+			else{
+				for (var i = 0; i < listSize; i++) {
+					if (i > 9) {
+						break;
+					}
+					tableItem += "<tr>";
+					tableItem += "<td>"+ data[i].no +"</td>"; //번호
+					tableItem += "<td><a href='qnadetail.do?qnano="+ data[i].no +"'>"+ data[i].title +"</a></td>"; //제목
+					tableItem += "<td>"+ data[i].regDateNoTimeForm +"</td>"; //등록일
+					tableItem += "<td>"+ data[i].member.id +"</td>";
+					tableItem += "<td>"+ data[i].stringReply +"</td>";
+					tableItem += "</tr>";
 				}
-				tableItem += "<tr>";
-				tableItem += "<td>"+ data[i].no +"</td>"; //번호
-				tableItem += "<td><a href='qnadetail.do?qnano="+ data[i].no +"'>"+ data[i].title +"</a></td>"; //제목
-				tableItem += "<td>"+ data[i].regDateNoTimeForm +"</td>"; //등록일
-				tableItem += "<td>"+ data[i].member.id +"</td>";
-				tableItem += "<td>"+ data[i].stringReply +"</td>";
-				tableItem += "</tr>";
 			}
 		$($tableName).html(tableItem);
 		
@@ -62,14 +72,18 @@
 				var tableItem = "<tr>";
 					tableItem += "<th>번호</th><th>제목</th><th>등록일</th><th>작성자</th><th>답변여부</th>";
 					tableItem += "</tr>";
-				for (var a = minSize; a < maxSize; a++) {
-					tableItem += "<tr>";
-					tableItem += "<td>"+ data[a].no +"</td>"; //번호
-					tableItem += "<td><a href='qnadetail.do?qnano="+ data[a].no +"'>"+ data[a].title +"</a></td>"; //제목
-					tableItem += "<td>"+ data[a].regDateNoTimeForm +"</td>"; //등록일
-					tableItem += "<td>"+ data[a].member.id +"</td>";
-					tableItem += "<td>"+ data[a].stringReply +"</td>";
-					tableItem += "</tr>";
+				if (listSize < 1) {
+					tableItem += "<tr><td colspan='5'>게시물이 없습니다.</td></tr>";
+				}else{
+					for (var a = minSize; a < maxSize; a++) {
+						tableItem += "<tr>";
+						tableItem += "<td>"+ data[a].no +"</td>"; //번호
+						tableItem += "<td><a href='qnadetail.do?qnano="+ data[a].no +"'>"+ data[a].title +"</a></td>"; //제목
+						tableItem += "<td>"+ data[a].regDateNoTimeForm +"</td>"; //등록일
+						tableItem += "<td>"+ data[a].member.id +"</td>";
+						tableItem += "<td>"+ data[a].stringReply +"</td>";
+						tableItem += "</tr>";
+					}
 				}
 				$tableName.html(tableItem);
 			});
@@ -135,7 +149,7 @@
 			</c:if>
 			<c:if test="${qnaList.size() > 0}">
 				<span id="memNum" style="display:none;">0</span><!-- 일반 회원은 0번으로 보냄 <= ajax사용하기 위함 -->
-				<table style="width:500px; text-align:center;" id="mem_table"></table>
+				<table id="mem_table"></table>
 			</c:if>
 		</c:if>
 		
@@ -150,17 +164,15 @@
 			</c:if>
 			<c:if test="${qnaList.size() > 0}">
 				<span id="memNum" style="display:none;">1</span><!-- 관리자는 1번으로 보냄 <= ajax사용하기 위함 -->
-				<table id="admin_table" style="width:500px; text-align:center;"></table>
+				<table id="admin_table"></table>
 			</c:if>
 		</c:if>
 	</c:if>
 	
 	<div class="pageDivArea">
-		<button id="goFirst"> << </button>
+		<button id="goFirst"class='paging_btn'><img src="image/paging_left2.png" alt="" /></button>
 		<div class='pageBtnArea'></div>
-		<button id="goLast"> >> </button>
+		<button id="goLast"class='paging_btn'><img src="image/paging_right2.png" alt="" /></button>
 	</div>
-	
-	<table id="testArea"></table>
 </body>
 </html>
