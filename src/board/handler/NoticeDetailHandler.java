@@ -37,7 +37,10 @@ public class NoticeDetailHandler implements CommandHandler{
 				}else{
 					NoticeDetailDao ndDao = NoticeDetailDao.getInstance();
 					NoticeDetail detail = ndDao.selectDetailByNo(conn, notice.getNo());
-					
+					System.out.println("detail : "+detail.getDetail());
+					detail.setDetail(detail.getDetail().replaceAll("`", "'"));
+					detail.setDetail(detail.getDetail().replaceAll("\r\n", "<br>"));
+					detail.setDetail(detail.getDetail().replaceAll("\u0020", "$nbsp;"));
 					req.setAttribute("index", index);
 					req.setAttribute("notice", notice);
 					req.setAttribute("detail", detail);

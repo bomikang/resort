@@ -27,7 +27,10 @@ public class NoticeInsertHandler implements CommandHandler{
 			if(writer != null && writer.getIsMng()==true){
 				String title = req.getParameter("title");
 				String detail = req.getParameter("detail");
+				
+				detail = detail.replaceAll("'", "`");// 특수문자(' -> `)처리
 				String real = req.getParameter("real");
+				System.out.println("detail : "+detail);
 				System.out.println("real : "+real);
 				boolean realNotice = false;
 				
@@ -57,6 +60,7 @@ public class NoticeInsertHandler implements CommandHandler{
 					res.sendRedirect("notice.do?page=1");
 				}catch (Exception e) {
 					conn.rollback();
+					e.printStackTrace();
 				}finally {
 					JdbcUtil.close(conn);
 				}

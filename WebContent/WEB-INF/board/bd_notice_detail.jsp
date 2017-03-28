@@ -6,6 +6,8 @@
 </style>
 <script>
 	$(function(){
+		$("#detail").html("${detail.detail }");
+	
 		$("#btnBack").click(function(){
 			location.href="notice.do?page=${index}";
 		});
@@ -49,7 +51,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" id="detail">
-						${detail.detail }
+						<!-- 공지사항 내용부분 -->
 					</td>
 				</tr>
 			</c:if>

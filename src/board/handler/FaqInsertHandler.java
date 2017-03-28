@@ -25,7 +25,7 @@ public class FaqInsertHandler implements CommandHandler{
 			if(admin != null && admin.getIsMng() == true){
 				String title = req.getParameter("title");
 				String detail = req.getParameter("detail");
-				
+				detail = detail.replaceAll("'", "`");
 				Connection conn = null;
 				try{
 					conn = ConnectionProvider.getConnection();
