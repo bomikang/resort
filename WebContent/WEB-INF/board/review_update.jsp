@@ -10,6 +10,19 @@
 
 </head>
 <body>
-
+	<form action ="rev_update.do" method = "post">
+		<input type="hidden" name="no" value="${rev.rev_no }">
+		<p>
+			<label>제목</label>
+			<input type="text" name="title" value="${rev.rev_title }">
+		</p>
+		<p>
+			<label>내용</label>
+			<textarea rows="10" cols="30" name="content">${rev_Detail.rev_detail }</textarea>
+		</p>
+		<p>
+			<input type="submit" value="등록">
+		</p>
+	</form>
 </body>
 </html>
