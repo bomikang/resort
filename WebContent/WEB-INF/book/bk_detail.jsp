@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 	#bk_detail #warning{color:orange;}
+	.book_detail_table{width:800px; margin: 0 auto;}
+	.book_detail_table th{width:20%;}
 </style>
 <script>
 	$(function(){
@@ -42,7 +44,7 @@
 			</span>
 		</c:if>
 		<h4>[예약자 정보]</h4>
-		<table border="1">
+		<table class='book_detail_table'>
 			<tr>
 				<th>예약 번호</th>
 				<td>${book.no }</td>
@@ -62,7 +64,7 @@
 		</table>
 		<br>
 		<h4>[시설 정보]</h4>
-		<table border="1">
+		<table class='book_detail_table'>
 			<tr>
 				<th>시설 명</th>
 				<td>${book.str.nameById } ${book.str.name }</td>
@@ -102,8 +104,10 @@
 					<c:otherwise>
 						<form action="bookcancel.do" method="post" class="bkcancel">
 							<input type="hidden" value="${book.no }" name="bkNo">
-							<input type="submit" value="취소하기">
-							<button type="button" id="btnBack">돌아가기</button>
+							<p class="act_btn_area">
+								<input type="submit" value="취소하기">
+								<button type="button" id="btnBack">돌아가기</button>
+							</p>
 						</form>	
 					</c:otherwise>
 				</c:choose>

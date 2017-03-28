@@ -25,7 +25,7 @@ public class FaqHandler implements CommandHandler {
 				for(Faq f:fList){
 					f.setDetail(f.getDetail().replaceAll("`", "'"));
 					f.setDetail(f.getDetail().replaceAll("\r\n", "<br>"));
-					f.setDetail(f.getDetail().replaceAll("\u0020", "$nbsp;"));
+					f.setDetail(f.getDetail().replaceAll("\u0020", "&nbsp;"));
 				}
 				req.setAttribute("fList", fList);
 			}finally {

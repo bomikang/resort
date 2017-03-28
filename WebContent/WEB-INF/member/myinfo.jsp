@@ -173,10 +173,10 @@
 			  
 			  <c:if test="${!empty user_info }">
 				<c:if test="${user_info.isMng==true }">
+
 					$("#main button").css("display", "none");
 				</c:if>
 			</c:if>	 
-	
 	});	
 </script>
 </head>
@@ -185,7 +185,9 @@
 	<div id="main">
 		<div id="header">
 			<h1>회원정보</h1>
-				<p>${info.id }님의 연락처 정보입니다.</p>
+
+				<p><b>${info.id }님</b>의 연락처 정보입니다.</p>
+
 				
 				<p>회원정보는 개인정보처리방침에 따라 안전하게 보호되며, 회원님의 명백한 동의 없이 공개 또는 제 3자에게 제공되지 않습니다.
 					 개인정보처리방침</p>

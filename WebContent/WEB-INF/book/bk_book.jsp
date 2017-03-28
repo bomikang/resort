@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+	.book_book_table, .book_mem_info_table{width:800px; margin:0 auto;}
+	.book_book_table th, .book_mem_info_table th{width:120px;}
+	.book_book_table td, .book_mem_info_table td{text-align: left; padding-left:10px;}
+	select{width:133px; text-align: center; padding:6px 0;}
+	input[type='text'], input[type='date']{width:120px;}
+	.book_mem_info_table #email_input{width:245px;}
+</style>
 <script>
 	var reg_tel1 = /^\d{3,4}$/; 
 	var reg_tel2 = /^\d{4}$/; 
@@ -180,7 +188,7 @@
 		<input type="hidden" value="${user_info.my_no }" name="memNo">
 		
 		<h4>예약 객실</h4>
-		<table border="1">
+		<table class='book_book_table'>
 			<tr>
 				<th>객실명</th>
 				<td>${str.name }</td>
@@ -216,7 +224,7 @@
 		<!-- 고객정보  -->
 		<h4>고객 정보</h4>
 		
-		<table border="1">
+		<table class='book_mem_info_table'>
 			<tr>
 				<th>예약자명</th>
 				<td><input type="text" readonly="readonly" disabled="disabled" required="required" value="${user_info.my_name }"></td>
@@ -238,13 +246,16 @@
 				<tr>
 				<th>메일주소</th>
 				<td>
-					<input type="text" readonly="readonly" value="${user_info.my_mail }">					
+					<input type="text" readonly="readonly" value="${user_info.my_mail }"  id="email_input">					
 				</td>
 				<tr>
 			</tr>
 		</table>
-		<button type="button" id="btnBook" disabled="disabled">예약하기</button>
-		<button type="button" id="btnBack">취소하기</button> 
+		<p class="act_btn_area">
+			<button type="button" id="btnBook" disabled="disabled">예약하기</button>
+			<button type="button" id="btnBack">취소하기</button>
+			<a href="book.do" class='moving_btn'>돌아가기</a>
+		</p> 
 	</form>
-	<a href="book.do">[돌아가기]</a>
+	
 </div>

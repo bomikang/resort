@@ -29,7 +29,8 @@
 	}//checkEmptyAdmin
 	
 	$(function(){
-		//textArea뿌리기
+		//textArea뿌리기(관리자)
+		//<br>로 넘어오는 값을 '\r'로 변경해 textarea에서 enter값이 먹도록 한다.
 		var adminTextArea = "${qnaAdmin.content}";
 		if (adminTextArea != "") {
 			var adminTextAreaArr = adminTextArea.split("<br>");
@@ -39,7 +40,7 @@
 			}
 			$("#adminContent").val(realAdminTextArea);
 		}
-		
+		//textArea뿌리기(회원)
 		var memTextArea = "${qna.content}";
 		if (memTextArea != "") {
 			var memTextAreaArr = memTextArea.split("<br>");
@@ -116,6 +117,14 @@
 		$("#btnDelete").click(function() {
 			showConfirm("정말 삭제하시겠습니까?", "qnadelete.do", "memberForm");
 		});
+		
+
+		/* disabled버튼 구분 */
+		/* $("input[type='submit']").each(function(i, obj) {
+			if ($(obj).attr("disabled") == "disabled") {
+				$(obj).css("background","gray");
+			}
+		}); */
 	});//ready
 </script>
 </head>
