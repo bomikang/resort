@@ -47,6 +47,8 @@ public class QnaInsertHandler implements CommandHandler {
 				Member member = memberDao.selectByNo(con, memInfo.getMy_no());
 				
 				QnaDao qnaDao = QnaDao.getInstance();
+				
+				content = content.replaceAll("'", "`");
 				Qna qna = new Qna(0, member, title, new Date(), article, content, false);
 				qnaDao.insertQna(con, qna);
 				

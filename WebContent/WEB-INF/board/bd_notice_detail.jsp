@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 	#notice_table td{text-align: left; padding-left:10px;} 
+	#notice_table #td_writed_date{border-right:none;}
+	#notice_table #td_writed_man{border-left:none;}
 </style>
 <script>
 	$(function(){
@@ -44,11 +46,11 @@
 					</th>
 				</tr>
 				<tr>
-					<td>작성일자 : ${notice.regDateTimeForm }</td>
-					<td>작성자 : ${notice.writer.my_name } / 조회수 : ${notice.readCnt }</td>
+					<td id="td_writed_date">작성일자 : ${notice.regDateTimeForm }</td>
+					<td id="td_writed_man">작성자 : ${notice.writer.my_name } / 조회수 : ${notice.readCnt }</td>
 				</tr>
 				<tr>
-					<td colspan="2" id="detail">
+					<td colspan="2">
 						${detail.detail }
 					</td>
 				</tr>

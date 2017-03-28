@@ -9,6 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <style>
 	.pageBtnArea{display:inline-block;}
+	.pageDivArea{text-align: center;}
 	#goFirst, #goLast{width:20px; background:none; border:none;}
 	.paging_btn_num{background:none; border:none; width:18px;}
 	#incomp_list, #comp_list{width:150px; margin-bottom:20px;}

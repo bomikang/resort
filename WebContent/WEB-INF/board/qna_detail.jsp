@@ -29,6 +29,28 @@
 	}//checkEmptyAdmin
 	
 	$(function(){
+		//textArea뿌리기
+		var adminTextArea = "${qnaAdmin.content}";
+		if (adminTextArea != "") {
+			var adminTextAreaArr = adminTextArea.split("<br>");
+			var realAdminTextArea = "";
+			for (var i = 0; i < adminTextAreaArr.length; i++) {
+				realAdminTextArea += adminTextAreaArr[i]+"\r"; 
+			}
+			$("#adminContent").val(realAdminTextArea);
+		}
+		
+		var memTextArea = "${qna.content}";
+		if (memTextArea != "") {
+			var memTextAreaArr = memTextArea.split("<br>");
+			var realMemTextArea = "";
+			for (var i = 0; i < memTextAreaArr.length; i++) {
+				realMemTextArea += memTextAreaArr[i]+"\r";
+			}
+			$("#memContent").val(realMemTextArea);
+		}
+		
+		
 		checkEmptyAdmin();//답변 존재 여부 함수 호출
 		
 		/* <관리자> */
@@ -47,7 +69,7 @@
 			//'확인'일 떼 return false
 			if ( check ) { 
 				$("form[name='adminForm']").css("display", "none");
-				$("form[name='adminForm']").reset(); //관리자 form 초기화
+				$("form[name='adminForm']").find("textarea").val(""); //관리자 form 초기화
 				return false;
 			}
 		});
@@ -79,7 +101,7 @@
 				$(this).val("삭제");
 				$("#btnUpdateAdminQna").val("수정");
 				$("#btnDeleteAdminQna").next("input").css("display", "inline-block");
-				$("#adminContent").val("${qnaAdmin.content}"); //기본 내용으로 되돌리기
+				$("#adminContent").val(); //기본 내용으로 되돌리기
 				$("#adminContent").attr("readonly", "readonly") //readonly 재설정
 				return false;
 			}else if($(this).val() == "삭제"){
@@ -115,7 +137,7 @@
 			</p>
 			<p>
 				<label for="">내용</label>
-				<textarea name="content" readonly="readonly">${qna.content}</textarea>
+				<textarea name="content" readonly="readonly" id="memContent"></textarea><!-- jquery에서 불러옴 -->
 			</p>
 			<p class='act_btn_area'>
 				<input type="hidden" name="qnano" value="${qna.no}" /><!-- 게시물 번호 hidden으로 심기 -->
@@ -167,7 +189,7 @@
 			<c:if test="${!empty qnaAdmin}">
 				<p>
 					<label for="">내용</label>
-					<textarea name="content" readonly="readonly" id="adminContent" required="required">${qnaAdmin.content}</textarea>
+					<textarea name="content" readonly="readonly" id="adminContent" required="required"></textarea>
 				</p>
 				
 				<!-- 로그인 상태면서 관리자 -->

@@ -64,6 +64,7 @@ select{border:1px solid #3e5c28; padding:5px; font-size:13px;}
 table{border-top:4px solid #3e5c28; border-bottom:4px solid #3e5c28; width:100%; border-collapse:collapse; }
 th, td{border:1px solid #96c277; padding:7px 2px; font-size: 14px; text-align: center;}
 th{background:#dfeed3;}
+td a{font-weight: bold;}
 
 
 a.moving_btn{display:inline-block; text-align:center; width:100px; font-size:15px; font-weight:bold; padding:6px 0; background-color:#945b01; color:#fff; border:1px solid #fff; }

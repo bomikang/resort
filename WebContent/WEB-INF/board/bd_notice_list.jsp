@@ -204,8 +204,7 @@
 		</c:if>
 	</c:if>
 	
-	<p id="page_index">
-	</p>
+	<p id="page_index"></p>
 	<!-- <form action="faqdelete.do" method="post" id="delete">
 		<input type="hidden" name="numbers" id="numbers">
 	</form>	 -->

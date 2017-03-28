@@ -24,6 +24,16 @@
 	}//checkRegExr
 	
 	$(function(){
+		var memTextArea = "${qna.content}";
+		if (memTextArea != "") {
+			var memTextAreaArr = memTextArea.split("<br>");
+			var realMemTextArea = "";
+			for (var i = 0; i < memTextAreaArr.length; i++) {
+				realMemTextArea += memTextAreaArr[i]+"\r";
+			}
+			$("#memContent").val(realMemTextArea);
+		}
+		
 		checkRegExr($("input[name='title']"), 50);
 		checkRegExr($("textarea[name='content']"), 400);
 		
@@ -63,7 +73,7 @@
 			</p>
 			<p>
 				<label for="">내용</label>
-				<textarea name="content" required="required">${qna.content }</textarea>
+				<textarea name="content" required="required" id="memContent"></textarea>
 				<span class="err">더 이상 입력이 불가능 합니다.</span>
 			</p>
 			<p>

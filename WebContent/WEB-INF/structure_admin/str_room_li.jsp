@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <style>
 	.pageBtnArea{display:inline-block;}
+	.pageDivArea{text-align: center;}
 	#goFirst, #goLast{width:20px; background:none; border:none;}
 	.paging_btn_num{background:none; border:none; width:18px;}
 </style>

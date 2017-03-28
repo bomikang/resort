@@ -27,7 +27,7 @@
 	.bigImage{text-align: center; padding-top:20px;}
 	.bigImage img{max-width:610px; max-height:410px; min-height:410px;box-shadow: 0px 0px 10px 5px gray;}
 	#room_name .go_book{width:130px;}
-	
+	.str_people_btn a{margin:5px 10px;}
 </style>
 <script>
 	/* bxSlider 적용 함수 */
@@ -139,9 +139,11 @@
 	</c:if>
 	<c:if test="${strList.size() > 0}">
 		<c:if test="${param.houseId == 1 or param.houseId == null}"> <!-- 숲속의 집 -->
-			<a href="structure.do?people=4">4인실</a>
-			<a href="structure.do?people=6">6인실</a>
-			<a href="structure.do?people=8">8인실</a>
+			<p class='str_people_btn'>
+				<a href="structure.do?people=4">4인실</a>
+				<a href="structure.do?people=6">6인실</a>
+				<a href="structure.do?people=8">8인실</a>
+			</p>
 			<ul class="room_menu">
 				<c:forEach var="rooms" items="${strList}">
 					<li><button>${rooms.name}<span class="str_no" style="display:none;">${rooms.no}</span></button></li>
@@ -149,9 +151,11 @@
 			</ul>
 		</c:if>
 		<c:if test="${param.houseId == 2}">
-			<a href="structure.do?people=4&houseId=2">4인실</a>
-			<a href="structure.do?people=8&houseId=2">8인실</a>
-			<a href="structure.do?people=17&houseId=2">17인실</a>
+			<p class='str_people_btn'>
+				<a href="structure.do?people=4&houseId=2" class='structure_people_btn'>4인실</a>
+				<a href="structure.do?people=8&houseId=2" class='structure_people_btn'>8인실</a>
+				<a href="structure.do?people=17&houseId=2" class='structure_people_btn'>17인실</a>
+			</p>
 		</c:if>
 		<p class="bigImage">
 			<!-- bigImage -->

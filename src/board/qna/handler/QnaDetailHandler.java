@@ -24,10 +24,19 @@ public class QnaDetailHandler implements CommandHandler {
 
 			QnaDao dao = QnaDao.getInstance();
 			Qna qna = dao.getQnaByNo(con, qnaNo); //회원의 게시글
+			qna.setContent(qna.getContent().replaceAll("`", "'"));
+			qna.setContent(qna.getContent().replaceAll("\r\n", "<br>"));
+			qna.setContent(qna.getContent().replaceAll("u0020", "$nbsp;"));
+			
 			Qna qnaFromAdmin = dao.getQnaFromAdmin(con, qnaNo); //관리자 게시글
 			
 			req.setAttribute("qna", qna);
-			if (qnaFromAdmin != null) req.setAttribute("qnaAdmin", qnaFromAdmin); //관리자 게시글이 존재하면 심어줌
+			if (qnaFromAdmin != null) {
+				qnaFromAdmin.setContent(qnaFromAdmin.getContent().replaceAll("`", "'"));
+				qnaFromAdmin.setContent(qnaFromAdmin.getContent().replaceAll("\r\n", "<br>"));
+				qnaFromAdmin.setContent(qnaFromAdmin.getContent().replaceAll("u0020", "$nbsp;"));
+				req.setAttribute("qnaAdmin", qnaFromAdmin); //관리자 게시글이 존재하면 심어줌
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
