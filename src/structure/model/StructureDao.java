@@ -189,6 +189,22 @@ public class StructureDao {
 		return structure;
 	}
 	
+	/*delete structure*/
+	public void deletetStructure(Connection con, int strNo){
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = con.prepareStatement("delete from structure where str_no = ?");
+			pstmt.setInt(1, strNo);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
 	//method
 	private Structure createStructure(ResultSet rs) throws SQLException {
 		int no = rs.getInt("str_no");

@@ -2,14 +2,14 @@
 <style>
 	#bk_notice{font-size: 14px;}
 	#bk_notice #toReserve{width:100%; text-align: right;}
-	#bk_notice #toReserve a{padding:5px; border:1px solid black; text-decoration: none; font-weight: bold;}
+	#bk_notice #toReserve a{width:130px;}
 	#bk_notice .noticeRed{color:red;}
 	#bk_notice .noticeRed dt{font-weight: bold; color:black !important;}
 </style>
 <!-- 옥성 자연 휴양림 참조 -->
 <div id="bk_notice">
 	<div id="toReserve">
-		<a href="book.do">예약하러 가기</a>
+		<a href="book.do" class='moving_btn'>예약하러 가기</a>
 	</div>
 	<dl>
 		<dt>

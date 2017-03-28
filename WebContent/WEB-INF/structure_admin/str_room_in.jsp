@@ -10,7 +10,8 @@
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <style>
-	.error, .error_reg{display : none; color:red; font-size: 12px;}
+	.error{display:none;}
+	.error_reg{diplay:none;}
 </style>
 <script>
 	//시설이름이 체크되어 있으면 그 value값을 리턴
@@ -105,14 +106,12 @@
 <body>
 	<form action="structureUpload.do" method="post" enctype="multipart/form-data" name="f1">
 		<fieldset>
-			<legend>숙박 시설 등록</legend>
-			
 			<p>
 				<label for="">시설 이름</label><br />
-				<input type="radio" name="strId" value="1" />숲속의집
-				<input type="radio" name="strId" value="2" />산림휴양관
-				<input type="radio" name="strId" value="3" />캐라반
-				<input type="radio" name="strId" value="4" />돔하우스
+				<input type="radio" name="strId" value="1" /><span>숲속의집</span>
+				<input type="radio" name="strId" value="2" /><span>산림휴양관</span>
+				<input type="radio" name="strId" value="3" /><span>캐라반</span>
+				<input type="radio" name="strId" value="4" /><span>돔하우스</span>
 				<span class="error">시설 이름을 선택해주세요.</span>
 			</p>
 			

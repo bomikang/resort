@@ -85,19 +85,22 @@
 		<form action="noticeinsert.do" method="post" name="addNotice">
 			<fieldset>
 				<p>
-					<label for="title">제목 : </label>
+					<label for="title">제목</label>
 					<input type="text" required="required" name="title" id="title">
 				</p>
+				
 				<p>
-					<label for="real">공지여부 : </label>
-					<input type="checkbox" name="real" id="real">
-				</p>
-				<p>
-					<label for="detail">내용 : </label>
+					<label for="detail">내용</label><br />
 					<textarea rows="" cols="" name="detail" id="detail"></textarea>
 				</p>
-				<button type="button" id="btnAdd">등  록</button>
-				<button type="button" id="btnBack">취  소</button>
+				<p>
+					<label for="real">공지여부</label>
+					<input type="checkbox" name="real" id="real">
+				</p>
+				<p class='act_btn_area'>
+					<button type="button" id="btnAdd">등  록</button>
+					<button type="button" id="btnBack">취  소</button>
+				</p>
 			</fieldset>
 		</form>
 	</c:if>
@@ -108,11 +111,15 @@
 				<input type="hidden" name="nNo" value="${notice.no }">
 				<input type="hidden" name="index" value="${index}">
 				<p>
-					<label for="title">제목 : </label>
+					<label for="title">제목</label>
 					<input type="text" required="required" name="title" id="title" value="${notice.title }">
 				</p>
 				<p>
-					<label for="real">공지여부 : </label>
+					<label for="detail">내용</label>
+					<textarea rows="" cols="" name="detail" id="detail">${detail.detail }</textarea>
+				</p>
+				<p>
+					<label for="real">공지여부</label>
 					<c:if test="${notice.isState()==true }">
 						<input type="checkbox" name="real" id="real" checked="checked">
 					</c:if>
@@ -120,13 +127,11 @@
 						<input type="checkbox" name="real" id="real">
 					</c:if>
 				</p>
-				<p>
-					<label for="detail">내용 : </label>
-					<textarea rows="" cols="" name="detail" id="detail">${detail.detail }</textarea>
+				<p class='act_btn_area'>
+					<button type="button" id="btnUpd">수  정</button>
+					<button type="button" id="btnDel">삭  제</button>
+					<button type="button" id="btnBack">취  소</button>
 				</p>
-				<button type="button" id="btnUpd">수  정</button>
-				<button type="button" id="btnDel">삭  제</button>
-				<button type="button" id="btnBack">취  소</button>
 			</fieldset>
 		</form>
 	</c:if>

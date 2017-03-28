@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-	#notice_detail #btns{width:100%; text-align: right;}
+	#notice_table td{text-align: left; padding-left:10px;} 
 </style>
 <script>
 	$(function(){
@@ -32,11 +32,11 @@
 	});//ready
 </script>
 <div id="notice_detail">
-	<table border="1">
+	<table id="notice_table">
 		<c:if test="${!empty notice }">
 			<c:if test="${!empty detail }">
 				<tr>
-					<th colspan="3">
+					<th colspan="2">
 						<c:if test="${notice.isState()==true }">
 							<b>[공지]</b>
 						</c:if>
@@ -44,19 +44,18 @@
 					</th>
 				</tr>
 				<tr>
-					<td></td>
 					<td>작성일자 : ${notice.regDateTimeForm }</td>
-					<td>작성자 : ${notice.writer.my_name } 조회수 : ${notice.readCnt }</td>
+					<td>작성자 : ${notice.writer.my_name } / 조회수 : ${notice.readCnt }</td>
 				</tr>
 				<tr>
-					<td colspan="3">
+					<td colspan="2" id="detail">
 						${detail.detail }
 					</td>
 				</tr>
 			</c:if>
 		</c:if>	
 	</table>
-	<p id="btns">
+	<p id="btns" class='act_btn_area'>
 		<c:if test="${!empty user_info }">
 			<c:if test="${user_info.isMng==true }">
 				<button id="btnUpd">수정</button>

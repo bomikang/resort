@@ -18,6 +18,7 @@ response.setHeader("pragma","no-cache");
 	#bk_now #bookTable .sat{color: blue;}
 	#bk_now #server{text-align: right;color: blue;}
 	#bk_now #server #serverTime{width: 110px; float: right;}
+	#bookTable td:HOVER {background:#ecbb5c;}
 	#bk_now .bkIcon{width:15px; height: 15px;}
 </style>
 <script type="text/javascript">	
@@ -180,7 +181,7 @@ response.setHeader("pragma","no-cache");
 			last[1]=29;
 		}
 		
-		var dateForm = "<table border='1'><tr><th></th>";
+		var dateForm = "<table><tr><th></th>";
 		
 		for(var i=0;i<last[m];i++){
 			date.setDate(i+1);
@@ -260,7 +261,7 @@ response.setHeader("pragma","no-cache");
 	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
 	<h2 id="bkTable"></h2>
 	<p>
-		시설 이름 : 
+		<label for="">시설 이름 : </label> 
 		<select id="bkStrId">
 			<c:forEach items="${strId }" var="str">
 				<option value="${str.id }">${str.nameById }</option>

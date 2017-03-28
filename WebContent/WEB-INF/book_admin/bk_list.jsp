@@ -117,36 +117,36 @@
 		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
 		var index = data[2];
 		if(index != null){
-			var indexForm = "<a class='pageIndex' href='#' index='1' title='첫 페이지'>[<<]</a>";
+			var indexForm = "<a class='pageIndex paging_btn' href='#' index='1' title='첫 페이지'><img src='image/paging_left2.png'/></a>";
 			if(index.start > 10 ){
-				indexForm += "<a class='pageIndex' href='#' index='"+(index.start-10)+"' title='이전 10페이지'>[<]</a>";
+				indexForm += "<a class='pageIndex paging_btn' href='#' index='"+(index.start-10)+"' title='이전 10페이지'><img src='image/paging_left1.png'/></a>";
 			}else{
-				indexForm += "[<]";
+				indexForm += "<a class='paging_btn'><img src='image/paging_left1.png'/></a>";
 			}
 			
 			for(var i = index.start; i <= index.end; i++){
 				if(i==1){
 					if(i == index.nowIndex){
-						indexForm += "<b>"+i+"</b>";
+						indexForm += "<b><a class='paging_btn_num'>"+i+"</a></b>";
 					}else{
-						indexForm += "<a class='pageIndex' href='#' index='"+i+"'>"+i+"</a>";	
+						indexForm += "<a class='pageIndex paging_btn_num' href='#' index='"+i+"'>"+i+"</a>";	
 					}
 				}else if(i>1){
 					if(i == index.nowIndex){
-						indexForm += " | <b>"+i+"</b>";
+						indexForm += " | <b><a class='paging_btn_num'>"+i+"</a></b>";
 					}else{
-						indexForm += " | <a class='pageIndex' href='#' index='"+i+"'>"+i+"</a>";
+						indexForm += " | <a class='pageIndex paging_btn_num' href='#' index='"+i+"'>"+i+"</a>";
 					}
 				}
 			}
 			
 			if(index.end < index.maxIndex){
-				indexForm += "<a class='pageIndex' href='#' index='"+(index.start+10)+"' title='다음 10페이지'>[>]</a>";
+				indexForm += "<a class='pageIndex paging_btn' href='#' index='"+(index.start+10)+"' title='다음 10페이지'><img src='image/paging_right1.png'/></a>";
 			}else{
-				indexForm += "[>]";
+				indexForm += "<a class='paging_btn'><img src='image/paging_right1.png'/></a>";
 			}
 			
-			indexForm += "<a class='pageIndex' href='#' index='"+index.maxIndex+"' title='마지막 페이지'>[>>]</a>";
+			indexForm += "<a class='pageIndex paging_btn' href='#' index='"+index.maxIndex+"' title='마지막 페이지'><img src='image/paging_right2.png'/></a>";
 			$("#page_index").html(indexForm);
 		}
 	}
