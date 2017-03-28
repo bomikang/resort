@@ -77,7 +77,6 @@ fieldset{
 		</div>
 		
 		</form>
-		<a href="loginsearch.do?key=id">아이디</a>/<a href="loginsearch.do?key=password">비밀번호 찾기</a>
 	</div>
 </body>
 </html>
