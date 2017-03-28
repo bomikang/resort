@@ -57,8 +57,8 @@ public class ReviewDao {
 	public void insert(Connection conn, Review rev) throws SQLException{
 		PreparedStatement pstmt = null;
 		try{
-			String sql ="insert into review(rev_no,rev_mem,rev_title,rev_name,rev_regdate,rev_readcnt)" 
-						+"values(?,?,?,?,?,?)";
+			String sql ="insert into review(rev_no,rev_mem,rev_title,rev_name,rev_regdate,rev_readcnt,rev_replycnt)" 
+						+"values(?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, rev.getRev_no());
 			pstmt.setInt(2,rev.getRev_mem());
@@ -66,6 +66,7 @@ public class ReviewDao {
 			pstmt.setString(4,rev.getRev_name());
 			pstmt.setTimestamp(5,new Timestamp(rev.getRev_regdate().getTime()));
 			pstmt.setInt(6,rev.getRev_readcnt());
+			pstmt.setInt(7, rev.getRev_replycnt());
 			pstmt.executeUpdate();
 		}finally{
 			JdbcUtil.close(pstmt);

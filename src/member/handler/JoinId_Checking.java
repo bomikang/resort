@@ -30,8 +30,7 @@ public class JoinId_Checking implements CommandHandler {
 				MemberDao dao = MemberDao.getInstance();  
 				List<Member> mem = dao.listNo(conn);
 				if(mem.isEmpty()){
-					result ="ok"; 
-							
+					result ="ok"; 			
 				}
 				final String reg_uid = "^[a-z0-9_]{5,12}$";  // 정규표현식
 				Pattern patt = Pattern.compile(reg_uid);	// 정규표현식 패턴 적용
@@ -43,21 +42,15 @@ public class JoinId_Checking implements CommandHandler {
 						break;
 					}else if(!mem.get(i).getId().equals(checkId)){
 						result = "ok";				// input 창의 아이디와 DB 아이디 비교 후 다르면 "OK" 값 반환
-					}
-					
-					
+					}	
 				}
-				
 				if(match.find()==false){
 					
 					result = "noID";
 				}
-				
-				
 				//json 사용 시 필요구문
 				ObjectMapper om= new ObjectMapper();
 				String json = om.writeValueAsString(result);	//  JSP화면 JSON 데이터 result값 반환 
-				
 				res.setContentType("application/json;charset=utf-8");
 				PrintWriter pw = res.getWriter();
 				pw.print(json);
