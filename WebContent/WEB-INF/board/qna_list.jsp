@@ -11,6 +11,8 @@
 	.pageBtnArea{display:inline-block;}
 	#goFirst, #goLast{width:20px; background:none; border:none;}
 	.paging_btn_num{background:none; border:none; width:18px;}
+	#incomp_list, #comp_list{width:150px; margin-bottom:20px;}
+	.style_from_input{display:inline-block; width:100px; margin-bottom:20px; text-align: center;}
 </style>
 <script>
 	function createQnaTable(data, $tableName){
@@ -143,7 +145,7 @@
 	<c:if test="${!empty user_info}">
 		<!-- 일반회원 -->
 		<c:if test="${user_info.isMng == false }">
-			<a href="qnainsert.do">게시글 등록</a>
+			<a href="qnainsert.do" class='style_from_input'>게시글 등록</a>
 			<c:if test="${qnaList.size() == 0}">
 				<p>등록된 게시물이 없습니다</p>
 			</c:if>

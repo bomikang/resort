@@ -33,8 +33,9 @@ response.setHeader("pragma","no-cache");
 		setInterval(function() {			
 			$("#serverTime").html(now.getHours()+":"+now.getMinutes()+":"+now.getSeconds());
 			now.setSeconds(now.getSeconds()+1);
-		}, 1000);		
-		popUp("bookNotice.jsp", "주의사항", 900, 700);
+		}, 1000);
+		
+		popUp("bookNotice.jsp", "주의사항", 700, 900);
 		/* 달력에 날짜 넣기 */		
 		var date = new Date();
 /* 		setMonthTable(date); */		

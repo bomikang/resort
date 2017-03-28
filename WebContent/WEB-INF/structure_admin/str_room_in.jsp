@@ -9,6 +9,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
+<style>
+	.error{display:none;}
+	.error_reg{diplay:none;}
+</style>
 <script>
 	//시설이름이 체크되어 있으면 그 value값을 리턴
 	function returnCheckedStrName($radio){

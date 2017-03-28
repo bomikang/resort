@@ -117,7 +117,7 @@
 				<label for="">내용</label>
 				<textarea name="content" readonly="readonly">${qna.content}</textarea>
 			</p>
-			<p>
+			<p class='act_btn_area'>
 				<input type="hidden" name="qnano" value="${qna.no}" /><!-- 게시물 번호 hidden으로 심기 -->
 				<c:if test="${!empty user_info}">
 					<!-- 회원 -->
@@ -156,7 +156,7 @@
 					<label for="">내용</label>
 					<textarea name="content" id="adminContent" required="required"></textarea>
 				</p>
-				<p>
+				<p class='act_btn_area'>
 					<input type="hidden" name="article" value="${qna.no}" /><!-- 회원 게시글 번호 심기 -->
 					<input type="submit" value="등록" id="btnAdminInsert"/>
 					<input type="button" value="취소" id="btnAdminCancel"/>
@@ -173,7 +173,7 @@
 				<!-- 로그인 상태면서 관리자 -->
 				<c:if test="${!empty user_info}">
 					<c:if test="${user_info.isMng == true}">
-						<p>
+						<p class='act_btn_area'>
 							<input type="hidden" name="article" value="${qna.no}" /><!-- 회원 게시글 번호 심기 -->
 							<input type="hidden" name="qnano" value="${qnaAdmin.no}" /><!-- 관리자 게시글 번호 심기 -->
 							<input type="submit" value="수정" id="btnUpdateAdminQna"/>

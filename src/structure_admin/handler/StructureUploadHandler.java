@@ -79,7 +79,7 @@ public class StructureUploadHandler implements CommandHandler {
 		}finally {
 			JdbcUtil.close(con);			
 		}
-		return "structureList.do";
+		return "index.jsp?page=/WEB-INF/structure_admin/str_room_li&menu=/WEB-INF/structure/str_menu";
 	}//end of postProcess
 
 }

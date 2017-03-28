@@ -62,4 +62,18 @@ public class Review_DetailDao {
 		
 		}
 	}
+	public int update(Connection conn, Review_Detail rev_detail) throws SQLException{
+		PreparedStatement pstmt = null;	
+		try {
+			String sql = "update review_detail set rev_detail=? where rev_no=?"; 
+
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, rev_detail.getRev_detail());
+			pstmt.setInt(2, rev_detail.getRev_no());
+			
+			return pstmt.executeUpdate();			
+		} finally {
+			JdbcUtil.close(pstmt);
+		}
+	}
 }

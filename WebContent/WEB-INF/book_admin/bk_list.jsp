@@ -3,7 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-	#bk_list #bkStrNo{opacity: 0;}
+	#bk_list #bkStrNo{display: none;}
 </style>
 <script>
 	var stateList = new Array();
@@ -77,11 +77,11 @@
 		$("#bkStrId").change(function(){
 			if($("#bkStrId").val() == "0"){
 				$("#bkStrNo").val("0");
-				$("#bkStrNo").css("opacity", "0");
+				$("#bkStrNo").css("display", "none");
 			}else if($("#bkStrId").val() != "0"){
 				setBkStrNo();
 				$("#bkStrNo").val("0");
-				$("#bkStrNo").css("opacity", "1");
+				$("#bkStrNo").css("display", "inline");
 			}
 		});
 		/* 예약자 이름 클릭 시 */
@@ -308,6 +308,20 @@
 	  return nArr.join('');
 	}
 </script>
+<c:if test="${!empty user_info }">
+	<c:if test="${user_info.isMng==false }">
+		<script>
+			alert("관리자만 접근 가능합니다.");
+			location.href="index.jsp";
+		</script>
+	</c:if>	
+</c:if>
+<c:if test="${empty user_info }">
+	<script>
+		alert("관리자만 접근 가능합니다.");
+		location.href="login.do";
+	</script>
+</c:if>	
 <div id="bk_list">
 	<h4>전체 예약 목록</h4>
 	<!-- 기간별(시작날짜|끝날짜가 그 달일 때), 상태별, 시설별로 관리자가 조회 할 수 있도록 bk_check참조하여 만들기 -->

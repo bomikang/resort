@@ -18,10 +18,10 @@ public class StructureDeleteHandler implements CommandHandler {
 
 			Connection con = null;
 			
+			int strNo = Integer.parseInt(req.getParameter("strNo"));
+			
 			try {
 				con = ConnectionProvider.getConnection();
-				
-				int strNo = Integer.parseInt(req.getParameter("strNo"));
 				
 				StructureDao dao = StructureDao.getInstance();
 				dao.deletetStructure(con, strNo);
@@ -30,10 +30,8 @@ public class StructureDeleteHandler implements CommandHandler {
 			} finally{
 				JdbcUtil.close(con);
 			}
-			
-			return "structureList.do";
 		}
-		return null;
+		return "index.jsp?page=/WEB-INF/structure_admin/str_room_li&menu=/WEB-INF/structure/str_menu";
 	}
 
 }

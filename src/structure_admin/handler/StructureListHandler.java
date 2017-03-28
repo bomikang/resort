@@ -35,7 +35,7 @@ public class StructureListHandler implements CommandHandler {
 				JdbcUtil.close(con);
 			}
 			return "index.jsp?page=/WEB-INF/structure_admin/str_room_li&menu=/WEB-INF/structure/str_menu";
-		}else{
+		}else if(req.getMethod().equalsIgnoreCase("post")){
 			Connection con = null;
 			
 			try {
@@ -58,8 +58,8 @@ public class StructureListHandler implements CommandHandler {
 			} finally{
 				JdbcUtil.close(con);
 			}
-			return null;
 		}
+		return null;
 	}
 
 }

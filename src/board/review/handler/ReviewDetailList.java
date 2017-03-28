@@ -32,9 +32,9 @@ public class ReviewDetailList implements CommandHandler{
 			Review_Detail detail = detail_dao.selectByNo(conn,no);//  게시물번호 입력해야됨 
 			// 현재 사용자 == 게시물을 올린 사용자
 			if(userinfo.getMy_no()==rev_list.getRev_mem()){
-				req.setAttribute("delete", true);
+				req.setAttribute("ok", true);
 			}else{
-				req.setAttribute("no_delete", true);
+				req.setAttribute("no", true);
 			}
 			req.setAttribute("rev_list",rev_list );
 			req.setAttribute("rev_detail", detail);

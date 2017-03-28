@@ -99,6 +99,7 @@
 			var check = confirm("정말 삭제하시겠습니까?");
 			 
 			if ( check ) {
+				$("form[name='f1']").attr("enctype", "");
 				$("form[name='f1']").attr("action", "structureDelete.do");
 			}else{
 				return false;
