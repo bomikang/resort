@@ -235,8 +235,7 @@ public class QnaDao {
 		ResultSet rs = null;
 		Qna qna = null;
 		
-		String sql = "select q.*, qna_detail "
-					+ "from qna q, qna_detail qd where q.qna_no = ? and qd.qna_no = ?";
+		String sql = "select q.*, d.qna_detail from resort.qna as q left join resort.qna_detail as d on q.qna_no = d.qna_no";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, qnaNo);
