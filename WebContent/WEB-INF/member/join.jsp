@@ -59,6 +59,10 @@ $(function(){
 	var reg_tel = /^(010|016|011)\d{3,4}\d{4}$/; //010,016,011,사용가능합니다.
 	var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog123@naver.com , hotdog12@naver.co.kr
 	
+	/*임시*/
+	var reg_tel1 = /^\d{3,4}$/; 
+	var reg_tel2 = /^\d{4}$/; 
+	
 	var check_Id = document.getElementById("id");
 	var check_Name = document.getElementById("name");
 	var check_Pwd = document.getElementById("password");
@@ -88,11 +92,16 @@ $(function(){
 			alert("형식에 맞지 않는 이름 입니다.");
 			return false;
    	 	}
-		if(reg_tel.test($("#tel").val())==false){
+		if(reg_tel1.test($("input[name='bkTel3']").val())==false){
 			alert("형식에 맞지 않는 전화번호 입니다.");
+			$("#bkTel2").focus();
 			return false;
    	 	}	
-	
+		if(reg_tel2.test($("input[name='bkTel3']").val())==false){
+			alert("형식에 맞지 않는 전화번호 입니다.");
+			$("#bkTel3").focus();
+			return false;
+   	 	}
 		if(reg_mail.test($("#email").val())==false){
 			alert("형식에 맞지 않는 이메일입니다.");
 			return false;   
@@ -137,8 +146,15 @@ $(function(){
    	 	 $(".ex").eq(2).css("display","none"); 
    	 	}	
 	}
-	check_Tel.onchange=function(){
-		if(reg_tel.test($("#tel").val())==false){
+	$("input[name='bkTel2']").onchange=function(){
+		if(reg_tel1.test($("input[name='bkTel2']").val())==false){
+            $(".ex").eq(3).css("display","block");
+   	 	}else{
+   	 	$(".ex").eq(3).css("display","none");
+   	 	}	
+	}
+	$("input[name='bkTel3']").onchange=function(){
+		if(reg_tel1.test($("input[name='bkTel3']").val())==false){
             $(".ex").eq(3).css("display","block");
    	 	}else{
    	 	$(".ex").eq(3).css("display","none");
@@ -217,8 +233,16 @@ $(function(){
 			</p>
 			<p>
 				<label>전화번호 : </label>
-				<span class="form_EX">010,016,011,사용 가능합니다.</span><br>
-				<input type="text" id="tel"name="tel" required="required" placeholder="예)01041378012" style="width:300px">
+				<select name="bkTel1">
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="019">019</option>
+						<option value="017">017</option>
+					</select>
+					-
+					<input type="text" required="required" name="bkTel2" placeholder="0000">
+					-
+					<input type="text" required="required" name="bkTel3" placeholder="0000">
 				<span class="ex">잘못된 전화번호입니다.</span>
 			</p>
 			<p>
