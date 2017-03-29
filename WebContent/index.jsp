@@ -60,7 +60,7 @@ response.setHeader("pragma","no-cache");
 			</div>
 		</div>
 		<header class="header_menu" style="z-index:9999;">
-			<div>
+			<div style="z-index:9999;">
 				<div id="menu_area">
 
 					<ul>
