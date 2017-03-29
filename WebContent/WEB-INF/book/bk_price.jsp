@@ -20,6 +20,9 @@
 		</c:when>
 		<c:otherwise>
 			alert("예약에 실패하였습니다.");
+			<%
+				response.sendRedirect("book.do");
+			%>
 		</c:otherwise>
 	</c:choose>
 	});

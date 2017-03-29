@@ -60,4 +60,6 @@ public class LoginMemberInfo { // 로그인 이후 세션에 데이터 남기는
 		this.isMng = isMng;
 	}
 
+
+	public LoginMemberInfo() {}
 }

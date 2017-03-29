@@ -5,44 +5,54 @@
 <script>
 	$(function(){
 		$("#btnUpdate").click(function(){
-			<c:if test="${!empty admin}">		
-				if(!confirm("수정 하시겠습니까?")){
-					return false;
-				}else{
-					$("form[name='updFaq']").submit();
-				}
+			<c:if test="${!empty user_info}">
+				<c:if test="${user_info.isMng == true }">		
+					if(!confirm("수정 하시겠습니까?")){
+						return false;
+					}else{
+						$("form[name='updFaq']").submit();
+					}
+				</c:if>
+				<c:if test="${user_info.isMng == false }">
+					alert("관리자 계정으로 로그인해 주세요.");
+					locaion.href="faq.do";
+				</c:if>
 			</c:if>	
-			<c:if test="${empty admin}">
-				alert("관리자 계정으로 로그인해 주세요.");
-				locaion.href="faq.do";
-			</c:if>
+			
 		});
 		$("#btnDelete").click(function(){
-			<c:if test="${!empty admin}">		
-				if(!confirm("삭제 하시겠습니까?")){
-					return false;
-				}else{
-					$("form[name='dltFaq']").submit();
-				}
-			</c:if>			
-			<c:if test="${empty admin}">
-				alert("관리자 계정으로 로그인해 주세요.");
-				locaion.href="faq.do";
-			</c:if>
+			<c:if test="${!empty user_info}">
+				<c:if test="${user_info.isMng == true }">	
+				
+					if(!confirm("삭제 하시겠습니까?")){
+						return false;
+					}else{
+						$("form[name='dltFaq']").submit();
+					}
+					
+				</c:if>	
+				<c:if test="${user_info.isMng == false }">
+					alert("관리자 계정으로 로그인해 주세요.");
+					locaion.href="faq.do";
+				</c:if>
+			</c:if>						
 		});
 		
 		$("#btnAdd").click(function(){
-			<c:if test="${!empty admin}">
-				if(!confirm("등록 하시겠습니까?")){
-					return false;
-				}else{
-					$("form[name='addFaq']").submit();
-				}
-			</c:if>
-			<c:if test="${empty admin}">
-				alert("관리자 계정으로 로그인해 주세요.");
-				locaion.href="faq.do";
-			</c:if>
+			<c:if test="${!empty user_info}">
+				<c:if test="${user_info.isMng == true }">	
+					if(!confirm("등록 하시겠습니까?")){
+						return false;
+					}else{
+						$("form[name='addFaq']").submit();
+					}
+					
+				</c:if>
+				<c:if test="${user_info.isMng == false }">	
+					alert("관리자 계정으로 로그인해 주세요.");
+					locaion.href="faq.do";
+				</c:if>
+			</c:if>			
 		});
 		
 		$("#btnBack").click(function(){
@@ -52,11 +62,14 @@
 	});
 </script>
 <div id="faqDetail">
-	<c:if test="${empty admin }">
-		<script type="text/javascript">
-			alert("관리자만 접근 가능합니다.");
-			location.href="login.do"; 
-		</script>
+
+	<c:if test="${!empty user_info}">
+		<c:if test="${user_info.isMng == false }">	
+			<script type="text/javascript">
+				alert("관리자만 접근 가능합니다.");
+				location.href="login.do?category=faq"; 
+			</script>
+		</c:if>
 	</c:if>
 	<c:if test="${type=='update' }">
 		<h2>FAQ 수정</h2>

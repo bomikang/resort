@@ -7,6 +7,8 @@
 	#bk_check .stateCancel{color:red; font-weight: bold;}
 	#bk_check .stateEnd{color:gray; font-weight: bold; text-decoration: line-through;}
 	#bk_check .bkStrIdName{color:green; font-weight: bold;}
+	#bk_check_field p{width:500px; margin:15px 0;}
+	#page_index{text-align: center;}
 </style>
 <script>
 
@@ -15,8 +17,9 @@
 		$("#year").val(date.getFullYear());
 		$("#month").val((date.getMonth()+1));
 		
-		setFormTagDisabled();
+		$("#withCon").prop("checked",true);
 		setScreen();
+		setFormTagAbled();
 		
 		/* Radio Button */
 		$("#all").click(function(){
@@ -43,7 +46,52 @@
 			return false;
 		});
 		
+		$(document).on("click",".pageIndex", function(){
+			var index = $(this).attr("index");
+			$("#pageIndex").val(index);
+			setScreen();
+			return false;
+		});
+		
 	});//ready
+	function setPageIndex(data){
+		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
+		var index = data[2];
+		if(index != null){
+			var indexForm = "<a class='pageIndex paging_btn' href='#' index='1' title='첫 페이지'><img src='image/paging_left2.png'/></a>";
+			if(index.start > 10 ){
+				indexForm += "<a class='pageIndex paging_btn' href='#' index='"+(index.start-10)+"' title='이전 10페이지'><img src='image/paging_left1.png'/></a>";
+			}else{
+				indexForm += "<a class='paging_btn'><img src='image/paging_left1.png'/></a>";
+			}
+			
+			for(var i = index.start; i <= index.end; i++){
+				if(i==1){
+					if(i == index.nowIndex){
+						indexForm += "<b><a class='paging_btn_num'>"+i+"</a></b>";
+					}else{
+						indexForm += "<a class='pageIndex paging_btn_num' href='#' index='"+i+"'>"+i+"</a>";	
+					}
+				}else if(i>1){
+					if(i == index.nowIndex){
+						indexForm += " | <b><a class='paging_btn_num'>"+i+"</a></b>";
+					}else{
+						indexForm += " | <a class='pageIndex paging_btn_num' href='#' index='"+i+"'>"+i+"</a>";
+					}
+				}
+			}
+			
+			if(index.end < index.maxIndex){
+				indexForm += "<a class='pageIndex paging_btn' href='#' index='"+(index.start+10)+"' title='다음 10페이지'><img src='image/paging_right1.png'/></a>";
+			}else{
+				indexForm += "<a class='paging_btn'><img src='image/paging_right1.png'/></a>";
+			}
+			
+			indexForm += "<a class='pageIndex paging_btn' href='#' index='"+index.maxIndex+"' title='마지막 페이지'><img src='image/paging_right2.png'/></a>";
+			$("#page_index").html(indexForm);
+		}
+	}
+	
 	function setScreen(){
 		var sList = new Array();
 		$("input[name='cdState']").each(function(i, obj) {
@@ -64,17 +112,23 @@
 				condition=$(obj).attr("id");
 			}			
 		});
+		/* 페이지 인덱스 */
+		var index = $("#pageIndex").val();
+		if(index==null || index==undefined){
+			index = "1";
+		}
 		console.log(condition);
 		$.ajax({
 			url:"bookcheck.do",
 			type:"post",
 			timeout:30000,
 			dataType:"json",
-			data:{"cdState":bkState,"strId":strId, "year":year, "month":month, "condition":condition},
+			data:{"cdState":bkState,"strId":strId, "year":year, "month":month, "condition":condition,"index":index},
 			success:function(data){
 				console.log(data);
 				$("#bkCheckRes").html("<span class='bkStrIdName'>"+data[0]+"</span>로 검색한 결과입니다.");
-				setTable(data);					
+				setTable(data);		
+				setPageIndex(data);
 			} 
 		}); 
 	}
@@ -115,7 +169,7 @@
 					break;
 				}
 				tableForm += "<td>";
-				if(bList[j].state != '예약취소'){
+				if(bList[j].state == '입금대기'){
 					tableForm += "<form action='bookcancel.do' method='post' class='bkcancel'>";
 					tableForm += "<input type='hidden' name='bkNo' value='"+bList[j].no+"'>";
 					tableForm += "<input type='submit' value='취소하기'>";
@@ -130,7 +184,6 @@
 	}
 	
 	function setFormTagAbled(){
-		$("#all").removeAttr("checked");
 		$("#year").removeProp("disabled");
 		$("#month").removeProp("disabled");
 		$("input[name='cdState']").each(function(i, obj) {
@@ -147,51 +200,55 @@
 		$("#bkStrId").prop("disabled", "disabled");
 	}
 </script>
-<c:if test="${empty myinfo }">
+<c:if test="${empty user_info }">
 	<script>
 		alert("로그인이 필요한 페이지 입니다.");
-		location.href="login.do";
+		location.href="login.do?category=bookcheck";
 	</script>
 </c:if>	
 <div id="bk_check">
 	<h2>예약 확인 및 취소</h2>
 	<form action="bookcheck.do" method="post" name="book1">
-		<fieldset>
+		<fieldset id="bk_check_field">
+			<input type="hidden" name="index" id="pageIndex">
 			<p>
-				조회 기준 : 
-				<input type="radio" name="condition" id="all" checked="checked">전체 내역 보기
-				<input type="radio" name="condition" id="withCon">조건별 검색 
+				<label for="">조회 기준 : </label> 
+				<input type="radio" name="condition" id="all"><span  class='small_label'>전체 내역 보기</span>
+				<input type="radio" name="condition" id="withCon"><span  class='small_label'>조건별 검색 </span>
 			</p>		
 			<p>
-				이용 기간 :
+				<label for="">이용 기간 : </label>
 				<select name="year" id="year">
 					<c:forEach items="${years }" var="year">
 						<option value="${year }">${year }</option>
 					</c:forEach>
 				</select> 
-				년 
+				<span class='small_label'>년</span> 
 				<select name="month" id="month">
 						<c:forEach items="${months }" var="month">
 							<option value="${month }">${month }</option>
 						</c:forEach>
 				</select>
-				월
+				<span class='small_label'>월</span> 
 			</p>
 			<p>
-				예약 상태 : 
-				<input type="checkbox" value="입금대기" id="bkReady" name="cdState" checked="checked"><label for="bkReady">입금대기</label>
-				<input type="checkbox" value="입금완료" id="bkProcess" name="cdState" checked="checked"><label for="bkRbkProcesseady">입금완료</label>
-				<input type="checkbox" value="예약취소" id="bkCancel" name="cdState"><label for="bkCancel">예약취소</label>
-				<input type="checkbox" value="예약종료" id="bkEnd" name="cdState"><label for="bkEnd">예약종료</label>
+				<label for="">예약 상태 : </label>
+				<input type="checkbox" value="입금대기" id="bkReady" name="cdState" checked="checked"><label for="bkReady" class='small_label'>입금대기</label>
+				<input type="checkbox" value="입금완료" id="bkProcess" name="cdState" checked="checked"><label for="bkRbkProcesseady" class='small_label'>입금완료</label>
+				<input type="checkbox" value="예약취소" id="bkCancel" name="cdState"><label for="bkCancel" class='small_label'>예약취소</label>
+				<input type="checkbox" value="예약종료" id="bkEnd" name="cdState"><label for="bkEnd" class='small_label'>예약종료</label>
 			</p>
-			<p>시설 구분 : 
+			<p>
+				<label for="">시설 구분 : </label> 
 				<select id="bkStrId" name="bkStrId">
+					<option value="0">전체 보기</option>
 					<c:forEach items="${strId }" var="str">
 						<option value="${str.id }">${str.nameById }</option>
 					</c:forEach>
 				</select>
+				<input type="submit" value="조회하기">
 			</p>
-			<p><input type="submit" value="조회하기"></p>
+			
 		</fieldset>
 	</form>
 	<%-- <form action="bookcheck.do" method="post" name="book1">
@@ -214,7 +271,7 @@
 		</fieldset>
 	</form> --%>
 	<p id="bkCheckRes"></p>
-	<table border="1" id="bkTable">
+	<table id="bkTable">
 		<tr>
 			<th>접수 날짜</th>	
 			<th>시설 명</th>								
@@ -269,4 +326,5 @@
 			</c:forEach>
 		</c:if> --%>
 	</table>
+	<p id="page_index"></p>
 </div>

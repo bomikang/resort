@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-/*캐시에 Data를 남기지 않는구문(로그아웃 이후 뒤로가기 Data기록 안남기기 위해 사용)  */
-response.setHeader("cache-control","no-store");
-response.setHeader("expires","0");
-response.setHeader("pragma","no-cache");
-
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,7 +88,22 @@ response.setHeader("pragma","no-cache");
 			var name = $("#name").val();
 			var check = confirm(strIdText +"의 "+name+" 을(를) 수정하시겠습니까?");
 			 
-			if ( !check ) return false;
+			if ( check ) {
+				$("form[name='f1']").attr("action", "structureUpdate.do");
+			}else{
+				return false;
+			}
+		});
+		
+		$("#btnDeleteStr").click(function() {
+			var check = confirm("정말 삭제하시겠습니까?");
+			 
+			if ( check ) {
+				$("form[name='f1']").attr("enctype", "");
+				$("form[name='f1']").attr("action", "structureDelete.do");
+			}else{
+				return false;
+			}
 		});
 	});
 </script>
@@ -156,6 +164,7 @@ response.setHeader("pragma","no-cache");
 				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
 				<input type="hidden" name="strNo" value="${structure.no}"/>
 				<input type="submit" value="수정" id="btnUpdateStr"/>
+				<input type="submit" value="삭제" id="btnDeleteStr" />
 				<input type="button" value="돌아가기" onclick="location.replace('structureList.do')"/><!-- 취소하면 리스트로 -->
 			</p>
 		</fieldset>

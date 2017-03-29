@@ -42,6 +42,11 @@ fieldset{
 .tt{
 	display: none;
 }
+.form_EX{
+	font-size:11px;
+}
+
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/common.js"></script>
@@ -100,8 +105,7 @@ $(function(){
 					return true;
 				}else{
 					return false;
-				}
-			
+				}	
 	}
 });
 	check_Pwd2.onchange=function(){
@@ -148,7 +152,6 @@ $(function(){
    	 		 $(".ex").eq(4).css("display","none");
    	 	}
 	}
-	
 	// 아이디 중복 확인 버튼 클릭스 화면 갱신 없이 ajax 로 데이터 값 읽어오기 
 	$("#btn").click(function(){
 		duplicatedFlag = false;	
@@ -170,9 +173,7 @@ $(function(){
 							$("form[name='f1']").submit(function() { 
 								alert("중복된 아이디 입니다. 확인하여 주십시오.!")
 								return false;
-							});		
-							
-							
+							});			
 						}
 						if(data=="noID"){
 							alert("형식에 맞지 않는 ID 입니다.");
@@ -191,45 +192,45 @@ $(function(){
 	</div>
 	<div id="join">
 	<form action="join.do" method="post" name="f1">
-	
 		<fieldset>
 			<p>
-				<label>아이디 : </label>  <input type="text" name="id" id="id" required="required" placeholder="아이디를 입력하세요" > 
-				<span class="ex">5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</span>
+				<label>아이디 : </label><span class="form_EX">5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</span><br> 
+				<input type="text" name="id" id="id" required="required" placeholder="아이디를 입력하세요" style="width:300px"> 
+				<span class="ex">형식에 맞지 않는 아이디 입니다.</span>
 				<span class="error">사용중인 아이디 입니다.</span>
 				<button id="btn" type="button">아이디중복</button>
 			</p>
 			<p>
-				<label>암호 : </label><input type="password" id ="password"name="password" required="required" placeholder="비밀번호를 입력하세요">
-				<span class="ex">6~24자 영문대소문자, 숫자, 특수문자 혼합하여 사용 가능합니다.</span>
+				<label>암호 : </label><span class="form_EX">6~24자 영문대소문자, 숫자, 특수문자 혼합하여 사용 가능합니다.</span><br>
+				<input type="password" id ="password"name="password" required="required" placeholder="비밀번호를 입력하세요" style="width:300px">
+				<span class="ex">형식에 맞지 않는 비밀번호 입니다.</span>
 			</p>
 			<p>
-				<label>비밀번호 재확인 :</label><input type="password" id="password2"name="password2" required="required" placeholder="비밀번호를 재확인해주세요">
+				<label>비밀번호 재확인 :</label><br>
+				<input type="password" id="password2"name="password2" required="required" placeholder="비밀번호를 재확인해주세요" style="width:300px">
 				<span class="error">입력한 비밀번호가 일치하지 않습니다.</span>
 			</p>
-			
-		</fieldset><br>
-		
-		<fieldset>
 			<p>
-				<label>이름 :</label><input type="text" id="name"name="name" required="required" placeholder="이름을 입력하세요">
+				<label>이름 :</label><br>
+				<input type="text" id="name"name="name" required="required" placeholder="이름을 입력하세요" style="width:300px">
 				<span class="ex">한글 2~20자 사용 가능합니다.</span>
 			</p>
 			<p>
-				<label>전화번호 : </label><input type="text" id="tel"name="tel" required="required" placeholder="예)01041378012">
-				<span class="ex">010,016,011,사용 가능합니다.</span>
+				<label>전화번호 : </label>
+				<span class="form_EX">010,016,011,사용 가능합니다.</span><br>
+				<input type="text" id="tel"name="tel" required="required" placeholder="예)01041378012" style="width:300px">
+				<span class="ex">잘못된 전화번호입니다.</span>
 			</p>
 			<p>
-				<label>E-Mail :</label><input type="text" id ="email" name="email" required="required" placeholder="본인확인 이메일">
-				<span class="ex">예)hotdog123@naver.com , hotdog12@naver.co.kr</span>
+				<label>E-Mail :</label>
+				<span class="form_EX">예)hotdog123@naver.com , hotdog12@naver.co.kr</span><br>
+				<input type="text" id ="email" name="email" required="required" placeholder="본인확인 이메일" style="width:300px">
+				<span class="ex">형식에 맞지 않는 email 입니다.</span>
 			</p>
-			
 		</fieldset>
-		
 		<div id="submit_div">
 			<input type="submit" value="가입하기" id="sub" >
 		</div>
-		
 		</form>
 		
 	</div>

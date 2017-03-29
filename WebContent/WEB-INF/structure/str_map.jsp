@@ -6,8 +6,13 @@
 <head>
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style>
+	#structure_map img{width:700px;}
+</style>
 </head>
 <body>
-	아직 안함 나중에 사진뿌린다
+	<div id="structure_map">
+		<img src="image/structure_map_new.png" alt="" />
+	</div>
 </body>
 </html>

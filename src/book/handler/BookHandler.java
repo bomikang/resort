@@ -28,17 +28,27 @@ public class BookHandler implements CommandHandler {
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		if(req.getMethod().equalsIgnoreCase("get")){
+			String strId = req.getParameter("id");
+			if(strId==null){
+				strId="1";
+			}else if(strId.isEmpty()){
+				strId="1";
+			}
 			Connection conn = null;
 			try{
 				conn = ConnectionProvider.getConnection();
 				StructureDao sDao = StructureDao.getInstance();
 				List<Integer> sList = sDao.selectDistinctId(conn);
 				List<Structure> strList = new ArrayList<>();
+				if(Integer.parseInt(strId)>sList.get(sList.size()-1)){
+					strId=sList.get(sList.size()-1)+"";
+				}
 				for(Integer s:sList){
 					Structure str = new Structure();
 					str.setId(s);
 					strList.add(str);
 				}
+				req.setAttribute("id", strId);
 				req.setAttribute("strId", strList);
 			}finally {
 				JdbcUtil.close(conn);

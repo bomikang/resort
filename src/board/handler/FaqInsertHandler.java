@@ -21,11 +21,11 @@ public class FaqInsertHandler implements CommandHandler{
 			return "index.jsp?page=/WEB-INF/board/faq_detail&menu=/WEB-INF/board/board_menu";
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			
-			LoginMemberInfo admin = (LoginMemberInfo) req.getSession().getAttribute("admin");
-			if(admin != null){
+			LoginMemberInfo admin = (LoginMemberInfo) req.getSession().getAttribute("user_info");
+			if(admin != null && admin.getIsMng() == true){
 				String title = req.getParameter("title");
 				String detail = req.getParameter("detail");
-				
+				detail = detail.replaceAll("'", "`");
 				Connection conn = null;
 				try{
 					conn = ConnectionProvider.getConnection();

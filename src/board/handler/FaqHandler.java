@@ -22,6 +22,11 @@ public class FaqHandler implements CommandHandler {
 				conn = ConnectionProvider.getConnection();
 				FaqDao fDao = FaqDao.getInstance();
 				List<Faq> fList = fDao.selectAllFaq(conn);
+				for(Faq f:fList){
+					f.setDetail(f.getDetail().replaceAll("`", "'"));
+					f.setDetail(f.getDetail().replaceAll("\r\n", "<br>"));
+					f.setDetail(f.getDetail().replaceAll("\u0020", "&nbsp;"));
+				}
 				req.setAttribute("fList", fList);
 			}finally {
 				JdbcUtil.close(conn);

@@ -10,14 +10,16 @@ response.setHeader("pragma","no-cache");
 %>
 <style>
 	#faqList .faqDetail{display: none; border:1px dotted orange;}
-	#faqList .faqTitleDt{border:1px solid red; width:100%;}
+	#faqList .faqTitleDt{width:100%;}
 	#faqList .faqTitleDt a{width:100%;padding:10px;}
 </style>
 <script>
 	$(function(){
 		$("#btnAdd").click(function(){
-			<c:if test="${!empty admin}">
-				location.href="faqinsert.do";
+			<c:if test="${!empty user_info}">
+				<c:if test="${user_info.isMng == true}">
+					location.href="faqinsert.do";
+				</c:if>
 			</c:if>
 		});
 		
@@ -64,28 +66,37 @@ response.setHeader("pragma","no-cache");
 				}
 			}
 		});
-	});
+		
+	});//ready
 </script>
 <div id="faqList">
 	<h2>자주 묻는 질문</h2>
 	<table border="1">
 		<c:choose>
 			<c:when test="${!empty fList }">
-				<c:forEach items="${fList }" var="fItem">
+				<c:forEach items="${fList }" var="fItem" varStatus="status">
 					<tr>
 						<td>
 							<dl>
 								<dt class="faqTitleDt">
-									<c:if test="${!empty admin }">
-										<input type="checkbox" name="faqCheck" value="${fItem.no }" class="faqCheck">
+									<c:if test="${!empty user_info}">
+										<c:if test="${user_info.isMng == true }">
+											<input type="checkbox" name="faqCheck" value="${fItem.no }" class="faqCheck">
+										</c:if>
 									</c:if>
 									<a href="#" class="faqTitle">${fItem.title }</a>
 								</dt>
 								<dd class="faqDetail">
-									<p>${fItem.detail }</p>
-									<c:if test="${!empty admin }">
-										<p><input type="hidden" name="fNo" value="${fItem.no }">
-										<button class="btnEdit">수정</button></p>
+									<p class="detail">
+										<script type="text/javascript">										
+											$(".detail").eq(${status.index }).html("${fItem.detail }");
+										</script>
+									</p>
+									<c:if test="${!empty user_info}">
+										<c:if test="${user_info.isMng == true }">
+											<p><input type="hidden" name="fNo" value="${fItem.no }">
+											<button class="btnEdit">수정</button></p>
+										</c:if>
 									</c:if>	
 								</dd>
 							</dl>
@@ -98,9 +109,11 @@ response.setHeader("pragma","no-cache");
 			</c:otherwise>
 		</c:choose>
 	</table>
-	<c:if test="${!empty admin}">
-		<button id="btnAdd">글 등록</button>
-		<button id="btnRmv">글 삭제</button>
+	<c:if test="${!empty user_info}">
+		<c:if test="${user_info.isMng == true }">
+			<button id="btnAdd">글 등록</button>
+			<button id="btnRmv">글 삭제</button>
+		</c:if>
 	</c:if>
 	<form action="faqdelete.do" method="post" id="delete">
 		<input type="hidden" name="numbers" id="numbers">

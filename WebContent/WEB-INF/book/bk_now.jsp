@@ -18,12 +18,14 @@ response.setHeader("pragma","no-cache");
 	#bk_now #bookTable .sat{color: blue;}
 	#bk_now #server{text-align: right;color: blue;}
 	#bk_now #server #serverTime{width: 110px; float: right;}
+	#bookTable td:HOVER {background:#ecbb5c;}
+	#bk_now .bkIcon{width:15px; height: 15px;}
 </style>
-<script type="text/javascript">
-	
+<script type="text/javascript">	
 	$(function(){	
 		console.log($("#bkStrId").val());
 		/* 서버시간 알리미용 임시 테스트 */
+		$("#bkStrId").val("${id}");
 		var st = srvTime();
 		var now = new Date(st);
 		console.log("서버시간 : "+now.getTime());
@@ -31,8 +33,9 @@ response.setHeader("pragma","no-cache");
 		setInterval(function() {			
 			$("#serverTime").html(now.getHours()+":"+now.getMinutes()+":"+now.getSeconds());
 			now.setSeconds(now.getSeconds()+1);
-		}, 1000);		
+		}, 1000);
 		
+		popUp("bookNotice.jsp", "주의사항", 700, 900);
 		/* 달력에 날짜 넣기 */		
 		var date = new Date();
 /* 		setMonthTable(date); */		
@@ -58,7 +61,8 @@ response.setHeader("pragma","no-cache");
 			}
 			
 			setScreen(date);
-			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");			
+			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");	
+			return false;
 		});
 		
 		
@@ -76,7 +80,8 @@ response.setHeader("pragma","no-cache");
 			}
 			
 			setScreen(date);
-			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");			
+			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");	
+			return false;
 		});
 		
 		$(document).on("click", ".isBooked", function(){
@@ -84,16 +89,16 @@ response.setHeader("pragma","no-cache");
 			return false;
 		});
 		
-		$(document).on("click", ".noBooked", function(){
-			<c:if test="${!empty admin }">
-				alert("관리자는 예약할 수 없습니다.");
-				return false;
-			</c:if>			
-			<c:if test="${empty myinfo }">
+		$(document).on("click", ".noBooked", function(){		
+			<c:if test="${empty user_info }">
 				alert("로그인이 필요한 페이지 입니다.");
-				location.href="login.do";
+				location.href="login.do?category=book";
 			</c:if>	
-			<c:if test="${!empty myinfo }">
+			<c:if test="${!empty user_info }">
+				<c:if test="${user_info.isMng==true }">
+					alert("관리자는 예약할 수 없습니다.");
+					return false;
+				</c:if>	
 				//alert("예약가능합니다.");	
 				var strNo = $(this).find(".strNo").val();
 				var date = $(this).find(".date").val();
@@ -110,6 +115,13 @@ response.setHeader("pragma","no-cache");
 		});
 		
 	});//ready
+	function popUp(url, name, width, height){
+		var x = (screen.availWidth-width)/2;
+		var y = (screen.availHeight-height)/2;
+		
+		window.open(url, name,  'width='+width+',height='+height+', left='+x+', top='+y+'');
+	}
+	
 	var xmlHttp;
 	/* 서버 시간을 표기하기 위한 메소드(인터넷 참조) */
 	function srvTime(){	
@@ -152,7 +164,8 @@ response.setHeader("pragma","no-cache");
 				
 				success:function(data){
 					console.log(data);
-					setMonthTable(date, data);					
+					setMonthTable(date, data);		
+					$("#bkStr").html($("#bkStrId").find("option[selected='true']").text());
 				} 
 			}); 
 	}// end of setScreen
@@ -168,7 +181,7 @@ response.setHeader("pragma","no-cache");
 			last[1]=29;
 		}
 		
-		var dateForm = "<table border='1'><tr><th></th>";
+		var dateForm = "<table><tr><th></th>";
 		
 		for(var i=0;i<last[m];i++){
 			date.setDate(i+1);
@@ -199,18 +212,18 @@ response.setHeader("pragma","no-cache");
 				if(bList != undefined){
 					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'>★</a></td>";
+						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약 내역이 존재할 때
 						if((k+1)==bList[index].date){
 							console.log("일치");
 							if(bList[index].state=="입금완료"){
-								dateForm += "<td><a href='#' class='isBooked'>X</a></td>";
+								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 							}else if(bList[index].state=="입금대기"){
-								dateForm += "<td><a href='#' class='isBooked'>△</a></td>";
+								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/booked.png'></a></td>";
 							}
 						}else{
-							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
+							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 						}
 					}
 					if((bList[index+1] != undefined) && (k+1)==bList[index].date){
@@ -219,10 +232,10 @@ response.setHeader("pragma","no-cache");
 				}else{
 					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'>★</a></td>";
+						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
-						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'>O</a></td>";
+						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 					}
 				}							
 			}
@@ -247,13 +260,15 @@ response.setHeader("pragma","no-cache");
 	</c:if>
 	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
 	<h2 id="bkTable"></h2>
-	<p>시설 이름 : 
-	<select id="bkStrId">
-		<c:forEach items="${strId }" var="str">
-			<option value="${str.id }">${str.nameById }</option>
-		</c:forEach>
-	</select>
+	<p>
+		<label for="">시설 이름 : </label> 
+		<select id="bkStrId">
+			<c:forEach items="${strId }" var="str">
+				<option value="${str.id }">${str.nameById }</option>
+			</c:forEach>
+		</select>
 	</p>
+	<h2 id="bkStr">${strId.get(0).nameById }</h2>
 	<div id="bookTable" >
 		
 	</div>
