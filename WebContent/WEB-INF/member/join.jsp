@@ -70,6 +70,26 @@ $(function(){
 	var check_Mail = document.getElementById("email");
 	var check_Pwd2 = document.getElementById("password2");
 	$("form[name='f1']").submit(function() { 
+		$.ajax({
+			url:"checkId.do",
+			type:"post",
+			timeout:30000,
+			dataType:"json",
+			data:{"id":$("#id").val()},
+			success:function(data){
+						if(data=="ok"){
+							return true;
+						}else if(data=="no"){
+							$(".error").eq(0).css("display","block");
+							alert("중복된 아이디 입니다. 확인하여 주십시오.")
+							return false;		
+						}
+						if(data=="noID"){
+							alert("형식에 맞지 않는 ID 입니다.");
+							return false;
+						}				
+			} 
+		});
 		if(duplicatedFlag == false)
 		{
 			alert("아이디 중복버튼을 클릭해주세요");
@@ -125,11 +145,14 @@ $(function(){
         }  
 	}	
 	check_Id.onchange=function(){
+		
 		if(reg_uid.test($("#id").val())==false){ 
             $(".ex").eq(0).css("display","block");
 		}else{
 			$(".ex").eq(0).css("display","none");
 		}	
+		
+		
 	}
 	check_Pwd.onchange=function(){
 		if(reg_upw.test($("#password").val())==false){
@@ -168,6 +191,7 @@ $(function(){
    	 		 $(".ex").eq(4).css("display","none");
    	 	}
 	}
+	
 	// 아이디 중복 확인 버튼 클릭스 화면 갱신 없이 ajax 로 데이터 값 읽어오기 
 	$("#btn").click(function(){
 		duplicatedFlag = false;	
@@ -181,15 +205,13 @@ $(function(){
 				
 										// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 						if(data=="ok"){
-							alert("사용가능 아이디 입니다.");	
+							alert("사용가능 아이디 입니다.");
+							$(".error").eq(0).css("display","none");
 							duplicatedFlag = true;
 						}else if(data=="no"){
 							$(".error").eq(0).css("display","block");
 							alert("중복된 아이디 입니다. 확인하여 주십시오.")
-							$("form[name='f1']").submit(function() { 
-								alert("중복된 아이디 입니다. 확인하여 주십시오.!")
-								return false;
-							});			
+										
 						}
 						if(data=="noID"){
 							alert("형식에 맞지 않는 ID 입니다.");
