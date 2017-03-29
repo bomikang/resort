@@ -10,7 +10,7 @@ response.setHeader("pragma","no-cache");
 %>
 <style>
 	#faqList .faqDetail{display: none; border:1px dotted orange;}
-	#faqList .faqTitleDt{border:1px solid red; width:100%;}
+	#faqList .faqTitleDt{width:100%;}
 	#faqList .faqTitleDt a{width:100%;padding:10px;}
 </style>
 <script>

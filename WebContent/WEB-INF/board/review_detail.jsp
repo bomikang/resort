@@ -31,8 +31,8 @@
 					var tr = $("<tr>");//<tr></tr>
 					var td = $("<td>").html(obj.rep_name);
 					var td2 = $("<td>").html(obj.rep_detail);
-					var td3 = $("<td>").html(obj.rep_regdate);
-					tr.append(td).append(td2).append(td3).append("<button class='repDelBtn'>삭제").append("<button>수정");//<tr><td>rep_no</td></tr>
+					var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
+					tr.append(td).append(td2).append(td3);/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
 					rep_no= Number(obj.rep_no);
 					table.append(tr);
 				});
@@ -56,14 +56,16 @@
 						var tr = $("<tr>");//<tr></tr>
 						var td = $("<td>").html(obj.rep_name);
 						var td2 = $("<td>").html(obj.rep_detail);
-						var td3 = $("<td>").html(obj.rep_regdate);
-						tr.append(td).append(td2).append(td3).append("<button class='repDelBtn'>삭제").append("<button>수정");//<tr><td>rep_no</td></tr>
+						var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
+						tr.append(td).append(td2).append(td3)/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
 						table.append(tr);
 					});			
 				} 
 			});
 		});
 		$(document).on("click", ".repDelBtn", function() {
+			var rep_no = $(this).find(".rep_no").val();
+			
 			$.ajax({
 				url:"rev_replyDelete.do",
 				type:"post",
@@ -78,8 +80,8 @@
 						var tr = $("<tr>");//<tr></tr>
 						var td = $("<td>").html(obj.rep_name);
 						var td2 = $("<td>").html(obj.rep_detail);
-						var td3 = $("<td>").html(obj.rep_regdate);
-						tr.append(td).append(td2).append(td3).append("<button class='repDelBtn'>삭제").append("<button>수정");//<tr><td>rep_no</td></tr>
+						var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
+						tr.append(td).append(td2).append(td3);<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
 						table.append(tr);
 					
 					});	
