@@ -25,13 +25,15 @@
 <style>
 	.room_menu li{display: inline-block;}
 	.bigImage{text-align: center; padding-top:20px;}
-	.bigImage img{max-width:610px; max-height:410px; min-height:410px;box-shadow: 0px 0px 10px 5px gray;}
+	.bigImage img{min-width:610px; max-width:610px; max-height:410px; min-height:410px;box-shadow: 0px 0px 10px 5px gray;}
 	#room_name .go_book{width:130px;}
 	.str_people_btn a{margin:5px 10px;}
 </style>
 <script>
 	/* bxSlider 적용 함수 */
 	function gallery(showImages){
+		var errCount = 0;
+		
 		$(".bigImage").html("<img src='"+showImages[0]+"'>"); //큰이미지
 		
 		var slideImage = "<div class='sliderImages'>";
@@ -50,6 +52,12 @@
 			maxSlides : 3,
 			slideMargin : 10
 		});
+		
+		$(".bigImage img").on("error",function(){ //로드가 안되면 이미지없다고 뿌리기
+			$(this).attr("src", "image/no_image.jpg");
+			$("#slideGallery").html("");
+		});
+	
 	}
 	
 	/* 방 정보 테이블 생성 */
@@ -100,6 +108,7 @@
 				for (var i = 0; i < oneImages.length; i++) {
 					showImages[i] = "<%=fullPath%>/Structure_Images/"+oneImages[i];
 				}
+				
 				//bxSlider 적용 함수 호출
 				gallery(showImages);
 				
