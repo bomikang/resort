@@ -81,6 +81,9 @@ public class LoginHandler implements CommandHandler {
 						member.getTel());
 				req.getSession().setAttribute("user_info",myinfo);
 				String url = "";
+				if(returnTo==null){
+					returnTo = "index.jsp";
+				}
 				if(returnTo.equals("index.jsp")){
 					url = returnTo;
 				}else{

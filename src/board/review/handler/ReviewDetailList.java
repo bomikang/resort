@@ -31,19 +31,7 @@ public class ReviewDetailList implements CommandHandler{
 			int no = Integer.parseInt(req.getParameter("no"));
 			Review rev_list= rev_dao.selectByNo(conn,no); // 화면에서 받은 매개변수로..
 			Review_Detail detail = detail_dao.selectByNo(conn,no);//  게시물번호 입력해야됨 
-			conn.setAutoCommit(false);
 			rev_dao.rev_ReadCnt(conn, no);
-			/*ReplyDao dao = ReplyDao.getInstance();
-			List<Reply> reply = dao.rep_list(conn, no);
-			req.setAttribute("rep_list",reply );
-			*/conn.commit();
-			// 현재 사용자 == 게시물을 올린 사용자
-			if(userinfo.getMy_no()==rev_list.getRev_mem()){
-				req.setAttribute("ok", true);
-			}else{
-				req.setAttribute("no", true);
-			}
-			
 			req.setAttribute("rev_list",rev_list );
 			req.setAttribute("rev_detail", detail);
 		}finally{

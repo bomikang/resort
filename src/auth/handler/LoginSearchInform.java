@@ -60,12 +60,27 @@ public class LoginSearchInform implements CommandHandler{
 				
 				if(result.equals("success")){
 					if(id != null){
-						req.setAttribute("resPW", mList.get(0).getPassword());
+						String password = mList.get(0).getPassword();
+						if(password.length()<8){
+							password = password.substring(0, (password.length()/2));
+							for(int i=0;i<password.length();i++){
+								password += "*";
+							}
+						}else{
+							password = password.substring(0, (password.length()-4)) + "****";
+						}
+						req.setAttribute("alertText", "귀하의 비밀번호는 "+mList.get(0).getPassword()+"입니다.");
+						
 					}else{
-						req.setAttribute("resID", mList.get(0).getId());
+						req.setAttribute("alertText", "귀하의 아이디는 "+mList.get(0).getId()+"입니다.");
+						
 					}
+				}else{
+					req.setAttribute("alertText", "탈퇴하였거나 존재하지 않는 정보입니다.");
 				}
-				return "/WEB-INF/member/temp.jsp";
+				
+				req.setAttribute("returnTo", "login.do");
+				return "/WEB-INF/board/alert.jsp";
 			}finally {
 				JdbcUtil.close(conn);
 			}

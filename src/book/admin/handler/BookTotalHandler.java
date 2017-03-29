@@ -40,7 +40,13 @@ public class BookTotalHandler implements CommandHandler {
 			/*if(myinfo != null){*/
 				Connection conn = null;
 				List<Book> bList = null;
+				String menu = "/WEB-INF/book/bk_menu";
 				try{
+					String key = req.getParameter("key");
+					
+					if(key != null && !key.isEmpty()){
+						menu = "/WEB-INF/member/mem_menu";
+					}
 					conn = ConnectionProvider.getConnection();
 									
 					BookDao bDao = BookDao.getInstance();
@@ -86,7 +92,8 @@ public class BookTotalHandler implements CommandHandler {
 				}finally {
 					JdbcUtil.close(conn);
 				}
-				return "index.jsp?page=/WEB-INF/book_admin/bk_total&menu=/WEB-INF/book/bk_menu";	
+				String url = "index.jsp?page=/WEB-INF/book_admin/bk_total&menu="+menu;
+				return url;
 			/*}*/
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			/*예약상태 조건*/
@@ -106,12 +113,13 @@ public class BookTotalHandler implements CommandHandler {
 			if(year.isEmpty()||month.isEmpty()){
 				Calendar cal = Calendar.getInstance();
 				year = cal.get(Calendar.YEAR)+"";
-				month = (cal.get(Calendar.MONTH)+1)+"";
+				month = (cal.get(Calendar.MONTH))+"";
 			}
 			
 			String start = getDateForm(year, month, "start");
+			System.out.println("BookTotal start : "+start);
 			String end = getDateForm(year, month, "end");
-			
+			System.out.println("BookTotal end : "+end);
 			int index = -1;
 			Connection conn = null;
 			try{
@@ -173,7 +181,7 @@ public class BookTotalHandler implements CommandHandler {
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(Calendar.YEAR, Integer.parseInt(year));
-		cal.set(Calendar.MONTH, Integer.parseInt(month));
+		cal.set(Calendar.MONTH, (Integer.parseInt(month)-1));
 		if(string.equals("start")){
 			cal.set(Calendar.DAY_OF_MONTH, cal.getMinimum(Calendar.DAY_OF_MONTH));
 		}else{

@@ -9,12 +9,20 @@ response.setHeader("expires","0");
 response.setHeader("pragma","no-cache");
 %>
 <style>
-	#faqList .faqDetail{display: none; border:1px dotted orange;}
-	#faqList .faqTitleDt{width:100%;}
-	#faqList .faqTitleDt a{width:100%;padding:10px;}
+	#faqList .faqDetail{display: none; border:1px dotted orange; text-align: left; margin-top: 20px; padding: 10px;}
+	#faqList .faqTitleDt{width:100%; text-align: left;}
+	#faqList .faqTitleDt a{width:100%;padding:10px; font-weight: bold;}
+	#faqList .faqCheck{float: left; margin-left: 10px;}
+	#faqList .icon1{width:20px; float: left; margin-left: 20px;}
+	#faqList .icon2{width:20px; display: inline-block;}
+	#faqList #iconTitle{float: left;margin-right: 10px;}
+	#faqTable dl{width:100%;}
+	#faqList .btnsP{text-align: right;padding-right: 20px;}
 </style>
 <script>
 	$(function(){
+		$(".btnEdit").parent("p").css("text-align", "right").css("padding-right", "70px");
+	
 		$("#btnAdd").click(function(){
 			<c:if test="${!empty user_info}">
 				<c:if test="${user_info.isMng == true}">
@@ -70,8 +78,8 @@ response.setHeader("pragma","no-cache");
 	});//ready
 </script>
 <div id="faqList">
-	<h2>자주 묻는 질문</h2>
-	<table border="1">
+	<h2><img id="iconTitle" alt="" src="image/question (1).png">  자주 묻는 질문</h2>
+	<table border="1" id="faqTable">
 		<c:choose>
 			<c:when test="${!empty fList }">
 				<c:forEach items="${fList }" var="fItem" varStatus="status">
@@ -84,9 +92,11 @@ response.setHeader("pragma","no-cache");
 											<input type="checkbox" name="faqCheck" value="${fItem.no }" class="faqCheck">
 										</c:if>
 									</c:if>
+									<img class='icon1' alt="" src="image/question (2).png">
 									<a href="#" class="faqTitle">${fItem.title }</a>
 								</dt>
 								<dd class="faqDetail">
+									<img class='icon2' alt="" src="image/answer.png">
 									<p class="detail">
 										<script type="text/javascript">										
 											$(".detail").eq(${status.index }).html("${fItem.detail }");
@@ -111,8 +121,10 @@ response.setHeader("pragma","no-cache");
 	</table>
 	<c:if test="${!empty user_info}">
 		<c:if test="${user_info.isMng == true }">
+		<p class="btnsP">
 			<button id="btnAdd">글 등록</button>
 			<button id="btnRmv">글 삭제</button>
+		</p>
 		</c:if>
 	</c:if>
 	<form action="faqdelete.do" method="post" id="delete">

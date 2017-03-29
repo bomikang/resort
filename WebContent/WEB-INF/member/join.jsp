@@ -70,6 +70,26 @@ $(function(){
 	var check_Mail = document.getElementById("email");
 	var check_Pwd2 = document.getElementById("password2");
 	$("form[name='f1']").submit(function() { 
+		$.ajax({
+			url:"checkId.do",
+			type:"post",
+			timeout:30000,
+			dataType:"json",
+			data:{"id":$("#id").val()},
+			success:function(data){
+						if(data=="ok"){
+							return true;
+						}else if(data=="no"){
+							$(".error").eq(0).css("display","block");
+							alert("중복된 아이디 입니다. 확인하여 주십시오.")
+							return false;		
+						}
+						if(data=="noID"){
+							alert("형식에 맞지 않는 ID 입니다.");
+							return false;
+						}				
+			} 
+		});
 		if(duplicatedFlag == false)
 		{
 			alert("아이디 중복버튼을 클릭해주세요");
@@ -125,11 +145,14 @@ $(function(){
         }  
 	}	
 	check_Id.onchange=function(){
+		
 		if(reg_uid.test($("#id").val())==false){ 
             $(".ex").eq(0).css("display","block");
 		}else{
 			$(".ex").eq(0).css("display","none");
 		}	
+		
+		
 	}
 	check_Pwd.onchange=function(){
 		if(reg_upw.test($("#password").val())==false){
@@ -168,6 +191,7 @@ $(function(){
    	 		 $(".ex").eq(4).css("display","none");
    	 	}
 	}
+	
 	// 아이디 중복 확인 버튼 클릭스 화면 갱신 없이 ajax 로 데이터 값 읽어오기 
 	$("#btn").click(function(){
 		duplicatedFlag = false;	
@@ -181,15 +205,13 @@ $(function(){
 				
 										// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 						if(data=="ok"){
-							alert("사용가능 아이디 입니다.");	
+							alert("사용가능 아이디 입니다.");
+							$(".error").eq(0).css("display","none");
 							duplicatedFlag = true;
 						}else if(data=="no"){
 							$(".error").eq(0).css("display","block");
 							alert("중복된 아이디 입니다. 확인하여 주십시오.")
-							$("form[name='f1']").submit(function() { 
-								alert("중복된 아이디 입니다. 확인하여 주십시오.!")
-								return false;
-							});			
+										
 						}
 						if(data=="noID"){
 							alert("형식에 맞지 않는 ID 입니다.");
@@ -211,10 +233,10 @@ $(function(){
 		<fieldset>
 			<p>
 				<label>아이디 : </label><span class="form_EX">5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</span><br> 
-				<input type="text" name="id" id="id" required="required" placeholder="아이디를 입력하세요" style="width:300px"> 
+				<input type="text" name="id" id="id" required="required" placeholder="아이디를 입력하세요" style="width:300px"><button id="btn" type="button">아이디중복</button> 
 				<span class="ex">형식에 맞지 않는 아이디 입니다.</span>
 				<span class="error">사용중인 아이디 입니다.</span>
-				<button id="btn" type="button">아이디중복</button>
+				
 			</p>
 			<p>
 				<label>암호 : </label><span class="form_EX">6~24자 영문대소문자, 숫자, 특수문자 혼합하여 사용 가능합니다.</span><br>

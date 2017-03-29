@@ -38,7 +38,13 @@ public class BookListHandler implements CommandHandler {
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("get")){
 			Connection conn = null;
+			String menu = "/WEB-INF/book/bk_menu";
 			try{
+				String key = req.getParameter("key");
+				
+				if(key != null && !key.isEmpty()){
+					menu = "/WEB-INF/member/mem_menu";
+				}
 				conn = ConnectionProvider.getConnection();
 				/* 시설 구분 리스트 */
 				StructureDao sDao = StructureDao.getInstance();
@@ -53,7 +59,8 @@ public class BookListHandler implements CommandHandler {
 			}finally {
 				JdbcUtil.close(conn);
 			}
-			return "index.jsp?page=/WEB-INF/book_admin/bk_list&menu=/WEB-INF/book/bk_menu";
+			String url ="index.jsp?page=/WEB-INF/book_admin/bk_list&menu="+menu; 
+			return url;
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			/* bk_list.jsp 내에서 조건 선택하여 조회버튼 눌렀을때 실행 */
 			if(req.getParameter("type").equalsIgnoreCase("setTable")){

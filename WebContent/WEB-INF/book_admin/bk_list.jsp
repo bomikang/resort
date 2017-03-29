@@ -57,7 +57,8 @@
 						console.log(data);
 						if(data[0]==true){
 							alert("수정되었습니다.");
-							$tr.find(".state").find(".bkState").val(data[1].state);
+							setScreen();
+							/* $tr.find(".state").find(".bkState").val(data[1].state);
 							
 							if(data[1].state=="예약취소"){
 								$tr.find(".bkPrice").text("-");
@@ -65,7 +66,7 @@
 							}else{
 								$tr.find(".bkPrice").text(data[1].priceForm);
 								$tr.find(".bkCancel").text("");
-							}
+							} */
 						}else{
 							alert("오류가 발생하였습니다.");
 						}						

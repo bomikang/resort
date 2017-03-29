@@ -57,14 +57,17 @@ public class NoticeInsertHandler implements CommandHandler{
 					}
 					
 					conn.commit();
-					res.sendRedirect("notice.do?page=1");
+					req.setAttribute("alertText", "성공적으로 등록되었습니다.");
 				}catch (Exception e) {
 					conn.rollback();
 					e.printStackTrace();
+					req.setAttribute("alertText", "오류가 발생되어 등록에 실패하였습니다.");
 				}finally {
 					JdbcUtil.close(conn);
 				}
 			}
+			req.setAttribute("returnTo", ("notice.do?page=1"));
+			return "/WEB-INF/board/alert.jsp";
 		}
 		return null;
 	}

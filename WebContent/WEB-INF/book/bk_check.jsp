@@ -58,7 +58,6 @@
 			setScreen();
 			return false;
 		});
-		
 	});//ready
 	function setPageIndex(data){
 		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
@@ -154,12 +153,12 @@
 				var bkDetailUrl = "bookcheckdetail.do?bkNo="+bList[j].no+"&pageId=check";
 				tableForm += "<tr>";
 				tableForm += "<th>"+bList[j].regDateNoTimeForm+"</th>";//접수 날짜
-				tableForm += "<td><a href='"+strUrl+"' target='_blank' class='toStr'>"+bList[j].str.nameById+"<br>"+bList[j].str.name+"</a></td>";//시설명 - 시설보기로 hyperlink				
-				tableForm += "<td><a href='"+bkDetailUrl+"' class='toDetail'>"+bList[j].startDateForm+" ~ "+bList[j].endDateForm+"</a></td>";//예약기간
+				tableForm += "<td><a href='"+strUrl+"' target='_blank' title='"+bList[j].str.nameById+" "+bList[j].str.name+" 정보' class='toStr'>"+bList[j].str.nameById+"<br>"+bList[j].str.name+"</a></td>";//시설명 - 시설보기로 hyperlink				
+				tableForm += "<td><a href='"+bkDetailUrl+"' title='예약번호 : "+bList[j].no+" 내역' class='toDetail'>"+bList[j].startDateForm+" ~ "+bList[j].endDateForm+"</a></td>";//예약기간
 					<!-- 시설명 클릭시 시설정보로 넘어갈 수 있도록 -->
 				
-				tableForm += "<td><a href='"+bkDetailUrl+"' class='toDetail'>"+bList[j].no+"</a></td>";//예약번호
-				tableForm += "<td><a href='"+bkDetailUrl+"' class='toDetail'>"+bList[j].priceForm +"</a></td>"//총가격
+				tableForm += "<td><a href='"+bkDetailUrl+"' title='예약번호 : "+bList[j].no+" 내역' class='toDetail'>"+bList[j].no+"</a></td>";//예약번호
+				tableForm += "<td><a href='"+bkDetailUrl+"' title='예약번호 : "+bList[j].no+" 내역' class='toDetail'>"+bList[j].priceForm +"</a></td>"//총가격
 				switch(bList[j].state){
 				case '입금대기':
 					tableForm += "<td class='stateReady'>"+bList[j].state+"</td>";

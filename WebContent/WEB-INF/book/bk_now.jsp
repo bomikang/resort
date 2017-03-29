@@ -16,6 +16,7 @@ response.setHeader("pragma","no-cache");
 	#bk_now #bookTable table{table-layout:auto;width:100%;}
 	#bk_now #bookTable .sun{color: red;}
 	#bk_now #bookTable .sat{color: blue;}
+
 	#bk_now #server{text-align: right; color:#0147bb;}
 	#bk_now #server #serverTime{width: 90px; float: right;}
 	#bookTable th:NTH-CHILD(1){width:70px;}
@@ -25,6 +26,9 @@ response.setHeader("pragma","no-cache");
 	#bkTable a{color:#595959;}
 	#bkTable a:HOVER{color:#dd7028;}
 	#bkStrArea{padding-left:30px;}
+	#bk_now .bkIcon{width:15px; height: 15px;}
+	#bk_now .paddingleft{padding-left: 30px;}
+
 </style>
 <script type="text/javascript">	
 	$(function(){	
@@ -91,6 +95,11 @@ response.setHeader("pragma","no-cache");
 		
 		$(document).on("click", ".isBooked", function(){
 			alert("예약할 수 없습니다.");
+			return false;
+		});
+		
+		$(document).on("click", ".today", function(){
+			alert("금일의 예약이 마감되었습니다. 당일예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
 			return false;
 		});
 		
@@ -215,32 +224,41 @@ response.setHeader("pragma","no-cache");
 			for(var k=0;k<last[m];k++){	
 				date.setDate(k+1);				
 				if(bList != undefined){
-					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
+					if(date.getMonth()==today.getMonth() && (k+1) < today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
+						dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약 내역이 존재할 때
-						if((k+1)==bList[index].date){
+	
+						if(bList[index] != undefined && (k+1)==bList[index].date){
 							console.log("일치");
-							if(bList[index].state=="입금완료"){
-								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
+							if(bList[index].state=="입금완료"){								
+								dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/isBooked.png'></a></td>";								
 							}else if(bList[index].state=="입금대기"){
-								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/booked.png'></a></td>";
+								dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/booked.png'></a></td>";									
 							}
 						}else{
-							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+							if((k+1) == today.getDate()){
+								dateForm += "<td><a href='#' class='today' title='예약마감'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+							}else{
+								dateForm += "<td><a href='#' class='noBooked' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].nameById+" "+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";	
+							}
 						}
 					}
 					if((bList[index+1] != undefined) && (k+1)==bList[index].date){
 						index++;
 					}
 				}else{
-					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
+					if(date.getMonth()==today.getMonth() && (k+1) < today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
+						dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
-						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+						if((k+1) == today.getDate()){
+							dateForm += "<td><a href='#' class='today' title='예약마감'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+						}else{
+							dateForm += "<td><a href='#' class='noBooked' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+						}
 					}
 				}							
 			}
@@ -266,9 +284,10 @@ response.setHeader("pragma","no-cache");
 			location.href="book.do";
 		</script>
 	</c:if>
+
 	<h3 id="server">[서버시간]<span id="serverTime">00:00:00</span></h3>
 	<h2 id="bkTable"></h2>
-	<p id='bkStrArea'>
+	<p id='bkStrArea' class="paddingleft">
 		<label for="">시설 이름 : </label> 
 		<select id="bkStrId">
 			<c:forEach items="${strId }" var="str">
