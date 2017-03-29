@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+	#mem_search .btnsP{text-align: center;}
+</style>
 <script>
 	$(function(){
 		$("#btnCancel").click(function(){
-			if(confirm("정말 취소하시겠습니까?")){
+			if(confirm("취소하시겠습니까?")){
 				location.href="login.do";	
 			}		
 		});
@@ -36,8 +39,10 @@
 					-
 					<input type="text" required="required" name="bkTel3">				
 				</p>
-				<input type="submit" id="btnSearch" value="아이디 찾기">
-				<button id="btnCancel">취 소</button>
+				<p class="btnsP">
+					<input type="submit" id="btnSearch" value="아이디 찾기">
+					<button id="btnCancel">취 소</button>
+				</p>
 			</fieldset>
 		</form>
 	</c:if>
@@ -67,8 +72,10 @@
 					-
 					<input type="text" required="required" name="bkTel3">				
 				</p>
-				<input type="submit" id="btnSearch" value="비밀번호 찾기">
-				<button id="btnCancel">취 소</button>
+				<p class="btnsP">
+					<input type="submit" id="btnSearch" value="비밀번호 찾기">
+					<button id="btnCancel">취 소</button>
+				</p>
 			</fieldset>
 		</form>
 	</c:if>
