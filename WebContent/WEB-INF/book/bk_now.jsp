@@ -89,6 +89,11 @@ response.setHeader("pragma","no-cache");
 			return false;
 		});
 		
+		$(document).on("click", ".today", function(){
+			alert("금일의 예약이 마감되었습니다. 당일예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
+			return false;
+		});
+		
 		$(document).on("click", ".noBooked", function(){		
 			<c:if test="${empty user_info }">
 				alert("로그인이 필요한 페이지 입니다.");
@@ -210,27 +215,31 @@ response.setHeader("pragma","no-cache");
 			for(var k=0;k<last[m];k++){	
 				date.setDate(k+1);				
 				if(bList != undefined){
-					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
+					if(date.getMonth()==today.getMonth() && (k+1) < today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
 						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약 내역이 존재할 때
 						if((k+1)==bList[index].date){
 							console.log("일치");
-							if(bList[index].state=="입금완료"){
-								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
+							if(bList[index].state=="입금완료"){								
+								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";								
 							}else if(bList[index].state=="입금대기"){
-								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/booked.png'></a></td>";
+								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/booked.png'></a></td>";									
 							}
 						}else{
-							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+							if((k+1) == today.getDate()){
+								dateForm += "<td><a href='#' class='today'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+							}else{
+								dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";	
+							}
 						}
 					}
 					if((bList[index+1] != undefined) && (k+1)==bList[index].date){
 						index++;
 					}
 				}else{
-					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
+					if(date.getMonth()==today.getMonth() && (k+1) < today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
 						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{

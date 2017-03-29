@@ -24,18 +24,23 @@ public class FaqDeleteHandler implements CommandHandler{
 				conn.setAutoCommit(false);
 				fDao.deleteFaq(conn, numList);
 				conn.commit();
+				req.setAttribute("returnTo", "faq.do");
+				req.setAttribute("alertText", "성공적으로 삭제되었습니다.");
 			}catch (Exception e) {
 				e.printStackTrace();
 				conn.rollback();
+				req.setAttribute("returnTo", "faq.do");
+				req.setAttribute("alertText", "오류가 발생되어 삭제되지 못했습니다.");
 			}finally {
 				JdbcUtil.close(conn);
 			}
 			
-			res.sendRedirect("faq.do");
+			return "/WEB-INF/board/alert.jsp";
 		}else if(req.getMethod().equalsIgnoreCase("get")){
 			String numbers = req.getParameter("fNo");
 			if(numbers==null||numbers==""){
-				res.sendRedirect("faq.do");
+				req.setAttribute("returnTo", "faq.do");
+				req.setAttribute("alertText", "오류가 발생되어 삭제되지 못했습니다.");
 			}
 			Connection conn = null;
 			try{
@@ -44,14 +49,18 @@ public class FaqDeleteHandler implements CommandHandler{
 				conn.setAutoCommit(false);
 				fDao.deleteFaq(conn, Integer.parseInt(numbers));
 				conn.commit();
+				req.setAttribute("returnTo", "faq.do");
+				req.setAttribute("alertText", "성공적으로 삭제되었습니다.");
 			}catch (Exception e) {
 				e.printStackTrace();
 				conn.rollback();
+				req.setAttribute("returnTo", "faq.do");
+				req.setAttribute("alertText", "오류가 발생되어 삭제되지 못했습니다.");
 			}finally {
 				JdbcUtil.close(conn);
 			}
 			
-			res.sendRedirect("faq.do");
+			return "/WEB-INF/board/alert.jsp";
 		}
 		return null;
 	}

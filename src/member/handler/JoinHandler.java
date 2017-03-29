@@ -49,6 +49,7 @@ public class JoinHandler implements CommandHandler {
 			}finally{
 				JdbcUtil.close(conn);
 			}
+			req.setAttribute("memId", id);
 			return "index.jsp?page=/WEB-INF/member/joinSuccess&menu=/WEB-INF/member/mem_menu";
 			
 		}

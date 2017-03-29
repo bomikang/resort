@@ -34,8 +34,7 @@ public class FaqUpdateHandler implements CommandHandler{
 				res.sendRedirect("faq.do");
 			}
 			return "index.jsp?page=/WEB-INF/board/faq_detail&menu=/WEB-INF/board/board_menu";
-		}else if(req.getMethod().equalsIgnoreCase("post")){
-			
+		}else if(req.getMethod().equalsIgnoreCase("post")){			
 			LoginMemberInfo admin = (LoginMemberInfo) req.getSession().getAttribute("user_info");
 			if(admin != null && admin.getIsMng() == true){
 				String title = req.getParameter("title");
@@ -51,15 +50,19 @@ public class FaqUpdateHandler implements CommandHandler{
 					faq.setNo(Integer.parseInt(fNo));
 					fDao.updateFaq(conn, faq);
 					conn.commit();
+					req.setAttribute("returnTo", "faq.do");
+					req.setAttribute("alertText", "성공적으로 수정되었습니다.");
 				}catch (Exception e) {
 					conn.rollback();
+					req.setAttribute("returnTo", ("faqupdate.do?fNo="+fNo));
+					req.setAttribute("alertText", "오류가 발생하여 수정되지 못했습니다.");
 				}finally {
 					JdbcUtil.close(conn);
 				}				
 			}
+			return "/WEB-INF/board/alert.jsp";
 		}
-		res.sendRedirect("faq.do");
-		return null;
+		return null;		
 	}
 
 }

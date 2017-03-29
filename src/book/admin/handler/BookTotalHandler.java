@@ -106,12 +106,13 @@ public class BookTotalHandler implements CommandHandler {
 			if(year.isEmpty()||month.isEmpty()){
 				Calendar cal = Calendar.getInstance();
 				year = cal.get(Calendar.YEAR)+"";
-				month = (cal.get(Calendar.MONTH)+1)+"";
+				month = (cal.get(Calendar.MONTH))+"";
 			}
 			
 			String start = getDateForm(year, month, "start");
+			System.out.println("BookTotal start : "+start);
 			String end = getDateForm(year, month, "end");
-			
+			System.out.println("BookTotal end : "+end);
 			int index = -1;
 			Connection conn = null;
 			try{
@@ -173,7 +174,7 @@ public class BookTotalHandler implements CommandHandler {
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(Calendar.YEAR, Integer.parseInt(year));
-		cal.set(Calendar.MONTH, Integer.parseInt(month));
+		cal.set(Calendar.MONTH, (Integer.parseInt(month)-1));
 		if(string.equals("start")){
 			cal.set(Calendar.DAY_OF_MONTH, cal.getMinimum(Calendar.DAY_OF_MONTH));
 		}else{
