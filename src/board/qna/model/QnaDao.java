@@ -105,10 +105,11 @@ public class QnaDao {
 		ResultSet rs = null;
 		List<Qna> list = new ArrayList<>();
 		
-		String sql = "select q.*, qna_detail from qna q, qna_detail qd "
+		/*String sql = "select q.*, qna_detail from qna q, qna_detail qd "
 					+ "where q.qna_no not in(select qna_article from qna where qna_article <> 0) "
-					+ "and q.qna_article = 0 and q.qna_no = qd.qna_no order by q.qna_no desc";
+					+ "and q.qna_article = 0 and q.qna_no = qd.qna_no order by q.qna_no desc";*/
 		
+		String sql = "select q.*, d.qna_detail from resort.qna as q left join resort.qna_detail as d on q.qna_no = d.qna_no where qna_article = 0";		
 		try {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -235,7 +236,8 @@ public class QnaDao {
 		ResultSet rs = null;
 		Qna qna = null;
 		
-		String sql = "select q.*, d.qna_detail from resort.qna as q left join resort.qna_detail as d on q.qna_no = d.qna_no";
+		String sql = "select q.*, qna_detail "
+					+ "from qna q, qna_detail qd where q.qna_no = ? and qd.qna_no = ?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, qnaNo);
