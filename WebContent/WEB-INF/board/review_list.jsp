@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	request.getSession().getAttribute("user_info");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style>
+	#paging{margin-left: 500px;}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <script type="text/javascript">
 	$(function(){
 	$("#searchBtn").click(function(){
@@ -15,13 +22,13 @@
 		location.href = "rev_search.do?select="+serVal+"&write="+writeVal;
 		
 	});	
-});	
-	
-		
+});			
 </script>
 </head>
 <body>
-	<a href="rev_insert.do">게시글 등록</a>
+	<c:if test="${!empty user_info }">
+		<a href="rev_insert.do">게시글 등록</a>
+	</c:if>	
 	<table>
 		<tr>
 			<td><b>게시물 번호</b></td>
@@ -47,22 +54,21 @@
 				
 			</tr>
 		</c:forEach>
-		<c:if test="${cntPage.hasArticles() }">
-			<tr>
-				<td colspan="5">
-					<c:if test="${cntPage.startPage > 5 }">
-					<a href ="review.do?pageNo=${cntPage.startPage -5 }">[이전]</a>
-					</c:if>
-					<c:forEach var="pNo" begin="${cntPage.startPage}" end="${cntPage.endPage }">
-					<a href ="review.do?pageNo=${pNo }">[${pNo}]</a>
-					 </c:forEach>
-					 <c:if test="${cntPage.endPage<cntPage.totalPages }">
-					 <a href="review.do?pageNo=${cntPage.startPage+5 }">[다음]</a>
-					 </c:if>
-				</td>
-			</tr>
-		</c:if>
+		
 	</table>
+	<p id="paging">
+		<c:if test="${cntPage.hasArticles() }">
+			<c:if test="${cntPage.startPage > 5 }">
+				<a href ="review.do?pageNo=${cntPage.startPage -5 }">[이전]</a>
+			</c:if>
+				<c:forEach var="pNo" begin="${cntPage.startPage}" end="${cntPage.endPage }">
+					<a href ="review.do?pageNo=${pNo }">[${pNo}]</a>
+				</c:forEach>
+				<c:if test="${cntPage.endPage<cntPage.totalPages }">
+						<a href="review.do?pageNo=${cntPage.startPage+5 }">[다음]</a>
+				 </c:if>
+		</c:if>
+	</p>
 	<select id="search">
 		<option value="title">제목</option>
 		<option value="name">작성자</option>

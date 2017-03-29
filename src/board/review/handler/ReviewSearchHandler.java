@@ -36,23 +36,30 @@ public class ReviewSearchHandler implements CommandHandler{
 			}
 			if(selectVal.equals("title")){
 				total = rev_dao.searchCnt_Title(conn, writeVal);
-				content = rev_dao.searchTitleOrderBy(conn, writeVal, (pageno-1),size); 
-						
+				content = rev_dao.searchTitleOrderBy(conn, writeVal, (pageno-1),size);
+				ListPageCount paging = new ListPageCount(total,
+														pageno, 
+														size, 
+														content);
+				req.setAttribute("cntPage", paging);
 			}else if(selectVal.equals("name")){
 				total = rev_dao.searchCnt_name(conn, writeVal);
 				content = rev_dao.searchNameOrderBy(conn, writeVal, (pageno-1),size); 
-				
+				ListPageCount paging = new ListPageCount(total,
+														pageno, 
+														size, 
+														content);
+				req.setAttribute("cntPage", paging);
 			}else if(selectVal.equals("number")){
 				total = rev_dao.searchCnt_number(conn, Integer.parseInt(writeVal));
 				content = rev_dao.searchNumberOrderBy(conn, Integer.parseInt(writeVal), (pageno-1),size); 
-				
+				ListPageCount paging = new ListPageCount(total,
+														pageno, 
+														size, 
+														content);
+				req.setAttribute("cntPage", paging);
 			}
-			ListPageCount paging = new ListPageCount(total,
-					pageno, 
-					size, 
-					content);
 			
-			req.setAttribute("cntPage", paging);
 			
 		}finally{
 			JdbcUtil.close(conn);
