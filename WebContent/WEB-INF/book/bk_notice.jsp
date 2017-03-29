@@ -1,17 +1,16 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <style>
-	#bk_notice{font-size: 14px;}
-	#bk_notice #toReserve{width:100%; text-align: right;}
-	#bk_notice #toReserve a{width:130px; top:50px;}
+	#bk_notice #toReserve{text-align: right; float:right;}
 	#bk_notice h4{font-size:18px;}
 	.noticeRed{color:red;}
 	.noticeRed li{padding-left:30px;}
 	.colorRed{color:red; font-size:15px;}
+	.moving_btn{width:130px;}
 </style>
 <!-- 옥성 자연 휴양림 참조 -->
 
 <div class="way_top">
-	<h2>예약안내<span>홈 > 예약안내 > 예약안내</span></h2>
+	<h3>예약안내<br /><span>홈 > 예약안내 > 예약안내</span></h3>
 </div>
 
 <div id="bk_notice" class='intro_padding'>

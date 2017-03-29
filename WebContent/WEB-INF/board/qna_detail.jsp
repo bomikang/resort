@@ -129,9 +129,13 @@
 </script>
 </head>
 <body>
+<div class="way_top">
+		<h3>1:1 문의<br /><span>홈 > 자유게시판 > 1:1 문의</span></h3>
+</div>
+<div class="intro_padding">
+	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>1:1 문의 내용</h2>
 	<form action="" method="get" name="memberForm">
 		<fieldset>
-			<legend>1:1 문의 상세보기</legend>
 			<p>
 				<label for="">작성자</label>
 				<input type="text" name="name" value="${qna.member.name}" readonly="readonly"/>
@@ -171,14 +175,14 @@
 	<!-- 관리자가 회원의 게시글에서 답변을 눌렀을 때 나오게 하는 insert / detail / update 화면-->
 	<form action="" method="post" name='adminForm'>
 		<fieldset>
-			<legend>1:1 문의 답변</legend>
+			<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>1:1 문의 답변</h2>
 			<p>
 				<label for="">작성자</label>
-				<input type="text" name="name" value="관리자" readonly="readonly"/>
+				<input type="text" name="name" value="관리자" readonly="readonly" disabled="disabled"/>
 			</p>
 			<p>
 				<label for="">제목</label>
-				<input type="text" name="title" value="문의하신 내용의 답변입니다." readonly="readonly"/>
+				<input type="text" name="title" value="문의하신 내용의 답변입니다." readonly="readonly"  disabled="disabled"/>
 			</p>
 			
 			<!-- 답변이 미존재하면 insert화면 -->
@@ -216,5 +220,6 @@
 			</c:if>
 		</fieldset>
 	</form>
+</div>
 </body>
 </html>

@@ -11,14 +11,14 @@ response.setHeader("pragma","no-cache");
 %>
 
 <style>
-	#bk_now{width:100%;}
+	#bk_now{width:100%; background:rgba(255,254,232,1); border-radius: 10px; padding:13px 0 30px;}
 	#bk_now #bookTable{width:95%; margin: 0 auto; }
 	#bk_now #bookTable table{table-layout:auto;width:100%;}
 	#bk_now #bookTable .sun{color: red;}
 	#bk_now #bookTable .sat{color: blue;}
 
-	#bk_now #server{text-align: right; color:#0147bb;}
-	#bk_now #server #serverTime{width: 90px; float: right;}
+	#bk_now #server{text-align: right; color:#0147bb; margin-right:25px;}
+	#bk_now #server #serverTime{width: 80px; float: right;}
 	#bookTable th:NTH-CHILD(1){width:70px;}
 	#bookTable td:HOVER {background:#9acaaf;}
 	#bk_now .bkIcon{width:16px; height: 16px;}
@@ -270,7 +270,7 @@ response.setHeader("pragma","no-cache");
 	}//end of setMonthTable
 </script>
 <div class="way_top">
-	<h2>예약하기<span>홈 > 예약안내 > 예약하기</span></h2>
+	<h3>예약하기<br /><span>홈 > 예약안내 > 예약하기</span></h3>
 </div>
 <div id="bk_now">
 	<c:if test="${noStr == true }">

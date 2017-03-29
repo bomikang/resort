@@ -9,7 +9,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <style>
 	.err{display:none; color:red; font-size:12px;}
-	input[name='title']{width:300px;}
 </style>
 <script>
 	function checkRegExr($input, limit){
@@ -55,9 +54,13 @@
 </script>
 </head>
 <body>
+<div class="way_top">
+		<h3>1:1 문의<br /><span>홈 > 자유게시판 > 1:1 문의</span></h3>
+</div>
+<div class="intro_padding">
+	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>1:1 문의 수정</h2>
 	<form action="qnaupdate.do" method="post" name="f1">
 		<fieldset>
-			<legend>1:1 문의 수정</legend>
 			<p>
 				<label for="">작성자</label>
 				<input type="text" name="name" value="${qna.member.name}" readonly="readonly"/>
@@ -68,7 +71,7 @@
 			</p>
 			<p>
 				<label for="">제목</label>
-				<input type="text" name="title" value="${qna.title }" required="required"/>
+				<input type="text" name="title" value="${qna.title}" readonly="readonly"/>
 				<span class="err">더 이상 입력이 불가능 합니다.</span>
 			</p>
 			<p>
@@ -76,12 +79,13 @@
 				<textarea name="content" required="required" id="memContent"></textarea>
 				<span class="err">더 이상 입력이 불가능 합니다.</span>
 			</p>
-			<p>
+			<p class='act_btn_area'>
 				<input type="hidden" name="qnano" value="${qna.no}" />
 				<input type="submit" value="수정" id="btnUpdate"/>
 				<input type="button" value="취소" id="btnCancel" /><!-- detail화면으로 -->
 			</p>
 		</fieldset>
 	</form>
+</div>
 </body>
 </html>

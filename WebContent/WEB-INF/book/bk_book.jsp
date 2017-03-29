@@ -7,8 +7,7 @@
 	.book_book_table td, .book_mem_info_table td{text-align: left; padding-left:10px;}
 	select{width:133px; text-align: center; padding:6px 0;}
 	input[type='text'], input[type='date']{width:120px;}
-	.book_mem_info_table #email_input{width:245px;}
-	#bk_book h3{text-align: center;}
+	.book_mem_info_table #email_input{width:267px;}
 </style>
 <script>
 	var reg_tel1 = /^\d{3,4}$/; 
@@ -183,7 +182,7 @@
 </script>
 
 <div class="way_top">
-	<h2>예약하기<span>홈 > 예약안내 > 예약하기 > 예약하기</span></h2>
+	<h3>예약하기<br /><span>홈 > 예약안내 > 예약하기 > 예약하기</span></h3>
 </div>
 <div id="bk_book" class='intro_padding'>
 	<!-- 예약폼이 들어갈 예정입니다. -->
@@ -192,7 +191,7 @@
 		<input type="hidden" value="${str.no }" name="strNo">
 		<input type="hidden" value="${user_info.my_no }" name="memNo">
 		
-		<h3>예약 객실</h3>
+		<h3 class='table_caption'>예약 객실</h3>
 		<table class='book_book_table'>
 			<tr>
 				<th>객실명</th>
@@ -227,7 +226,7 @@
 			</tr>
 		</table>
 		<!-- 고객정보  -->
-		<h3>고객 정보</h3>
+		<h3 class='table_caption'>고객 정보</h3>
 		
 		<table class='book_mem_info_table'>
 			<tr>

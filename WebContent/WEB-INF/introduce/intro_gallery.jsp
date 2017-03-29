@@ -9,9 +9,9 @@
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <style>
-	#intro_gallery_top{text-align: center; font-family: "SeoulHangangM"; font-size:30px; color:#2e2e2e;}
+	#intro_gallery_top{text-align: center; font-family: "SeoulHangangM"; font-size:30px; color:#dd7028; margin:40px 0;}
 	#show_image{width:100%; text-align: center; margin:30px 0;}
-	#show_image img{width:600px; box-shadow: 0px 0px 5px 3px black;}
+	#show_image img{width:600px; box-shadow: 0px 0px 10px 5px gray;}
 	#show_image p{font-size:22px; color:#2e2e2e;}
 	.resort_gallery{width:100%; text-align: center; margin:0 auto;}
 	.resort_gallery li{ display: inline-block; margin:10px; opacity:0.7; text-align: center;}
@@ -44,15 +44,11 @@
 <body>
 
 <div class="way_top">
-	<h2>눈꽃자연휴양림 갤러리<span>홈 > 휴양림 소개 > 눈꽃자연휴양림 갤러리</span></h2>
+	<h3>눈꽃자연휴양림 갤러리<br /><span>홈 > 휴양림 소개 > 눈꽃자연휴양림 갤러리</span></h3>
 </div>
 
 <div class='intro_padding'>
-	<h1 id='intro_gallery_top'>
-		<img src="image/icon_flower_orange.png" class='icon_flower'/>
-		눈꽃자연휴양림의 다양한 곳을 감상해보세요
-		<img src="image/icon_flower_orange.png" class='icon_flower'/>
-	</h1>
+	<h2 id='intro_gallery_top'>눈꽃자연휴양림의 다양한 곳을 감상해보세요</h2>
 	<div id="show_image">
 		<img src="image/resortgallery/01waterfall.jpg" alt="" />
 		<p>계곡</p>
@@ -66,7 +62,6 @@
 		<li><img src="image/resortgallery/06sanlim.jpg"><br><span>산림휴양관 복도</span></li>
 		<li><img src="image/resortgallery/07entry.jpg"><br><span>옥성자연휴양림 입구</span></li>
 		<li><img src="image/resortgallery/08greengrass.jpg"><br><span>잔디광장</span></li>
-		<li><img src="image/resortgallery/09greengrass2.jpg"><br><span>잔디광장2</span></li>
 	</ul>
 </div>
 </body>

@@ -4,7 +4,6 @@
 <!-- 입력 창(관리자용) -->
 <style>
 	#faqDetail .btnsP{text-align: center;}
-	#faqDetail h2{padding-left: 210px;}
 </style>
 <script>
 	$(function(){
@@ -68,7 +67,7 @@
 	
 	});
 </script>
-<div id="faqDetail">
+<div id="faqDetail" class='intro_padding'>
 
 	<c:if test="${!empty user_info}">
 		<c:if test="${user_info.isMng == false }">	
@@ -80,16 +79,16 @@
 	</c:if>
 	<c:if test="${type=='update' }">
 		<h2>FAQ 수정</h2>
-		
+		<hr />
 		<form action="faqupdate.do" method="post" name="updFaq">
 			<input type="hidden" name="fNo" value=${faq.no }>
 			<fieldset>
 				<p>
-					<label for="title">제목 : </label>
+					<label for="title">제목</label>
 					<input type="text" required="required" name="title" id="title" value=${faq.title }>
 				</p>
 				<p>
-					<label for="detail">내용 : </label>
+					<label for="detail">내용</label>
 					<textarea rows="" cols="" name="detail" id="detail">${faq.detail }</textarea>
 				</p>
 				<p class='btnsP'>
@@ -105,14 +104,15 @@
 	</c:if>
 	<c:if test="${type!='update' }">
 		<h2>FAQ 등록</h2>
+		<hr />
 		<form action="faqinsert.do" method="post" name="addFaq">
 				<fieldset>
 				<p>
-					<label for="title">제목 : </label>
+					<label for="title">제목</label>
 					<input type="text" required="required" name="title" id="title">
 				</p>
 				<p>
-					<label for="detail">내용 : </label>
+					<label for="detail">내용</label>
 					<textarea rows="" cols="" name="detail" id="detail"></textarea>
 				</p>
 				<p class='btnsP'>

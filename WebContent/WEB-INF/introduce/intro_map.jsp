@@ -10,7 +10,7 @@
 <body>
 
 <div class="way_top">
-	<h2>찾아오시는 길 <span>홈 > 휴양림 소개 > 찾아오시는 길</span></h2>
+	<h3>찾아오시는 길<br /><span>홈 > 휴양림 소개 > 찾아오시는 길</span></h3>
 </div>
 
 <div class='intro_padding'>

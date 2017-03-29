@@ -10,12 +10,12 @@
 	input[type='text']{width:120px;}
 	#btnInquire{position:relative; top:2px;}
 	#bkTable th:NTH-CHILD(1){width:150px;}
-	#bkTable th:NTH-CHILD(2){width:80px;}
+	#bkTable th:NTH-CHILD(2){width:70px;}
 	#bkTable th:NTH-CHILD(3){width:130px;}
-	#bkTable th:NTH-CHILD(4){width:110px;}
-	#bkTable th:NTH-CHILD(5){width:110px;}
-	#bkTable th:NTH-CHILD(6){width:120px;}
-	#bkTable th:NTH-CHILD(8){width:110px;}
+	#bkTable th:NTH-CHILD(4){width:95px;}
+	#bkTable th:NTH-CHILD(5){width:95px;}
+	#bkTable th:NTH-CHILD(6){width:100px;}
+	#bkTable th:NTH-CHILD(8){width:95px;}
 	#bkTable button{width:55px; margin:0 3px;}
 </style>
 <script>
@@ -336,8 +336,9 @@
 		location.href="login.do?category=booklist";
 	</script>
 </c:if>	
-<div id="bk_list">
-	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>전체 예약 목록<img src="image/icon_flower_orange.png" class='icon_flower'/></h2>
+<div id="bk_list" class='intro_padding'>
+	<h2>전체 예약 목록</h2>
+	<hr />
 	<!-- 기간별(시작날짜|끝날짜가 그 달일 때), 상태별, 시설별로 관리자가 조회 할 수 있도록 bk_check참조하여 만들기 -->
 	<form name="book1" action="booklist.do" method="post">
 		<fieldset id='bk_list_field'>

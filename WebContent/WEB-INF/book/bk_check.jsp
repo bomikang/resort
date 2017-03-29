@@ -6,7 +6,7 @@
 	#bk_check .stateProcess{color:green; font-weight: bold;}
 	#bk_check .stateCancel{color:red; font-weight: bold;}
 	#bk_check .stateEnd{color:gray; font-weight: bold; text-decoration: line-through;}
-	#bk_check .bkStrIdName{color:green; font-weight: bold;}
+	#bk_check .bkStrIdName{color:#cc0000; font-weight: bold;}
 	#bk_check_field p{width:500px; margin:15px 0;}
 	#page_index{text-align: center;}
 	#bkTable th:NTH-CHILD(1) {width:100px;}
@@ -212,7 +212,7 @@
 	</script>
 </c:if>	
 <div class="way_top">
-	<h2>예약조회 및 취소<span>홈 > 예약안내 > 예약조회 / 취소</span></h2>
+	<h3>예약조회 및 취소<br /><span>홈 > 예약안내 > 예약조회 / 취소</span></h3>
 </div>
 <div id="bk_check" class='intro_padding'>
 	<form action="bookcheck.do" method="post" name="book1">

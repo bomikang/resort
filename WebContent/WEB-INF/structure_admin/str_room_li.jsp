@@ -11,6 +11,7 @@
 	.pageDivArea{text-align: center;}
 	#goFirst, #goLast{width:20px; background:none; border:none;}
 	.paging_btn_num{background:none; border:none; width:18px;}
+	#structureTable{margin-top:30px;}
 	#structureTable td:FIRST-CHILD{width:100px;}
 	#structureTable td:NTH-CHILD(2) {width:270px;}
 	#structureTable td:NTH-CHILD(3) {width:350px;}
@@ -122,6 +123,9 @@
 </script>
 </head>
 <body>
+<div class="intro_padding">
+	<h2>숙박 시설 목록</h2>
+	<hr />
 	<table id="structureTable"></table>
 	
 	<div class="pageDivArea">
@@ -129,5 +133,7 @@
 		<div class='pageBtnArea'></div>
 		<button id="goLast"class='paging_btn'><img src="image/paging_right2.png" alt="" /></button>
 	</div>
+</div>
+	
 </body>
 </html>

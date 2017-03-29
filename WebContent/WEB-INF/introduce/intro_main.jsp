@@ -2,18 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-	span.bold{width:93px; display:inline-block; color:#0f6815;}
-	#intro_main{background:#fff; border-radius: 10px;}
-	.way_top{position:relative; padding:10px 0; left:-43px;
-			background:url(image/ribbon.png) no-repeat left center; background-size: contain; margin:0;}
-	.way_top h3{text-align: left; padding-left:18px; padding-bottom:9px; color:#fff; height:20px; }
-	.way_top h3 span{font-size:12px;}
+	span.bold{width:93px; display:inline-block; color:#00894a;}
 </style>
 
 <div class="way_top">
 	<h3>눈꽃자연휴양림 소개글<br /><span>홈 > 휴양림 소개 > 눈꽃자연휴양림 소개글</span></h3>
 </div>
-<p id='showScroll'></p>
 <div id="intro_main" class='intro_padding'>
 	<ul>
 		<li>

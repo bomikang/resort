@@ -10,10 +10,11 @@
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-	#paging{margin-left: 500px;}
+	#write{width:200px; height:17px; position:relative; top:-2px;}
+	#searchBtn{width:50px; background:#43493e; padding:5px 0;}
+	#searchBtn:HOVER{color:#43493e; border-color:#43493e; background:#fff;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
 <script type="text/javascript">
 	$(function(){
 	$("#searchBtn").click(function(){
@@ -26,16 +27,20 @@
 </script>
 </head>
 <body>
+<div class="way_top">
+	<h3>후기<br /><span>홈 > 자유게시판 > 후기</span></h3>
+</div>
+<div class="intro_padding">
 	<c:if test="${!empty user_info }">
-		<a href="rev_insert.do">게시글 등록</a>
+		<a href="rev_insert.do" class='style_from_input'>게시글 등록</a>
 	</c:if>	
 	<table>
 		<tr>
-			<td><b>게시물 번호</b></td>
-			<td><b>제목</b></td>
-			<td><b>작성자</b></td>
-			<td><b>작성날짜</b></td>
-			<td><b>조회수</b></td>
+			<th><b>게시물 번호</b></th>
+			<th><b>제목</b></th>
+			<th><b>작성자</b></th>
+			<th><b>작성날짜</b></th>
+			<th><b>조회수</b></th>
 		</tr>
 		
 		<c:if test="${cntPage.hasNoArticles() }">
@@ -57,25 +62,30 @@
 		
 	</table>
 	<p id="paging">
-		<c:if test="${cntPage.hasArticles() }">
-			<c:if test="${cntPage.startPage > 5 }">
-				<a href ="review.do?pageNo=${cntPage.startPage -5 }">[이전]</a>
-			</c:if>
-				<c:forEach var="pNo" begin="${cntPage.startPage}" end="${cntPage.endPage }">
-					<a href ="review.do?pageNo=${pNo }">[${pNo}]</a>
+			<c:if test="${cntPage.hasArticles() }">
+				<c:if test="${cntPage.startPage > 5 }">
+					<a href="review.do?pageNo=${cntPage.startPage -5 }">[이전]</a>
+				</c:if>
+				<c:forEach var="pNo" begin="${cntPage.startPage}"
+					end="${cntPage.endPage }">
+					<a href="review.do?pageNo=${pNo }">[${pNo}]</a>
 				</c:forEach>
 				<c:if test="${cntPage.endPage<cntPage.totalPages }">
-						<a href="review.do?pageNo=${cntPage.startPage+5 }">[다음]</a>
-				 </c:if>
-		</c:if>
+					<a href="review.do?pageNo=${cntPage.startPage+5 }">[다음]</a>
+				</c:if>
+			</c:if>
+		</p>
+	<p class="act_btn_area">
+		<label for="">검색 :</label>
+		<select id="search">
+			<option value="title">제목</option>
+			<option value="name">작성자</option>
+			<option value="number">게시글번호</option>
+			<option value="date">날짜</option>
+		</select>
+		<input type="text" id="write" >
+		<button id="searchBtn">검색</button>
 	</p>
-	<select id="search">
-		<option value="title">제목</option>
-		<option value="name">작성자</option>
-		<option value="number">게시글번호</option>
-		<option value="date">날짜</option>
-	</select>
-	<input type="text" id="write" >
-	<button id="searchBtn">검색</button>
+</div>
 </body>
 </html>

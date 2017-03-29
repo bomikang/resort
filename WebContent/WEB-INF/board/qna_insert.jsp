@@ -45,23 +45,27 @@
 </script>
 </head>
 <body>
-	<c:if test="${!empty user_info}">
-		<!-- 일반회원 -->
-		<c:if test="${user_info.isMng == false }">
-			<c:set var="user" value="${user_info}"></c:set>
-		</c:if>
+
+<c:if test="${!empty user_info}">
+	<!-- 일반회원 -->
+	<c:if test="${user_info.isMng == false }">
+		<c:set var="user" value="${user_info}"></c:set>
 	</c:if>
-	
+</c:if>
+<div class="way_top">
+		<h3>1:1 문의<br /><span>홈 > 자유게시판 > 1:1 문의</span></h3>
+</div>
+<div class='intro_padding'>	
+	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>1:1 문의 등록</h2>
 	<form action="qnainsert.do" method="post" id='f1'>
 		<fieldset>
-			<legend>1:1 문의 등록</legend>
 			<p>
 				<label for="">작성자</label>
-				<input type="text" name="name" value="${user.my_name}" readonly="readonly"/>
+				<input type="text" name="name" value="${user.my_name}" readonly="readonly" disabled="disabled"/>
 			</p>
 			<p>
 				<label for="">이메일</label>
-				<input type="text" name="email" value="${user.my_mail}" readonly="readonly"/>
+				<input type="text" name="email" value="${user.my_mail}" readonly="readonly" disabled="disabled"/>
 			</p>
 			<p>
 				<label for="">제목</label>
@@ -73,11 +77,12 @@
 				<textarea name="content" required="required"></textarea>
 				<span class="err">더 이상 입력이 불가능 합니다.</span>
 			</p>
-			<p>
+			<p class='act_btn_area'>
 				<input type="submit" value="등록" id="btnInsert"/>
 				<input type="button" value="취소" id="btnCancel"/><!-- 리스트로 이동 -->
 			</p>
 		</fieldset>
 	</form>
+</div>	
 </body>
 </html>

@@ -2,11 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-	#bk_detail #warning{color:orange;}
-	#bk_detail h3{text-align: center; margin-bottom:30px;}
+	#bk_detail #warning{color:#cc0000;}
 	.book_detail_table{width:800px; margin: 0 auto;}
 	.book_detail_table th{width:20%;}
-	
+	.book_detail_table td{text-align: left; padding-left:10px;}
 </style>
 <script>
 	$(function(){
@@ -32,7 +31,7 @@
 	</script>
 </c:if>	
 <div class="way_top">
-	<h2>예약내역<span>홈 > 예약안내 > 예약조회 / 취소 > 예약내역</span></h2>
+	<h3>예약내역<br /><span>홈 > 예약안내 > 예약조회 / 취소 > 예약내역</span></h3>
 </div>
 <div id="bk_detail" class='intro_padding'>
 	<c:if test="${empty book }">
@@ -42,12 +41,12 @@
 	</c:if>
 	<c:if test="${!empty book }">
 		<c:if test="${pageId=='process' }">
-			<span id="warning">인터넷으로 예약하신 후 예약일로 부터 3일 이내(휴일제외) 지정계좌로 사용료를 결제하셔야만 예약이 확정되며, 사용료 입금시에는 
-				반드시 예약번호와 예약자 성명을 함께 기재하여 입금해 주십시오.(계좌번호 : 유진뱅크 123-45-123456 옥성휴양림)<br>
+			<p id="warning">인터넷으로 예약하신 후 예약일로 부터 3일 이내(휴일제외) 지정계좌로 사용료를 결제하셔야만 예약이 확정되며,<br />
+			 	사용료 입금시에는 반드시 예약번호와 예약자 성명을 함께 기재하여 입금해 주십시오.(계좌번호 : 유진뱅크 123-45-123456 눈꽃자연휴양림)<br>
 				예약일 포함 3일 이내에 결제하지 않으시면 자동으로 예약이 취소되므로 이점 유의하시기 바랍니다.
-			</span>
+			</p>
 		</c:if>
-		<h3><img src="image/icon_flower_orange.png" class='icon_flower'/>예약자 정보 <img src="image/icon_flower_orange.png" class='icon_flower'/></h3>
+		<h3 class='table_caption'>예약자 정보</h3>
 		<table class='book_detail_table'>
 			<tr>
 				<th>예약 번호</th>
@@ -67,7 +66,7 @@
 			</tr>
 		</table>
 		<br>
-		<h3><img src="image/icon_flower_orange.png" class='icon_flower'/>시설 정보 <img src="image/icon_flower_orange.png" class='icon_flower'/></h3>
+		<h3 class='table_caption'>시설 정보</h3>
 		<table class='book_detail_table'>
 			<tr>
 				<th>시설 명</th>

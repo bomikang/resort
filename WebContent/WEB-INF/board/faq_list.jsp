@@ -9,7 +9,9 @@ response.setHeader("expires","0");
 response.setHeader("pragma","no-cache");
 %>
 <style>
-	#faqList .faqDetail{display: none; border:1px dotted orange; text-align: left; margin-top: 20px; padding: 10px;}
+	#faqList .faqDetail{display: none; border:1px dotted orange; text-align: left; margin-top: 20px; padding: 10px; background:#fff; 
+	width:89%;}
+	#faqList .faqDetail .btnEdit{position:relative; left:50px;}
 	#faqList .faqTitleDt{width:100%; text-align: left;}
 	#faqList .faqTitleDt a{width:100%;padding:10px; font-weight: bold;}
 	#faqList .faqCheck{float: left; margin-left: 10px;}
@@ -77,7 +79,10 @@ response.setHeader("pragma","no-cache");
 		
 	});//ready
 </script>
-<div id="faqList">
+<div class="way_top">
+	<h3>자주 묻는 질문<br /><span>홈 > 자유게시판 > 자주 묻는 질문</span></h3>
+</div>
+<div id="faqList" class='intro_padding'>
 	<h2><img id="iconTitle" alt="" src="image/question (1).png">  자주 묻는 질문</h2>
 	<table border="1" id="faqTable">
 		<c:choose>

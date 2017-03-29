@@ -124,7 +124,10 @@
 	
 	
 </script>
-<div id="notice_list">
+<div class="way_top">
+	<h3>공지사항<br /><span>홈 > 자유게시판 > 공지사항</span></h3>
+</div>
+<div id="notice_list" class='intro_padding'>
 	<h2><img alt="" src="image/Notice.png" id="noticeIcon">공지사항</h2>
 	<table border="1">	
 		<c:if test="${!empty user_info }">		

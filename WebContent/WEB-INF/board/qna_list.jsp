@@ -14,6 +14,13 @@
 	.paging_btn_num{background:none; border:none; width:18px;}
 	#incomp_list, #comp_list{width:150px; margin-bottom:20px;}
 	.style_from_input{display:inline-block; width:100px; margin-bottom:20px; text-align: center;}
+	.btn_right{text-align: right;}
+	#mem_table th:NTH-CHILD(1), #admin_table th:NTH-CHILD(1){width:40px;}
+	#mem_table th:NTH-CHILD(3), #admin_table th:NTH-CHILD(3){width:110px;}
+	#mem_table th:NTH-CHILD(4), #admin_table th:NTH-CHILD(4){width:140px;}
+	#mem_table th:NTH-CHILD(5), #admin_table th:NTH-CHILD(5){width:90px;}
+	#mem_table td:NTH-CHILD(2), #admin_table td:NTH-CHILD(2){text-align:left; padding-left:15px;}
+	hr{margin-bottom:25px;}
 </style>
 <script>
 	function createQnaTable(data, $tableName){
@@ -136,28 +143,40 @@
 </script>
 </head>
 <body>
-	<!-- 손님 -->
-	<c:if test="${empty user_info}">
-		<script>
-			location.href="login.do?category=qna";
-		</script>
+<!-- 손님 -->
+<c:if test="${empty user_info}">
+	<script>
+		location.href="login.do?category=qna";
+	</script>
+</c:if>
+
+<c:if test="${!empty user_info}">
+	<c:if test="${user_info.isMng == false }"><!-- 일반회원 -->
+		<div class="way_top">
+			<h3>1:1 문의<br /><span>홈 > 자유게시판 > 1:1 문의</span></h3>
+		</div>
 	</c:if>
-	
+</c:if>
+<div class="intro_padding">
 	<c:if test="${!empty user_info}">
 		<!-- 일반회원 -->
 		<c:if test="${user_info.isMng == false }">
-			<a href="qnainsert.do" class='style_from_input'>게시글 등록</a>
 			<c:if test="${qnaList.size() == 0}">
 				<p>등록된 게시물이 없습니다</p>
 			</c:if>
 			<c:if test="${qnaList.size() > 0}">
+				<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>1:1 문의</h2>
 				<span id="memNum" style="display:none;">0</span><!-- 일반 회원은 0번으로 보냄 <= ajax사용하기 위함 -->
 				<table id="mem_table"></table>
 			</c:if>
+			<p class='btn_right'><a href="qnainsert.do" class='style_from_input'>게시글 등록</a></p>
+			
 		</c:if>
 		
 		<!-- 관리자 -->
 		<c:if test="${user_info.isMng == true }">
+			<h2>1:1 문의 목록</h2>
+			<hr />
 			<button id="incomp_list">답변 미완료 목록</button>
 			<button id="comp_list">답변 완료 목록</button>
 			<button id="all_list">전체 목록</button>
@@ -177,5 +196,6 @@
 		<div class='pageBtnArea'></div>
 		<button id="goLast"class='paging_btn'><img src="image/paging_right2.png" alt="" /></button>
 	</div>
+</div>
 </body>
 </html>
