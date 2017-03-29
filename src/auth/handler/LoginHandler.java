@@ -57,6 +57,7 @@ public class LoginHandler implements CommandHandler {
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}	
 
+
 				// 세션에 DATA 남기기위한 작업
 				if(member.getIsMng().equals(true)){ // 관리자일 경우
 					/**

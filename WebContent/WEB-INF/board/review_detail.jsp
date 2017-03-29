@@ -26,7 +26,7 @@
 				console.log(res);
 				var table = $("#rep_table");
 				$(res.data).each(function(i, obj) {
-					rep_no = $("<td>").html(obj.rep_no);
+					
 					
 					var tr = $("<tr>");//<tr></tr>
 					var td = $("<td>").html(obj.rep_name);
@@ -85,32 +85,9 @@
 						table.append(tr);
 					
 					});	
-					
 				} 
 			});
 		});
-	/* 	 $("#repDelBtn").click(function() {
-			$.ajax({
-				url:"rev_replyDelete.do",
-				type:"post",
-				timeout:30000,
-				dataType:"json",
-				data:{"rep_no":rev_no,"rev_no":$("#rev_no").val()},
-				success:function(res){
-					console.log(res);
-					var table = $("#rep_table");
-					table.empty();
-					$(res.data).each(function(i, obj) {						
-						var tr = $("<tr>");//<tr></tr>
-						var td = $("<td>").html(obj.rep_no);
-						var td2 = $("<td>").html(obj.rep_detail);
-						var td3 = $("<td>").html(obj.rep_regdate);
-						tr.append(td).append(td2).append(td3).append("<button id='repDelBtn'>삭제").append("<button>수정");//<tr><td>rep_no</td></tr>
-						table.append(tr);
-					});			
-				} 
-			});
-		});  */
 	});
 	
 </script>

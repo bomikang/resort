@@ -62,6 +62,7 @@ response.setHeader("pragma","no-cache");
 		<header class="header_menu" style="z-index:9999;">
 			<div>
 				<div id="menu_area">
+
 					<ul>
 						<li><a href="introduce.do">휴양림소개</a></li>
 						<li><a href="bookinform.do">예약안내</a></li>
