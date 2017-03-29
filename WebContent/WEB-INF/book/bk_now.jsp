@@ -20,6 +20,7 @@ response.setHeader("pragma","no-cache");
 	#bk_now #server #serverTime{width: 110px; float: right;}
 	#bookTable td:HOVER {background:#ecbb5c;}
 	#bk_now .bkIcon{width:15px; height: 15px;}
+	#bk_now .paddingleft{padding-left: 30px;}
 </style>
 <script type="text/javascript">	
 	$(function(){	
@@ -244,7 +245,11 @@ response.setHeader("pragma","no-cache");
 						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
-						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+						if((k+1) == today.getDate()){
+							dateForm += "<td><a href='#' class='today'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+						}else{
+							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+						}
 					}
 				}							
 			}
@@ -268,8 +273,8 @@ response.setHeader("pragma","no-cache");
 		</script>
 	</c:if>
 	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
-	<h2 id="bkTable"></h2>
-	<p>
+	<h2 id="bkTable" class="paddingleft"></h2>
+	<p class="paddingleft">
 		<label for="">시설 이름 : </label> 
 		<select id="bkStrId">
 			<c:forEach items="${strId }" var="str">
