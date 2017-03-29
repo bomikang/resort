@@ -32,7 +32,7 @@ public class LoginHandler implements CommandHandler {
 				Member no_member = dao.selectOutdateIs(conn, id);
 				
 				
-				/*if(no_member == null){	 // 아이디가 없을경우
+				if(no_member == null){	 // 아이디가 없을경우
 					req.setAttribute("notJoin", true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}else if(id==""){     // 아이디란이 공란일 경우
@@ -47,7 +47,7 @@ public class LoginHandler implements CommandHandler {
 					req.setAttribute("notPass",true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}
-*/				
+				
 				// 세션에 DATA 남기기위한 작업
 				if(member.getIsMng().equals(true)){ // 관리자일 경우
 					/**

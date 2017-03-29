@@ -65,7 +65,7 @@ response.setHeader("pragma","no-cache");
 				<div id="logo_area">
 					<a href="index.jsp"><img src="image/logo2.png" alt="" /></a>
 				</div>
-				<div id="menu_area">
+				<div id="menu_area">	
 					<ul>
 						<li><a href="introduce.do">휴양림소개</a></li>
 						<li><a href="book.do">예약안내</a></li>
