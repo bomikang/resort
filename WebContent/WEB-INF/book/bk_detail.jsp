@@ -100,10 +100,13 @@
 			<c:when test="${pageId=='check' }">
 				<c:choose>
 					<c:when test="${book.state=='예약취소' }">
-						<button type="button" id="btnBack">확인</button>
+						<p class="act_btn_area"><button type="button" id="btnBack">확인</button></p>
 					</c:when>
 					<c:when test="${book.state=='예약완료' }">
-						<button type="button" id="btnBack">확인</button>
+						<p class="act_btn_area"><button type="button" id="btnBack">확인</button></p>
+					</c:when>
+					<c:when test="${book.state=='입금완료' }">
+						<p class="act_btn_area"><button type="button" id="btnBack">확인</button></p>
 					</c:when>
 					<c:otherwise>
 						<form action="bookcancel.do" method="post" class="bkcancel">

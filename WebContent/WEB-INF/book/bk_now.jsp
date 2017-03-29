@@ -226,21 +226,22 @@ response.setHeader("pragma","no-cache");
 				if(bList != undefined){
 					if(date.getMonth()==today.getMonth() && (k+1) < today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
+						dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약 내역이 존재할 때
-						if((k+1)==bList[index].date){
+	
+						if(bList[index] != undefined && (k+1)==bList[index].date){
 							console.log("일치");
 							if(bList[index].state=="입금완료"){								
-								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";								
+								dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/isBooked.png'></a></td>";								
 							}else if(bList[index].state=="입금대기"){
-								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/booked.png'></a></td>";									
+								dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/booked.png'></a></td>";									
 							}
 						}else{
 							if((k+1) == today.getDate()){
-								dateForm += "<td><a href='#' class='today'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+								dateForm += "<td><a href='#' class='today' title='예약마감'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 							}else{
-								dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";	
+								dateForm += "<td><a href='#' class='noBooked' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].nameById+" "+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";	
 							}
 						}
 					}
@@ -250,13 +251,13 @@ response.setHeader("pragma","no-cache");
 				}else{
 					if(date.getMonth()==today.getMonth() && (k+1) < today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
+						dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
 						if((k+1) == today.getDate()){
-							dateForm += "<td><a href='#' class='today'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+							dateForm += "<td><a href='#' class='today' title='예약마감'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 						}else{
-							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+							dateForm += "<td><a href='#' class='noBooked' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 						}
 					}
 				}							
@@ -283,15 +284,10 @@ response.setHeader("pragma","no-cache");
 			location.href="book.do";
 		</script>
 	</c:if>
-<<<<<<< HEAD
-	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
-	<h2 id="bkTable" class="paddingleft"></h2>
-	<p class="paddingleft">
-=======
+
 	<h3 id="server">[서버시간]<span id="serverTime">00:00:00</span></h3>
 	<h2 id="bkTable"></h2>
-	<p id='bkStrArea'>
->>>>>>> refs/remotes/origin/bomi02
+	<p id='bkStrArea' class="paddingleft">
 		<label for="">시설 이름 : </label> 
 		<select id="bkStrId">
 			<c:forEach items="${strId }" var="str">

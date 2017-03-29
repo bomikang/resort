@@ -40,7 +40,13 @@ public class BookTotalHandler implements CommandHandler {
 			/*if(myinfo != null){*/
 				Connection conn = null;
 				List<Book> bList = null;
+				String menu = "/WEB-INF/book/bk_menu";
 				try{
+					String key = req.getParameter("key");
+					
+					if(key != null && !key.isEmpty()){
+						menu = "/WEB-INF/member/mem_menu";
+					}
 					conn = ConnectionProvider.getConnection();
 									
 					BookDao bDao = BookDao.getInstance();
@@ -86,7 +92,8 @@ public class BookTotalHandler implements CommandHandler {
 				}finally {
 					JdbcUtil.close(conn);
 				}
-				return "index.jsp?page=/WEB-INF/book_admin/bk_total&menu=/WEB-INF/book/bk_menu";	
+				String url = "index.jsp?page=/WEB-INF/book_admin/bk_total&menu="+menu;
+				return url;
 			/*}*/
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			/*예약상태 조건*/
