@@ -19,7 +19,7 @@
 		</tr>
 		<c:if test="${cntPage.hasNoArticles() }">
 			<tr>
-				<td colspan="5">게시글이 없습니다.</td>
+				<td colspan="5">검색한 내용이 없습니다.</td>
 			</tr>
 		</c:if>
 		<c:forEach var="i"  items="${cntPage.content}">
@@ -31,21 +31,18 @@
 				<td>${i.rev_readcnt }</td>
 			</tr>
 		</c:forEach>
-			<c:if test="${cntPage.hasArticles() }">
-			<tr>
-				<td colspan="5">
-					<c:if test="${cntPage.startPage > 5 }">
-					<a href ="review.do?pageNo=${cntPage.startPage -5 }">[이전]</a>
-					</c:if>
-					<c:forEach var="pNo" begin="${cntPage.startPage}" end="${cntPage.endPage }">
-					<a href ="review.do?pageNo=${pNo }">[${pNo}]</a>
-					 </c:forEach>
-					 <c:if test="${cntPage.endPage<cntPage.totalPages }">
-					 <a href="review.do?pageNo=${cntPage.startPage+5 }">[다음]</a>
-					 </c:if>
-				</td>
-			</tr>
-		</c:if>
 	</table>		
+		<c:if test="${cntPage.hasArticles() }">
+			<c:if test="${cntPage.startPage > 5 }">
+				<a href ="review.do?pageNo=${cntPage.startPage -5 }">[이전]</a>
+			</c:if>
+			<c:forEach var="pNo" begin="${cntPage.startPage}" end="${cntPage.endPage }">
+				<a href ="review.do?pageNo=${pNo }">[${pNo}]</a>
+			</c:forEach>
+			<c:if test="${cntPage.endPage<cntPage.totalPages }">
+				<a href="review.do?pageNo=${cntPage.startPage+5 }">[다음]</a>
+			</c:if>
+		</c:if>
+		<a href="review.do"><button>목록</button></a>
 </body>
 </html>

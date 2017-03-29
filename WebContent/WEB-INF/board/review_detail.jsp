@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	request.getSession().getAttribute("user_info");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +14,9 @@
 	#repDelBtn{
 	color:blue;
 	}
+	#top_table tr th:NTH-CHILD(1), #rep_table tr td:NTH-CHILD(1){width:130px;}
+	#top_table tr th:NTH-CHILD(2), #rep_table tr td:NTH-CHILD(2){width:700px;}
+	
 </style>
 <script type="text/javascript">
 	var rep_no=0;
@@ -42,6 +48,10 @@
 		});	
 		
 		$("#replyBtn").click(function() {
+			if($("#rep_write").val()==""){
+				alert("댓글 내용을 입력해주세요.");
+				return false;
+			}else{
 			$.ajax({
 				url:"rev_replyInsert.do",
 				type:"post",
@@ -59,10 +69,12 @@
 						var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
 						tr.append(td).append(td2).append(td3)/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
 						table.append(tr);
+						$("#rep_write").val("");
 					});			
 				} 
 			});
-		});
+		}
+	});
 		$(document).on("click", ".repDelBtn", function() {
 			var rep_no = $(this).find(".rep_no").val();
 			
@@ -92,36 +104,37 @@
 	
 </script>
 </head>
-<body>
+<body>	
 	<table>
 	<tr>
-		<td>제목 : ${rev_list.rev_title }</td>
+		<td> ${rev_list.rev_title }</td>
 	</tr>		
 	<tr>
-		<td>이름 :${rev_list.rev_name }</td>
+		<td>${rev_list.rev_name }</td>
 	</tr>
 	<tr>
-		<td>내용 :${rev_detail.rev_detail }</td>
+		<td>${rev_detail.rev_detail }</td>
 	</tr>	
 </table>
-	<c:if test="${ok }">
+	<c:if test="${user_info.my_name.equals(rev_list.rev_name)}">
 		<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete">삭제</a></span>
 		<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }">글 수정</a></span>
 	</c:if>
-<hr>
-
+	<hr>
 	<input type="hidden" name="rev_no" id="rev_no" value="${rev_list.rev_no }">
 	<p>[나도 한마디]</p>
-	<textarea rows="7" cols="100" placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write" name="rep_write"></textarea>
+	<textarea rows="7" cols="100" placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write" name="rep_write" required="required"></textarea>
 	<button id="replyBtn">등록</button>
 
-	
-		<table id="rep_table">
+		<table id="top_table">
 			<tr>
-				<td>아이디</td>
-				<td>내용</td>
-				<td>날짜</td>
+				<th>아이디</th>
+				<th>내용</th>
+				<th>날짜</th>
 			</tr>	
+		</table>
+		<table id="rep_table">
+			
 		</table>
 	
 

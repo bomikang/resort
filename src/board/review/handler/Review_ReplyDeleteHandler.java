@@ -33,19 +33,18 @@ public class Review_ReplyDeleteHandler implements CommandHandler {
 		 if(req.getMethod().equalsIgnoreCase("post")){
 			Connection conn = null;	
 			try{
-				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			
 				conn = ConnectionProvider.getConnection();
 				ReplyDao repdao = ReplyDao.getInstance();
 				int rep_no = Integer.parseInt(req.getParameter("rep_no"));
-				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>"+rep_no);
 				int rev_no = Integer.parseInt(req.getParameter("rev_no"));
 				LoginMemberInfo userInfo = (LoginMemberInfo)req.getSession(false).getAttribute("user_info");
+				conn.setAutoCommit(false);
 				repdao.delete(conn, rep_no);
-				
 				List<Reply> rep_list=repdao.rep_list(conn, rev_no); // 해당 게시글의 댓글
 				HashMap<String, List<Reply>> map = new HashMap<>();
 				map.put("data", rep_list);	
-				
+				conn.commit();
 				//json 사용 시 필요구문
 				ObjectMapper om= new ObjectMapper();
 				String json = om.writeValueAsString(map);	//  JSP화면 JSON 데이터 result값 반환 

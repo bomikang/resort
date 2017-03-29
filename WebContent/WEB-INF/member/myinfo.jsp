@@ -103,6 +103,10 @@
 			});    
 	
 			  $("#btn3_1").click(function(){
+				  if($("#password").val() != $("#password2").val()){
+			            alert("패스워드가 일치하지 않습니다.");
+						return false;            
+			        }  
 				$.ajax({
 					url:"updateInfo.do",
 					type:"post",
@@ -212,16 +216,17 @@
 					
 					<tr>
 						<td>비밀번호 변경  </td>
-						<td>${info.password } <button type="button" id="btn3">수정</button>
+						<td>****** <button type="button" id="btn3">수정</button>
 							<span id="passwordUpdate" class="update">
-								<input type="text" name="password" id="password" placeholder="비밀번호">
+								<input type="password" name="password" id="password">
+								<input type="password" name="password2" id="password2">
 									<button type="button" id="btn3_1">완료</button>
 									<button type="button" id="btn3_2">취소</button>
 							</span>
 						</td>
 					</tr>
 					<tr>
-						<td>본인확인 이메일  ${info.mail }</td>
+						<td>본인확인 이메일</td>
 						<td>${info.mail } <button type="button" id="btn4">수정</button>
 							<span id="mailUpdate" class="update">
 								<input type="text" name="mail" id="mail" placeholder="e-mail">
@@ -242,8 +247,7 @@
 					</tr>
 					<tr>
 						<td>탈퇴</td>
-						<td><button type="button" id="withdrawal">탈 퇴</button>
-							
+						<td><button type="button" id="withdrawal">탈 퇴</button>	
 						</td>
 					</tr>
 					

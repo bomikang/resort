@@ -6,3 +6,8 @@
 	<a href="join.do">회원가입</a>
 	<a href="login.do">로그인</a>
 </c:if>
+<c:if test="${!empty user_info }">
+	<a href="myinfo.do">회원정보</a>
+	<a href="bookcheck.do">예약조회/취소</a>
+	<a href="qna.do">1:1문의</a>
+</c:if>

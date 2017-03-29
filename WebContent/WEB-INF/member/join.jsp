@@ -217,10 +217,10 @@ $(function(){
 		<fieldset>
 			<p>
 				<label>아이디 : </label><span class="form_EX">5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</span><br> 
-				<input type="text" name="id" id="id" required="required" placeholder="아이디를 입력하세요" style="width:300px"> 
+				<input type="text" name="id" id="id" required="required" placeholder="아이디를 입력하세요" style="width:300px"><button id="btn" type="button">아이디중복</button> 
 				<span class="ex">형식에 맞지 않는 아이디 입니다.</span>
 				<span class="error">사용중인 아이디 입니다.</span>
-				<button id="btn" type="button">아이디중복</button>
+				
 			</p>
 			<p>
 				<label>암호 : </label><span class="form_EX">6~24자 영문대소문자, 숫자, 특수문자 혼합하여 사용 가능합니다.</span><br>
