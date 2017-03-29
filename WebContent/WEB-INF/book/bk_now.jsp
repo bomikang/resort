@@ -16,10 +16,15 @@ response.setHeader("pragma","no-cache");
 	#bk_now #bookTable table{table-layout:auto;width:100%;}
 	#bk_now #bookTable .sun{color: red;}
 	#bk_now #bookTable .sat{color: blue;}
-	#bk_now #server{text-align: right;color: blue;}
-	#bk_now #server #serverTime{width: 110px; float: right;}
-	#bookTable td:HOVER {background:#ecbb5c;}
-	#bk_now .bkIcon{width:15px; height: 15px;}
+	#bk_now #server{text-align: right; color:#0147bb;}
+	#bk_now #server #serverTime{width: 90px; float: right;}
+	#bookTable th:NTH-CHILD(1){width:70px;}
+	#bookTable td:HOVER {background:#9acaaf;}
+	#bk_now .bkIcon{width:16px; height: 16px;}
+	#bkTable {text-align: center; font-family:"SeoulHangangM"; color:#595959;}
+	#bkTable a{color:#595959;}
+	#bkTable a:HOVER{color:#dd7028;}
+	#bkStrArea{padding-left:30px;}
 </style>
 <script type="text/javascript">	
 	$(function(){	
@@ -40,7 +45,7 @@ response.setHeader("pragma","no-cache");
 		var date = new Date();
 /* 		setMonthTable(date); */		
 		setScreen(date); 
-		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");			
+		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'> ▶ </a>");			
 		
 		/** combo box 내에서 선택된 아이템이 변할 때 마다 그에 맞는 화면으로 전환하도록 함(필요시 버튼삽입 필요)*/
 		$(document).on("change", "#bkStrId", function(){
@@ -61,7 +66,7 @@ response.setHeader("pragma","no-cache");
 			}
 			
 			setScreen(date);
-			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");	
+			$("#bkTable").html("<a href='#' class='prevMonth'> ◀ </a>"+(date.getMonth()+1)+"월 달력");	
 			return false;
 		});
 		
@@ -80,7 +85,7 @@ response.setHeader("pragma","no-cache");
 			}
 			
 			setScreen(date);
-			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");	
+			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'> ▶ </a>");	
 			return false;
 		});
 		
@@ -246,6 +251,9 @@ response.setHeader("pragma","no-cache");
 		$("#bookTable").prepend(dateForm);
 	}//end of setMonthTable
 </script>
+<div class="way_top">
+	<h2>예약하기<span>홈 > 예약안내 > 예약하기</span></h2>
+</div>
 <div id="bk_now">
 	<c:if test="${noStr == true }">
 		<script type="text/javascript">
@@ -258,9 +266,9 @@ response.setHeader("pragma","no-cache");
 			location.href="book.do";
 		</script>
 	</c:if>
-	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
+	<h3 id="server">[서버시간]<span id="serverTime">00:00:00</span></h3>
 	<h2 id="bkTable"></h2>
-	<p>
+	<p id='bkStrArea'>
 		<label for="">시설 이름 : </label> 
 		<select id="bkStrId">
 			<c:forEach items="${strId }" var="str">

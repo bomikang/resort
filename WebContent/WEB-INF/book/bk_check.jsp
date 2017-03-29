@@ -9,6 +9,12 @@
 	#bk_check .bkStrIdName{color:green; font-weight: bold;}
 	#bk_check_field p{width:500px; margin:15px 0;}
 	#page_index{text-align: center;}
+	#bkTable th:NTH-CHILD(1) {width:100px;}
+	#bkTable th:NTH-CHILD(2) {width:100px;}
+	#bkTable th:NTH-CHILD(3) {width:250px;}
+	#bkTable th:NTH-CHILD(4) {width:250px;}
+	#bkTable th:NTH-CHILD(5) {width:100px;}
+	#bkTable th:NTH-CHILD(6) {width:100px;}
 </style>
 <script>
 
@@ -206,8 +212,10 @@
 		location.href="login.do?category=bookcheck";
 	</script>
 </c:if>	
-<div id="bk_check">
-	<h2>예약 확인 및 취소</h2>
+<div class="way_top">
+	<h2>예약조회 및 취소<span>홈 > 예약안내 > 예약조회 / 취소</span></h2>
+</div>
+<div id="bk_check" class='intro_padding'>
 	<form action="bookcheck.do" method="post" name="book1">
 		<fieldset id="bk_check_field">
 			<input type="hidden" name="index" id="pageIndex">

@@ -1,9 +1,9 @@
 @CHARSET "UTF-8";
 /* 초기화 */
-body{margin:0; padding:0; font-family:"NanumSquareB";}
+body{margin:0; padding:0; font-family:"NanumBarunGothic";}
 ul, ol{margin:0; padding:0;}
 ul li, ol li{list-style-type: none; margin:0; padding:0;}
-a{text-decoration: none; color:black; margin:0; padding:0;}
+a{text-decoration: none; color:black; margin:0; padding:0; font-family: "맑은 고딕";}
 
 @font-face{
 	font-family: "NanumSquareB";
@@ -16,6 +16,14 @@ a{text-decoration: none; color:black; margin:0; padding:0;}
 @font-face{
 	font-family: "210HaetsalB";
 	src: url(../fonts/210HaetsalB.woff) format("woff");
+}
+@font-face{
+	font-family: "NanumBarunGothic";
+	src: url(../fonts/NanumBarunGothic.woff) format("woff");
+}
+@font-face{
+	font-family: "SeoulHangangM";
+	src: url(../fonts/08SeoulHangangM.woff) format("woff");
 }
 .wrapper{display:block; width:100%;}
 
@@ -83,3 +91,11 @@ a.moving_btn:HOVER {background:#fff; border-color:#945b01; color:#945b01; font-w
 
 .paging_btn img{width:15px; position:relative; top:2px;}
 .paging_btn_num {color:#414141; font-size:18px; font-family: NanumSquareB; padding:0 6px;}
+
+.way_top h2{border-top:1px solid #bcbcbc;border-bottom:1px solid #bcbcbc; padding:10px 0px; color:#595959;}
+.way_top h2 span{padding-left:20px; font-size:14px;}
+
+.intro_padding{padding:20px 30px;}
+.icon_flower{width:30px; position:relative; top:10px; margin-right:3px;}
+.inner_content{padding-left:35px;}
+.inner_content li{margin:13px 0;}

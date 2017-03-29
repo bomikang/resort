@@ -44,12 +44,16 @@
 		$("#btnUpdateStr").click(function() {
 			var strIdText = "";
 			
-			switch ($("input[name='strId']").val()) {
-			case "1": strIdText = "숲속의집"; break;
-			case "2": strIdText = "산림휴양관"; break;
-			case "3": strIdText = "캐라반"; break;
-			case "4": strIdText = "돔하우스"; break;
-			}
+			$("input[type='radio']").each(function(i, obj) {
+				if ($(obj).prop("checked") == true) {
+					switch ($(obj).val()) {
+					case "1": strIdText = "숲속의집"; break;
+					case "2": strIdText = "산림휴양관"; break;
+					case "3": strIdText = "캐라반"; break;
+					case "4": strIdText = "돔하우스"; break;
+					}
+				}
+			});
 			
 			/* 1. 공란 존재 여부 */
 			if( !checkInputEmpty($("input[type='text']"))){
