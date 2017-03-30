@@ -43,6 +43,14 @@
 		});//기간을 변경할 때
 		
 		$("#btnDate").click(function(){
+			var st = srvTime();
+			var now = new Date(st);
+			if(now.getHours()>=12 && now.getMinutes()>=30){
+				alert("금일 예약이 마감 되어 예약을 진행할 수 없습니다. 예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
+				location.href="book.do";
+				return false;
+			}
+		
 			$.ajax({
 				url:"bookcheckdate.do",
 				type:"post",
@@ -77,6 +85,14 @@
 			if(!confirm("선택하신 기간으로 예약 하시겠습니까?")){
 				return false;
 			}else{
+				var st = srvTime();
+				var now = new Date(st);
+				if(now.getHours()>=12 && now.getMinutes()>=30){
+					alert("금일 예약이 마감 되어 예약을 진행할 수 없습니다. 예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
+					location.href="book.do";
+					return false;
+				}	
+			
 				//예약하기 버튼클릭 후 예약진행을 선택한 경우	
 				var tel1 = $("input[name='bkTel2']").val();
 				var tel2 = $("input[name='bkTel3']").val();
@@ -178,6 +194,37 @@
 				return temp.getFullYear()+"-"+(temp.getMonth()+1)+"-"+temp.getDate();
 			}			
 		}
+	}
+	
+	var xmlHttp;
+	/* 서버 시간을 표기하기 위한 메소드(인터넷 참조) */
+	function srvTime(){	
+		if (window.XMLHttpRequest) {//분기하지 않으면 IE에서만 작동된다.
+	
+			xmlHttp = new XMLHttpRequest(); // IE 7.0 이상, 크롬, 파이어폭스 등
+		
+			xmlHttp.open('HEAD',window.location.href.toString(),false);
+		
+			xmlHttp.setRequestHeader("Content-Type", "text/html");
+		
+			xmlHttp.send('');
+		
+			return xmlHttp.getResponseHeader("Date");
+	
+		}else if (window.ActiveXObject) {
+	
+			xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
+		
+			xmlHttp.open('HEAD',window.location.href.toString(),false);
+		
+			xmlHttp.setRequestHeader("Content-Type", "text/html");
+		
+			xmlHttp.send('');
+		
+			return xmlHttp.getResponseHeader("Date");
+	
+		}
+
 	}
 </script>
 
