@@ -25,8 +25,6 @@
 	.style_from_input{display: inline-block; text-align: center;}
 	textarea{width: 100%; height:50px;}	
 </style>
-
-</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
 	function rep_Btn(){
@@ -69,11 +67,13 @@
 				});
 			/*  made by yujin 오늘 저녁 본인이 작성한 댓글만 삭제가능하도록 하는거 관련한 수정사항이 git에 없어서 혹시나 하는 마음으로 코드만 작성합니다. 테스트도 없어요.
 				만약 수정이 되어있다면 이 부분은 가차없이 삭제해 주세요. - 말도없이 주석 달아서 죄송합니다.ㅜㅜ
+
 				댓글 테이블 구성 부분 - 삭제 버튼 내 댓글 등록 회원의 멤버 번호를 가지고 있는 hidden type의 input 태그 삽입 */
 				
 				/* 혹시나 이 부분이 제대로 적용되지 않을 시 setBtnDel()같이 함수로 만들어 댓글 리스트 불러올떄마다(ajax사용) 마지막으로 만든 메소드를 호출해서 사용하되
 				만약.... 그래도 안되면 폐기처분 고고 */
 			
+
 			
 			} 
 		});	
@@ -142,6 +142,7 @@
 				});
 			}
 			});
+
 		});
 	});
 </script>

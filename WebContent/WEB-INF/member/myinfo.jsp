@@ -12,6 +12,7 @@ table {width: 600px;margin: 0 auto;margin-top: 25px;}
 table td {text-align: center; height:50px; font-size:16px;}
 table th:FIRST-CHILD {width: 130px;}
 input[type='submit'], button{width:50px;}
+<<<<<<< HEAD
 input[type='text'], input[type='password']{width:120px;}
 input#origin_pwd,input#mail{width:200px;}
 small {color: #777;margin: 15px 0;}
@@ -68,7 +69,6 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 								}
 					} 
 				});
-
 			}); 
 		 $("#btn4").click(function(){
 				$("#mailUpdate").css("display","block");
@@ -314,6 +314,7 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 						</form>
 					</td>
 				</tr>
+
 				<tr>
 					<th>비밀번호 변경</th>
 					<td><span id='infoPwd'><input type="password" id="origin_pwd" name="origin_pwd"
@@ -334,7 +335,6 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 							placeholder="e-mail" required="required">
 							<button type="button" id="btn4_1">완료</button>
 							<button type="button" id="btn4_2">취소</button>
-
 					</span>
 					</td>
 				</tr>
@@ -349,8 +349,6 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 								<option value="017">017</option>
 						</select> - <input type="text" required="required" name="bkTel2"> -
 							<input type="text" required="required" name="bkTel3">
-
-
 							<button type="button" id="btn5_1">완료</button>
 							<button type="button" id="btn5_2">취소</button>
 					</span></td>

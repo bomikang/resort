@@ -12,7 +12,6 @@
 <style>
 .errors{color:red;padding:0;display:block;font-size: 12px;}
 .errors{text-align: left;}
-
 .way_top h2{color:#fff; position:relative; left:30px; top:5px;}
 fieldset{width:500px; margin:0 auto; margin-top:70px; padding-top:20px; padding-bottom:50px;background:rgba(255,255,255,0.9); border-radius: 20px; box-shadow: 1px 1px 0px 1px black;}
 fieldset p{width:380px;}
@@ -22,7 +21,6 @@ fieldset p input{width:300px !important; height:31px !important; border-radius: 
 ::-webkit-input-placeholder{color:#fff;}
 fieldset #sub{background:#FFBB83 !important; width:370px; border-radius: 15px; height:46px; color:#fff; font-family:"NanumSquareB"; font-size:20px;}
  .bottom_btn p{font-size:14px; width:500px; margin:0 auto; margin-top:30px;} 
-
 </style>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -39,7 +37,8 @@ fieldset #sub{background:#FFBB83 !important; width:370px; border-radius: 15px; h
 		<fieldset>
 			<p>
 				<label><img src="image/icon_id_gray.png" alt="" /></label>
-				<input type="text" name="id" id="id" placeholder="아이디" required="required">
+				<input type="text" name="id" id="id" placeholder="아이디" required="required"> 
+
 				<c:if test="${notJoin}">
 					<span class="errors">아이디가  틀렸습니다.</span>
 					<script type="text/javascript">
