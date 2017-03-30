@@ -232,7 +232,7 @@ var reg_tel2 = /^\d{4}$/;
 					<form action="updateInfo.do" method="post">
 						${info.name }<button type="button" id="btn1">수정</button>
 						<span id="nameUpdate" class="update">
-							<input type="text" name="name" id="name" placeholder="이름">
+							<input type="text" name="name" id="name" placeholder="이름" required="required">
 							<button type="button" id="btn1_1">완료</button>
 							<button type="button" id="btn1_2">취소</button>
 						</span>
@@ -245,8 +245,8 @@ var reg_tel2 = /^\d{4}$/;
 				<td>********
 					<button type="button" id="btn3">수정</button>
 					<span id="passwordUpdate" class="update">
-						<input type="password" name="password" id="password" placeholder="비밀번호 입력">
-						<input type="password"name="password2" id="password2" placeholder="비밀번호 확인">
+						<input type="password" name="password" id="password" placeholder="비밀번호 입력" required="required">
+						<input type="password"name="password2" id="password2" placeholder="비밀번호 확인" required="required">
 						<button type="button" id="btn3_1">완료</button>
 						<button type="button" id="btn3_2">취소</button>
 					</span>
@@ -257,7 +257,7 @@ var reg_tel2 = /^\d{4}$/;
 				<td>
 					${info.mail }<button type="button" id="btn4">수정</button> 
 					<span id="mailUpdate" class="update"> 
-						<input type="text" name="mail" id="mail" placeholder="e-mail">
+						<input type="text" name="mail" id="mail" placeholder="e-mail" required="required">
 						<button type="button" id="btn4_1">완료</button>
 						<button type="button" id="btn4_2">취소</button>
 					</span>
@@ -268,6 +268,9 @@ var reg_tel2 = /^\d{4}$/;
 				<td>
 					<span id='infoTel'>${info.tel }</span><button type="button" id="btn5">수정</button> 
 					<span id="telUpdate" class="update">
+<<<<<<< HEAD
+						<input type="text" name="tel" id="tel" placeholder="전화번호" required="required">
+=======
 						<select name="bkTel1">
 							<option value="010">010</option>
 							<option value="011">011</option>
@@ -279,6 +282,7 @@ var reg_tel2 = /^\d{4}$/;
 						-
 						<input type="text" required="required" name="bkTel3">
 
+>>>>>>> refs/remotes/origin/yujin_ver_2
 						<button type="button" id="btn5_1">완료</button>
 						<button type="button" id="btn5_2">취소</button>
 					</span>

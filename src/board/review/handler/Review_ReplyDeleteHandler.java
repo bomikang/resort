@@ -33,7 +33,7 @@ public class Review_ReplyDeleteHandler implements CommandHandler {
 		 if(req.getMethod().equalsIgnoreCase("post")){
 			Connection conn = null;	
 			try{
-			
+				
 				conn = ConnectionProvider.getConnection();
 				ReplyDao repdao = ReplyDao.getInstance();
 				int rep_no = Integer.parseInt(req.getParameter("rep_no"));

@@ -10,6 +10,7 @@
 <script type="text/javascript">
 </script>
 <style>
+
 	.errors{	
 	color:red;
 	padding:0;
@@ -45,7 +46,6 @@ fieldset p{width:420px;}
 		<fieldset>
 			<p>
 				<label>아이디</label><br />  <input type="text" name="id" id="id" placeholder="아이디" required="required"> 
-
 				<c:if test="${notJoin}">
 					<span class="errors">아이디가  틀렸습니다.</span>
 					<script type="text/javascript">
@@ -53,6 +53,7 @@ fieldset p{width:420px;}
 							$("#id").focus();
 						});
 					</script>
+
 				</c:if>
 				<c:if test="${outId }">
 					<span class="errors">아이디를 입력하세요.</span>
@@ -61,14 +62,17 @@ fieldset p{width:420px;}
 							$("#id").focus();
 						});
 					</script>
+
 				</c:if>
 				<c:if test="${no_member }">
+
 					<span class="errors">탈퇴한 회원의 아이디입니다.</span>
 					<script type="text/javascript">
 						$(function(){
 							$("#id").focus();
 						});
 					</script>
+
 				</c:if> 
 			</p>
 			<p>
@@ -88,6 +92,7 @@ fieldset p{width:420px;}
 						$("#password").focus();
 					});
 				</script>
+
 				</c:if>
 			</p>
 		</fieldset>
