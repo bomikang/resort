@@ -11,15 +11,24 @@ response.setHeader("pragma","no-cache");
 %>
 
 <style>
-	#bk_now{width:100%;}
+	#bk_now{width:100%; background:rgba(255,254,232,1); border-radius: 10px; padding:13px 0 30px;}
 	#bk_now #bookTable{width:95%; margin: 0 auto; }
 	#bk_now #bookTable table{table-layout:auto;width:100%;}
 	#bk_now #bookTable .sun{color: red;}
 	#bk_now #bookTable .sat{color: blue;}
-	#bk_now #server{text-align: right;color: blue;}
-	#bk_now #server #serverTime{width: 110px; float: right;}
-	#bookTable td:HOVER {background:#ecbb5c;}
+
+	#bk_now #server{text-align: right; color:#0147bb; margin-right:25px;}
+	#bk_now #server #serverTime{width: 80px; float: right;}
+	#bookTable th:NTH-CHILD(1){width:70px;}
+	#bookTable td:HOVER {background:#9acaaf;}
+	#bk_now .bkIcon{width:16px; height: 16px;}
+	#bkTable {text-align: center; font-family:"SeoulHangangM"; color:#595959;}
+	#bkTable a{color:#595959;}
+	#bkTable a:HOVER{color:#dd7028;}
+	#bkStrArea{padding-left:30px;}
 	#bk_now .bkIcon{width:15px; height: 15px;}
+	#bk_now .paddingleft{padding-left: 30px;}
+
 </style>
 <script type="text/javascript">	
 	$(function(){	
@@ -40,7 +49,7 @@ response.setHeader("pragma","no-cache");
 		var date = new Date();
 /* 		setMonthTable(date); */		
 		setScreen(date); 
-		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");			
+		$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'> ▶ </a>");			
 		
 		/** combo box 내에서 선택된 아이템이 변할 때 마다 그에 맞는 화면으로 전환하도록 함(필요시 버튼삽입 필요)*/
 		$(document).on("change", "#bkStrId", function(){
@@ -61,7 +70,7 @@ response.setHeader("pragma","no-cache");
 			}
 			
 			setScreen(date);
-			$("#bkTable").html("<a href='#' class='prevMonth'>&lt;</a>"+(date.getMonth()+1)+"월 달력");	
+			$("#bkTable").html("<a href='#' class='prevMonth'> ◀ </a>"+(date.getMonth()+1)+"월 달력");	
 			return false;
 		});
 		
@@ -80,13 +89,39 @@ response.setHeader("pragma","no-cache");
 			}
 			
 			setScreen(date);
-			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'>&gt;</a>");	
+			$("#bkTable").html((date.getMonth()+1)+"월 달력<a href='#' class='nextMonth'> ▶ </a>");	
 			return false;
 		});
 		
 		$(document).on("click", ".isBooked", function(){
 			alert("예약할 수 없습니다.");
 			return false;
+		});
+		
+		$(document).on("click", ".today", function(){
+			var st = srvTime();
+			var now = new Date(st);
+			
+			if(now.getHours()>=12){
+				alert("금일의 예약이 마감되었습니다. 당일예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
+				return false;
+			}else{
+				<c:if test="${empty user_info }">
+					alert("로그인이 필요한 페이지 입니다.");
+					location.href="login.do?category=book";
+				</c:if>	
+				<c:if test="${!empty user_info }">
+					<c:if test="${user_info.isMng==true }">
+						alert("관리자는 예약할 수 없습니다.");
+						return false;
+					</c:if>	
+					//alert("예약가능합니다.");	
+					var strNo = $(this).find(".strNo").val();
+					var date = $(this).find(".date").val();
+					var url="bookprocess.do?strNo="+strNo+"&date="+date;
+					location.href=url;
+				</c:if>
+			}
 		});
 		
 		$(document).on("click", ".noBooked", function(){		
@@ -210,32 +245,41 @@ response.setHeader("pragma","no-cache");
 			for(var k=0;k<last[m];k++){	
 				date.setDate(k+1);				
 				if(bList != undefined){
-					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
+					if(date.getMonth()==today.getMonth() && (k+1) < today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
+						dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약 내역이 존재할 때
-						if((k+1)==bList[index].date){
+	
+						if(bList[index] != undefined && (k+1)==bList[index].date){
 							console.log("일치");
-							if(bList[index].state=="입금완료"){
-								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
+							if(bList[index].state=="입금완료"){								
+								dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/isBooked.png'></a></td>";								
 							}else if(bList[index].state=="입금대기"){
-								dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/booked.png'></a></td>";
+								dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/booked.png'></a></td>";									
 							}
 						}else{
-							dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+							if((k+1) == today.getDate()){
+								dateForm += "<td><a href='#' class='today' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].nameById+" "+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+							}else{
+								dateForm += "<td><a href='#' class='noBooked' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].nameById+" "+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";	
+							}
 						}
 					}
 					if((bList[index+1] != undefined) && (k+1)==bList[index].date){
 						index++;
 					}
 				}else{
-					if(date.getMonth()==today.getMonth() && (k+1) <= today.getDate()){
+					if(date.getMonth()==today.getMonth() && (k+1) < today.getDate()){
 						//이번 달 오늘 날짜까지는 예약이 완료 된 것으로 표시하기 위해 
-						dateForm += "<td><a href='#' class='isBooked'><img class='bkIcon' src='image/isBooked.png'></a></td>";
+						dateForm += "<td><a href='#' class='isBooked' title='예약불가'><img class='bkIcon' src='image/isBooked.png'></a></td>";
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
-						dateForm += "<td><a href='#' class='noBooked'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+						if((k+1) == today.getDate()){
+							dateForm += "<td><a href='#' class='today' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].nameById+" "+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+						}else{
+							dateForm += "<td><a href='#' class='noBooked' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+						}
 					}
 				}							
 			}
@@ -246,6 +290,9 @@ response.setHeader("pragma","no-cache");
 		$("#bookTable").prepend(dateForm);
 	}//end of setMonthTable
 </script>
+<div class="way_top">
+	<h3>예약하기<br /><span>홈 > 예약안내 > 예약하기</span></h3>
+</div>
 <div id="bk_now">
 	<c:if test="${noStr == true }">
 		<script type="text/javascript">
@@ -258,9 +305,10 @@ response.setHeader("pragma","no-cache");
 			location.href="book.do";
 		</script>
 	</c:if>
-	<h2 id="server">[서버시간]<span id="serverTime">00:00:00</span></h2>
+
+	<h3 id="server">[서버시간]<span id="serverTime">00:00:00</span></h3>
 	<h2 id="bkTable"></h2>
-	<p>
+	<p id='bkStrArea' class="paddingleft">
 		<label for="">시설 이름 : </label> 
 		<select id="bkStrId">
 			<c:forEach items="${strId }" var="str">

@@ -6,9 +6,15 @@
 	#bk_check .stateProcess{color:green; font-weight: bold;}
 	#bk_check .stateCancel{color:red; font-weight: bold;}
 	#bk_check .stateEnd{color:gray; font-weight: bold; text-decoration: line-through;}
-	#bk_check .bkStrIdName{color:green; font-weight: bold;}
+	#bk_check .bkStrIdName{color:#cc0000; font-weight: bold;}
 	#bk_check_field p{width:500px; margin:15px 0;}
 	#page_index{text-align: center;}
+	#bkTable th:NTH-CHILD(1) {width:100px;}
+	#bkTable th:NTH-CHILD(2) {width:100px;}
+	#bkTable th:NTH-CHILD(3) {width:250px;}
+	#bkTable th:NTH-CHILD(4) {width:250px;}
+	#bkTable th:NTH-CHILD(5) {width:100px;}
+	#bkTable th:NTH-CHILD(6) {width:100px;}
 </style>
 <script>
 
@@ -52,7 +58,6 @@
 			setScreen();
 			return false;
 		});
-		
 	});//ready
 	function setPageIndex(data){
 		/* Page 하단에 index 표시(10개 단위로 끊어 표시 ) */
@@ -148,12 +153,12 @@
 				var bkDetailUrl = "bookcheckdetail.do?bkNo="+bList[j].no+"&pageId=check";
 				tableForm += "<tr>";
 				tableForm += "<th>"+bList[j].regDateNoTimeForm+"</th>";//접수 날짜
-				tableForm += "<td><a href='"+strUrl+"' target='_blank' class='toStr'>"+bList[j].str.nameById+"<br>"+bList[j].str.name+"</a></td>";//시설명 - 시설보기로 hyperlink				
-				tableForm += "<td><a href='"+bkDetailUrl+"' class='toDetail'>"+bList[j].startDateForm+" ~ "+bList[j].endDateForm+"</a></td>";//예약기간
+				tableForm += "<td><a href='"+strUrl+"' target='_blank' title='"+bList[j].str.nameById+" "+bList[j].str.name+" 정보' class='toStr'>"+bList[j].str.nameById+"<br>"+bList[j].str.name+"</a></td>";//시설명 - 시설보기로 hyperlink				
+				tableForm += "<td><a href='"+bkDetailUrl+"' title='예약번호 : "+bList[j].no+" 내역' class='toDetail'>"+bList[j].startDateForm+" ~ "+bList[j].endDateForm+"</a></td>";//예약기간
 					<!-- 시설명 클릭시 시설정보로 넘어갈 수 있도록 -->
 				
-				tableForm += "<td><a href='"+bkDetailUrl+"' class='toDetail'>"+bList[j].no+"</a></td>";//예약번호
-				tableForm += "<td><a href='"+bkDetailUrl+"' class='toDetail'>"+bList[j].priceForm +"</a></td>"//총가격
+				tableForm += "<td><a href='"+bkDetailUrl+"' title='예약번호 : "+bList[j].no+" 내역' class='toDetail'>"+bList[j].no+"</a></td>";//예약번호
+				tableForm += "<td><a href='"+bkDetailUrl+"' title='예약번호 : "+bList[j].no+" 내역' class='toDetail'>"+bList[j].priceForm +"</a></td>"//총가격
 				switch(bList[j].state){
 				case '입금대기':
 					tableForm += "<td class='stateReady'>"+bList[j].state+"</td>";
@@ -206,8 +211,10 @@
 		location.href="login.do?category=bookcheck";
 	</script>
 </c:if>	
-<div id="bk_check">
-	<h2>예약 확인 및 취소</h2>
+<div class="way_top">
+	<h3>예약조회 및 취소<br /><span>홈 > 예약안내 > 예약조회 / 취소</span></h3>
+</div>
+<div id="bk_check" class='intro_padding'>
 	<form action="bookcheck.do" method="post" name="book1">
 		<fieldset id="bk_check_field">
 			<input type="hidden" name="index" id="pageIndex">

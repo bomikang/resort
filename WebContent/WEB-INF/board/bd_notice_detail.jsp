@@ -2,13 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-	#notice_table td{text-align: left; padding-left:10px;} 
-	#notice_table #td_writed_date{border-right:none;}
-	#notice_table #td_writed_man{border-left:none;}
+	#notice_table{margin-top:20px;}
+	#notice_detail #notice_table td{text-align: left; padding-left:10px;} 
+	#notice_detail #notice_table #td_writed_date{border-right:none; text-align: right; width:70%;}
+	#notice_detail #notice_table #td_writed_man{border-left:none; text-align: right; padding-right: 15px; width:20%;}
+	#notice_detail #detail{height: 300px; vertical-align: top;}
+	#notice_detail .nTitle{width:100%; word-break:break-all; text-align: center; padding-left: 70px;padding-right: 70px;}
+	#notice_detail .nDetail{width:90%; margin:15px auto; white-space: normal; word-break:break-all;}
+	#notice_detail	#noticeIcon img{width:20px; float: left;}
 </style>
 <script>
 	$(function(){
-		$("#detail").html("${detail.detail }");
+		$(".nDetail").html("${detail.detail }");
 	
 		$("#btnBack").click(function(){
 			location.href="notice.do?page=${index}";
@@ -35,16 +40,21 @@
 		});
 	});//ready
 </script>
-<div id="notice_detail">
+<div class="way_top">
+	<h3>공지사항<br /><span>홈 > 자유게시판 > 공지사항</span></h3>
+</div>
+<div id="notice_detail" class='intro_padding'>
 	<table id="notice_table">
 		<c:if test="${!empty notice }">
 			<c:if test="${!empty detail }">
 				<tr>
-					<th colspan="2">
+					<th colspan="2" class="nTitle">
+						
 						<c:if test="${notice.isState()==true }">
-							<b>[공지]</b>
+							<b id="noticeIcon"><img alt="" src="image/Notice.png"></b>
 						</c:if>
-							${notice.title }
+						${notice.title }
+						
 					</th>
 				</tr>
 				<tr>
@@ -53,6 +63,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" id="detail">
+						<p class="nDetail"></p>
 						<!-- 공지사항 내용부분 -->
 					</td>
 				</tr>

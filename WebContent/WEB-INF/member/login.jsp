@@ -73,7 +73,7 @@ fieldset p{width:420px;}
 		</div>
 		
 		</form>
-		<a href="loginsearch.do?key=id">아이디</a>/<a href="loginsearch.do?key=password">비밀번호 찾기</a>
+		<p>아이디나 비밀번호가 기억나지 않으세요?<a href="loginsearch.do?key=id"><b>아이디</b></a>/<a href="loginsearch.do?key=password"><b>비밀번호 찾기</b></a></p>
 	</div>
 </body>
 </html>

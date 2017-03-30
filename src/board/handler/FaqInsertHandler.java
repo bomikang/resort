@@ -34,15 +34,19 @@ public class FaqInsertHandler implements CommandHandler{
 					Faq faq = new Faq(admin, title, detail, new Date(System.currentTimeMillis()));
 					fDao.insertIntoFaq(conn, faq);
 					conn.commit();
+					req.setAttribute("alertText", "등록에 성공하였습니다.");
 				}catch (Exception e) {
 					conn.rollback();
+					req.setAttribute("alertText", "오류가 발생하여 등록되지 못했습니다.");
 				}finally {
+					req.setAttribute("returnTo", ("faq.do"));
 					JdbcUtil.close(conn);
 				}				
 			}
+			return "/WEB-INF/board/alert.jsp";
 		}
-		res.sendRedirect("faq.do");
 		return null;
+		
 	}
 
 }

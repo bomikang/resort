@@ -25,7 +25,9 @@ public class JoinHandler implements CommandHandler {
 			return "index.jsp?page=/WEB-INF/member/join&menu=/WEB-INF/member/mem_menu";
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			String id = req.getParameter("id");
-			
+			String tel1 = req.getParameter("bkTel1");
+			String tel2 = req.getParameter("bkTel2");
+			String tel3 = req.getParameter("bkTel3");
 			//mem_no,mem_id,mem_pwd,mem_name,mem_mail,mem_tel,mem_regdate,mem_outdate,mem_ismng
 			Date nowTime = new Date();
 			Member mem = new Member(0,
@@ -33,7 +35,7 @@ public class JoinHandler implements CommandHandler {
 					req.getParameter("password"),
 					req.getParameter("name"),
 					req.getParameter("email"),
-					req.getParameter("tel"),
+					tel1+"-"+tel2+"-"+tel3,
 					nowTime,
 					null,
 					false
@@ -47,6 +49,7 @@ public class JoinHandler implements CommandHandler {
 			}finally{
 				JdbcUtil.close(conn);
 			}
+			req.setAttribute("memId", id);
 			return "index.jsp?page=/WEB-INF/member/joinSuccess&menu=/WEB-INF/member/mem_menu";
 			
 		}

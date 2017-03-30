@@ -29,20 +29,20 @@ public class NoticeDeleteHandler implements CommandHandler{
 				int ndRes = ndDao.deleteNoticeDetails(conn, numList);
 				if(nRes==ndRes){
 					conn.commit();
+					req.setAttribute("alertText", "성공적으로 삭제되었습니다.");
 				}else{
 					throw new Exception();
 				}
 			}catch (Exception e) {
 				e.printStackTrace();
 				conn.rollback();
+				req.setAttribute("alertText", "오류가 발생되어 삭제되지 못했습니다.");
 			}finally {
 				JdbcUtil.close(conn);
 			}
-			
-			String url = "notice.do?page="+index;
-			res.sendRedirect(url);
-			
-			return null;
+
+			req.setAttribute("returnTo", ("notice.do?page="+index));
+			return "/WEB-INF/board/alert.jsp";
 			
 	}
 

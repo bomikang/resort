@@ -79,11 +79,13 @@ public class NoticeUpdateHandler implements CommandHandler{
 					
 					if(nRes == dRes){
 						conn.commit();
+						req.setAttribute("alertText", "성공적으로 수정되었습니다.");
 					}else{
 						throw new Exception();
 					}
 				}catch (Exception e) {
 					conn.rollback();
+					req.setAttribute("alertText", "오류가 발생되어 수정에 실패하였습니다.");
 				}finally {
 					JdbcUtil.close(conn);
 				}				
@@ -93,9 +95,9 @@ public class NoticeUpdateHandler implements CommandHandler{
 		if(index == null||index.equals("")){
 			index="1";
 		}
-		String url = "notice.do?page="+index;
-		res.sendRedirect(url);
-		return null;
+		
+		req.setAttribute("returnTo", ("notice.do?page="+index));
+		return "/WEB-INF/board/alert.jsp";
 	}
 	
 }

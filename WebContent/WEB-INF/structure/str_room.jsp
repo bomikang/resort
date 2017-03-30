@@ -23,15 +23,20 @@
 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
 <style>
+	.room_menu{text-align: center; margin-bottom:20px;}
 	.room_menu li{display: inline-block;}
-	.bigImage{text-align: center; padding-top:20px;}
-	.bigImage img{max-width:610px; max-height:410px; min-height:410px;box-shadow: 0px 0px 10px 5px gray;}
+	.bigImage{text-align: center; padding-top:20px; margin-bottom:30px;}
+	.bigImage img{min-width:610px; max-width:610px; max-height:410px; min-height:410px;box-shadow: 0px 0px 10px 5px gray;}
 	#room_name .go_book{width:130px;}
-	.str_people_btn a{margin:5px 10px;}
+	.str_people_btn{text-align: center;}
+	.str_people_btn a{margin:5px 10px; padding:3px 0; border-bottom:3px solid rgba(0,0,0,0);}
+	#furniture{font-weight: bold;}
 </style>
 <script>
 	/* bxSlider 적용 함수 */
 	function gallery(showImages){
+		var errCount = 0;
+		
 		$(".bigImage").html("<img src='"+showImages[0]+"'>"); //큰이미지
 		
 		var slideImage = "<div class='sliderImages'>";
@@ -50,6 +55,12 @@
 			maxSlides : 3,
 			slideMargin : 10
 		});
+		
+		$(".bigImage img").on("error",function(){ //로드가 안되면 이미지없다고 뿌리기
+			$(this).attr("src", "image/no_image.jpg");
+			$("#slideGallery").html("");
+		});
+	
 	}
 	
 	/* 방 정보 테이블 생성 */
@@ -75,10 +86,10 @@
 			table += "<td>무료 주차</td>";
 		table += "</tr>";
 		
-		$(".room_info_area #room_name label").html(data.nameById+" 이용안내");
+		$(".room_info_area #room_name h2 span").html(data.nameById +" 이용안내");
 		$(".room_info_area > table").html(table);
 		$(".room_info_area #furniture").html(data.option);
-	}
+	}//roomInfoTable
 	
 	function getStructures(str_no){
 		$.ajax({
@@ -100,11 +111,28 @@
 				for (var i = 0; i < oneImages.length; i++) {
 					showImages[i] = "<%=fullPath%>/Structure_Images/"+oneImages[i];
 				}
+				
 				//bxSlider 적용 함수 호출
 				gallery(showImages);
 				
 				//table 생성 함수 호출
-				roomInfoTable(data);	
+				roomInfoTable(data);
+				
+				//수용 인원 button 활성화 호출
+				if (data.people == 4) {
+					$("#forest_btn").find("a").eq(0).css({"border-color":"#dd7028", "font-weight":"bold"});
+					$("#sanrim_btn").find("a").eq(0).css({"border-color":"#dd7028", "font-weight":"bold"});
+				}
+				if(data.people == 6){
+					$("#forest_btn").find("a").eq(1).css({"border-color":"#dd7028", "font-weight":"bold"});
+				}
+				if(data.people == 8){
+					$("#forest_btn").find("a").eq(2).css({"border-color":"#dd7028", "font-weight":"bold"});
+					$("#sanrim_btn").find("a").eq(1).css({"border-color":"#dd7028", "font-weight":"bold"});
+				}
+				if(data.peope == 17){
+					$("#sanrim_btn").find("a").eq(2).css({"border-color":"#dd7028", "font-weight":"bold"});
+				}
 			}
 		});
 	}
@@ -134,12 +162,32 @@
 </script>
 </head>
 <body>
+
+<div class="way_top">
+	<c:if test="${empty param.houseId}">
+		<h3>숲속의 집<br /><span>홈 > 시설현황 > 숲속의 집</span></h3>
+	</c:if>
+	<c:if test="${param.houseId == 1}">
+		<h3>숲속의 집<br /><span>홈 > 시설현황 > 숲속의 집</span></h3>
+	</c:if>
+	<c:if test="${param.houseId == 2}">
+		<h3>산림휴양관<br /><span>홈 > 시설현황 > 산림휴양관</span></h3>
+	</c:if>
+	<c:if test="${param.houseId == 3}">
+		<h3>캐라반<br /><span>홈 > 시설현황 > 캐라반</span></h3>
+	</c:if>
+	<c:if test="${param.houseId == 4}">
+		<h3>돔하우스<br /><span>홈 > 시설현황 > 돔하우스</span></h3>
+	</c:if>
+</div>
+<div class="intro_padding">
 	<c:if test="${strList.size() == 0}">
 		<p>등록된 방이 없습니다</p>
 	</c:if>
 	<c:if test="${strList.size() > 0}">
 		<c:if test="${param.houseId == 1 or param.houseId == null}"> <!-- 숲속의 집 -->
-			<p class='str_people_btn'>
+			<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>숲속의 집</h2>
+			<p class='str_people_btn' id='forest_btn'>
 				<a href="structure.do?people=4">4인실</a>
 				<a href="structure.do?people=6">6인실</a>
 				<a href="structure.do?people=8">8인실</a>
@@ -149,13 +197,21 @@
 					<li><button>${rooms.name}<span class="str_no" style="display:none;">${rooms.no}</span></button></li>
 				</c:forEach>
 			</ul>
+			<hr />
 		</c:if>
 		<c:if test="${param.houseId == 2}">
-			<p class='str_people_btn'>
+			<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>산림휴양관</h2>
+			<p class='str_people_btn' id='sanrim_btn'>
 				<a href="structure.do?people=4&houseId=2" class='structure_people_btn'>4인실</a>
 				<a href="structure.do?people=8&houseId=2" class='structure_people_btn'>8인실</a>
 				<a href="structure.do?people=17&houseId=2" class='structure_people_btn'>17인실</a>
 			</p>
+		</c:if>
+		<c:if test="${param.houseId == 3}">
+			<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>캐라반</h2>
+		</c:if>
+		<c:if test="${param.houseId == 4}">
+			<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>돔하우스</h2>
 		</c:if>
 		<p class="bigImage">
 			<!-- bigImage -->
@@ -164,26 +220,36 @@
 			<!-- gallery -->
 		</p>
 		<div class="room_info_area">
-			<p id="room_name">
-				<label for=""></label>
-				<c:if test="${!empty param.houseId}">
-					<a href="book.do?id=${param.houseId}" class="moving_btn go_book">예약하러 가기</a>
-				</c:if>
-				<c:if test="${empty param.houseId}">
-					<a href="book.do?id=1" class="moving_btn go_book">예약하러 가기</a>
-				</c:if>
-			</p>
+			<div id="room_name">
+				<h2>
+					<img src="image/icon_flower_orange.png" class='icon_flower'/>
+					<span><!-- OOOO 이용안내 --></span>
+		
+					<c:if test="${!empty param.houseId}">
+						<a href="book.do?id=${param.houseId}" class="moving_btn go_book">예약하러 가기</a>
+					</c:if>
+					<c:if test="${empty param.houseId}">
+						<a href="book.do?id=1" class="moving_btn go_book">예약하러 가기</a>
+					</c:if>
+				</h2>
+			</div>
 			
 			<table></table>
 			
-			<h4>내부 시설 안내</h4>
-			<p id="furniture"></p>
-			<p id="furniture_notice">
-				※ 구비물품은 기준인원에 맞추어 구비되어 있으며 추가지급은 안됩니다. <br />
-				※ 최대인원을 초과하여서는 입실이 안되며, 애완동물(애완견) 동반시 이용 불가합니다. <br /> 
-     			이와 같은 사유로 객실을 이용하지 못할 경우 사용자 과실로 처리되며, 환불기준에 의거하여 환불되오니 이용에 착오없으시기 바랍니다.
-			</p>
+			<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>내부 시설 안내</h2>
+			<ul class="inner_content">
+				<li><p id="furniture"></p></li>
+				<li>
+					<p id="furniture_notice">
+					※ 구비물품은 기준인원에 맞추어 구비되어 있으며 추가지급은 안됩니다. <br />
+					※ 최대인원을 초과하여서는 입실이 안되며, 애완동물(애완견) 동반시 이용 불가합니다. <br /> 
+     				&nbsp;&nbsp;&nbsp;이와 같은 사유로 객실을 이용하지 못할 경우 사용자 과실로 처리되며, 환불기준에 의거하여 환불되오니 이용에 착오없으시기 바랍니다.
+			</p></li>
+			</ul>
+			
+			
 		</div>
 	</c:if>
+</div>
 </body>
 </html>

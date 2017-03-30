@@ -41,28 +41,31 @@ $(function(){
 
 //header fixed on top
 $(window).scroll(function() {
-	if ($(this).scrollTop() > 1){
-		$(".header_menu").addClass("stickyHeader");
-        //$("#menu_area ul li").finish().css("line-height", "55px");
+	//$("#showScroll").html($(this).scrollTop() +", "+ $(".header_menu div #menu_area").width());
+	if ($(this).scrollTop() > 201){
+		$(".header_menu div").addClass("stickyHeader");
+		$("#menu_area ul").finish().css("padding", "25px 0");
         $("#menu_area ul li a").finish().css("font-size", "20px");
-        $("#menu_area ul li a").finish().css("top", "-14px");
-        $("#menu_area ul #logo").finish().css("background-size", "40px");
+        $("#menu_area ul li a").finish().css("top", "3px");
+        $("#menu_area ul #logo").finish().css("background-size", "0px");
         $("#menu_area ul #logo a").finish().css("font-size", "45px");
-        $("#menu_area ul #logo a").finish().css("top", "-5px");
-        //$("#menu_area ul #logo a img").finish().css("height","45px");
-    }else{
-		$('.header_menu').removeClass("stickyHeader");
+        $("#menu_area ul #logo a").finish().css("top", "13px");
+       
+        
+    }else if($(this).scrollTop() < 1){
+		$('.header_menu div').removeClass("stickyHeader");
+		$("#menu_area ul").finish().css("padding", "60px 0");
 		$("#menu_area ul li a").finish().animate({"font-size":"30px"}, "slow");
 		$("#menu_area ul li a").finish().animate({"top":"0px"}, "slow");
 		$("#menu_area ul #logo a").finish().animate({"top":"18px"},"slow");
 		$("#menu_area ul #logo a").finish().animate({"font-size":"90px"}, "slow");
 		$("#menu_area ul #logo").finish().animate({"background-size":"90px"},"slow");
-		
-    }
-
-	if ($(this).scrollTop() >= 150) {
-		$(".content div").find("nav").addClass("stickyMenu");
-	}else{
-		$(".content div").find("nav").removeClass("stickyMenu");
+	}
+	
+	if ($(this).scrollTop() > 250) {
+		$(".content div").find("nav").addClass("stickyMenu"); //좌측메뉴
+	}
+	if ($(this).scrollTop() < 250) {
+		$(".content div").find("nav").removeClass("stickyMenu"); //좌측 메뉴
 	}
 });

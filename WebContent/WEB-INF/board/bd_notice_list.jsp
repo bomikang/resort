@@ -4,12 +4,14 @@
 <style>
 	#notice_list #page_index{text-align: center;}
 	#notice_list .realNotice td{background: rgba(255,255,0,0.5);}
-	#notice_list .toNoticeDetail{width: 100%; overflow: hidden; white-space: nowrap; color:black; text-decoration: none;}
 	
+	#notice_list .nTitle{width:inherit;overflow: hidden;text-overflow: ellipsis; white-space: nowrap; padding: 0 10px; }
+	#notice_list .nTitle a{display:block;width: 500px; white-space: nowrap; word-wrap:normal;text-overflow: ellipsis; overflow: hidden;color:black; text-decoration: none;text-align: left!important;}
 	form[name='searchNotice'] label{color:#43493e;}
 	#srcText{width:200px; height:17px; position:relative; top:-2px;}
 	#btnSearch{width:50px; background:#43493e; padding:5px 0;}
 	#btnSearch:HOVER{color:#43493e; border-color:#43493e; background:#fff;}
+	#notice_list #noticeIcon{float: left; width:25px; margin-left: 10px;margin-right: 10px;}
 </style>
 <script>
 	$(function(){
@@ -122,9 +124,22 @@
 	
 	
 </script>
-<div id="notice_list">
-	<h2>공지사항 List</h2>
-	<table border="1">
+<div class="way_top">
+	<h3>공지사항<br /><span>홈 > 자유게시판 > 공지사항</span></h3>
+</div>
+<div id="notice_list" class='intro_padding'>
+	<h2><img alt="" src="image/Notice.png" id="noticeIcon">공지사항</h2>
+	<table border="1">	
+		<c:if test="${!empty user_info }">		
+			<c:if test="${user_info.isMng==true }">
+				<col width="5%"/>
+			</c:if>
+		</c:if>
+		<col width="10%"/>
+		<col width="50%"/>
+		<col width="10%"/>
+		<col width="20%"/>
+		<col width="10%"/>
 		<tr>
 			<c:if test="${!empty user_info }">		
 				<c:if test="${user_info.isMng==true }">

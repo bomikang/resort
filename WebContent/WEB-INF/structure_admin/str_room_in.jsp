@@ -12,6 +12,9 @@
 <style>
 	.error{display:none;}
 	.error_reg{diplay:none;}
+	
+	input[type='text']{width:400px;}
+	p{width:490px !important;}
 </style>
 <script>
 	//시설이름이 체크되어 있으면 그 value값을 리턴
@@ -61,9 +64,9 @@
 			var strIdText = returnCheckedStrName($("input[type='radio']"));
 			
 			/* 2. 공란 존재 여부 */
-			if( !checkInputEmpty($("input[type='text']"))){
+			/* if( !checkInputEmpty($("input[type='text']"))){
 				return false;
-			}
+			} */
 			
 			/* 3. 정규표현식 검사 */
 			if ( !checkRegExr($("input[name='name']"))
@@ -104,10 +107,13 @@
 </script>
 </head>
 <body>
+<div class="intro_padding">
+	<h2>시설등록</h2>
+	<hr />
 	<form action="structureUpload.do" method="post" enctype="multipart/form-data" name="f1">
 		<fieldset>
 			<p>
-				<label for="">시설 이름</label><br />
+				<label for="">시설 이름 : </label> 
 				<input type="radio" name="strId" value="1" /><span>숲속의집</span>
 				<input type="radio" name="strId" value="2" /><span>산림휴양관</span>
 				<input type="radio" name="strId" value="3" /><span>캐라반</span>
@@ -116,48 +122,49 @@
 			</p>
 			
 			<p>
-				<label for="">호수(방이름)</label><br />
-				<input type="text" name="name" id="name"/>
+				<label for="">호&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;수 : </label>
+				<input type="text" name="name" id="name" required="required"/>
 				<span class="error">호수를 입력해주세요.</span>
 				<span class="error_reg">호수는 영문, 숫자, 한글, 특수문자(-, _)만 입력 가능합니다.(최대 20글자)</span>
 			</p>
 			
 			<p>
-				<label for="">수용 인원</label><br />
-				<input type="text" name="people" placeholder="ex) 4"/>
+				<label for="">수용 인원 : </label>
+				<input type="text" name="people" placeholder="ex) 4" required="required"/>
 				<span class="error">수용 인원을 입력해주세요.</span>
 				<span class="error_reg">수용 인원은 1~99까지 숫자만 입력 가능합니다.</span>
 			</p>
 			
 			<p>
-				<label for="">가격</label><br />
-				<input type="text" name="price" placeholder="ex) 90000"/>
+				<label for="">가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격 : </label>
+				<input type="text" name="price" placeholder="ex) 90000"  required="required"/>
 				<span class="error">가격을 입력해주세요.</span>
 				<span class="error_reg">가격은 10000~9999999까지 숫자만 입력 가능합니다.</span>
 			</p>
 			
 			<p>
-				<label for="">옵션</label><br />
-				<input type="text" name="option" />
+				<label for="">옵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;션 : </label>
+				<input type="text" name="option"  required="required"/>
 				<span class="error">옵션을 입력해주세요.</span>
 			</p>
 			
 			<p>
-				<label for="">대표사진</label><br />
+				<label for="">대표 사진 : </label>
 				<input type="file" name="repImage" id="repImage"/>
 			</p>
 			
 			<p>
-				<label for="">내부사진</label><br/>
+				<label for="">내부 사진 : </label>
 				<input type="file" name="innerImage" id="innerImage" multiple/><br>
 				<span class="error">대표사진과 내부사진을 등록해주세요!</span>
 			</p>
-			<p>
+			<p class='act_btn_area'>
 				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
 				<input type="submit" value="등록" id="btnAddStr"/>
 				<input type="button" value="취소" onclick="location.replace('structureList.do')"/><!-- 취소하면 리스트로 -->
 			</p>
 		</fieldset>
 	</form>
+</div>
 </body>
 </html>

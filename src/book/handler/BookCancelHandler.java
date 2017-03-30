@@ -29,16 +29,17 @@ public class BookCancelHandler implements CommandHandler {
 				book.setCancelDate(new Date(System.currentTimeMillis()));
 				bDao.updateCancelDate(conn, book);
 				conn.commit();
-				res.sendRedirect("bookcheck.do");
-				return null;
+				req.setAttribute("alertText", "성공적으로 취소되었습니다.");
 			}catch (Exception e) {
 				e.printStackTrace();
 				conn.rollback();
+				req.setAttribute("alertText", "오류가 발생되어 수정에 실패하였습니다.");
 			}finally {
 				JdbcUtil.close(conn);
 			}
 		}
-		return null;
+		req.setAttribute("returnTo", ("bookcheck.do"));
+		return "/WEB-INF/board/alert.jsp";
 	}
 
 }

@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+	#mem_search .btnsP{text-align: center;}
+</style>
 <script>
 	$(function(){
 		$("#btnCancel").click(function(){
-			if(confirm("정말 취소하시겠습니까?")){
-				location.href="index.jsp";	
+			if(confirm("취소하시겠습니까?")){
+				location.href="login.do";	
 			}		
 		});
 	});//ready
@@ -18,6 +21,7 @@
 		<form action="loginsearch.do" method="post">
 			<fieldset>
 				<legend>아이디 찾기</legend>
+				<p>회원정보에 기재된 이름과 전화번호를 입력해 주세요.</p>
 				<p>
 					<label for="name">이름 : </label>
 					<input type="text" name="name" id="name" required="required">
@@ -35,14 +39,17 @@
 					-
 					<input type="text" required="required" name="bkTel3">				
 				</p>
-				<input type="submit" id="btnSearch" value="아이디 찾기">
-				<button id="btnCancel">취 소</button>
+				<p class="btnsP">
+					<input type="submit" id="btnSearch" value="아이디 찾기">
+					<button id="btnCancel">취 소</button>
+				</p>
 			</fieldset>
 		</form>
 	</c:if>
 	<c:if test="${key=='password'}">
 		<form action="loginsearch.do" method="post">
 			<fieldset>
+				<p>본인의 아이디와 이름, 전화번호를 입력해 주세요. 아이디가 기억나지 않는경우 <a href="loginsearch.do?key=id">아이디 찾기</a>를 이용해 주세요.</p>
 				<legend>비밀번호 찾기</legend>
 				<p>
 					<label for="id">아이디 : </label>
@@ -65,8 +72,10 @@
 					-
 					<input type="text" required="required" name="bkTel3">				
 				</p>
-				<input type="submit" id="btnSearch" value="아이디 찾기">
-				<button id="btnCancel">취 소</button>
+				<p class="btnsP">
+					<input type="submit" id="btnSearch" value="비밀번호 찾기">
+					<button id="btnCancel">취 소</button>
+				</p>
 			</fieldset>
 		</form>
 	</c:if>

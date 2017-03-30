@@ -10,6 +10,9 @@
 <script type="text/javascript" src="js/common.js"></script>
 <style>
 	.error, .error_reg{display : none; color:red; font-size: 12px;}
+	
+	input[type='text']{width:400px;}
+	p{width:490px !important;}
 </style>
 <script>
 	//정규표현식 검사 함수
@@ -44,18 +47,22 @@
 		$("#btnUpdateStr").click(function() {
 			var strIdText = "";
 			
-			switch ($("input[name='strId']").val()) {
-			case "1": strIdText = "숲속의집"; break;
-			case "2": strIdText = "산림휴양관"; break;
-			case "3": strIdText = "캐라반"; break;
-			case "4": strIdText = "돔하우스"; break;
-			}
+			$("input[type='radio']").each(function(i, obj) {
+				if ($(obj).prop("checked") == true) {
+					switch ($(obj).val()) {
+					case "1": strIdText = "숲속의집"; break;
+					case "2": strIdText = "산림휴양관"; break;
+					case "3": strIdText = "캐라반"; break;
+					case "4": strIdText = "돔하우스"; break;
+					}
+				}
+			});
 			
 			/* 1. 공란 존재 여부 */
-			if( !checkInputEmpty($("input[type='text']"))){
+			/* if( !checkInputEmpty($("input[type='text']"))){
 				return false;
 			}
-			
+			 */
 			/* 2. 정규표현식 검사 */
 			if ( !checkRegExr($("input[name='name']"))
 				|| !checkRegExr($("input[name='people']"))
@@ -109,12 +116,13 @@
 </script>
 </head>
 <body>
+<div class="intro_padding">
+	<h2>시설등록</h2>
+	<hr />
 	<form action="structureUpdate.do" method="post" enctype="multipart/form-data" name="f1">
 		<fieldset>
-			<legend>숙박 시설 수정</legend>
-			
 			<p>
-				<label for="">시설 이름</label><br />
+				<label for="">시설 이름 : </label> 
 				
 				<input type="radio" name="strId" value="1" />숲속의집
 				<input type="radio" name="strId" value="2" />산림휴양관
@@ -124,43 +132,43 @@
 			</p>
 			
 			<p>
-				<label for="">호수(숲속의 집은 방 이름을 입력해주세요.)</label><br />
-				<input type="text" name="name" id="name" value="${structure.name}"/>
+				<label for="">호&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;수 : </label>
+				<input type="text" name="name" id="name" value="${structure.name}"required="required"/>
 				<span class="error">호수를 입력해주세요.</span>
 				<span class="error_reg">호수는 영문, 숫자, 한글, 특수문자(-, _)만 입력 가능합니다.(최대 20글자)</span>
 			</p>
 			
 			<p>
-				<label for="">수용 인원</label><br />
-				<input type="text" name="people" placeholder="ex) 4" value="${structure.people}"/>
+				<label for="">수용 인원 : </label>
+				<input type="text" name="people" placeholder="ex) 4" value="${structure.people}"required="required"/>
 				<span class="error">수용 인원을 입력해주세요.</span>
 				<span class="error_reg">수용 인원은 1~99까지 숫자만 입력 가능합니다.</span>
 			</p>
 			
 			<p>
-				<label for="">가격</label><br />
-				<input type="text" name="price" placeholder="ex) 90000" value="${structure.price}"/>
+				<label for="">가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격 : </label>
+				<input type="text" name="price" placeholder="ex) 90000" value="${structure.price}"required="required"/>
 				<span class="error">가격을 입력해주세요.</span>
 				<span class="error_reg">가격은 10000~9999999까지 숫자만 입력 가능합니다.</span>
 			</p>
 			
 			<p>
-				<label for="">옵션</label><br />
-				<input type="text" name="option" value="${structure.option}" />
+				<label for="">옵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;션 : </label>
+				<input type="text" name="option" value="${structure.option}" required="required"/>
 				<span class="error">옵션을 입력해주세요.</span>
 			</p>
 			
 			<p>
-				<label for="">대표사진</label><br />
+				<label for="">대표 사진 : </label>
 				<input type="file" name="repImage" id="repImage"/>
 			</p>
 			
 			<p>
-				<label for="">내부사진</label><br />
+				<label for="">내부 사진 : </label>
 				<input type="file" name="innerImage" id="innerImage" multiple/><br>
 				<span class="error">대표사진과 내부사진을 등록해주세요!</span>
 			</p>
-			<p>
+			<p class='act_btn_area'>
 				<input type="hidden" name="setDbImage" id="setDbImage" /><!-- db전달용 -->
 				<input type="hidden" name="strNo" value="${structure.no}"/>
 				<input type="submit" value="수정" id="btnUpdateStr"/>
@@ -169,5 +177,6 @@
 			</p>
 		</fieldset>
 	</form>
+</div>	
 </body>
 </html>

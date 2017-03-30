@@ -6,9 +6,11 @@
 	#bk_total .stateProcess{color:green; font-weight: bold;}
 	#bk_total .stateCancel{color:red; font-weight: bold;}
 	#bk_total .stateEnd{color:gray; font-weight: bold; text-decoration: line-through;}
-	#bk_total .bkStrIdName{color:green; font-weight: bold;}
+	#bk_total .bkStrIdName{color:#cc0000; font-weight: bold;}
 	#bk_total .totalBook{text-align: center;}
 	#bk_total .totalPrice{text-align: right;}
+	#bk_total_field p{width:500px; margin:15px 0;}
+	
 </style>
 <script>
 
@@ -96,19 +98,20 @@
 		location.href="login.do?category=booktotal";
 	</script>
 </c:if>	
-<div id="bk_total">
+<div id="bk_total" class='intro_padding'>
 	<h2 id="totalTitle"></h2>
+	<hr />
 	<form action="booktotal.do" method="post" name="book1">
-		<fieldset>		
+		<fieldset id='bk_total_field'>		
 			<p>
-				시설 구분 : 
+				<label for="">시설 구분 : </label> 
 				<select id="bkStrId" name="bkStrId">
 					<c:forEach items="${strId }" var="str">
 						<option value="${str.id }">${str.nameById }</option>
 					</c:forEach>
 				</select>
 				<br>
-				이용 기간 :
+				<label for="">이용 기간 : </label>
 				<select name="year" id="year">
 					<c:forEach items="${years }" var="year">
 						<option value="${year }">${year }</option>
@@ -127,5 +130,5 @@
 	</form>
 	
 	<p id="bkTotalRes"></p>
-	<table border="1" id="bkTable"></table>
+	<table id="bkTable"></table>
 </div>

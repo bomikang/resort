@@ -10,19 +10,26 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="way_top">
+	<h3>후기<br /><span>홈 > 자유게시판 > 후기</span></h3>
+</div>
+<div class="intro_padding">
+	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>후기 등록</h2>
 	<form action ="rev_insert.do" method = "post" name="f1">
-		<p>
-			<label>제목</label>
-			<input type="text" name="title">
-		</p>
-		<p>
-			<label>내용</label>
-			<textarea rows="10" cols="30" name="content">
-			</textarea>
-		</p>
-		<p>
-			<input type="submit" value="등록">
-		</p>
+		<fieldset>
+			<p>
+				<label>제목</label>
+				<input type="text" name="title">
+			</p>
+			<p>
+				<label>내용</label>
+				<textarea rows="10" cols="30" name="content"></textarea>
+			</p>
+			<p class='act_btn_area'>
+				<input type="submit" value="등록">
+			</p>
+		</fieldset>
 	</form>
+</div>
 </body>
 </html>

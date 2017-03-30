@@ -4,6 +4,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 	#bk_list #bkStrNo{display: none;}
+	#bk_list_field p{width:500px; margin:15px 0;}
+	#bkStrId{width:130px;}
+	#page_index{text-align: center;}
+	input[type='text']{width:120px;}
+	#btnInquire{position:relative; top:2px;}
+	#bkTable th:NTH-CHILD(1){width:150px;}
+	#bkTable th:NTH-CHILD(2){width:70px;}
+	#bkTable th:NTH-CHILD(3){width:130px;}
+	#bkTable th:NTH-CHILD(4){width:95px;}
+	#bkTable th:NTH-CHILD(5){width:95px;}
+	#bkTable th:NTH-CHILD(6){width:100px;}
+	#bkTable th:NTH-CHILD(8){width:95px;}
+	#bkTable button{width:55px; margin:0 3px;}
 </style>
 <script>
 	var stateList = new Array();
@@ -44,7 +57,8 @@
 						console.log(data);
 						if(data[0]==true){
 							alert("수정되었습니다.");
-							$tr.find(".state").find(".bkState").val(data[1].state);
+							setScreen();
+							/* $tr.find(".state").find(".bkState").val(data[1].state);
 							
 							if(data[1].state=="예약취소"){
 								$tr.find(".bkPrice").text("-");
@@ -52,7 +66,7 @@
 							}else{
 								$tr.find(".bkPrice").text(data[1].priceForm);
 								$tr.find(".bkCancel").text("");
-							}
+							} */
 						}else{
 							alert("오류가 발생하였습니다.");
 						}						
@@ -322,31 +336,33 @@
 		location.href="login.do?category=booklist";
 	</script>
 </c:if>	
-<div id="bk_list">
-	<h4>전체 예약 목록</h4>
+<div id="bk_list" class='intro_padding'>
+	<h2>전체 예약 목록</h2>
+	<hr />
 	<!-- 기간별(시작날짜|끝날짜가 그 달일 때), 상태별, 시설별로 관리자가 조회 할 수 있도록 bk_check참조하여 만들기 -->
 	<form name="book1" action="booklist.do" method="post">
-		<fieldset>
+		<fieldset id='bk_list_field'>
 			<input type="hidden" name="index" id="pageIndex">
 			<p>
-				조회 기준 : 
-				<input type="radio" name="condition" id="all">전체 내역 보기
-				<input type="radio" name="condition" id="withCon">조건별 검색 
+				<label for="">조회 기준 : </label> 
+				<input type="radio" name="condition" id="all" class='small_label'>전체 내역 보기
+				<input type="radio" name="condition" id="withCon" class='small_label'>조건별 검색 
 			</p>		
 			<p>
-				이용 기간 :
+				<label for="">이용 기간 : </label>
 				<input type="date" required="required" name="startDate" id="startDate">
 				~
 				<input type="date" required="required" name="endDate" id="endDate">
 			</p>
 			<p>
-				예약 상태 : 
-				<input type="checkbox" value="입금대기" id="bkReady" name="cdState" checked="checked"><label for="bkReady">입금대기</label>
-				<input type="checkbox" value="입금완료" id="bkProcess" name="cdState" checked="checked"><label for="bkRbkProcesseady">입금완료</label>
-				<input type="checkbox" value="예약취소" id="bkCancel" name="cdState"><label for="bkCancel">예약취소</label>
-				<input type="checkbox" value="예약종료" id="bkEnd" name="cdState"><label for="bkEnd">예약종료</label>
+				<label for="">예약 상태 : </label> 
+				<input type="checkbox" value="입금대기" id="bkReady" name="cdState" checked="checked"><label for="bkReady" class='small_label'>입금대기</label>
+				<input type="checkbox" value="입금완료" id="bkProcess" name="cdState" checked="checked"><label for="bkRbkProcesseady" class='small_label'>입금완료</label>
+				<input type="checkbox" value="예약취소" id="bkCancel" name="cdState"><label for="bkCancel" class='small_label'>예약취소</label>
+				<input type="checkbox" value="예약종료" id="bkEnd" name="cdState"><label for="bkEnd" class='small_label'>예약종료</label>
 			</p>
-			<p>시설 구분 : 
+			<p>
+				<label for="">시설 구분 : </label> 
 				<select id="bkStrId" name="bkStrId">
 					<option value="0">전체</option>
 					<c:forEach items="${strId }" var="str">
@@ -357,8 +373,12 @@
 					<option value="0">전체</option>
 				</select>
 			</p>
-			<p>예약자명 : <input type="text" name="memName" id="memName"></p>
-			<p><input type="submit" value="조회하기"></p>
+			<p>
+				<label for="">예약자 명 : </label>
+				<input type="text" name="memName" id="memName">
+				<input type="submit" value="조회하기" id="btnInquire">
+			</p>
+			
 		</fieldset>
 	</form>
 	<br>

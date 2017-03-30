@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 입력 창(관리자용) -->
+<style>
+	#faqDetail .btnsP{text-align: center;}
+</style>
 <script>
 	$(function(){
 		$("#btnUpdate").click(function(){
@@ -17,7 +20,11 @@
 					alert("관리자 계정으로 로그인해 주세요.");
 					locaion.href="faq.do";
 				</c:if>
-			</c:if>	
+			</c:if>
+			<c:if test="${!empty user_info}">
+				alert("관리자 계정으로 로그인해 주세요.");
+				locaion.href="login.do?category=faq";
+			</c:if>
 			
 		});
 		$("#btnDelete").click(function(){
@@ -56,12 +63,15 @@
 		});
 		
 		$("#btnBack").click(function(){
-			location.href="faq.do";
+			var title = $("#faqDetail h2").text().split(" ")[1];
+			if(confirm(title+"을 취소하고 이전화면으로 돌아가시겠습니까?")){
+				location.href="faq.do";
+			}
 		});		
 	
 	});
 </script>
-<div id="faqDetail">
+<div id="faqDetail" class='intro_padding'>
 
 	<c:if test="${!empty user_info}">
 		<c:if test="${user_info.isMng == false }">	
@@ -73,21 +83,23 @@
 	</c:if>
 	<c:if test="${type=='update' }">
 		<h2>FAQ 수정</h2>
-		
+		<hr />
 		<form action="faqupdate.do" method="post" name="updFaq">
 			<input type="hidden" name="fNo" value=${faq.no }>
 			<fieldset>
 				<p>
-					<label for="title">제목 : </label>
+					<label for="title">제목</label>
 					<input type="text" required="required" name="title" id="title" value=${faq.title }>
 				</p>
 				<p>
-					<label for="detail">내용 : </label>
+					<label for="detail">내용</label>
 					<textarea rows="" cols="" name="detail" id="detail">${faq.detail }</textarea>
 				</p>
+				<p class='btnsP'>
 				<button type="button" id="btnUpdate">수  정</button>
 				<button type="button" id="btnDelete">삭  제</button>
 				<button type="button" id="btnBack">취  소</button>
+				</p>
 			</fieldset>
 		</form>
 		<form action="faqdelete.do" method="get" name="dltFaq">
@@ -96,18 +108,21 @@
 	</c:if>
 	<c:if test="${type!='update' }">
 		<h2>FAQ 등록</h2>
+		<hr />
 		<form action="faqinsert.do" method="post" name="addFaq">
 				<fieldset>
 				<p>
-					<label for="title">제목 : </label>
+					<label for="title">제목</label>
 					<input type="text" required="required" name="title" id="title">
 				</p>
 				<p>
-					<label for="detail">내용 : </label>
+					<label for="detail">내용</label>
 					<textarea rows="" cols="" name="detail" id="detail"></textarea>
 				</p>
+				<p class='btnsP'>
 				<button type="button" id="btnAdd">등  록</button>
 				<button type="button" id="btnBack">취  소</button>
+				</p>
 			</fieldset>
 		</form>
 	</c:if>
@@ -124,5 +139,5 @@
 			<input type="reset" value="취  소">
 		</fieldset>
 	</form> -->
-	<a href="faq.do">[돌아가기]</a>
+
 </div>

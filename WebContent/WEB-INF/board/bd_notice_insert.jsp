@@ -79,9 +79,11 @@
 		});
 	});//ready
 </script>
-<div id="notice_insert">
+<div id="notice_insert" class='intro_padding'>
+	
 	<c:if test="${type=='insert' }">
 		<h2>공지사항 등록</h2>
+		<hr />
 		<form action="noticeinsert.do" method="post" name="addNotice">
 			<fieldset>
 				<p>
@@ -106,6 +108,7 @@
 	</c:if>
 	<c:if test="${type=='update' }">
 		<h2>공지사항 수정</h2>
+		<hr />
 		<form action="noticeupdate.do" method="post" name="updNotice">
 			<fieldset>
 				<input type="hidden" name="nNo" value="${notice.no }">

@@ -7,7 +7,7 @@
 	.book_book_table td, .book_mem_info_table td{text-align: left; padding-left:10px;}
 	select{width:133px; text-align: center; padding:6px 0;}
 	input[type='text'], input[type='date']{width:120px;}
-	.book_mem_info_table #email_input{width:245px;}
+	.book_mem_info_table #email_input{width:267px;}
 </style>
 <script>
 	var reg_tel1 = /^\d{3,4}$/; 
@@ -180,14 +180,18 @@
 		}
 	}
 </script>
-<div id="bk_book">
+
+<div class="way_top">
+	<h3>예약하기<br /><span>홈 > 예약안내 > 예약하기 > 예약하기</span></h3>
+</div>
+<div id="bk_book" class='intro_padding'>
 	<!-- 예약폼이 들어갈 예정입니다. -->
 	<form action="bookprocess.do" method="post" id="bookProcess">
 		<!-- 예약정보1 - 시설정보 및 기간 설정에 따른 가격 계산 -->
 		<input type="hidden" value="${str.no }" name="strNo">
 		<input type="hidden" value="${user_info.my_no }" name="memNo">
 		
-		<h4>예약 객실</h4>
+		<h3 class='table_caption'>예약 객실</h3>
 		<table class='book_book_table'>
 			<tr>
 				<th>객실명</th>
@@ -222,7 +226,7 @@
 			</tr>
 		</table>
 		<!-- 고객정보  -->
-		<h4>고객 정보</h4>
+		<h3 class='table_caption'>고객 정보</h3>
 		
 		<table class='book_mem_info_table'>
 			<tr>
@@ -253,8 +257,8 @@
 		</table>
 		<p class="act_btn_area">
 			<button type="button" id="btnBook" disabled="disabled">예약하기</button>
-			<button type="button" id="btnBack">취소하기</button>
-			<a href="book.do" class='moving_btn'>돌아가기</a>
+			<button type="button" id="btnBack"class='moving_btn'>취소하기</button>
+			<!-- <a href="book.do" class='moving_btn'>돌아가기</a> -->
 		</p> 
 	</form>
 	

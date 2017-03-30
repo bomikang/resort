@@ -18,41 +18,57 @@
 #top_table tr th:NTH-CHILD(1), #rep_table tr td:NTH-CHILD(1) {width: 130px;}
 #top_table tr th:NTH-CHILD(2), #rep_table tr td:NTH-CHILD(2) {width: 700px;}
 </style>
-<script language=javascript>
-var userinfo2 = "<%= request.getSession().getAttribute("user_info") %>";
-</script>
+
 <script type="text/javascript">
- document.write(userinfo2); 
- 
 	var rep_no = 0;
 	var temp = 0;
 	$(function() {
 		$.ajax({
-		url : "rev_reply.do",
-		type : "post",
-		timeout : 30000,
-		dataType : "json",
-		data : {
-			"rev_no" : $("#rev_no").val()
-		},//게시글의 번호
-		success : function(res) {
-			console.log(res);
-			var table = $("#rep_table");
-			$(res.data)
-					.each(function(i, obj) {
-						
-						var tr = $("<tr>");//<tr></tr>
-						var td = $("<td>").html(obj.rep_name);
-						var td2 = $("<td>").html(obj.rep_detail);
-						var td3 = $("<td>").html(obj.rep_regdate + "<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
-						tr.append(td).append(td2).append(td3);/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */
-						<!--.append("<button>수정");
-						-->//<tr><td>rep_no</td></tr>
-						rep_no = Number(obj.rep_no);
-						table.append(tr);
+			url:"rev_reply.do",
+			type:"post",
+			timeout:30000,
+			dataType:"json",
+			data:{"rev_no":$("#rev_no").val()},//게시글의 번호
+			success:function(res){							
+				console.log(res);
+				var table = $("#rep_table");
+				$(res.data).each(function(i, obj) {
+					
+					
+					var tr = $("<tr>");//<tr></tr>
+					var td = $("<td>").html(obj.rep_name);
+					var td2 = $("<td>").html(obj.rep_detail);
+					var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
+					tr.append(td).append(td2).append(td3);/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
+					rep_no= Number(obj.rep_no);
+					table.append(tr);
+				});
+			/* made by yujin 오늘 저녁 본인이 작성한 댓글만 삭제가능하도록 하는거 관련한 수정사항이 git에 없어서 혹시나 하는 마음으로 코드만 작성합니다. 테스트도 없어요.
+				만약 수정이 되어있다면 이 부분은 가차없이 삭제해 주세요. - 말도없이 주석 달아서 죄송합니다.ㅜㅜ
+				댓글 테이블 구성 부분 - 삭제 버튼 내 댓글 등록 회원의 멤버 번호를 가지고 있는 hidden type의 input 태그 삽입
+				var tr = $("<tr>");//<tr></tr>
+				var td = $("<td>").html(obj.rep_name);
+				var td2 = $("<td>").html(obj.rep_detail);
+				var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'><input type='hidden' value='"+obj.rep_mem+"' class='mem_no'></button>");
+				tr.append(td).append(td2).append(td3);
+				rep_no= Number(obj.rep_no);
+				table.append(tr);
+				ready 내 제이쿼리 부분 - 로그인 정보(user_info)가 비어있지 않고(=로그인 된 상태), 각각 버튼 내 mem_no의 value값과 로그인 정보의 회원번호를 비교해 같지 않을 경우 button을 숨김
+				<c:if test="${!empty user_info}">
+					$(".repDelBtn").each(function(i,obj){
+						var mem_no = ${user_info.my_no};
+						if($(obj).find(".mem_no").val()!=mem_no){
+							$(obj).css("display","none");
+						}
 					});
-		}
-		});
+				</c:if>
+				혹시나 이 부분이 제대로 적용되지 않을 시 setBtnDel()같이 함수로 만들어 댓글 리스트 불러올떄마다(ajax사용) 마지막으로 만든 메소드를 호출해서 사용하되
+				만약.... 그래도 안되면 폐기처분 고고
+			*/
+			
+			} 
+		});	
+		
 
 		$("#replyBtn").click(function() {
 			if ($("#rep_write").val() == "") {
@@ -130,6 +146,9 @@ var userinfo2 = "<%= request.getSession().getAttribute("user_info") %>";
 		</tr>
 		<tr>
 			<td>${rev_detail.rev_detail }</td>
+		</tr>
+		<tr>
+			<td>${rev_list.rev_regdate }</td>
 		</tr>
 	</table>
 	<c:if test="${user_info.my_name.equals(rev_list.rev_name)}">
