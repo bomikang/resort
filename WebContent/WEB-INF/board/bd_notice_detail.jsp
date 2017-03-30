@@ -17,7 +17,12 @@
 		$(".nDetail").html("${detail.detail }");
 	
 		$("#btnBack").click(function(){
-			location.href="notice.do?page=${index}";
+			var returnTo = "${returnTo}";
+			if(returnTo != null){
+				location.href="review.do?page=1";
+			}else{
+				location.href="notice.do?page=${index}";
+			}
 		});
 		$("#btnUpd").click(function(){
 			location.href="noticeupdate.do?page=${index}&no=${notice.no }";

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% request.getSession().getAttribute("user_info"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,6 @@ table {width: 600px;margin: 0 auto;margin-top: 25px;}
 table td {text-align: center; height:50px; font-size:16px;}
 table th:FIRST-CHILD {width: 130px;}
 input[type='submit'], button{width:50px;}
-<<<<<<< HEAD
 input[type='text'], input[type='password']{width:120px;}
 input#origin_pwd,input#mail{width:200px;}
 small {color: #777;margin: 15px 0;}
@@ -315,6 +315,7 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 					</td>
 				</tr>
 
+			<c:if test="${user_info.isMng==false }">
 				<tr>
 					<th>비밀번호 변경</th>
 					<td><span id='infoPwd'><input type="password" id="origin_pwd" name="origin_pwd"
@@ -327,6 +328,7 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 						</span>
 					</td>
 				</tr>
+					</c:if>
 				<tr>
 					<th>본인확인 이메일</th>
 					<td><span id="infoMail">${info.mail }</span>
@@ -353,11 +355,12 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 							<button type="button" id="btn5_2">취소</button>
 					</span></td>
 				</tr>
+				<c:if test="${user_info.isMng==false }">
 				<tr>
 					<th>탈퇴</th>
 					<td><button type="button" id="withdrawal">탈 퇴</button></td>
 				</tr>
-
+				</c:if>
 			</table>
 
 		</div>

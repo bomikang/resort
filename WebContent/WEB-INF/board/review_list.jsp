@@ -23,7 +23,7 @@
 	
 	#paging{text-align: center;}
 	
-	
+	.intro_padding .realNotice td{background: rgba(255,255,0,0.5);}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -50,7 +50,22 @@
 			<th><b>작성날짜</b></th>
 			<th><b>조회수</b></th>
 		</tr>
-		
+		<c:if test="${!empty rnList }">
+			<c:forEach items="${rnList }" var="real">
+				<tr class="realNotice">
+					<c:if test="${!empty user_info }">		
+						<c:if test="${user_info.isMng==true }">
+							<th></th>
+						</c:if>
+					</c:if>
+					<td>공지</td>
+					<td class='nTitle'><a href="noticedetail.do?page=${index.getNowIndex() }&no=${real.no }&category=review" class="toNoticeDetail">${real.title }</a></td>
+					<td>${real.writer.my_name }</td>
+					<td>${real.regDateForm }</td>
+					<td>${real.readCnt }</td>
+				</tr>
+			</c:forEach>
+		</c:if>
 		<c:if test="${cntPage.hasNoArticles() }">
 			<tr>
 				<td colspan="5">게시글이 없습니다.</td>
@@ -91,7 +106,7 @@
 			<option value="number">게시글번호</option>
 			<option value="date">날짜</option>
 		</select>
-		<input type="text" id="write" >
+		<input type="text" id="write" required="required">
 		<button id="searchBtn">검색</button>
 	</p>
 	

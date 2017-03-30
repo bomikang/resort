@@ -19,6 +19,7 @@ public class NoticeDetailHandler implements CommandHandler{
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("get")){
+			String returnTo = req.getParameter("category");
 			String nNo = req.getParameter("no");
 			String index = req.getParameter("page");
 			Connection conn = null;
@@ -44,6 +45,7 @@ public class NoticeDetailHandler implements CommandHandler{
 					req.setAttribute("index", index);
 					req.setAttribute("notice", notice);
 					req.setAttribute("detail", detail);
+					req.setAttribute("returnTo", returnTo);
 					return "index.jsp?page=/WEB-INF/board/bd_notice_detail&menu=/WEB-INF/board/board_menu";
 				}
 			}finally {
