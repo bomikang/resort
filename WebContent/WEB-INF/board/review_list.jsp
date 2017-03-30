@@ -20,7 +20,10 @@
 	table th:NTH-CHILD(4){width:120px;}
 	table th:NTH-CHILD(5){width:80px;}
 	table td:NTH-CHILD(2){text-align: left; padding-left:15px;}
+	
 	#paging{text-align: center;}
+	
+	
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">

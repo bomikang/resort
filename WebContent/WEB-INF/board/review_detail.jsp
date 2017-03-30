@@ -1,28 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.getSession().getAttribute("user_info");
+
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-	#repDelBtn{
-	color:blue;
-	}
-	#top_table tr th:NTH-CHILD(1), #rep_table tr td:NTH-CHILD(1){width:130px;}
+	#top_table{border-bottom: none;}
+	#rep_table{border-top:none;}
+	#top_table tr th:NTH-CHILD(1), #rep_table tr th:NTH-CHILD(1){width:130px;}
 	#top_table tr th:NTH-CHILD(2), #rep_table tr td:NTH-CHILD(2){width:700px;}
-	#btn_right{text-align: right;}
+	table tr #td_writed_date{border-right:none; text-align: right; width:70%;}
+	table tr #td_writed_man{border-left:none; text-align: right; padding-right: 15px; width:20%;}
+	table tr #rev_detail_td{height: 300px; text-align: left; vertical-align: top;}
+	table tr #rev_detail_td p{width:90%; margin:15px auto; white-space: normal; word-break:break-all;}
+	.btn_right{text-align: right;}
 	.style_from_input{display: inline-block; text-align: center;}
+	textarea{width: 100%;}
+	
 </style>
+
 <script type="text/javascript">
-	var rep_no=0;
+	var rep_no = 0;
 	var temp = 0;
-	$(function(){
+	$(function() {
 		$.ajax({
 			url:"rev_reply.do",
 			type:"post",
@@ -39,7 +48,9 @@
 					var td = $("<th>").html(obj.rep_name);
 					var td2 = $("<td>").html(obj.rep_detail);
 					var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
-					tr.append(td).append(td2).append(td3);/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
+					
+					tr.append(td).append(td2).append(td3)/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
+					
 					rep_no= Number(obj.rep_no);
 					table.append(tr);
 				});
@@ -69,18 +80,22 @@
 			} 
 		});	
 		
+
 		$("#replyBtn").click(function() {
-			if($("#rep_write").val()==""){
+			if ($("#rep_write").val() == "") {
 				alert("댓글 내용을 입력해주세요.");
 				return false;
-			}else{
-			$.ajax({
-				url:"rev_replyInsert.do",
-				type:"post",
-				timeout:30000,
-				dataType:"json",
-				data:{"rev_no":$("#rev_no").val(),"rep_write":$("#rep_write").val()},
-				success:function(res){							
+			} else {
+				$.ajax({
+				url : "rev_replyInsert.do",
+				type : "post",
+				timeout : 30000,
+				dataType : "json",
+				data : {
+				"rev_no" : $("#rev_no").val(),
+				"rep_write" : $("#rep_write").val()
+				},
+				success : function(res) {
 					console.log(res);
 					var table = $("#rep_table");
 					table.empty();
@@ -89,44 +104,49 @@
 						var td = $("<th>").html(obj.rep_name);
 						var td2 = $("<td>").html(obj.rep_detail);
 						var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
-						tr.append(td).append(td2).append(td3)/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
+						tr.append(td).append(td2).append(td3)/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */
+						//<tr><td>rep_no</td></tr>
 						table.append(tr);
 						$("#rep_write").val("");
-					});			
-				} 
-			});
-		}
-	});
+					});
+				}
+				});
+			}
+		});
 		$(document).on("click", ".repDelBtn", function() {
 			var rep_no = $(this).find(".rep_no").val();
-			
+
 			$.ajax({
-				url:"rev_replyDelete.do",
-				type:"post",
-				timeout:30,
-				dataType:"json",
-				data:{"rep_no":rep_no,"rev_no":$("#rev_no").val()},
-				success:function(res){
+				url : "rev_replyDelete.do",
+				type : "post",
+				timeout : 30,
+				dataType : "json",
+				data : {
+				"rep_no" : rep_no,
+				"rev_no" : $("#rev_no").val()
+				},
+				success : function(res) {
 					console.log(res);
 					var table = $("#rep_table");
 					table.empty();
-					$(res.data).each(function(i, obj) {						
+					$(res.data).each(function(i, obj) {
 						var tr = $("<tr>");//<tr></tr>
 						var td = $("<th>").html(obj.rep_name);
 						var td2 = $("<td>").html(obj.rep_detail);
 						var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
-						tr.append(td).append(td2).append(td3);<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
+						tr.append(td).append(td2).append(td3)
+						//<tr><td>rep_no</td></tr>
 						table.append(tr);
-					
-					});	
-				} 
+		
+					});
+				}
 			});
 		});
 	});
-	
 </script>
 </head>
 <body>
+
 <div class="way_top">
 	<h3>후기<br /><span>홈 > 자유게시판 > 후기</span></h3>
 </div>
@@ -134,39 +154,40 @@
 	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>후기</h2>
 	<table>
 		<tr>
-			<th> ${rev_list.rev_title }</th>
-		</tr>		
-	<tr>
-		<td>${rev_list.rev_name }</td>
-	</tr>
-	<tr>
-		<td>${rev_detail.rev_detail }</td>
-	</tr>	
-</table>
+			<th colspan="2">${rev_list.rev_title }</td>
+		</tr>
+		<tr>
+			<td id="td_writed_date">작성 일자 : ${rev_list.rev_regdate }</td>
+			<td id="td_writed_man">작성자 : ${rev_list.rev_name } / 조회수 : ${rev_list.rev_readcnt } </td>
+		</tr>
+		<tr>
+			<td colspan="2" id='rev_detail_td'><p id='detail_content'>${rev_detail.rev_detail}</p></td>
+		</tr>
+	</table>
+
 	<c:if test="${user_info.my_name.equals(rev_list.rev_name)}">
-	<p id='btn_right'>
-		<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }"  class='style_from_input'>수정</a></span>
-		<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete" class='style_from_input'>삭제</a></span>
-	</p>
+		<p class='btn_right'>
+			<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }"  class='style_from_input'>수정</a></span>
+			<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete" class='style_from_input'>삭제</a></span>
+		</p>
 	</c:if>
 	<hr>
-	
 	<input type="hidden" name="rev_no" id="rev_no" value="${rev_list.rev_no }">
 	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>나도 한마디</h2>
-	<textarea rows="7" cols="100" placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write" name="rep_write" required="required"></textarea>
-	<button id="replyBtn">등록</button>
-
-		<table id="top_table">
-			<tr>
-				<th>아이디</th>
-				<th>내용</th>
-				<th>날짜</th>
-			</tr>	
-		</table>
-		<table id="rep_table">
-			
-		</table>
-	
+	<textarea placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write" name="rep_write" required="required"></textarea>
+	<p class="btn_right">
+		<button id="replyBtn">등록</button>
+	</p>
+	<table id="top_table">
+		<tr>
+			<th>아이디</th>
+			<th>내용</th>
+			<th colspan='2'>날짜</th>
+		</tr>
+	</table>
+	<table id="rep_table">
+		
+	</table>
 </div>
 </body>
 </html>

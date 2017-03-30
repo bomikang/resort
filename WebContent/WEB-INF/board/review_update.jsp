@@ -10,19 +10,27 @@
 
 </head>
 <body>
+<div class="way_top">
+	<h3>후기<br /><span>홈 > 자유게시판 > 후기</span></h3>
+</div>
+<div class="intro_padding">
+	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>후기 수정</h2>
 	<form action ="rev_update.do" method = "post">
 		<input type="hidden" name="no" value="${rev.rev_no }">
-		<p>
-			<label>제목</label>
-			<input type="text" name="title" value="${rev.rev_title }">
-		</p>
-		<p>
-			<label>내용</label>
-			<textarea rows="10" cols="30" name="content">${rev_Detail.rev_detail }</textarea>
-		</p>
-		<p>
-			<input type="submit" value="등록">
-		</p>
+		<fieldset>
+			<p>
+				<label>제목</label>
+				<input type="text" name="title" value="${rev.rev_title }">
+			</p>
+			<p>
+				<label>내용</label>
+				<textarea rows="10" cols="30" name="content">${rev_Detail.rev_detail }</textarea>
+			</p>
+			<p class='act_btn_area'>
+				<input type="submit" value="등록">
+			</p>
+		</fieldset>
 	</form>
+</div>
 </body>
 </html>
