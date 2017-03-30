@@ -1,10 +1,11 @@
 package auth.handler;
 
 import java.sql.Connection;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import book.model.BookDao;
 import jdbc.ConnectionProvider;
@@ -27,7 +28,20 @@ public class LoginHandler implements CommandHandler {
 			}else if(returnTo.isEmpty()){
 				returnTo = "index.jsp";
 			}
+			if(req.getAttribute("notJoin") != null){
+				req.removeAttribute("notJoin");
+			}
+			if(req.getAttribute("outId") != null){
+				req.removeAttribute("outId");
+			}
+			if(req.getAttribute("outPass") != null){
+				req.removeAttribute("outPass");
+			}
+			if(req.getAttribute("notPass") != null){
+				req.removeAttribute("notPass");
+			}
 			return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
+			
 		}else if(req.getMethod().equalsIgnoreCase("post")){
 			System.out.println("returnTo : "+returnTo);
 			String id = req.getParameter("id");
@@ -35,13 +49,14 @@ public class LoginHandler implements CommandHandler {
 			
 			Connection conn = null;
 			MemberDao dao = MemberDao.getInstance();
+			String url = "";
 			try{
 				conn = ConnectionProvider.getConnection();
 				Member member = dao.selectById(conn, id);
-				Member no_member = dao.selectOutdateIs(conn, id);
+				//Member no_member = dao.selectOutdateIs(conn, id);
 				
 				
-				if(no_member == null){	 // 아이디가 없을경우
+				if(member == null || (member!=null && member.getOutDate() != null)){	 // 아이디가 없을경우
 					req.setAttribute("notJoin", true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}else if(id==""){     // 아이디란이 공란일 경우
@@ -56,19 +71,16 @@ public class LoginHandler implements CommandHandler {
 					req.setAttribute("notPass",true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}	
-
-
-				// 세션에 DATA 남기기위한 작업
-				if(member.getIsMng().equals(true)){ // 관리자일 경우
-					/**
-					 * 유진작업 - 관리자일 경우 수행할 메소드(자동취소, 자동 완료) 2개 추가 - 문제발생 시 알려주세요! 
-					 * */
-					conn.setAutoCommit(false);
-					BookDao bDao = BookDao.getInstance();
-					bDao.autoBookCancel(conn);
-					bDao.autoBookEnd(conn);
-					conn.commit();
+				
+				if(returnTo==null){
+					returnTo = "index.jsp";
 				}
+				if(returnTo.equals("index.jsp")){
+					url = returnTo;
+				}else{
+					url=returnTo+".do";
+				}	
+				// 세션에 DATA 남기기위한 작업				
 				/*if(member.getIsMng().equals(false)){ // 일반회원일 경우
 					req.setAttribute("user",true);
 				}*/
@@ -81,20 +93,31 @@ public class LoginHandler implements CommandHandler {
 						member.getTel());
 				
 				req.getSession().setAttribute("user_info",myinfo);
-				String url = "";
-				if(returnTo==null){
-					returnTo = "index.jsp";
-				}
-				if(returnTo.equals("index.jsp")){
-					url = returnTo;
-				}else{
-					url=returnTo+".do";
-				}				
+				
+				if(myinfo.getIsMng().equals(true)){ // 관리자일 경우
+					/**
+					 * 유진작업 - 관리자일 경우 수행할 메소드(자동취소, 자동 완료) 2개 추가 - 문제발생 시 알려주세요! 
+					 * */
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(new Date(System.currentTimeMillis()));
+					if(cal.get(Calendar.HOUR_OF_DAY)>=15){
+						conn.setAutoCommit(false);
+						BookDao bDao = BookDao.getInstance();
+						if(cal.get(Calendar.HOUR_OF_DAY)>=17){
+							bDao.autoBookCancel(conn);
+						}
+						bDao.autoBookEnd(conn);
+						conn.commit();
+					}
+				}	
 				res.sendRedirect(url);
-				return null;
-			}finally{
+			}catch (Exception e) {
+				e.printStackTrace();
+				conn.rollback();
+			}finally{				
 				JdbcUtil.close(conn);	
 			}
+			return null;
 		}
 		return null;
 	}
