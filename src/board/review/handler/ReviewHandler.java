@@ -2,11 +2,14 @@ package board.review.handler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import board.model.Notice;
+import board.model.NoticeDao;
 import board.review.model.ListPageCount;
 import board.review.model.Review;
 import board.review.model.ReviewDao;
@@ -31,6 +34,14 @@ public class ReviewHandler implements CommandHandler {
 				}
 				ListPageCount listPage = dao.getArticlePage(pageno);
 				req.setAttribute("cntPage", listPage);
+				/*중요공지 리스트*/
+				NoticeDao nDao = NoticeDao.getInstance();
+				List<Notice> rnList = new ArrayList<>();
+				
+				System.out.println("rnList : true");
+				rnList = nDao.selectRealNotice(conn);
+			
+				req.setAttribute("rnList", rnList);
 			} finally {
 				JdbcUtil.close(conn);
 			}
