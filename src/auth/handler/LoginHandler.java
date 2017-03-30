@@ -79,6 +79,7 @@ public class LoginHandler implements CommandHandler {
 						member.getMail(),
 						member.getIsMng(),
 						member.getTel());
+				req.getSession().setAttribute("user_name", myinfo.getMy_name());
 				req.getSession().setAttribute("user_info",myinfo);
 				String url = "";
 				if(returnTo.equals("index.jsp")){
