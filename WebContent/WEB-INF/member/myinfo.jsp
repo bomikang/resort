@@ -204,7 +204,7 @@ h2 b{color:#cc0000;}
 					<form action="updateInfo.do" method="post">
 						${info.name }<button type="button" id="btn1">수정</button>
 						<span id="nameUpdate" class="update">
-							<input type="text" name="name" id="name" placeholder="이름">
+							<input type="text" name="name" id="name" placeholder="이름" required="required">
 							<button type="button" id="btn1_1">완료</button>
 							<button type="button" id="btn1_2">취소</button>
 						</span>
@@ -217,8 +217,8 @@ h2 b{color:#cc0000;}
 				<td>********
 					<button type="button" id="btn3">수정</button>
 					<span id="passwordUpdate" class="update">
-						<input type="password" name="password" id="password" placeholder="비밀번호 입력">
-						<input type="password"name="password2" id="password2" placeholder="비밀번호 확인">
+						<input type="password" name="password" id="password" placeholder="비밀번호 입력" required="required">
+						<input type="password"name="password2" id="password2" placeholder="비밀번호 확인" required="required">
 						<button type="button" id="btn3_1">완료</button>
 						<button type="button" id="btn3_2">취소</button>
 					</span>
@@ -229,7 +229,7 @@ h2 b{color:#cc0000;}
 				<td>
 					${info.mail }<button type="button" id="btn4">수정</button> 
 					<span id="mailUpdate" class="update"> 
-						<input type="text" name="mail" id="mail" placeholder="e-mail">
+						<input type="text" name="mail" id="mail" placeholder="e-mail" required="required">
 						<button type="button" id="btn4_1">완료</button>
 						<button type="button" id="btn4_2">취소</button>
 					</span>
@@ -240,7 +240,7 @@ h2 b{color:#cc0000;}
 				<td>
 					${info.tel }<button type="button" id="btn5">수정</button> 
 					<span id="telUpdate" class="update">
-						<input type="text" name="tel" id="tel" placeholder="전화번호">
+						<input type="text" name="tel" id="tel" placeholder="전화번호" required="required">
 						<button type="button" id="btn5_1">완료</button>
 						<button type="button" id="btn5_2">취소</button>
 					</span>

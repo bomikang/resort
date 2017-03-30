@@ -32,7 +32,7 @@ public class LoginHandler implements CommandHandler {
 			System.out.println("returnTo : "+returnTo);
 			String id = req.getParameter("id");
 			String password = req.getParameter("password");
-			
+		
 			Connection conn = null;
 			MemberDao dao = MemberDao.getInstance();
 			try{
@@ -43,6 +43,7 @@ public class LoginHandler implements CommandHandler {
 				
 				if(no_member == null){	 // 아이디가 없을경우
 					req.setAttribute("notJoin", true);
+					System.out.println(" 아이디 안돼!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}else if(id==""){     // 아이디란이 공란일 경우
 					req.setAttribute("outId", true);
@@ -50,13 +51,14 @@ public class LoginHandler implements CommandHandler {
 				}
 				
 				if(password == ""){ // 패스워드 란이 공란일 경우
+					
 					req.setAttribute("outPass", true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu"; 
 				}else if(!member.matchPassword(password)){ // 비밀번호가다를경우
 					req.setAttribute("notPass",true);
+					System.out.println(" 비번안돼!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}	
-
 
 				// 세션에 DATA 남기기위한 작업
 				if(member.getIsMng().equals(true)){ // 관리자일 경우
@@ -81,6 +83,7 @@ public class LoginHandler implements CommandHandler {
 						member.getTel());
 				
 				req.getSession().setAttribute("user_info",myinfo);
+				
 				String url = "";
 				if(returnTo==null){
 					returnTo = "index.jsp";

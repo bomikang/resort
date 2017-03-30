@@ -98,7 +98,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try{
-			String sql = "select * from member where mem_id =? and mem_outdate is null;";
+			String sql = "select * from member where mem_id =? and mem_outdate is null";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
