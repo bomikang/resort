@@ -23,7 +23,7 @@
 	table tr #rev_detail_td p{width:90%; margin:15px auto; white-space: normal; word-break:break-all;}
 	.btn_right{text-align: right;}
 	.style_from_input{display: inline-block; text-align: center;}
-	textarea{width: 100%;}	
+	textarea{width: 100%; height:50px;}	
 </style>
 
 </style>
@@ -57,15 +57,8 @@
 					var tr = $("<tr>");//<tr></tr>
 					var td = $("<th>").html(obj.rep_name);
 					var td2 = $("<td>").html(obj.rep_detail);
-<<<<<<< HEAD
-					var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
-					
-					tr.append(td).append(td2).append(td3)/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
-					
-=======
 					var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'><input type='hidden' value='"+obj.rep_mem+"' class='mem_no'></button>");
 					tr.append(td).append(td2).append(td3);
->>>>>>> refs/remotes/origin/moonhan
 					rep_no= Number(obj.rep_no);
 					table.append(tr);
 					rep_Btn();
@@ -177,6 +170,7 @@
 		<p class='btn_right'>
 			<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }"  class='style_from_input'>수정</a></span>
 			<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete" class='style_from_input'>삭제</a></span>
+			<a href="#" onclick="location.replace('review.do')" class='moving_btn'>목록</a>
 		</p>
 	</c:if>
 	<hr>
@@ -185,6 +179,7 @@
 	<textarea placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write" name="rep_write" required="required"></textarea>
 	<p class="btn_right">
 		<button id="replyBtn">등록</button>
+		
 	</p>
 	<table id="top_table">
 		<tr>

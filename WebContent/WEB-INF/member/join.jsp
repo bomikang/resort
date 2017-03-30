@@ -26,7 +26,7 @@
 }
 
 .way_top h2{color:#fff; position:relative; left:30px; top:5px;}
-fieldset{width:680px; margin:0 auto; margin-top:70px; margin-bottom:80px; padding-top:20px; padding-bottom:50px;background:rgba(255,255,255,1); border-radius: 20px; box-shadow: 1px 1px 0px 1px black;}
+fieldset{width:680px; margin:0 auto; margin-top:70px; margin-bottom:80px; padding-top:20px; padding-bottom:50px;background:rgba(255,255,255,0.9); border-radius: 20px; box-shadow: 1px 1px 0px 1px black;}
 fieldset p{width:570px;}
 fieldset input{display: inline-block;}
 fieldset input[name='id'], input[name='password'], input[name='password2'], input[name='name'], input[name='email']{width:200px; height:31px !important;

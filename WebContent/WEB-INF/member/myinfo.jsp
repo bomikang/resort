@@ -7,25 +7,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-/* <<<<<<< HEAD
-#infoName, #infoPwd, #infoMail, #infoTel{display: inline-block; width:170px;}
-input[type='submit'], button{width:50px;}
-input[type='text'], input[type='password']{width:120px; display: inline;}
-input#mail{width:220px;}
-input#tel1_input, input#tel2_input{width:50px !important;}
-small{color:#777; margin:15px 0;}
-h2 b{color:#cc0000;}
-======= */
 .update {display: none;}
-table {width: 520px;margin: 0 auto;margin-top: 25px;}
-table td {text-align: right;height: 60px;}
+table {width: 600px;margin: 0 auto;margin-top: 25px;}
+table td {text-align: center; height:50px; font-size:16px;}
 table th:FIRST-CHILD {width: 130px;}
-input[type='submit'], button {width: 50px;}
-input[type='text'], input[type='password'] {width: 200px;display: inline;}
+input[type='submit'], button{width:50px;}
+input[type='text'], input[type='password']{width:120px;}
+input#origin_pwd,input#mail{width:200px;}
 small {color: #777;margin: 15px 0;}
 h2 b {color: #cc0000;}
 #btn1, #btn2, #btn3, #btn4, #btn5{position:relative;}
-#infoName, #infoPwd, #infoMail, #infoTel{display: inline-block; width:170px;}
+#infoName, #infoMail, #infoTel, #infoPwd{display: inline-block; width:220px;}
+input[name='bkTel2'], input[name='bkTel3']{width:50px !important;}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -66,7 +59,8 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 								if(data=="no"){
 									alert("비밀번호가 틀렸습니다.");
 								}else if(data=="ok"){
-									$("#passwordUpdate").css("display","inline-block");	
+									$("#passwordUpdate").css("display","inline-block");
+									$("#infoPwd").css("display","none");
 									$("#btn3").css("display","none");
 									$("#origin_pwd").css("display","none");
 									$("#btn3_1").css("display","inline-block");
@@ -116,11 +110,14 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 				$("#btn2_2").css("display","none");
 			});
 		 $("#btn3_2").click(function(){
+			 	$("#infoPwd").css("display", "inline-block");
 				$("#passwordUpdate").css("display","none");
+				$("#origin_pwd").css("display","inline-block");
+				$("#origin_pwd").val("");
 				$("#btn3").css("display","inline-block");
 				$("#btn3_1").css("display","none");
 				$("#btn3_2").css("display","none");
-				$("#infoPwd").css("display","inline-block");
+				
 			});
 		 $("#btn4_2").click(function(){
 				$("#mailUpdate").css("display","none");
@@ -319,17 +316,15 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 				</tr>
 				<tr>
 					<th>비밀번호 변경</th>
-					<td><input type="password" id="origin_pwd" name="origin_pwd"
-						placeholder="사용중인 비밀번호를 입력하세요!">
-						<button type="button" id="btn3">수정</button> <span
-						id="passwordUpdate" class="update"> <input type="password"
-							name="password" id="password" placeholder="비밀번호 입력"
-							required="required"> <input type="password"
-							name="password2" id="password2" placeholder="비밀번호 확인"
-							required="required">
-							<button type="button" id="btn3_1">완료</button>
-							<button type="button" id="btn3_2">취소</button>
-					</span></td>
+					<td><span id='infoPwd'><input type="password" id="origin_pwd" name="origin_pwd"
+						placeholder="사용중인 비밀번호를 입력하세요!"></span>
+						<button type="button" id="btn3">수정</button>
+						<span id="passwordUpdate" class="update"> 
+							<input type="password" name="password" id="password" placeholder="비밀번호 입력" required="required">
+							<input type="password" name="password2" id="password2" placeholder="비밀번호 확인" required="required">
+							<button type="button" id="btn3_1">완료</button><button type="button" id="btn3_2">취소</button>
+						</span>
+					</td>
 				</tr>
 				<tr>
 					<th>본인확인 이메일</th>

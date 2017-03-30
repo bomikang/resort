@@ -28,6 +28,7 @@
 			</p>
 			<p class='act_btn_area'>
 				<input type="submit" value="등록">
+				<a href="#" onclick="location.replace('review.do')" class='moving_btn'>목록</a>
 			</p>
 		</fieldset>
 	</form>

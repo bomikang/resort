@@ -8,6 +8,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <title>Insert title here</title>
+<style>
+	a.style_from_input{width: 100px !important;}
+</style>
 </head>
 <body>
 <div class="way_top">
@@ -27,6 +30,7 @@
 			</p>
 			<p class='act_btn_area'>
 				<input type="submit" value="등록">
+				<a href="#" onclick="location.replace('review.do')" class='moving_btn'>목록</a>
 			</p>
 		</fieldset>
 	</form>
