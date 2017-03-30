@@ -25,19 +25,15 @@
 	color:#cc3333;
 }
 
-.way_top h2{color:#fff; position:relative; left:30px; top:5px;}
-fieldset{width:680px; margin:0 auto; margin-top:70px; margin-bottom:80px; padding-top:20px; padding-bottom:50px;background:rgba(255,255,255,0.9); border-radius: 20px; box-shadow: 1px 1px 0px 1px black;}
-fieldset p{width:570px;}
-fieldset input{display: inline-block;}
-fieldset input[name='id'], input[name='password'], input[name='password2'], input[name='name'], input[name='email']{width:200px; height:31px !important;
-border-radius: 15px; background:#929292; color:#fff !important; border:1px solid rgba(0,0,0,0) !important;}
-input[type='submit'], button{background:#FFBB83 !important; width:120px; border-radius: 15px; height:46px; color:#fff; font-family:"NanumSquareB";}
-button{margin-left:12px;}
-input[type='submit']{width:415px;} 
+.login_join_field{width:680px;}
+.login_join_field p{width:570px;}
+.login_join_field button{margin-left:12px;}
+.login_join_field input[type='submit']{width:415px !important;} 
 ::-webkit-input-placeholder{color:#fff;}
-fieldset input[name='bkTel2'], input[name='bkTel3']{width:102px; border-radius: 10px; background:#929292; border:none !important;}
-fieldset label{color:#929292; margin-right:12px;}
-select{border-radius: 10px; background:#929292; color:#fff;  border:none !important;}
+.login_join_field input[name='bkTel2'], .login_join_field input[name='bkTel3']{width:60px !important; border-radius: 10px; height:23px !important;}
+.login_join_field label{margin-right:12px !important;}
+
+
 #submit_div{width:570px; display:block; margin: 0 auto;}
 
 </style>
@@ -223,7 +219,7 @@ $(function(){
 </div>
 	<div id="join">
 	<form action="join.do" method="post" name="f1">
-		<fieldset>
+		<fieldset class='login_join_field'>
 			<p>
 				<label>아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;디 </label>
 				<input type="text" name="id" id="id" required="required" placeholder="아이디를 입력하세요" style="width:300px"><button id="btn" type="button">아이디중복</button> 

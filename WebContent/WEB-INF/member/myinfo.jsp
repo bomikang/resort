@@ -285,9 +285,7 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 </head>
 <body>
 	<div class="way_top">
-		<h3>
-			회원정보<br /> <span>홈 > 회원정보 > 회원정보</span>
-		</h3>
+		<h2>회원정보</h2>
 	</div>
 	<div id="main" class='intro_padding'>
 		<div id="header">

@@ -55,7 +55,6 @@ public class QnaHandler implements CommandHandler {
 			Connection con = null;
 			
 			String checkReply = req.getParameter("checkReply");
-			
 			try {
 				con = ConnectionProvider.getConnection();
 				
@@ -73,9 +72,11 @@ public class QnaHandler implements CommandHandler {
 						list = dao.incompleteReplyList(con);
 					}
 				}
-				else if (checkReply.equals("incomplete")){ list = dao.incompleteReplyList(con);	}//답변 미완료(관리자) 
-				else if (checkReply.equals("complete")){ list = dao.completeReplyList(con); }//답변 완료(관리자)
-				else if (checkReply.equals("all")) { list = dao.selectAllQnaExceptAdmin(con); }//게시글 전체(관리자)
+				else if (checkReply.equals("incomplete")){ list = dao.incompleteReplyList(con);	System.out.println("incom");}//답변 미완료(관리자) 
+				else if (checkReply.equals("complete")){ list = dao.completeReplyList(con); 	System.out.println("com");}//답변 완료(관리자)
+				else if (checkReply.equals("all")) { list = dao.selectAllQnaExceptAdmin(con);	System.out.println("all");}//게시글 전체(관리자)
+				
+				req.setAttribute("qnaList", list);
 				
 				//json
 				ObjectMapper om = new ObjectMapper();

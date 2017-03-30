@@ -26,7 +26,7 @@
 	function createQnaTable(data, $tableName){
 		///////////////////////////////////////////////각 페이지 버튼 눌렀을 때 페이지 분리
 		var listSize = data.length; //리스트사이즈
-		
+	
 		/*ex) 리스트가 33개면 4페이지*/
 		var btnPageNum = 1; // X페이지 숫자 버튼(1페이지부터 시작)
 		if( listSize/10 != 0 ) btnPageNum = listSize/10; 
@@ -60,9 +60,8 @@
 					tableItem += "<td>"+ data[i].stringReply +"</td>";
 					tableItem += "</tr>";
 				}
+				$tableName.html(tableItem);
 			}
-		$($tableName).html(tableItem);
-		
 	}//createQnaTable
 	
 	function createTableByClickedNum(data, $tableName){
@@ -109,8 +108,17 @@
 			dataType:"json",
 			data:{"checkReply":checkReply},
 			success:function(data){
-				createQnaTable(data, $tableName);
-				createTableByClickedNum(data, $tableName);
+				if (data.length > 0) {
+					createQnaTable(data, $tableName);	
+					createTableByClickedNum(data, $tableName);
+				}else{
+					var tableItem = "<tr>";
+						tableItem += "<th>번호</th><th>제목</th><th>등록일</th><th>작성자</th><th>답변여부</th>";
+						tableItem += "</tr>";
+						tableItem += "<tr><td colspan='5'>게시물이 없습니다.</td></tr>";
+					$tableName.html(tableItem);
+				}
+				
 			}
 		});
 	}//getQnaList
@@ -161,14 +169,9 @@
 	<c:if test="${!empty user_info}">
 		<!-- 일반회원 -->
 		<c:if test="${user_info.isMng == false }">
-			<c:if test="${qnaList.size() == 0}">
-				<p>등록된 게시물이 없습니다</p>
-			</c:if>
-			<c:if test="${qnaList.size() > 0}">
-				<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>1:1 문의</h2>
-				<span id="memNum" style="display:none;">0</span><!-- 일반 회원은 0번으로 보냄 <= ajax사용하기 위함 -->
-				<table id="mem_table"></table>
-			</c:if>
+			<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>1:1 문의</h2>
+			<span id="memNum" style="display:none;">0</span><!-- 일반 회원은 0번으로 보냄 <= ajax사용하기 위함 -->
+			<table id="mem_table"></table>
 		</c:if>
 		
 		<!-- 관리자 -->
@@ -179,13 +182,8 @@
 			<button id="comp_list">답변 완료 목록</button>
 			<button id="all_list">전체 목록</button>
 			
-			<c:if test="${qnaList.size() == 0}">
-				<p>등록된 게시물이 없습니다</p>
-			</c:if>
-			<c:if test="${qnaList.size() > 0}">
-				<span id="memNum" style="display:none;">1</span><!-- 관리자는 1번으로 보냄 <= ajax사용하기 위함 -->
-				<table id="admin_table"></table>
-			</c:if>
+			<span id="memNum" style="display:none;">1</span><!-- 관리자는 1번으로 보냄 <= ajax사용하기 위함 -->
+			<table id="admin_table"></table>
 		</c:if>
 		
 		<!-- 페이징 -->

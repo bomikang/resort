@@ -30,7 +30,7 @@ a{text-decoration: none; color:black; margin:0; padding:0; font-family: "맑은 
 .wrapper{display:block; width:100%;}
 
 .login_area{width:100%; background:rgba(255,255,255,0.3);}
-.login_area > div{width: 1400px; margin:0 auto; padding:10px 0; text-align: right;}
+.login_area > div{width: 1380px; margin:0 auto; padding:10px 0; text-align: right; padding-right:20px;}
 .login_area > div p{font-size:14px; text-align: left; display: inline; color:#b5592a;}
 .login_area > div a{font-size:14px; margin-left:12px; color:#b5592a;}
 
@@ -96,10 +96,17 @@ td a{font-weight: bold;}
 .way_top{position:relative; padding:10px 0; left:-43px;	background:url(../image/ribbon.png) no-repeat left center; background-size: contain; margin-bottom:10px;}
 .way_top h3{text-align: left; padding-left:24px; padding-bottom:9px; color:#fff; height:20px; }
 .way_top h3 span{font-size:13px; font-weight: normal;}
+.way_top h2{color:#fff; position:relative; left:30px; top:5px;}
 
 .intro_padding{padding:13px 30px 30px; background:rgba(255,254,232,1); border-radius: 10px; min-height:760px;}
 .icon_flower{width:30px; position:relative; top:10px; margin-right:3px;}
 .inner_content{padding-left:35px;}
 .inner_content li{margin:13px 0;}
 
-
+.login_join_field{width:500px; margin:0 auto; margin-top:70px; padding-top:20px; padding-bottom:50px;background:rgba(255,255,255,0.9); border-radius: 20px; box-shadow: 1px 1px 0px 1px black;}
+.login_join_field p{width:380px;}
+.login_join_field p label{margin-right:16px;  color:#929292;}
+.login_join_field p label img{width:40px; position:relative; top:16px;}
+.login_join_field p input{width:300px !important; height:31px !important; border-radius: 15px; background:#929292; color:#fff !important; border:1px solid rgba(0,0,0,0) !important; display:inline-block;}
+.login_join_field input[type='submit'], .login_join_field button{background:#FFBB83 !important; width:120px !important; border-radius: 15px; height:46px !important; color:#fff; font-family:"NanumSquareB";}
+.login_join_field select{border-radius: 10px; background:#929292; color:#fff;  border:none !important;}
