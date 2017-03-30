@@ -174,11 +174,13 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 				}
 			});    
 			 
-			 
+			
 			  $("#btn3_1").click(function(){
 				  if($("#password").val() != $("#password2").val()){
 			            alert("패스워드가 일치하지 않습니다.");
-						return false;            
+						           
+			        }else if(reg_upw.test($("#password").val())==false){
+			        	alert("형식에 맞지 앟는 패스워드 입니다.");
 			        }else{  
 				$.ajax({
 					url:"updateInfo.do",
@@ -311,7 +313,7 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 					<th>사용자 이름</th>
 					<td>
 						<form action="updateInfo.do" method="post">
-							${info.name }
+							<span id="infoName">${info.name }</span>
 							<button type="button" id="btn1">수정</button>
 							<span id="nameUpdate" class="update"> <input type="text"
 								name="name" id="name" placeholder="이름" required="required">
@@ -338,7 +340,7 @@ var reg_mail = /^\w{5,12}@[a-z]{2,10}[\.][a-z]{2,3}[\.]?[a-z]{0,3}$/; //hotdog12
 				</tr>
 				<tr>
 					<th>본인확인 이메일</th>
-					<td>${info.mail }
+					<td><span id="infoMail">${info.mail }</span>
 						<button type="button" id="btn4">수정</button> <span id="mailUpdate"
 						class="update"> <input type="text" name="mail" id="mail"
 							placeholder="e-mail" required="required">
