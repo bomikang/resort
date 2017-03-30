@@ -13,7 +13,12 @@
 		});
 	});//ready
 </script>
-<div id="mem_search">
+
+<div class="way_top">
+	<h3>아이디 / 비밀번호 찾기</h3>
+</div>
+
+<div id="mem_search" class='intro_padding'>
 	<c:if test="${!empty user_info }">
 		<%response.sendRedirect("index.jsp"); %>
 	</c:if>

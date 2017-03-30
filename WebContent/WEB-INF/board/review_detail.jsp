@@ -168,16 +168,16 @@
 			<td colspan="2" id='rev_detail_td'><p id='detail_content'>${rev_detail.rev_detail}</p></td>
 		</tr>
 	</table>
-
-	<c:if test="${user_info.my_name.equals(rev_list.rev_name)}">
-		<p class='btn_right'>
+	<p class='btn_right'>
+		<c:if test="${user_info.my_no == rev_list.rev_mem}">
+		
 			<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }"  class='style_from_input'>수정</a></span>
 			<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete" class='style_from_input'>삭제</a></span>
-			<a href="#" onclick="location.replace('review.do')" class='moving_btn'>목록</a>
-		</p>
-	</c:if>
+		
+		</c:if>
+		<a href="#" onclick="location.replace('review.do')" class='moving_btn'>목록</a>
+	</p>
 	<hr>
-
 	<input type="hidden" name="rev_no" id="rev_no" value="${rev_list.rev_no }">
 	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>나도 한마디</h2>
 	<c:if test="${!empty user_info }">
@@ -185,7 +185,7 @@
 		placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write"
 		name="rep_write" required="required"></textarea>
 		<p class="btn_right">
-		<button id="replyBtn">등록</button>
+			<button id="replyBtn">등록</button>
 
 		</p>
 	</c:if>
