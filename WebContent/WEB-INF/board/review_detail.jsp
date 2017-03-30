@@ -35,7 +35,7 @@
 					
 					
 					var tr = $("<tr>");//<tr></tr>
-					var td = $("<td>").html(obj.rep_name);
+					var td = $("<th>").html(obj.rep_name);
 					var td2 = $("<td>").html(obj.rep_detail);
 					var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
 					tr.append(td).append(td2).append(td3);/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
@@ -85,7 +85,7 @@
 					table.empty();
 					$(res.data).each(function(i, obj) {
 						var tr = $("<tr>");//<tr></tr>
-						var td = $("<td>").html(obj.rep_name);
+						var td = $("<th>").html(obj.rep_name);
 						var td2 = $("<td>").html(obj.rep_detail);
 						var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
 						tr.append(td).append(td2).append(td3)/* .append("<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'></button>"); */<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
@@ -111,7 +111,7 @@
 					table.empty();
 					$(res.data).each(function(i, obj) {						
 						var tr = $("<tr>");//<tr></tr>
-						var td = $("<td>").html(obj.rep_name);
+						var td = $("<th>").html(obj.rep_name);
 						var td2 = $("<td>").html(obj.rep_detail);
 						var td3 = $("<td>").html(obj.rep_regdate+"<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'>");
 						tr.append(td).append(td2).append(td3);<!--.append("<button>수정");-->//<tr><td>rep_no</td></tr>
@@ -125,11 +125,16 @@
 	
 </script>
 </head>
-<body>	
+<body>
+<div class="way_top">
+	<h3>후기<br /><span>홈 > 자유게시판 > 후기</span></h3>
+</div>
+<div class="intro_padding">
+	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>후기</h2>
 	<table>
-	<tr>
-		<td> ${rev_list.rev_title }</td>
-	</tr>		
+		<tr>
+			<th> ${rev_list.rev_title }</th>
+		</tr>		
 	<tr>
 		<td>${rev_list.rev_name }</td>
 	</tr>
@@ -158,6 +163,6 @@
 			
 		</table>
 	
-
+</div>
 </body>
 </html>

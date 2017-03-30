@@ -13,8 +13,8 @@
 	#goFirst, #goLast{width:20px; background:none; border:none;}
 	.paging_btn_num{background:none; border:none; width:18px;}
 	#incomp_list, #comp_list{width:150px; margin-bottom:20px;}
-	.style_from_input{display:inline-block; width:100px; margin-bottom:20px; text-align: center;}
 	.btn_right{text-align: right;}
+	.btn_right .style_from_input{display:inline-block; width:100px; margin-bottom:20px; text-align: center;}
 	#mem_table th:NTH-CHILD(1), #admin_table th:NTH-CHILD(1){width:40px;}
 	#mem_table th:NTH-CHILD(3), #admin_table th:NTH-CHILD(3){width:110px;}
 	#mem_table th:NTH-CHILD(4), #admin_table th:NTH-CHILD(4){width:140px;}
@@ -169,8 +169,6 @@
 				<span id="memNum" style="display:none;">0</span><!-- 일반 회원은 0번으로 보냄 <= ajax사용하기 위함 -->
 				<table id="mem_table"></table>
 			</c:if>
-			<p class='btn_right'><a href="qnainsert.do" class='style_from_input'>게시글 등록</a></p>
-			
 		</c:if>
 		
 		<!-- 관리자 -->
@@ -189,13 +187,19 @@
 				<table id="admin_table"></table>
 			</c:if>
 		</c:if>
+		
+		<!-- 페이징 -->
+		<div class="pageDivArea">
+			<button id="goFirst"class='paging_btn'><img src="image/paging_left2.png" alt="" /></button>
+			<div class='pageBtnArea'></div>
+			<button id="goLast"class='paging_btn'><img src="image/paging_right2.png" alt="" /></button>
+		</div>
+		<c:if test="${user_info.isMng == false }">
+			<p class='btn_right'><a href="qnainsert.do" class='style_from_input'>게시글 등록</a></p>	
+		</c:if>
 	</c:if>
 	
-	<div class="pageDivArea">
-		<button id="goFirst"class='paging_btn'><img src="image/paging_left2.png" alt="" /></button>
-		<div class='pageBtnArea'></div>
-		<button id="goLast"class='paging_btn'><img src="image/paging_right2.png" alt="" /></button>
-	</div>
+	
 </div>
 </body>
 </html>

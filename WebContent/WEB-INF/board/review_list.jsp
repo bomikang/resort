@@ -13,6 +13,14 @@
 	#write{width:200px; height:17px; position:relative; top:-2px;}
 	#searchBtn{width:50px; background:#43493e; padding:5px 0;}
 	#searchBtn:HOVER{color:#43493e; border-color:#43493e; background:#fff;}
+	.btn_right{text-align: right;}
+	.btn_right .style_from_input{display:inline-block; width:100px; margin-bottom:20px; text-align: center;}
+	table th:NTH-CHILD(1){width:80px;}
+	table th:NTH-CHILD(3){width:120px;}
+	table th:NTH-CHILD(4){width:120px;}
+	table th:NTH-CHILD(5){width:80px;}
+	table td:NTH-CHILD(2){text-align: left; padding-left:15px;}
+	#paging{text-align: center;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -21,7 +29,6 @@
 		var serVal= $("#search").val();
 		var writeVal = $("#write").val(); 
 		location.href = "rev_search.do?select="+serVal+"&write="+writeVal;
-		
 	});	
 });			
 </script>
@@ -31,9 +38,7 @@
 	<h3>후기<br /><span>홈 > 자유게시판 > 후기</span></h3>
 </div>
 <div class="intro_padding">
-	<c:if test="${!empty user_info }">
-		<a href="rev_insert.do" class='style_from_input'>게시글 등록</a>
-	</c:if>	
+	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>후기</h2>
 	<table>
 		<tr>
 			<th><b>게시물 번호</b></th>
@@ -64,14 +69,14 @@
 	<p id="paging">
 			<c:if test="${cntPage.hasArticles() }">
 				<c:if test="${cntPage.startPage > 5 }">
-					<a href="review.do?pageNo=${cntPage.startPage -5 }">[이전]</a>
+					<a href="review.do?pageNo=${cntPage.startPage -5 }" class='paging_btn'><img src="image/paging_left1.png" alt="" /></a>
 				</c:if>
 				<c:forEach var="pNo" begin="${cntPage.startPage}"
 					end="${cntPage.endPage }">
-					<a href="review.do?pageNo=${pNo }">[${pNo}]</a>
+					<a href="review.do?pageNo=${pNo }" class='paging_btn_num'>${pNo}</a>
 				</c:forEach>
 				<c:if test="${cntPage.endPage<cntPage.totalPages }">
-					<a href="review.do?pageNo=${cntPage.startPage+5 }">[다음]</a>
+					<a href="review.do?pageNo=${cntPage.startPage+5 }" class='paging_btn'><img src="image/paging_left2.png" alt="" /></a>
 				</c:if>
 			</c:if>
 		</p>
@@ -86,6 +91,10 @@
 		<input type="text" id="write" >
 		<button id="searchBtn">검색</button>
 	</p>
+	
+	<c:if test="${!empty user_info }">
+		<p class='btn_right'><a href="rev_insert.do" class='style_from_input' id="btn_insert">게시글 등록</a></p>
+	</c:if>	
 </div>
 </body>
 </html>
