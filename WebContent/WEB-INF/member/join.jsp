@@ -12,40 +12,33 @@
 	display : none;
 	color:red;
 	padding:0;
-	margin:0 0 0 90px;
 	font-size: 12px;
 }
 .ex{
 	display : none;
 	color:red;
 	padding:0;
-	margin:0 0 0 90px;
 	font-size: 12px;
 }
-#title{
-	width : 130px;
-	margin: 0 auto;
-}
-fieldset{
-	width : 350px;
-	margin: 0 auto;
-}
-#submit_div{
-	width : 380px;	
-	margin: 0 auto;
-}
-#sub{
-	width : 380px;
-	height: 45px;
-	margin-top: 20px;
-}
-.tt{
-	display: none;
-}
 .form_EX{
-	font-size:11px;
+	font-size: 12px;
+	color:#cc3333;
 }
 
+.way_top h2{color:#fff; position:relative; left:30px; top:5px;}
+fieldset{width:680px; margin:0 auto; margin-top:70px; margin-bottom:80px; padding-top:20px; padding-bottom:50px;background:rgba(255,255,255,1); border-radius: 20px; box-shadow: 1px 1px 0px 1px black;}
+fieldset p{width:570px;}
+fieldset input{display: inline-block;}
+fieldset input[name='id'], input[name='password'], input[name='password2'], input[name='name'], input[name='email']{width:200px; height:31px !important;
+border-radius: 15px; background:#929292; color:#fff !important; border:1px solid rgba(0,0,0,0) !important;}
+input[type='submit'], button{background:#FFBB83 !important; width:120px; border-radius: 15px; height:46px; color:#fff; font-family:"NanumSquareB";}
+button{margin-left:12px;}
+input[type='submit']{width:415px;} 
+::-webkit-input-placeholder{color:#fff;}
+fieldset input[name='bkTel2'], input[name='bkTel3']{width:102px; border-radius: 10px; background:#929292; border:none !important;}
+fieldset label{color:#929292; margin-right:12px;}
+select{border-radius: 10px; background:#929292; color:#fff;  border:none !important;}
+#submit_div{width:570px; display:block; margin: 0 auto;}
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -225,36 +218,38 @@ $(function(){
 </script>
 </head>
 <body>
-	<div id="title">
-		<h1> 회원가입 </h1>
-	</div>
+<div class="way_top">
+	<h2>눈꽃자연휴양림 로그인</h2>
+</div>
 	<div id="join">
 	<form action="join.do" method="post" name="f1">
 		<fieldset>
 			<p>
-				<label>아이디 : </label><span class="form_EX">5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</span><br> 
+				<label>아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;디 </label>
 				<input type="text" name="id" id="id" required="required" placeholder="아이디를 입력하세요" style="width:300px"><button id="btn" type="button">아이디중복</button> 
+				<br /><span class="form_EX">5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</span>
 				<span class="ex">형식에 맞지 않는 아이디 입니다.</span>
 				<span class="error">사용중인 아이디 입니다.</span>
 				
 			</p>
 			<p>
-				<label>암호 : </label><span class="form_EX">6~24자 영문대소문자, 숫자, 특수문자 혼합하여 사용 가능합니다.</span><br>
+				<label>비&nbsp;&nbsp;밀&nbsp;&nbsp;번&nbsp;&nbsp;호</label>
 				<input type="password" id ="password"name="password" required="required" placeholder="비밀번호를 입력하세요" style="width:300px">
+				<br /><span class="form_EX">6~24자 영문대소문자, 숫자, 특수문자 혼합하여 사용 가능합니다.</span>
 				<span class="ex">형식에 맞지 않는 비밀번호 입니다.</span>
 			</p>
 			<p>
-				<label>비밀번호 재확인 :</label><br>
+				<label style='font-size:15px;'>비밀번호  확인</label>
 				<input type="password" id="password2"name="password2" required="required" placeholder="비밀번호를 재확인해주세요" style="width:300px">
 				<span class="error">입력한 비밀번호가 일치하지 않습니다.</span>
 			</p>
 			<p>
-				<label>이름 :</label><br>
+				<label>이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</label>
 				<input type="text" id="name"name="name" required="required" placeholder="이름을 입력하세요" style="width:300px">
 				<span class="ex">한글 2~20자 사용 가능합니다.</span>
 			</p>
 			<p>
-				<label>전화번호 : </label>
+				<label>전&nbsp;&nbsp;화&nbsp;&nbsp;번&nbsp;&nbsp;호</label>
 				<select name="bkTel1">
 						<option value="010">010</option>
 						<option value="011">011</option>
@@ -268,15 +263,16 @@ $(function(){
 				<span class="ex">잘못된 전화번호입니다.</span>
 			</p>
 			<p>
-				<label>E-Mail :</label>
-				<span class="form_EX">예)hotdog123@naver.com , hotdog12@naver.co.kr</span><br>
+				<label>이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;메&nbsp;&nbsp;&nbsp;&nbsp;일</label>
 				<input type="text" id ="email" name="email" required="required" placeholder="본인확인 이메일" style="width:300px">
+				<br /><span class="form_EX">예)hotdog123@naver.com , hotdog12@naver.co.kr</span>
 				<span class="ex">형식에 맞지 않는 email 입니다.</span>
 			</p>
+			<div id="submit_div">
+				<input type="submit" value="가입하기" id="sub" >
+			</div>	
 		</fieldset>
-		<div id="submit_div">
-			<input type="submit" value="가입하기" id="sub" >
-		</div>
+		
 		</form>
 		
 	</div>
