@@ -83,6 +83,7 @@
 				"rep_write" : $("#rep_write").val()
 				},
 				success : function(res) {
+					alert("댓글이 등록되었습니다.");
 					console.log(res);
 					var table = $("#rep_table");
 					table.empty();
@@ -116,6 +117,7 @@
 			"rev_no" : $("#rev_no").val()
 			},
 			success : function(res) {
+				alert("해당 댓글이 삭제 되었습니다.");
 				console.log(res);
 				var table = $("#rep_table");
 				table.empty();
@@ -152,7 +154,7 @@
 			<td>${rev_list.rev_regdate }</td>
 		</tr>
 	</table>
-	<c:if test="${user_info.my_name.equals(rev_list.rev_name)}">
+	<c:if test="${user_info.my_no.equals(rev_list.rev_mem)}">
 		<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }"
 			id="delete">삭제</a></span>
 		<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }">글
@@ -162,18 +164,25 @@
 	<input type="hidden" name="rev_no" id="rev_no"
 		value="${rev_list.rev_no }">
 	<p>[나도 한마디]</p>
+	<c:if test="${!empty user_info }">
 	<textarea rows="7" cols="100"
 		placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write"
 		name="rep_write" required="required"></textarea>
 	<button id="replyBtn">등록</button>
-
+	</c:if>
 	<table id="top_table">
 		<tr>
 			<th>아이디</th>
 			<th>내용</th>
-			<th>날짜</th>
+			<th>날짜</th>	
 		</tr>
+	<c:if test="${rev_list.reply_zero()}">	
+		<tr>	
+			<td colspan="3">댓글이 없습니다.</td>
+		</tr>
+	</c:if>
 	</table>
+	
 	<table id="rep_table">
 
 	</table>
