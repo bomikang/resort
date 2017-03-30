@@ -8,11 +8,15 @@
 <title>Insert title here</title>
 <style>
 .update {display: none;}
-table{width:750px; margin:0 auto;margin-top:25px;}
-table td{text-align: right; height:45px;}
+table{width:520px; margin:0 auto;margin-top:25px;}
+table td{height:60px;}
 table th:FIRST-CHILD{width:130px;}
+#btn1, #btn2, #btn3, #btn4, #btn5{position:relative;}
+#infoName, #infoPwd, #infoMail, #infoTel{display: inline-block; width:170px;}
 input[type='submit'], button{width:50px;}
-input[type='text'], input[type='password']{width:200px; display: inline;}
+input[type='text'], input[type='password']{width:120px; display: inline;}
+input#mail{width:220px;}
+input#tel1_input, input#tel2_input{width:50px !important;}
 small{color:#777; margin:15px 0;}
 h2 b{color:#cc0000;}
 </style>
@@ -28,10 +32,12 @@ var reg_tel2 = /^\d{4}$/;
 
 	$(function(){
 		 $("#btn1").click(function(){
-			$("#nameUpdate").css("display","inline-block");
+			$("#nameUpdate").css("display","block");
 			$("#btn1").css("display","none");
 			$("#btn1_1").css("display","inline-block");
 			$("#btn1_2").css("display","inline-block");
+			$("#infoName").css("display", "none");
+			$("#name").val($("#infoName").text());
 		});
 		 $("#btn2").click(function(){
 				$("#IdUpdate").css("display","block");	
@@ -40,16 +46,19 @@ var reg_tel2 = /^\d{4}$/;
 				$("#btn2_2").css("display","inline-block");
 			}); 
 		 $("#btn3").click(function(){
-				$("#passwordUpdate").css("display","inline-block");	
+				$("#passwordUpdate").css("display","block");	
 				$("#btn3").css("display","none");
 				$("#btn3_1").css("display","inline-block");
 				$("#btn3_2").css("display","inline-block");
+				$("#infoPwd").css("display","none");
 			}); 
 		 $("#btn4").click(function(){
-				$("#mailUpdate").css("display","inline-block");
+				$("#mailUpdate").css("display","block");
 				$("#btn4").css("display","none");
 				$("#btn4_1").css("display","inline-block");
 				$("#btn4_2").css("display","inline-block");
+				$("#infoMail").css("display", "none");
+				$("#mail").val($("#infoMail").text());
 			});
 		 $("#btn5").click(function(){
 		
@@ -62,7 +71,7 @@ var reg_tel2 = /^\d{4}$/;
 				}
 				
 			 	$("#infoTel").css("display", "none");
-				$("#telUpdate").css("display","inline-block");
+				$("#telUpdate").css("display","block");
 				$("#btn5").css("display","none");
 				$("#btn5_1").css("display","inline-block");
 				$("#btn5_2").css("display","inline-block");
@@ -72,6 +81,9 @@ var reg_tel2 = /^\d{4}$/;
 				$("#btn1").css("display","inline-block");
 				$("#btn1_1").css("display","none");
 				$("#btn1_2").css("display","none");
+				
+				$("#infoName").css("display", "inline-block");
+				$("#name").val($("#infoName").text());
 			});
 		 $("#btn2_2").click(function(){
 				$("#IdUpdate").css("display","none");
@@ -84,17 +96,20 @@ var reg_tel2 = /^\d{4}$/;
 				$("#btn3").css("display","inline-block");
 				$("#btn3_1").css("display","none");
 				$("#btn3_2").css("display","none");
+				$("#infoPwd").css("display","inline-block");
 			});
 		 $("#btn4_2").click(function(){
 				$("#mailUpdate").css("display","none");
 				$("#btn4").css("display","inline-block");
 				$("#btn4_1").css("display","none");
 				$("#btn4_2").css("display","none");
+				$("#infoMail").css("display", "inline-block");
+				$("#mail").val($("#infoMail").text());
 			});
 		 $("#btn5_2").click(function(){
 
-				$("#infoTel").text($("select[name='bkTel1']").val()+"-"+$("input[name='bkTel2']").val()+"-"+$("input[name='bkTel3']").val());
-			 	$("#infoTel").css("display", "inline");
+				$("#infoTel").text($("#infoTel").text());
+			 	$("#infoTel").css("display", "inline-block");
 				$("#telUpdate").css("display","none");
 				$("#btn5").css("display","inline-block");
 					$("#btn5_1").css("display","none");
@@ -230,7 +245,8 @@ var reg_tel2 = /^\d{4}$/;
 				<th>사용자 이름</th>
 				<td>
 					<form action="updateInfo.do" method="post">
-						${info.name }<button type="button" id="btn1">수정</button>
+						<span id='infoName'>${info.name }</span>
+						<button type="button" id="btn1">수정</button>
 						<span id="nameUpdate" class="update">
 							<input type="text" name="name" id="name" placeholder="이름">
 							<button type="button" id="btn1_1">완료</button>
@@ -242,7 +258,7 @@ var reg_tel2 = /^\d{4}$/;
 
 			<tr>
 				<th>비밀번호 변경</th>
-				<td>********
+				<td><span id='infoPwd'>********</span>
 					<button type="button" id="btn3">수정</button>
 					<span id="passwordUpdate" class="update">
 						<input type="password" name="password" id="password" placeholder="비밀번호 입력">
@@ -255,7 +271,7 @@ var reg_tel2 = /^\d{4}$/;
 			<tr>
 				<th>본인확인 이메일</th>
 				<td>
-					${info.mail }<button type="button" id="btn4">수정</button> 
+					<span id='infoMail'>${info.mail }</span><button type="button" id="btn4">수정</button> 
 					<span id="mailUpdate" class="update"> 
 						<input type="text" name="mail" id="mail" placeholder="e-mail">
 						<button type="button" id="btn4_1">완료</button>
@@ -275,9 +291,9 @@ var reg_tel2 = /^\d{4}$/;
 							<option value="017">017</option>
 						</select>
 						-
-						<input type="text" required="required" name="bkTel2">
+						<input type="text" required="required" name="bkTel2" id='tel1_input'>
 						-
-						<input type="text" required="required" name="bkTel3">
+						<input type="text" required="required" name="bkTel3" id='tel2_input'>
 
 						<button type="button" id="btn5_1">완료</button>
 						<button type="button" id="btn5_2">취소</button>
