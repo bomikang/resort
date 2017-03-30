@@ -1,10 +1,13 @@
 package book.handler;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.codehaus.jackson.map.ObjectMapper;
 
 import book.model.Book;
 import book.model.BookDao;
@@ -20,6 +23,7 @@ public class BookCancelHandler implements CommandHandler {
 			String bkNo = req.getParameter("bkNo");
 			System.out.println(bkNo);
 			Connection conn = null;
+			boolean result = false;
 			try{
 				conn = ConnectionProvider.getConnection();
 				conn.setAutoCommit(false);
@@ -29,17 +33,27 @@ public class BookCancelHandler implements CommandHandler {
 				book.setCancelDate(new Date(System.currentTimeMillis()));
 				bDao.updateCancelDate(conn, book);
 				conn.commit();
-				req.setAttribute("alertText", "성공적으로 취소되었습니다.");
+				result = true;				
 			}catch (Exception e) {
 				e.printStackTrace();
 				conn.rollback();
-				req.setAttribute("alertText", "오류가 발생되어 수정에 실패하였습니다.");
+			
 			}finally {
 				JdbcUtil.close(conn);
+				
+				//data�� json ���� ����
+				ObjectMapper om= new ObjectMapper();
+				// json �߽�
+				String json = om.writeValueAsString(result);
+				
+				res.setContentType("application/json;charset=utf-8");
+				PrintWriter pw = res.getWriter();
+				pw.print(json);
+				pw.flush();
 			}
 		}
-		req.setAttribute("returnTo", ("bookcheck.do"));
-		return "/WEB-INF/board/alert.jsp";
+		
+		return null;
 	}
 
 }

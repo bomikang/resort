@@ -43,7 +43,26 @@
 		
 			if(!confirm("예약을 취소하시겠습니까?")){
 				return false;
+			}else{
+				$.ajax({
+					url:"bookcancel.do",
+					type:"post",
+					timeout:30000,
+					dataType:"json",
+					data:{"bkNo":bkNo},
+					asnc : false,
+					success:function(data){
+						console.log(data);
+						if(data=="true"||data==true){
+							alert("정상적으로 취소되었습니다.");
+							setScreen();
+						}else{
+							alert("오류가 발생되어 취소되지 못했습니다. 잠시후 다시 시도해 주세요.");
+						}
+					} 
+				}); 
 			}
+			return false;
 		});
 		
 		/* 예약상태와 시설 구분을 선택한 후 조회하기 버튼 클릭 시 ajax통해 table을 다시 구성하도록 만듦 */
