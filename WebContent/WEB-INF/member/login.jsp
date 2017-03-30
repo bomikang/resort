@@ -23,7 +23,6 @@ fieldset p input{width:300px !important; height:31px !important; border-radius: 
 fieldset #sub{background:#FFBB83 !important; width:370px; border-radius: 15px; height:46px; color:#fff; font-family:"NanumSquareB"; font-size:20px;}
  .bottom_btn p{font-size:14px; width:500px; margin:0 auto; margin-top:30px;} 
 
-
 </style>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -40,8 +39,7 @@ fieldset #sub{background:#FFBB83 !important; width:370px; border-radius: 15px; h
 		<fieldset>
 			<p>
 				<label><img src="image/icon_id_gray.png" alt="" /></label>
-				<input type="text" name="id" id="id" placeholder="아이디" required="required"> 
-
+				<input type="text" name="id" id="id" placeholder="아이디" required="required">
 				<c:if test="${notJoin}">
 					<span class="errors">아이디가  틀렸습니다.</span>
 					<script type="text/javascript">
@@ -49,6 +47,7 @@ fieldset #sub{background:#FFBB83 !important; width:370px; border-radius: 15px; h
 							$("#id").focus();
 						});
 					</script>
+
 				</c:if>
 				<c:if test="${outId }">
 					<span class="errors">아이디를 입력하세요.</span>
@@ -57,14 +56,17 @@ fieldset #sub{background:#FFBB83 !important; width:370px; border-radius: 15px; h
 							$("#id").focus();
 						});
 					</script>
+
 				</c:if>
 				<c:if test="${no_member }">
+
 					<span class="errors">탈퇴한 회원의 아이디입니다.</span>
 					<script type="text/javascript">
 						$(function(){
 							$("#id").focus();
 						});
 					</script>
+
 				</c:if> 
 			</p>
 			<p>
@@ -85,6 +87,7 @@ fieldset #sub{background:#FFBB83 !important; width:370px; border-radius: 15px; h
 						$("#password").focus();
 					});
 				</script>
+
 				</c:if>
 			</p>
 			

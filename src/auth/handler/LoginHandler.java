@@ -46,7 +46,7 @@ public class LoginHandler implements CommandHandler {
 			System.out.println("returnTo : "+returnTo);
 			String id = req.getParameter("id");
 			String password = req.getParameter("password");
-			
+		
 			Connection conn = null;
 			MemberDao dao = MemberDao.getInstance();
 			String url = "";
@@ -58,6 +58,7 @@ public class LoginHandler implements CommandHandler {
 				
 				if(member == null || (member!=null && member.getOutDate() != null)){	 // 아이디가 없을경우
 					req.setAttribute("notJoin", true);
+					System.out.println(" 아이디 안돼!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
 				}else if(id==""){     // 아이디란이 공란일 경우
 					req.setAttribute("outId", true);
@@ -65,11 +66,14 @@ public class LoginHandler implements CommandHandler {
 				}
 				
 				if(password == ""){ // 패스워드 란이 공란일 경우
+					
 					req.setAttribute("outPass", true);
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu"; 
 				}else if(!member.matchPassword(password)){ // 비밀번호가다를경우
 					req.setAttribute("notPass",true);
+					System.out.println(" 비번안돼!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 					return "index.jsp?page=/WEB-INF/member/login&menu=/WEB-INF/member/mem_menu";
+
 				}	
 				
 				if(returnTo==null){
@@ -81,6 +85,7 @@ public class LoginHandler implements CommandHandler {
 					url=returnTo+".do";
 				}	
 				// 세션에 DATA 남기기위한 작업				
+
 				/*if(member.getIsMng().equals(false)){ // 일반회원일 경우
 					req.setAttribute("user",true);
 				}*/
@@ -94,6 +99,7 @@ public class LoginHandler implements CommandHandler {
 				
 				req.getSession().setAttribute("user_info",myinfo);
 				
+
 				if(myinfo.getIsMng().equals(true)){ // 관리자일 경우
 					/**
 					 * 유진작업 - 관리자일 경우 수행할 메소드(자동취소, 자동 완료) 2개 추가 - 문제발생 시 알려주세요! 
@@ -110,6 +116,7 @@ public class LoginHandler implements CommandHandler {
 						conn.commit();
 					}
 				}	
+
 				res.sendRedirect(url);
 			}catch (Exception e) {
 				e.printStackTrace();
