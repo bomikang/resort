@@ -61,6 +61,14 @@
 						}
 					});
 				</c:if>
+				<c:if test="${empty user_info}">
+					$(".repDelBtn").each(function(i,obj){
+						var mem_no = ${user_info.my_no};
+						if($(obj).find(".mem_no").val()!=mem_no){
+							$(obj).css("display","none");
+						}
+					});
+				</c:if>
 				혹시나 이 부분이 제대로 적용되지 않을 시 setBtnDel()같이 함수로 만들어 댓글 리스트 불러올떄마다(ajax사용) 마지막으로 만든 메소드를 호출해서 사용하되
 				만약.... 그래도 안되면 폐기처분 고고
 			*/
