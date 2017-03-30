@@ -10,6 +10,7 @@
 	#notice_detail .nTitle{width:100%; word-break:break-all; text-align: center; padding-left: 70px;padding-right: 70px;}
 	#notice_detail .nDetail{width:90%; margin:15px auto; white-space: normal; word-break:break-all;}
 	#notice_detail	#noticeIcon img{width:20px; float: left;}
+	#noticeIcon{float: left; width:25px; margin-left: 10px;margin-right: 10px;}
 </style>
 <script>
 	$(function(){
@@ -44,6 +45,7 @@
 	<h3>공지사항<br /><span>홈 > 자유게시판 > 공지사항</span></h3>
 </div>
 <div id="notice_detail" class='intro_padding'>
+	<h2><img alt="" src="image/Notice.png" id="noticeIcon">공지사항</h2>
 	<table id="notice_table">
 		<c:if test="${!empty notice }">
 			<c:if test="${!empty detail }">

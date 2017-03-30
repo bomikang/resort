@@ -11,7 +11,7 @@ response.setHeader("pragma","no-cache");
 %>
 
 <style>
-	#bk_now{width:100%; background:rgba(255,254,232,1); border-radius: 10px; padding:13px 0 30px;}
+	#bk_now{width:100%; background:rgba(255,254,232,1); border-radius: 10px; padding:13px 0 30px; min-height:760px;}
 	#bk_now #bookTable{width:95%; margin: 0 auto; }
 	#bk_now #bookTable table{table-layout:auto;width:100%;}
 	#bk_now #bookTable .sun{color: red;}
