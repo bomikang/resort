@@ -284,9 +284,6 @@ var reg_tel2 = /^\d{4}$/;
 				<td>
 					<span id='infoTel'>${info.tel }</span><button type="button" id="btn5">수정</button> 
 					<span id="telUpdate" class="update">
-<<<<<<< HEAD
-						<input type="text" name="tel" id="tel" placeholder="전화번호" required="required">
-=======
 						<select name="bkTel1">
 							<option value="010">010</option>
 							<option value="011">011</option>
@@ -297,8 +294,6 @@ var reg_tel2 = /^\d{4}$/;
 						<input type="text" required="required" name="bkTel2" id='tel1_input'>
 						-
 						<input type="text" required="required" name="bkTel3" id='tel2_input'>
-
->>>>>>> refs/remotes/origin/yujin_ver_2
 						<button type="button" id="btn5_1">완료</button>
 						<button type="button" id="btn5_2">취소</button>
 					</span>
