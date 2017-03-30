@@ -2,14 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<a href="bookinform.do">예약안내</a>
-<a href="book.do">예약하기</a>
-<a href="bookcheck.do">예약 조회/취소</a>
+<a href="bookinform.do" class='nav_hover_style'>예약안내</a>
+<a href="book.do" class='nav_hover_style'>예약하기</a>
+<a href="bookcheck.do" class='nav_hover_style'>예약 조회/취소</a>
 <c:if test="${!empty user_info }">
 	<c:if test="${user_info.isMng==true }">
 		<hr />
-		<a href="booklist.do" class="forAdmin">예약 List</a>
-		<a href="booktotal.do" class="forAdmin">예약 실적조회</a>
+		<a href="booklist.do" class="forAdmin nav_hover_style">예약 List</a>
+		<a href="booktotal.do" class="forAdmin nav_hover_style">예약 실적조회</a>
 	</c:if>	
 </c:if>	
 

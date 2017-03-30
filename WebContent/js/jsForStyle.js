@@ -3,17 +3,37 @@
  */
 
 $(function(){
-	//$(".content_rep_img > div").animate({height:"120px", opacity:"0.3"}, "slow");
-	//$(".content_rep_img > div").animate({width:"100%", opacity:"1"}, "slow");
+	//버튼활성화
+	var aTags = $("#menu_area ul li").find("a");
+	
+	var resortHref = $(location).attr("href");
+	console.log(resortHref);
+	
+	if (resortHref.indexOf("intro") > 0 || resortHref.indexOf("index") > 0  ) {
+		aTags.eq(0).addClass("active_button");
+	}else if(resortHref.indexOf("bk") > 0 || resortHref.indexOf("book") > 0){
+		aTags.eq(1).addClass("active_button");
+	}else if(resortHref.indexOf("str") > 0 || resortHref.indexOf("structure") > 0 ){
+		aTags.eq(3).addClass("active_button");
+	}else if(resortHref.indexOf("board") > 0 ||
+			resortHref.indexOf("notice") > 0 ||
+			resortHref.indexOf("faq") > 0 ||
+			resortHref.indexOf("review") > 0 ||
+			resortHref.indexOf("rev") > 0 ||
+			resortHref.indexOf("qna") > 0 ){
+		aTags.eq(4).addClass("active_button");
+	}
+	//버튼활성화
 	
 	/*
+	
 	var sub_menu = new Array(4);
 	sub_menu[0] = ["옥성원 소개글", "옥성원 갤러리", "찾아오시는 길"];
 	sub_menu[1] = ["예약안내", "예약하기", "예약조회 및 취소"];
 	sub_menu[2] = ["숙박시설", "주변시설", "전체 시설 조감도"];
 	sub_menu[3] = ["공지사항", "자주 묻는 질문", "1:1 문의", "후기"];
 	
-	$("#menu_area ul li a").each(function(i, obj) {
+	$("#menu_area ul li").each(function(i, obj) {
 		//show sub menus when mouse over
 		$(obj).on("mouseover focus", function() {
 			var sub_item = [];

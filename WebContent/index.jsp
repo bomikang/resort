@@ -25,6 +25,8 @@ response.setHeader("pragma","no-cache");
 <script type="text/javascript" src="js/jsForStyle.js"></script><!-- js for style -->
 <style>
 	.wrapper{ background:url("image/bg_yellow_flower.jpg") no-repeat fixed center center; background-size:cover;}
+	.login_out_btn{display:inline-block; text-align:center; width:100px; font-size:15px; padding:6px 0; border:1px solid #945b01; background:rgba(255,255,255,0.5); color:#945b01;}
+	.login_out_btn:HOVER{background:#fff;  font-weight:bold;}
 </style>
 <title>Insert title here</title>
 </head>		
@@ -35,8 +37,8 @@ response.setHeader("pragma","no-cache");
 			
 			<c:if test="${empty user_info }">
 				<p>눈꽃자연휴양림에 오신걸 환영합니다</p>
-				<a href="login.do">로그인</a>
-				<a href="join.do">회원가입</a>
+				<a href="login.do" class='login_out_btn'>로그인</a>
+				<a href="join.do" class='login_out_btn'>회원가입</a>
 			</c:if>	
 			<c:if test="${!empty user_info }">
 				<c:if test="${user_info.isMng==false }">
@@ -46,8 +48,8 @@ response.setHeader("pragma","no-cache");
 				</c:if>
 				<c:if test="${user_info.isMng==true }">
 					<p>관리자 모드 입니다 </p>
-					<a href="logout.do">로그아웃</a>
-					<a href="myinfo.do">관리자페이지</a>
+					<a href="logout.do" class='login_out_btn'>로그아웃</a>
+					<a href="myinfo.do" class='login_out_btn'>관리자페이지</a>
 				</c:if>
 			</c:if>
 			<%-- <c:if test="${!empty admin}">
@@ -96,7 +98,7 @@ response.setHeader("pragma","no-cache");
 		</section>
 		<footer>
 			<div>
-				Copyright ⓒ  The Reason Why Bomi Is MoonHan All Right Reserved
+				COPYRIGHT Ⓒ  THE REASON WHY BOMI IS MOONHAN ALL RIGHT RESERVED
 			</div>
 		</footer>
 	</div>

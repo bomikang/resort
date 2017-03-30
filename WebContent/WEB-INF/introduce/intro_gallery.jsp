@@ -60,7 +60,7 @@
 		<li><img src="image/resortgallery/04forestroad.jpg"><br><span>산책로1</span></li>
 		<li><img src="image/resortgallery/05forestroad2.jpg"><br><span>산책로2</span></li>
 		<li><img src="image/resortgallery/06sanlim.jpg"><br><span>산림휴양관 복도</span></li>
-		<li><img src="image/resortgallery/07entry.jpg"><br><span>옥성자연휴양림 입구</span></li>
+		<li><img src="image/resortgallery/07entry.jpg"><br><span>눈꽃자연휴양림 입구</span></li>
 		<li><img src="image/resortgallery/08greengrass.jpg"><br><span>잔디광장</span></li>
 	</ul>
 </div>

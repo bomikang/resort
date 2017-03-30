@@ -43,7 +43,7 @@ a{text-decoration: none; color:black; margin:0; padding:0; font-family: "맑은 
 .header_menu div #menu_area ul li#logo{width:400px; background:url('../image/icon_flower.png') no-repeat 90px top ;}
 .header_menu div #menu_area ul li#logo a{font-family:"210HaetsalB"; font-size:90px; position:relative; top:18px; color:#fff;}
 .header_menu div #menu_area ul li a{padding:12px 10px; font-size:30px; color:#fefdd0;font-family:"NanumSquareB"; text-shadow: 0 0 10px black; position:relative;}
-.header_menu div #menu_area ol{text-align: center; background-color:#ddd; width:870px; position:absolute;}
+.header_menu div #menu_area ol{text-align: center; background-color:#ddd; width:1400px; position:absolute;}
 .header_menu div #menu_area ol li{display:inline-block;margin:0 10px;}
 
 /* header fixed on top */
@@ -58,10 +58,10 @@ a{text-decoration: none; color:black; margin:0; padding:0; font-family: "맑은 
 .content div nav{width:220px; text-align: center; float:left;margin-left:20px; }
 .content div nav div{margin:0 auto;background:rgba(255,249,194, 0.8); border-radius: 20px; margin-top:10px; padding:15px 0;}
 .content div nav div a{display:block; margin:5px 0; padding:15px; font-family:"NanumSquareB"; font-size:20px; color:#722130;}
-.content div article{width:1100px; float:right; margin-bottom:30px;margin-right:20px;}
+.content div article{width:1100px; float:right; margin-bottom:100px;margin-right:20px;}
 .content div article > div{min-height:760px; padding:20px; margin:10px auto 10px; background-color:rgba(255,249,194, 0.8); border-radius: 20px;}
-footer{clear:both;}
-footer > div{width:1300px; margin:0 auto;  padding:40px 0; text-align: center;}
+footer{clear:both;  background:rgba(0,0,0,0.1);}
+footer > div{width:1400px; margin:0 auto;text-align: center;line-height: 197px; color:rgba(255,255,255,0.7);font-family:"NanumSquareB";font-weight: bold; font-size:20px;}
 
 fieldset{border:none;}
 fieldset p{margin:15px auto; width:700px; padding-bottom:4px;}
@@ -110,3 +110,8 @@ td a{font-weight: bold;}
 .login_join_field p input{width:300px !important; height:31px !important; border-radius: 15px; background:#929292; color:#fff !important; border:1px solid rgba(0,0,0,0) !important; display:inline-block;}
 .login_join_field input[type='submit'], .login_join_field button{background:#FFBB83 !important; width:120px !important; border-radius: 15px; height:46px !important; color:#fff; font-family:"NanumSquareB";}
 .login_join_field select{border-radius: 10px; background:#929292; color:#fff;  border:none !important;}
+
+/* 탑 메뉴 버튼활성화되었을 때 */
+.active_button{border-bottom:8px solid rgba(255,255,255,0.5); border-radius: 10px;}
+/* 좌측 메뉴 버튼 호버 */
+.nav_hover_style:HOVER {color:#cc0000; background:rgba(255,255,255,0.3);}
