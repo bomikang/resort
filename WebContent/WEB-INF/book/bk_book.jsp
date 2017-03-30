@@ -45,12 +45,14 @@
 		$("#btnDate").click(function(){
 			var st = srvTime();
 			var now = new Date(st);
-			if(now.getHours()>=12 && now.getMinutes()>=30){
-				alert("금일 예약이 마감 되어 예약을 진행할 수 없습니다. 예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
-				location.href="book.do";
-				return false;
+			var date = new Date(${startDate});
+			if(date.getDate()==now.getDate()){
+				if(now.getHours()>=12 && now.getMinutes()>=30){
+					alert("금일 예약이 마감 되어 예약을 진행할 수 없습니다. 예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
+					location.href="book.do";
+					return false;
+				}
 			}
-		
 			$.ajax({
 				url:"bookcheckdate.do",
 				type:"post",
@@ -87,11 +89,14 @@
 			}else{
 				var st = srvTime();
 				var now = new Date(st);
-				if(now.getHours()>=12 && now.getMinutes()>=30){
-					alert("금일 예약이 마감 되어 예약을 진행할 수 없습니다. 예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
-					location.href="book.do";
-					return false;
-				}	
+				var date = new Date(${startDate});
+				if(date.getDate()==now.getDate()){
+					if(now.getHours()>=12 && now.getMinutes()>=30){
+						alert("금일 예약이 마감 되어 예약을 진행할 수 없습니다. 예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
+						location.href="book.do";
+						return false;
+					}	
+				}
 			
 				//예약하기 버튼클릭 후 예약진행을 선택한 경우	
 				var tel1 = $("input[name='bkTel2']").val();
