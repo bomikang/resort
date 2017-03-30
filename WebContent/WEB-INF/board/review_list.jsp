@@ -106,7 +106,7 @@
 			<option value="number">게시글번호</option>
 			<option value="date">날짜</option>
 		</select>
-		<input type="text" id="write" >
+		<input type="text" id="write" required="required">
 		<button id="searchBtn">검색</button>
 	</p>
 	

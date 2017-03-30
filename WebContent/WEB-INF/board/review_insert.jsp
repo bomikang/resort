@@ -19,11 +19,11 @@
 		<fieldset>
 			<p>
 				<label>제목</label>
-				<input type="text" name="title">
+				<input type="text" name="title" required="required">
 			</p>
 			<p>
 				<label>내용</label>
-				<textarea rows="10" cols="30" name="content"></textarea>
+				<textarea rows="10" cols="30" name="content" required="required"></textarea>
 			</p>
 			<p class='act_btn_area'>
 				<input type="submit" value="등록">

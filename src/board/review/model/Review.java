@@ -64,6 +64,8 @@ public class Review {
 	public void setRev_name(String rev_name) {
 		this.rev_name = rev_name;
 	}
-	
+	public boolean reply_zero(){
+		return rev_replycnt==0;
+	}
 		
 }

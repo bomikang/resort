@@ -12,12 +12,11 @@
 <meta content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-<<<<<<< HEAD
+
 .repDelBtn{display: none;}
-#repDelBtn {color: blue;}
-#top_table tr th:NTH-CHILD(1), #rep_table tr td:NTH-CHILD(1) {width: 130px;}
-#top_table tr th:NTH-CHILD(2), #rep_table tr td:NTH-CHILD(2) {width: 700px;}
-=======
+
+
+
 	#top_table{border-bottom: none;}
 	#rep_table{border-top:none;}
 	#top_table tr th:NTH-CHILD(1), #rep_table tr th:NTH-CHILD(1){width:130px;}
@@ -30,7 +29,7 @@
 	.style_from_input{display: inline-block; text-align: center;}
 	textarea{width: 100%;}	
 </style>
->>>>>>> refs/remotes/origin/bomi02
+
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -101,6 +100,7 @@
 				"rep_write" : $("#rep_write").val()
 				},
 				success : function(res) {
+					alert("댓글이 등록되었습니다.");
 					console.log(res);
 					var table = $("#rep_table");
 					table.empty();
@@ -135,6 +135,7 @@
 			"rev_no" : $("#rev_no").val()
 			},
 			success : function(res) {
+				alert("해당 댓글이 삭제 되었습니다.");
 				console.log(res);
 				var table = $("#rep_table");
 				table.empty();
@@ -177,26 +178,41 @@
 		</tr>
 	</table>
 
-	<c:if test="${user_info.my_name.equals(rev_list.rev_name)}">
-		<p class='btn_right'>
-			<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }"  class='style_from_input'>수정</a></span>
-			<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete" class='style_from_input'>삭제</a></span>
-		</p>
+	<c:if test="${user_info.my_no.equals(rev_list.rev_mem)}">
+		<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }"
+			id="delete">삭제</a></span>
+		<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }">글
+				수정</a></span>
+
 	</c:if>
 	<hr>
+
 	<input type="hidden" name="rev_no" id="rev_no" value="${rev_list.rev_no }">
 	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>나도 한마디</h2>
-	<textarea placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write" name="rep_write" required="required"></textarea>
-	<p class="btn_right">
+	<c:if test="${!empty user_info }">
+	<textarea rows="7" cols="100"
+		placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write"
+		name="rep_write" required="required"></textarea>
+		<p class="btn_right">
 		<button id="replyBtn">등록</button>
-	</p>
+		</p>
+	</c:if>
+
 	<table id="top_table">
 		<tr>
 			<th>아이디</th>
 			<th>내용</th>
+
 			<th colspan='2'>날짜</th>
+
 		</tr>
+	<c:if test="${rev_list.reply_zero()}">	
+		<tr>	
+			<td colspan="3">댓글이 없습니다.</td>
+		</tr>
+	</c:if>
 	</table>
+	
 	<table id="rep_table">
 		
 	</table>
