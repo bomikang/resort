@@ -20,7 +20,11 @@
 					alert("관리자 계정으로 로그인해 주세요.");
 					locaion.href="faq.do";
 				</c:if>
-			</c:if>	
+			</c:if>
+			<c:if test="${!empty user_info}">
+				alert("관리자 계정으로 로그인해 주세요.");
+				locaion.href="login.do?category=faq";
+			</c:if>
 			
 		});
 		$("#btnDelete").click(function(){

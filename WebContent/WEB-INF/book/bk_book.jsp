@@ -257,8 +257,8 @@
 		</table>
 		<p class="act_btn_area">
 			<button type="button" id="btnBook" disabled="disabled">예약하기</button>
-			<button type="button" id="btnBack">취소하기</button>
-			<a href="book.do" class='moving_btn'>돌아가기</a>
+			<button type="button" id="btnBack"class='moving_btn'>취소하기</button>
+			<!-- <a href="book.do" class='moving_btn'>돌아가기</a> -->
 		</p> 
 	</form>
 	

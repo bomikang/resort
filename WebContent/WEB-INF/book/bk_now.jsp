@@ -99,8 +99,29 @@ response.setHeader("pragma","no-cache");
 		});
 		
 		$(document).on("click", ".today", function(){
-			alert("금일의 예약이 마감되었습니다. 당일예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
-			return false;
+			var st = srvTime();
+			var now = new Date(st);
+			
+			if(now.getHours()>=12){
+				alert("금일의 예약이 마감되었습니다. 당일예약을 희망할 경우 054-951-7531로 연락주시기바랍니다.");
+				return false;
+			}else{
+				<c:if test="${empty user_info }">
+					alert("로그인이 필요한 페이지 입니다.");
+					location.href="login.do?category=book";
+				</c:if>	
+				<c:if test="${!empty user_info }">
+					<c:if test="${user_info.isMng==true }">
+						alert("관리자는 예약할 수 없습니다.");
+						return false;
+					</c:if>	
+					//alert("예약가능합니다.");	
+					var strNo = $(this).find(".strNo").val();
+					var date = $(this).find(".date").val();
+					var url="bookprocess.do?strNo="+strNo+"&date="+date;
+					location.href=url;
+				</c:if>
+			}
 		});
 		
 		$(document).on("click", ".noBooked", function(){		
@@ -239,7 +260,7 @@ response.setHeader("pragma","no-cache");
 							}
 						}else{
 							if((k+1) == today.getDate()){
-								dateForm += "<td><a href='#' class='today' title='예약마감'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+								dateForm += "<td><a href='#' class='today' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].nameById+" "+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 							}else{
 								dateForm += "<td><a href='#' class='noBooked' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].nameById+" "+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";	
 							}
@@ -255,7 +276,7 @@ response.setHeader("pragma","no-cache");
 					}else{
 						//시설에 대한 예약내역이 존재하지 않을 때
 						if((k+1) == today.getDate()){
-							dateForm += "<td><a href='#' class='today' title='예약마감'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
+							dateForm += "<td><a href='#' class='today' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].nameById+" "+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 						}else{
 							dateForm += "<td><a href='#' class='noBooked' title='"+(date.getMonth()+1)+"/"+date.getDate()+"("+names[j].name+")'><input type='hidden' class='strNo' value='"+names[j].no+"'><input type='hidden' class='date' value='"+date.getTime()+"'><img class='bkIcon' src='image/canBook.png'></a></td>";
 						}
