@@ -24,8 +24,7 @@
 	table tr #rev_detail_td p{width:90%; margin:15px auto; white-space: normal; word-break:break-all;}
 	.btn_right{text-align: right;}
 	.style_from_input{display: inline-block; text-align: center;}
-	textarea{width: 100%;}
-	
+	textarea{width: 100%;}	
 </style>
 
 <script type="text/javascript">
