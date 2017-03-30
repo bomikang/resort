@@ -16,7 +16,8 @@
 	}
 	#top_table tr th:NTH-CHILD(1), #rep_table tr td:NTH-CHILD(1){width:130px;}
 	#top_table tr th:NTH-CHILD(2), #rep_table tr td:NTH-CHILD(2){width:700px;}
-	
+	#btn_right{text-align: right;}
+	.style_from_input{display: inline-block; text-align: center;}
 </style>
 <script type="text/javascript">
 	var rep_no=0;
@@ -143,12 +144,15 @@
 	</tr>	
 </table>
 	<c:if test="${user_info.my_name.equals(rev_list.rev_name)}">
-		<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete">삭제</a></span>
-		<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }">글 수정</a></span>
+	<p id='btn_right'>
+		<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }"  class='style_from_input'>수정</a></span>
+		<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete" class='style_from_input'>삭제</a></span>
+	</p>
 	</c:if>
 	<hr>
+	
 	<input type="hidden" name="rev_no" id="rev_no" value="${rev_list.rev_no }">
-	<p>[나도 한마디]</p>
+	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>나도 한마디</h2>
 	<textarea rows="7" cols="100" placeholder="무단광고,이유 없는 악플 등은 삭제될 수 있습니다." id="rep_write" name="rep_write" required="required"></textarea>
 	<button id="replyBtn">등록</button>
 
