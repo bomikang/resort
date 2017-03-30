@@ -51,6 +51,13 @@
 			success:function(res){							
 				console.log(res);
 				var table = $("#rep_table");
+				console.log($(res.data).length);
+				if($(res.data).length==0){
+					$("#top_table").append("<tr class='reply_zero' ><td colspan='3'>댓글이 없습니다.</td>	</tr>");
+					
+				}else{
+						
+					
 				$(res.data).each(function(i, obj) {
 					var tr = $("<tr>");//<tr></tr>
 					var td = $("<th>").html(obj.rep_name);
@@ -65,6 +72,7 @@
 					/* ready 내 제이쿼리 부분 - 로그인 정보(user_info)가 비어있지 않고(=로그인 된 상태), 각각 버튼 내 mem_no의 value값과 로그인 정보의 회원번호를 비교해 같지 않을 경우 button을 숨김 */
 					
 				});
+				}
 			/*  made by yujin 오늘 저녁 본인이 작성한 댓글만 삭제가능하도록 하는거 관련한 수정사항이 git에 없어서 혹시나 하는 마음으로 코드만 작성합니다. 테스트도 없어요.
 				만약 수정이 되어있다면 이 부분은 가차없이 삭제해 주세요. - 말도없이 주석 달아서 죄송합니다.ㅜㅜ
 
@@ -96,6 +104,12 @@
 					console.log(res);
 					var table = $("#rep_table");
 					table.empty();
+					if($(res.data).length==0){
+						$("#top_table").append("<tr class='reply_zero' ><td colspan='3'>댓글이 없습니다.</td>	</tr>");
+						
+					}else{
+						$("#top_table").empty();
+						$("#top_table").append("<tr><th>아이디</th><th>내용</th><th colspan='2'>날짜</th></tr>");
 					$(res.data).each(function(i, obj) {
 						var tr = $("<tr>");//<tr></tr>
 						var td = $("<th>").html(obj.rep_name);
@@ -109,6 +123,7 @@
 						
 					});
 					$("#rep_write").val("");
+					}
 				}
 				});
 			}
@@ -130,6 +145,10 @@
 				console.log(res);
 				var table = $("#rep_table");
 				table.empty();
+				if($(res.data).length==0){
+					$("#top_table").append("<tr class='reply_zero' ><td colspan='3'>댓글이 없습니다.</td>	</tr>");
+					
+				}else{
 				$(res.data).each(function(i, obj) {
 					var tr = $("<tr>");//<tr></tr>
 					var td = $("<td>").html(obj.rep_name);
@@ -142,6 +161,7 @@
 					 rep_Btn();
 					
 				});
+				}
 			}
 			});
 
@@ -175,6 +195,11 @@
 			<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete" class='style_from_input'>삭제</a></span>
 		
 		</c:if>
+		<c:if test="${user_info.isMng==true }">
+			<span class="ok"><a href="rev_update.do?no=${rev_list.rev_no }"  class='style_from_input'>수정</a></span>
+			<span class="ok"><a href="rev_delete.do?no=${rev_list.rev_no }" id="delete" class='style_from_input'>삭제</a></span>
+		
+		</c:if>
 		<a href="#" onclick="location.replace('review.do')" class='moving_btn'>목록</a>
 	</p>
 	<hr>
@@ -198,11 +223,11 @@
 			<th colspan='2'>날짜</th>
 
 		</tr>
-	<c:if test="${rev_list.reply_zero()}">	
-		<tr>	
-			<td colspan="3">댓글이 없습니다.</td>
+	
+		<!-- <tr class="reply_zero" >	
+			<td colspan="1">댓글이 없습니다.</td>
 		</tr>
-	</c:if>
+		<style> .reply_zero{display: none;}</style> -->
 	</table>
 	
 	<table id="rep_table">

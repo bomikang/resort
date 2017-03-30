@@ -53,11 +53,7 @@
 		<c:if test="${!empty rnList }">
 			<c:forEach items="${rnList }" var="real">
 				<tr class="realNotice">
-					<c:if test="${!empty user_info }">		
-						<c:if test="${user_info.isMng==true }">
-							<th></th>
-						</c:if>
-					</c:if>
+					
 					<td>공지</td>
 					<td class='nTitle'><a href="noticedetail.do?page=${index.getNowIndex() }&no=${real.no }&category=review" class="toNoticeDetail">${real.title }</a></td>
 					<td>${real.writer.my_name }</td>

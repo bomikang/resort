@@ -20,11 +20,11 @@
 		<fieldset>
 			<p>
 				<label>제목</label>
-				<input type="text" name="title" value="${rev.rev_title }">
+				<input type="text" name="title" value="${rev.rev_title }" required="required">
 			</p>
 			<p>
 				<label>내용</label>
-				<textarea rows="10" cols="30" name="content">${rev_Detail.rev_detail }</textarea>
+				<textarea rows="10" cols="30" name="content" required="required">${rev_Detail.rev_detail }</textarea>
 			</p>
 			<p class='act_btn_area'>
 				<input type="submit" value="등록">
