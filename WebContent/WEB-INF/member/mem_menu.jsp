@@ -8,6 +8,7 @@
 </c:if>
 <c:if test="${!empty user_info }">
 	<c:if test="${user_info.isMng==true }">
+		<a href="myinfo.do">관리자정보</a>
 		<a href="booklist.do?key=admin" class="forAdmin">예약 관리</a>
 		<a href="booktotal.do?key=admin" class="forAdmin">예약 실적조회</a>
 	</c:if>	

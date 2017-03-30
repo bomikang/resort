@@ -33,18 +33,14 @@ public class MyInfoUpdate implements CommandHandler {
 				MemberDao dao = MemberDao.getInstance();
 				LoginMemberInfo userInfo = (LoginMemberInfo) req.getSession().getAttribute("user_info");
 				Member memberinfo = dao.selectByNo(conn, userInfo.getMy_no());
-
 				Member user_Info = new Member(userInfo.getMy_no(), userInfo.getMy_id(), memberinfo.getPassword(),
 						userInfo.getMy_name(), userInfo.getMy_mail(), userInfo.getMy_tel(), null, null, null);
 				String result = "";
-
 				if (name != null) {
 					user_Info.setName(name);
-
 					dao.updateInFo(conn, user_Info);
 					result = "ok";
 					Member mem = dao.selectById(conn, user_Info.getId());
-
 					LoginMemberInfo myinfo = new LoginMemberInfo(mem.getNo(), mem.getId(), mem.getName(), mem.getMail(),
 							mem.getIsMng(), mem.getTel());
 
