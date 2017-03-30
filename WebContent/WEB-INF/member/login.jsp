@@ -10,8 +10,8 @@
 <script type="text/javascript">
 </script>
 <style>
-	.errors{
-	
+
+	.errors{	
 	color:red;
 	padding:0;
 	margin:0 0 0 90px;
@@ -46,25 +46,53 @@ fieldset p{width:420px;}
 		<fieldset>
 			<p>
 				<label>아이디</label><br />  <input type="text" name="id" id="id" placeholder="아이디" required="required"> 
-				<c:if test="${empty notJoin }">
-				</c:if>
-				<c:if test="${notJoin==true }">
-				<span class="errors">아이디가  틀렸습니다.</span>
+				<c:if test="${notJoin}">
+					<span class="errors">아이디가  틀렸습니다.</span>
+					<script type="text/javascript">
+						$(function(){
+							$("#id").focus();
+						});
+					</script>
+
 				</c:if>
 				<c:if test="${outId }">
-				<span class="errors">아이디를 입력하세요.</span>
+					<span class="errors">아이디를 입력하세요.</span>
+					<script type="text/javascript">
+						$(function(){
+							$("#id").focus();
+						});
+					</script>
+
 				</c:if>
 				<c:if test="${no_member }">
-				<span class="errors">탈퇴한 회원의 아이디입니다.</span>
+
+					<span class="errors">탈퇴한 회원의 아이디입니다.</span>
+					<script type="text/javascript">
+						$(function(){
+							$("#id").focus();
+						});
+					</script>
+
 				</c:if> 
 			</p>
 			<p>
 				<label>비밀번호</label><br />  <input type="password" name="password" id="password" placeholder="비밀번호" required="required"> 
 				 <c:if test="${outPass }">
 				<span class="errors">비밀번호를 입력하세요.</span>
+				<script type="text/javascript">
+					$(function(){
+						$("#password").focus();
+					});
+				</script>
 				</c:if>
 				<c:if test="${notPass }">
 				<span class="errors">비밀번호가 틀렸습니다.</span>
+				<script type="text/javascript">
+					$(function(){
+						$("#password").focus();
+					});
+				</script>
+
 				</c:if>
 			</p>
 		</fieldset>

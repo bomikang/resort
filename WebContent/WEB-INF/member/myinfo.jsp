@@ -22,7 +22,8 @@ h2 b{color:#cc0000;}
 <!--로그아웃상태 시 뒤로가기버튼 막음  -->
 <script src="js/common.js"></script>
 <script>
-
+var reg_tel1 = /^\d{3,4}$/; 
+var reg_tel2 = /^\d{4}$/; 
 
 
 	$(function(){
@@ -51,6 +52,16 @@ h2 b{color:#cc0000;}
 				$("#btn4_2").css("display","inline-block");
 			});
 		 $("#btn5").click(function(){
+		
+				var tel = $("#infoTel").text();
+				var bkTels = tel.split("-");
+				if(bkTels.length == 3){
+					$("select[name='bkTel1']").val(bkTels[0]);
+					$("input[name='bkTel2']").val(bkTels[1]);
+					$("input[name='bkTel3']").val(bkTels[2]);
+				}
+				
+			 	$("#infoTel").css("display", "none");
 				$("#telUpdate").css("display","inline-block");
 				$("#btn5").css("display","none");
 				$("#btn5_1").css("display","inline-block");
@@ -81,6 +92,9 @@ h2 b{color:#cc0000;}
 				$("#btn4_2").css("display","none");
 			});
 		 $("#btn5_2").click(function(){
+
+				$("#infoTel").text($("select[name='bkTel1']").val()+"-"+$("input[name='bkTel2']").val()+"-"+$("input[name='bkTel3']").val());
+			 	$("#infoTel").css("display", "inline");
 				$("#telUpdate").css("display","none");
 				$("#btn5").css("display","inline-block");
 					$("#btn5_1").css("display","none");
@@ -142,12 +156,26 @@ h2 b{color:#cc0000;}
 					});
 				});   
 			  $("#btn5_1").click(function(){
+				  	var bkTel1 = $("select[name='bkTel1']").val();
+				  	var bkTel2 = $("input[name='bkTel2']").val();
+				  	var bkTel3 = $("input[name='bkTel3']").val();
+				  	if(reg_tel1.test(bkTel2)==false){
+				  		alert("형식에 맞지 않는 전화번호 입니다.");
+				  		$("input[name='bkTel2']").focus();
+						return false;
+				  	}
+				  	if(reg_tel2.test(bkTel3)==false){
+						alert("형식에 맞지 않는 전화번호 입니다.");
+						$("input[name='bkTel3']").focus();
+						return false;
+			   	 	}
+				  	var tel = bkTel1+"-"+bkTel2+"-"+bkTel3;
 					$.ajax({
 						url:"updateInfo.do",
 						type:"post",
 						timeout:30000,
 						dataType:"json",
-						data:{"tel":$("#tel").val()},
+						data:{"tel":tel},
 						success:function(data){
 													// Json Handler 에서 처리한 DATA 값이 아래와 갔다면 ..
 									if(data=="ok"){
@@ -238,9 +266,23 @@ h2 b{color:#cc0000;}
 			<tr>
 				<th>본인확인 전화번호</th>
 				<td>
-					${info.tel }<button type="button" id="btn5">수정</button> 
+					<span id='infoTel'>${info.tel }</span><button type="button" id="btn5">수정</button> 
 					<span id="telUpdate" class="update">
+<<<<<<< HEAD
 						<input type="text" name="tel" id="tel" placeholder="전화번호" required="required">
+=======
+						<select name="bkTel1">
+							<option value="010">010</option>
+							<option value="011">011</option>
+							<option value="019">019</option>
+							<option value="017">017</option>
+						</select>
+						-
+						<input type="text" required="required" name="bkTel2">
+						-
+						<input type="text" required="required" name="bkTel3">
+
+>>>>>>> refs/remotes/origin/yujin_ver_2
 						<button type="button" id="btn5_1">완료</button>
 						<button type="button" id="btn5_2">취소</button>
 					</span>
