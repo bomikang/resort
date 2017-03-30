@@ -20,7 +20,7 @@ fieldset p label{  margin-right:16px;}
 fieldset p label img{width:40px; position:relative; top:16px;}
 fieldset p input{width:300px !important; height:31px !important; border-radius: 15px; background:#929292; color:#fff !important; border:1px solid rgba(0,0,0,0) !important;}
 ::-webkit-input-placeholder{color:#fff;}
-fieldset #sub{background:#FFBB83 !important; width:370px; border-radius: 15px; height:42px; color:#333;}
+fieldset #sub{background:#FFBB83 !important; width:370px; border-radius: 15px; height:46px; color:#fff; font-family:"NanumSquareB"; font-size:20px;}
  .bottom_btn p{font-size:14px; width:500px; margin:0 auto; margin-top:30px;} 
 
 
