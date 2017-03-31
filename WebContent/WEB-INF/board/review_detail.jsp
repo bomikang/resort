@@ -16,6 +16,7 @@
 	#rep_table{border-top:none;}
 	#top_table tr th:NTH-CHILD(1), #rep_table tr th:NTH-CHILD(1){width:130px;}
 	#top_table tr th:NTH-CHILD(2), #rep_table tr td:NTH-CHILD(2){width:700px;}
+	#top_table tr th:NTH-CHILD(3), #rep_table tr th:NTH-CHILD(3){width:130px;}
 	table tr #td_writed_date{border-right:none; text-align: right; width:70%;}
 	table tr #td_writed_man{border-left:none; text-align: right; padding-right: 15px; width:20%;}
 	table tr #rev_detail_td{height: 300px; text-align: left; vertical-align: top;}
@@ -24,6 +25,8 @@
 	.style_from_input{display: inline-block; text-align: center;}
 	textarea{width: 100%; height:50px;}	
 	.repDelBtn{display: none;}
+	#detail_content{font-size:16px;}
+	#td_title{font-size:18px;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -165,7 +168,7 @@
 				}else{
 				$(res.data).each(function(i, obj) {
 					var tr = $("<tr>");//<tr></tr>
-					var td = $("<td>").html(obj.rep_name);
+					var td = $("<th>").html(obj.rep_name);
 					var td2 = $("<td>").html(obj.rep_detail);
 					var td3 = $("<td>")
 							.html(obj.rep_regdate + "<button class='repDelBtn'>삭제<input type='hidden' value='"+obj.rep_no+"' class='rep_no'><input type='hidden' value='"+obj.rep_mem+"' class='mem_no'></button>");
@@ -192,7 +195,7 @@
 	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>후기</h2>
 	<table>
 		<tr>
-			<th colspan="2">${rev_list.rev_title }</td>
+			<th colspan="2" id='td_title'>${rev_list.rev_title }</td>
 		</tr>
 		<tr>
 			<td id="td_writed_date">작성 일자 : ${rev_list.rev_regdate }</td>

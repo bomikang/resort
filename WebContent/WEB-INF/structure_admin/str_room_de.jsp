@@ -117,7 +117,7 @@
 </head>
 <body>
 <div class="intro_padding">
-	<h2>시설등록</h2>
+	<h2>시설수정</h2>
 	<hr />
 	<form action="structureUpdate.do" method="post" enctype="multipart/form-data" name="f1">
 		<fieldset>
