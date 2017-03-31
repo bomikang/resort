@@ -18,7 +18,7 @@
 	
 		$("#btnBack").click(function(){
 			var returnTo = "${returnTo}";
-			if(returnTo != null){
+			if(returnTo != null && returnTo != ""){
 				location.href="review.do?page=1";
 			}else{
 				location.href="notice.do?page=${index}";

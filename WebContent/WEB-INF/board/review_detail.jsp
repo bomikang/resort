@@ -23,22 +23,36 @@
 	.btn_right{text-align: right;}
 	.style_from_input{display: inline-block; text-align: center;}
 	textarea{width: 100%; height:50px;}	
-
+	.repDelBtn{display: none;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript">
-	function rep_Btn(){
-		<c:if test="${!empty user_info}">
+	/* function rep_Btn(){
+		if (${!empty user_info}) {
 			$(".repDelBtn").each(function(i,obj){
-			var mem_no = ${user_info.my_no};
-			if($(obj).find(".mem_no").val()==mem_no){
-                $(obj).css("display","inline-block");
-             }
-		});
-		</c:if>
+				var mem_no = ${user_info.my_no};
+				if($(obj).find(".mem_no").val()==mem_no){
+	                $(obj).css("display","inline-block");
+	             }
+		}
+	} */
+	function rep_Btn(){
+	    if (${!empty user_info}) {
+			if (${user_info.isMng==true}) {
+				$(".repDelBtn").each(function(i,obj){
+		               $(obj).css("display","inline-block");
+		            });
+			}
+	    	if (${user_info.isMng==false}) {
+	    		$(".repDelBtn").each(function(i,obj){
+		            var mem_no = ${user_info.my_no};
+		            if($(obj).find(".mem_no").val()==mem_no){
+		                   $(obj).css("display","inline-block");
+		                }
+		            });
+			}
+		}
 	}
-	
-	
 	var rep_no = 0;
 	var temp = 0;
 	$(function() {
@@ -109,7 +123,7 @@
 						
 					}else{
 						$("#top_table").empty();
-						$("#top_table").append("<tr><th>아이디</th><th>내용</th><th colspan='2'>날짜</th></tr>");
+						$("#top_table").append("<tr><th>이름</th><th>내용</th><th colspan='2'>날짜</th></tr>");
 					$(res.data).each(function(i, obj) {
 						var tr = $("<tr>");//<tr></tr>
 						var td = $("<th>").html(obj.rep_name);
@@ -217,7 +231,7 @@
 
 	<table id="top_table">
 		<tr>
-			<th>아이디</th>
+			<th>이름</th>
 			<th>내용</th>
 
 			<th colspan='2'>날짜</th>

@@ -56,7 +56,7 @@
 					tableItem += "<td>"+ data[i].no +"</td>"; //번호
 					tableItem += "<td><a href='qnadetail.do?qnano="+ data[i].no +"'>"+ data[i].title +"</a></td>"; //제목
 					tableItem += "<td>"+ data[i].regDateNoTimeForm +"</td>"; //등록일
-					tableItem += "<td>"+ data[i].member.id +"</td>";
+					tableItem += "<td>"+ data[i].member.id +" / "+ data[i].member.name +"</td>";
 					tableItem += "<td>"+ data[i].stringReply +"</td>";
 					tableItem += "</tr>";
 				}
@@ -89,7 +89,7 @@
 						tableItem += "<td>"+ data[a].no +"</td>"; //번호
 						tableItem += "<td><a href='qnadetail.do?qnano="+ data[a].no +"'>"+ data[a].title +"</a></td>"; //제목
 						tableItem += "<td>"+ data[a].regDateNoTimeForm +"</td>"; //등록일
-						tableItem += "<td>"+ data[a].member.id +"</td>";
+						tableItem += "<td>"+ data[a].member.id +" / "+ data[i].member.name +"</td>";
 						tableItem += "<td>"+ data[a].stringReply +"</td>";
 						tableItem += "</tr>";
 					}

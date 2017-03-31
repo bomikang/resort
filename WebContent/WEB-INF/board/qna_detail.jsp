@@ -83,7 +83,7 @@
 				$(this).val("완료"); 
 				$("#btnDeleteAdminQna").val("취소");
 				$("#btnDeleteAdminQna").next("input").css("display", "none");
-				$("#adminContent").removeAttr("readonly"); //readonly 해제
+				$("#adminContent").removeAttr("disabled"); //readonly 해제
 				
 				return false;
 			}else if($(this).val() == "완료"){
@@ -103,7 +103,7 @@
 				$("#btnUpdateAdminQna").val("수정");
 				$("#btnDeleteAdminQna").next("input").css("display", "inline-block");
 				$("#adminContent").val(); //기본 내용으로 되돌리기
-				$("#adminContent").attr("readonly", "readonly") //readonly 재설정
+				$("#adminContent").attr("disabled", "disabled") //readonly 재설정
 				return false;
 			}else if($(this).val() == "삭제"){
 				showConfirm("정말 삭제하시겠습니까?", "qnadelete.do", "adminForm");
@@ -127,6 +127,12 @@
 		}); */
 	});//ready
 </script>
+<style>
+	#memField input[type='text'], #adminField input[type='text']{display:inline-block; width:600px !important; margin-left:6px;}
+	#memField input[type='text']:DISABLED, #adminField input[type='text']:DISABLED{border:none !important; background:none !important;}
+	#memField textarea:DISABLED{border:none !important; background:#fff !important; margin-top:20px;}
+	#adminField textarea:DISABLED{border:none !important; background:#fff !important;}
+</style>
 </head>
 <body>
 <div class="way_top">
@@ -135,22 +141,22 @@
 <div class="intro_padding">
 	<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>1:1 문의 내용</h2>
 	<form action="" method="get" name="memberForm">
-		<fieldset>
+		<fieldset id='memField'>
 			<p>
-				<label for="">작성자</label>
-				<input type="text" name="name" value="${qna.member.name}" readonly="readonly"/>
+				<label for="">작성자 :</label>
+				<input type="text" name="name" value="${qna.member.name}" disabled="disabled"/>
 			</p>
 			<p>
-				<label for="">이메일</label>
-				<input type="text" name="email" value="${qna.member.mail}" readonly="readonly"/>
+				<label for="">이메일 :</label>
+				<input type="text" name="email" value="${qna.member.mail}"disabled="disabled"/>
 			</p>
 			<p>
-				<label for="">제목</label>
-				<input type="text" name="title" value="${qna.title}" readonly="readonly"/>
+				<label for="">제&nbsp;&nbsp;&nbsp;목 :</label>
+				<input type="text" name="title" value="${qna.title}"disabled="disabled"/>
 			</p>
 			<p>
-				<label for="">내용</label>
-				<textarea name="content" readonly="readonly" id="memContent"></textarea><!-- jquery에서 불러옴 -->
+				<label for="">내&nbsp;&nbsp;&nbsp;용</label>
+				<textarea name="content"disabled="disabled"id="memContent"></textarea><!-- jquery에서 불러옴 -->
 			</p>
 			<p class='act_btn_area'>
 				<input type="hidden" name="qnano" value="${qna.no}" /><!-- 게시물 번호 hidden으로 심기 -->
@@ -159,13 +165,13 @@
 					<c:if test="${user_info.isMng == false}">
 						<input type="submit" value="수정" id="btnUpdate"/>
 						<input type="submit" value="삭제" id="btnDelete"/>
-						<input type="button" value="목록" onclick="location.replace('qna.do')" /><!-- list화면으로 이동 -->
+						<a href="#" onclick="location.replace('qna.do')" class='moving_btn'>목록</a><!-- list화면으로 이동 -->
 					</c:if>
 					
 					<!-- 관리자-->
 					<c:if test="${user_info.isMng == true}">
 						<input type="button" value="답변" id="btnReply"/>
-						<input type="button" value="목록" id="btnGoList" onclick="location.replace('qna.do')" />
+						<a href="#" id="btnGoList" onclick="location.replace('qna.do')" class='moving_btn'>목록</a>
 					</c:if>
 				</c:if>
 			</p>
@@ -174,21 +180,21 @@
 	
 	<!-- 관리자가 회원의 게시글에서 답변을 눌렀을 때 나오게 하는 insert / detail / update 화면-->
 	<form action="" method="post" name='adminForm'>
-		<fieldset>
+		<fieldset id='adminField'>
 			<h2><img src="image/icon_flower_orange.png" class='icon_flower'/>1:1 문의 답변</h2>
 			<p>
-				<label for="">작성자</label>
+				<label for="">작성자 :</label>
 				<input type="text" name="name" value="관리자" readonly="readonly" disabled="disabled"/>
 			</p>
 			<p>
-				<label for="">제목</label>
+				<label for="">제&nbsp;&nbsp;&nbsp;목 :</label>
 				<input type="text" name="title" value="문의하신 내용의 답변입니다." readonly="readonly"  disabled="disabled"/>
 			</p>
 			
 			<!-- 답변이 미존재하면 insert화면 -->
 			<c:if test="${empty qnaAdmin}">
 				<p>
-					<label for="">내용</label>
+					<label for="">내&nbsp;&nbsp;&nbsp;용</label>
 					<textarea name="content" id="adminContent" required="required"></textarea>
 				</p>
 				<p class='act_btn_area'>
@@ -201,8 +207,8 @@
 			<!-- 답변이 존재하면 detail화면 -->
 			<c:if test="${!empty qnaAdmin}">
 				<p>
-					<label for="">내용</label>
-					<textarea name="content" readonly="readonly" id="adminContent" required="required"></textarea>
+					<label for="">내&nbsp;&nbsp;&nbsp;용</label>
+					<textarea name="content"disabled="disabled"id="adminContent" required="required"></textarea>
 				</p>
 				
 				<!-- 로그인 상태면서 관리자 -->
@@ -213,7 +219,7 @@
 							<input type="hidden" name="qnano" value="${qnaAdmin.no}" /><!-- 관리자 게시글 번호 심기 -->
 							<input type="submit" value="수정" id="btnUpdateAdminQna"/>
 							<input type="submit" value="삭제" id="btnDeleteAdminQna"/>
-							<input type="button" value="목록" onclick="location.replace('qna.do')" /><!-- list화면으로 이동 -->
+							<a href="#" id="btnGoList" onclick="location.replace('qna.do')" class='moving_btn'>목록</a>
 						</p>
 					</c:if>
 				</c:if>

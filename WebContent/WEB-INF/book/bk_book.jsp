@@ -188,14 +188,14 @@
 	/*date 객체의 getTime()으로 가져온 시간 값을 다시 String형태의 date값으로 변환 */
 	function convertToString(date){
 		var temp = new Date(date);
-		if(temp.getMonth()<9){
-			if(temp.getDate()<9){
+		if(temp.getMonth()<10){
+			if(temp.getDate()<10){
 				return temp.getFullYear()+"-0"+(temp.getMonth()+1)+"-0"+temp.getDate();
 			}else{
 				return temp.getFullYear()+"-0"+(temp.getMonth()+1)+"-"+temp.getDate();
 			}
 		}else{
-			if(temp.getDate()<9){
+			if(temp.getDate()<10){
 				return temp.getFullYear()+"-"+(temp.getMonth()+1)+"-0"+temp.getDate();
 			}else{
 				return temp.getFullYear()+"-"+(temp.getMonth()+1)+"-"+temp.getDate();
