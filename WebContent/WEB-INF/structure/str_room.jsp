@@ -130,7 +130,7 @@
 					$("#forest_btn").find("a").eq(2).css({"border-color":"#dd7028", "font-weight":"bold"});
 					$("#sanrim_btn").find("a").eq(1).css({"border-color":"#dd7028", "font-weight":"bold"});
 				}
-				if(data.peope == 17){
+				if(data.people == 17){
 					$("#sanrim_btn").find("a").eq(2).css({"border-color":"#dd7028", "font-weight":"bold"});
 				}
 			}
