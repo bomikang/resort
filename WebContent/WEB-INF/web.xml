@@ -11,7 +11,7 @@
       </init-param>
       <init-param>
           <param-name>jdbcUrl</param-name>
-          <param-value>jdbc:mysql://localhost:3306/resort?characterEncoding=utf8</param-value>
+          <param-value>jdbc:mysql://127.0.0.1:3306/resort?characterEncoding=UTF-8&amp;serverTimezone=UTC</param-value>
       </init-param>
       <init-param>
           <param-name>dbUser</param-name>
